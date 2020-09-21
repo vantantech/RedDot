@@ -1,0 +1,833 @@
+﻿<Window x:Class="RedDot.RetailSales"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RedDot"
+    x:Name="SalesWindow"
+    Title="Retail Sales" 
+    Width="1200"  Height="850" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow"  ResizeMode="CanResizeWithGrip"  >
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/SalesResource.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+      
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    -->
+
+
+
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         ######  ########    ###    ########  ########     ######   ########  #### ########  
+        ##    ##    ##      ## ##   ##     ##    ##       ##    ##  ##     ##  ##  ##     ## 
+        ##          ##     ##   ##  ##     ##    ##       ##        ##     ##  ##  ##     ## 
+         ######     ##    ##     ## ########     ##       ##   #### ########   ##  ##     ## 
+              ##    ##    ######### ##   ##      ##       ##    ##  ##   ##    ##  ##     ## 
+        ##    ##    ##    ##     ## ##    ##     ##       ##    ##  ##    ##   ##  ##     ## 
+         ######     ##    ##     ## ##     ##    ##        ######   ##     ## #### ########  
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ -->
+    <Grid  x:Name="LayoutRoot"   >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="450"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Col 0: Left Pane Category/Products / all buttons-->
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="210"/> <!---Buttons on bottom-->
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock FontSize="15" Foreground="White" Text="Logged In As:   "/>
+                <TextBlock FontSize="15" Foreground="White"  Text="{Binding CurrentSecurity.CurrentEmployee.DisplayName}"/>
+            </StackPanel>
+        
+
+            <!-- Row 0:   Category / Products-->
+            <Grid Grid.Row="1" >
+                <TabControl Name="tabCategory"  Style="{StaticResource TabControlStyle}"  FontSize="20" SelectedIndex="{Binding SelectedIndex}" >
+                    <TabItem Header="Products A-J"  Style="{StaticResource TabItemStyle}"  Width="90">
+                        <!--   Row 2:   Category / Products-->
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid x:Name="grdCategory" Grid.Column="0" Visibility="{Binding VisibleCategory}" >
+ 
+                                <ScrollViewer x:Name="ScrollViewerCat" VerticalScrollBarVisibility="Auto" >
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="Auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+                                    <ItemsControl  ItemsSource="{Binding Categories1}"  >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Button Command="{Binding DataContext.CategoryProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding id}" >
+
+                                                    <Border Width="150" Height="40" BorderBrush="{Binding colorcode}" Background="AliceBlue" >
+                                                        <TextBlock Text="{Binding description}"   FontSize="15" Foreground="Black"   TextAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+
+                                    </ItemsControl>
+                                    
+                         
+                                </ScrollViewer>
+
+                            </Grid>
+
+
+
+
+                            <Grid Grid.Column="1" Visibility="{Binding VisibleCategory}">
+ 
+
+                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" >
+                                        <ScrollViewer.Resources>
+                                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter Property="Width" Value="40"/>
+                                                        <Setter Property="Height" Value="Auto" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ScrollViewer.Resources>
+
+                                    <StackPanel Orientation="Vertical">
+
+                                        <!--   Categories within category-->
+                                        <ItemsControl  ItemsSource="{Binding SubCategories1}"  >
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+
+                                                    <Button Command="{Binding DataContext.CategoryProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                            CommandParameter="{Binding id}" >
+
+                                                        <Border Width="150" Height="40" BorderBrush="{Binding colorcode}" Background="AliceBlue" >
+                                                            <TextBlock Text="{Binding description}"   FontSize="15" Foreground="Black"   TextAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+
+                                        </ItemsControl>
+
+                                        <ListView Name="lbProduct"   ItemsSource="{Binding Products}" ItemTemplate="{StaticResource ProductTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Single" Background="Transparent" >
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
+                                    </StackPanel>
+                               
+                                        
+                                        
+                                        
+                                    </ScrollViewer>
+
+                            </Grid>
+
+                        </Grid>
+
+                    </TabItem>
+
+                    <TabItem Header="Products K-Z"  Style="{StaticResource TabItemStyle}"  Width="90" >
+
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid x:Name="grdCategory2" Grid.Column="0" Visibility="{Binding VisibleCategory}" >
+  
+                                <ScrollViewer x:Name="ScrollViewerCat2"  VerticalScrollBarVisibility="Auto" >
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="Auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+
+                                    <ItemsControl  ItemsSource="{Binding Categories2}"  >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Button Command="{Binding DataContext.CategoryServiceClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding id}" >
+
+                                                    <Border Width="150" Height="40" BorderBrush="{Binding colorcode}" Background="AliceBlue" >
+                                                        <TextBlock Text="{Binding description}"   FontSize="15" Foreground="Black"   TextAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+
+                                    </ItemsControl>
+                                    
+                                    
+                                    
+                                </ScrollViewer>
+
+                            </Grid>
+
+                            <Grid Grid.Column="1" Visibility="{Binding VisibleCategory}">
+                              
+                                    
+                 
+                                    <ScrollViewer  VerticalScrollBarVisibility="Auto" >
+                                        <ScrollViewer.Resources>
+                                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter Property="Width" Value="40"/>
+                                                        <Setter Property="Height" Value="Auto" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ScrollViewer.Resources>
+
+                                        <StackPanel Orientation="Vertical">
+                                          
+                                        
+                                            <!--   Categories within category-->
+                                            <ItemsControl  ItemsSource="{Binding SubCategories2}"  >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+
+                                                        <Button Command="{Binding DataContext.CategoryServiceClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                            CommandParameter="{Binding id}" >
+
+                                                            <Border Width="150" Height="40" BorderBrush="{Binding colorcode}" Background="AliceBlue" >
+                                                                <TextBlock Text="{Binding description}"   FontSize="15" Foreground="Black"   TextAlignment="Center" VerticalAlignment="Center" />
+                                                            </Border>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+
+                                            </ItemsControl>
+<!-- Product / Service -->
+                                        <ListView Name="lbService"   ItemsSource="{Binding Services}" ItemTemplate="{StaticResource ProductTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Single" Background="Transparent" >
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
+
+                                    </StackPanel>
+                                    
+                                    
+                                </ScrollViewer>
+
+        
+                            </Grid>
+
+                        </Grid>
+
+
+                    </TabItem>
+                    <TabItem Header="Labor"  Style="{StaticResource TabItemStyle}"   Width="90" >
+
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                 <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid x:Name="grdCategory3" Grid.Column="0" Visibility="{Binding VisibleCategory}" >
+                                <!--
+                    ____      _                              
+                   / ___|__ _| |_ ___  __ _  ___  _ __ _   _ 
+                  | |   / _` | __/ _ \/ _` |/ _ \| '__| | | |
+                  | |__| (_| | ||  __/ (_| | (_) | |  | |_| |
+                   \____\__,_|\__\___|\__, |\___/|_|   \__, |
+                                       |___/            |___/ 
+
+                -->
+
+
+                                <ScrollViewer x:Name="ScrollViewerCat3"  VerticalScrollBarVisibility="Auto" >
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="Auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+
+                                    <ItemsControl  ItemsSource="{Binding Categories3}"  >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Button Command="{Binding DataContext.CategoryFavoriteClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding id}" >
+
+                                                    <Border Width="150" Height="40" BorderBrush="{Binding colorcode}" Background="AliceBlue" >
+                                                        <TextBlock Text="{Binding description}"   FontSize="15" Foreground="Black"   TextAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+
+                                    </ItemsControl>
+                                </ScrollViewer>
+
+                            </Grid>
+
+
+
+
+                            <Grid Grid.Column="1" Visibility="{Binding VisibleCategory}">
+
+                                <!-- Favorites                -->
+
+                                <!-- Services Grid  width=589-->
+ 
+
+         
+                                    <ScrollViewer   VerticalScrollBarVisibility="Auto" >
+                                        <ScrollViewer.Resources>
+                                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter Property="Width" Value="40"/>
+                                                        <Setter Property="Height" Value="Auto" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ScrollViewer.Resources>
+                                        <ListView Name="lbFavorite"   ItemsSource="{Binding Favorites}" ItemTemplate="{StaticResource ServiceTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Single" Background="Transparent" >
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
+                                    </ScrollViewer>
+
+                            </Grid>
+
+                        </Grid>
+
+
+                    </TabItem>
+                    <TabItem Header="Shipping"  Style="{StaticResource TabItemStyle}"   Width="90" >
+
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid  Grid.Column="0" Visibility="{Binding VisibleCategory}" >
+                                <!--
+                    ____      _                              
+                   / ___|__ _| |_ ___  __ _  ___  _ __ _   _ 
+                  | |   / _` | __/ _ \/ _` |/ _ \| '__| | | |
+                  | |__| (_| | ||  __/ (_| | (_) | |  | |_| |
+                   \____\__,_|\__\___|\__, |\___/|_|   \__, |
+                                       |___/            |___/ 
+
+                -->
+
+
+                                <ScrollViewer  VerticalScrollBarVisibility="Auto" >
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="Auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+
+                                    <ItemsControl  ItemsSource="{Binding Categories4}"  >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+
+                                                <Button Command="{Binding DataContext.CategoryShippingClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding id}" >
+
+                                                    <Border Width="150" Height="40" BorderBrush="{Binding colorcode}" Background="AliceBlue" >
+                                                        <TextBlock Text="{Binding description}"   FontSize="15" Foreground="Black"   TextAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+
+                                    </ItemsControl>
+                                </ScrollViewer>
+
+                            </Grid>
+
+
+
+
+                            <Grid Grid.Column="1" Visibility="{Binding VisibleCategory}">
+
+                                <!-- Favorites                -->
+
+                                <!-- Services Grid  width=589-->
+
+
+
+                                <ScrollViewer   VerticalScrollBarVisibility="Auto" >
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="Auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+                                    <ListView   ItemsSource="{Binding Shippings}" ItemTemplate="{StaticResource ServiceTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Single" Background="Transparent" >
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </ScrollViewer>
+
+                            </Grid>
+
+                        </Grid>
+
+
+                    </TabItem>
+
+
+
+                    <TabItem Header="Search"  Style="{StaticResource TabItemStyle}"  Width="90">
+            
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                               <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid x:Name="grdSearch" Grid.Column="0" Visibility="{Binding VisibleCategory}" >
+
+
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Margin="10" Text="Enter Search in Box "  />
+                                    <TextBox  Margin="10" Name="tbSearchValue"  Text="" Width="150" Height="45" FontSize="18"/>
+                                    <Button Margin="10"  Style="{StaticResource BottomButtons}" Width="150" Command="{Binding SearchProductClicked}" CommandParameter="{Binding ElementName=tbSearchValue,Path=Text}" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/search.png" Width="40" Height="40"/>
+                                            <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc SearchProduct}" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Margin="10"  Style="{StaticResource BottomButtons}"  Width="150" Command="{Binding SearchServiceClicked}" CommandParameter="{Binding ElementName=tbSearchValue,Path=Text}" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/search.png" Width="40" Height="40"/>
+                                            <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc SearchService}" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+
+
+                            <Grid Grid.Column="1">
+                                <!-- 
+                  ____                _            _   
+                 |  _ \ _ __ ___   __| |_   _  ___| |_ 
+                 | |_) | '__/ _ \ / _` | | | |/ __| __|
+                 |  __/| | | (_) | (_| | |_| | (__| |_ 
+                 |_|   |_|  \___/ \__,_|\__,_|\___|\__|
+                -->
+
+                                <!-- Product Grid  width=589-->
+                                <Grid x:Name="grdResults" Grid.Column="2" Visibility="{Binding VisibleCategory}" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition  Height="50"/>
+                                        <RowDefinition  Height="*"/>
+
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Height="50" Width="auto" Text="{Binding SearchMessage}" FontSize="30" Foreground="White"  TextAlignment="Left"  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+
+                                    </StackPanel>
+
+                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+                                        <ScrollViewer.Resources>
+                                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter Property="Width" Value="40"/>
+                                                        <Setter Property="Height" Value="Auto" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ScrollViewer.Resources>
+                                        
+                                        <StackPanel Orientation="Vertical">
+                                            <ListView   ItemsSource="{Binding SearchResults}" ItemTemplate="{StaticResource ProductTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Single" Background="Transparent" >
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
+                                            </ListView>
+                                            <ListView   ItemsSource="{Binding SearchResults2}" ItemTemplate="{StaticResource ServiceTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionMode="Single" Background="Transparent" >
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
+                                            </ListView>
+                                        </StackPanel>
+                                 
+                                        
+                                        
+                                    </ScrollViewer>
+
+                                </Grid>
+                            </Grid>
+
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Tickets/Quotes"  Style="{StaticResource TabItemStyle}"  Width="100">
+                        <!-- List of OPEN  orders-->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Search OPEN/QUOTE Tickets By:" FontSize="18" VerticalAlignment="Center"  />
+                            <WrapPanel Grid.Row="1" Orientation="Horizontal">
+                                <Button Style="{StaticResource BottomButtons}"   Command="{Binding SearchByCustomerClicked}"  Width="100" >
+                                    <StackPanel Orientation="Vertical" >
+                                        <Image Source="/media/customersearch.png" Width="40" Height="40"/>
+                                        <TextBlock  Text="Customer"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource BottomButtons}"   Command="{Binding SearchByTicketClicked}" Width="100"  >
+                                    <StackPanel Orientation="Vertical" >
+                                        <Image Source="/media/searchreceipt.png" Width="40" Height="40"/>
+                                        <TextBlock  Text="Ticket #"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource BottomButtons}"   Command="{Binding SearchByDateClicked}" Width="100"  >
+                                    <StackPanel Orientation="Vertical" >
+                                        <Image Source="/media/calendar.png" Width="40" Height="40"/>
+                                        <TextBlock  Text="Date"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource BottomButtons}"   Command="{Binding SearchByEmployeeClicked}" Width="110"  >
+                                    <StackPanel Orientation="Vertical" >
+                                        <Image Source="/media/employee.png" Width="40" Height="40"/>
+                                        <TextBlock  Text="My Tickets"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource BottomButtons}"   Command="{Binding BrowseAllClicked}" Width="110"  >
+                                    <StackPanel Orientation="Vertical" >
+                                        <Image Source="/media/allreceipts.png" Width="40" Height="40"/>
+                                        <TextBlock  Text="All Tickets"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </WrapPanel>
+                            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                <TextBlock FontSize="18" Margin="0,0,30,0">
+                                    Has Payment:   
+                                </TextBlock>                               
+                                <CheckBox   Height="30" Width="30" IsChecked="{Binding  HasPayment}" >
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="3" ScaleY="3" />
+                                    </CheckBox.LayoutTransform>
+
+                                </CheckBox>
+                                <TextBlock  Text="{Binding SearchMessage2}" FontSize="18" VerticalAlignment="Center"  />
+
+                            </StackPanel>
+                         
+                            <ScrollViewer Grid.Row="3" >
+                                <ItemsControl   ItemsSource="{Binding Tickets}" ItemTemplate="{StaticResource Ticketlist}" >
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+
+                                    </ItemsControl.ItemsPanel>
+
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+
+    
+
+                    </TabItem>
+
+
+                </TabControl>
+
+   
+            </Grid>
+
+
+            <!--  Row 1:  Divider-->
+            <Rectangle Grid.Row="2" Fill="White" />
+
+            <!--  Row 2:  Bottom Buttons-->
+            <WrapPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent">
+                <Button Style="{StaticResource BottomButtons}"  Command="{Binding HoldClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/hold.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc Hold}" />
+                    </StackPanel>
+                </Button>
+
+
+                <Button  Style="{StaticResource BottomButtons}"   Command="{Binding CashTenderClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/money.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc CashTender}" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"   Command="{Binding CreditCardClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/creditcard.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc CreditCard}" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding CheckClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/checkblack.png" Width="40" Height="40"/>
+                        <TextBlock Text="Check" />
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding StoreCreditClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/creditblack.png" Width="40" Height="40"/>
+                        <TextBlock Text="Store Credit" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding WorkOrderClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/workorder.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="Work Order" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding ShipOrderClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cargo.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="Shipping" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding PrintLargeReceiptClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/printer.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="Print LARGE" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding PrintReceiptClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/receipt.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="{Loc PrintReceipt}" />
+                    </StackPanel>
+                </Button>
+
+
+
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding SettleClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/paid.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Settle"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding VoidClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cancel.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc Void}" />
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"   Command="{Binding TaxExemptClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/taxexempt.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="{Loc TaxExempt}" />
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource BottomButtons}" Command="{Binding NoteClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/notes.png" Height="40" Width="40"/>
+                        <TextBlock Text="Note"/>
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding NoSaleClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cashdrawer.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="{Loc NoSale}" />
+                    </StackPanel>
+                   
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding PrintPDFClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/pdf.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="Print to PDF" />
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding EmailPDFClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/email.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="Email PDF" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource BottomButtons}" Command="{Binding InternalNoteClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/notes.png" Height="40" Width="40"/>
+                        <TextBlock Foreground="Red" Text="Internal Note"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource BottomButtons}" Command="{Binding CustomerClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/customer.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Customer"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"    Command="{Binding DiscountClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/adjustment.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc Adjustment}" />
+                    </StackPanel>
+                </Button>
+                
+                
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding MoreClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/more.png" Width="40" Height="40"/>
+                        <TextBlock  Text="More..."  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding ExitClicked}"  Click="btnExit_Click" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/RedDot;component/media/exit.png" Height="40" Width="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="{Loc Exit}"/>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+
+
+        </Grid>
+        <!--
+              ____               _       _   
+             |  _ \ ___  ___ ___(_)_ __ | |_ 
+             | |_) / _ \/ __/ _ \ | '_ \| __|
+             |  _ <  __/ (_|  __/ | |_) | |_ 
+             |_| \_\___|\___\___|_| .__/ \__|
+                                  |_|        
+            -->
+        <Grid Grid.Column="1" Background="White" > 
+            
+            <local:RetailReceiptControl Visibility="{Binding VisibleCategory}" />
+            <!--NEW TICKET button -->
+            <Button  x:Name="btnNew" Visibility="{Binding VisibleNewticketbutton}" Style="{StaticResource CustomButtonStyle}" Content="New Ticket"  Height="120"   Width="250" Command="{Binding NewTicketClicked}"  FontSize="40"/>
+
+        </Grid>
+
+    </Grid>
+    
+    
+</Window>

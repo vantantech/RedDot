@@ -1,0 +1,483 @@
+﻿<Window x:Class="RedDot.OrderHistory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:local="clr-namespace:RedDot"
+        Title="OrderHistory" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+
+   
+                
+            </ResourceDictionary.MergedDictionaries>
+            
+            
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+            <local:BalanceToColorConverter x:Key="BalanceToColorConverter"/>
+            <local:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+
+            <DataTemplate x:Key="OpenTicket">
+                <Border  BorderThickness="1" BorderBrush="DarkGray" CornerRadius="5" Margin="3,1"   Background="{Binding status, Converter={StaticResource StringToColorConverter }}">
+
+                    <StackPanel Orientation="Horizontal">
+
+
+                        <Button  Style="{StaticResource CustomButtonStyle}"  Width="60"  Height="60" HorizontalContentAlignment="Left" 
+                                            Command="{Binding DataContext.OpenOrderClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding id}">
+                            <TextBlock Text="{Loc Open}" FontSize="18" FontFamily="Consolas" FontWeight="Normal" />
+                        </Button>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Ticket #:" Width="120" TextAlignment="Right" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding saledate}"  Width="180" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding status }" Width="80" Foreground="Blue"  FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding paymenttype}" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding salestotal, StringFormat=c }" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" TextAlignment="Right" />
+                                <TextBlock Text="{Binding balance, StringFormat=c }" Width="auto"  Foreground="{Binding balance,Converter={StaticResource BalanceToColorConverter}}" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Reverse Date:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding reversedate}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                <TextBlock Text="Last UpdateDate:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding lastupdated}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Customer:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding customername}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                                <TextBlock  Text="{Binding phone1}" Width="150" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Sales Person:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding displayname}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                <StackPanel Visibility="{Binding parentid,Converter={StaticResource EmptyToVisibilityConverter}}" Orientation="Horizontal">
+                                    <TextBlock   Text="REFUND TICKET" Width="auto" Foreground="Red" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                    <Button Margin="50,0,0,0"  Command="{Binding DataContext.ViewClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding parentid}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock   Text="Original Ticket: " Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                                            <TextBlock   Text="{Binding parentid}"   Foreground="Blue"   TextAlignment="Center"  Width="70" Height="20"  FontSize="15" FontFamily="Consolas" FontWeight="Normal" />
+
+                                        </StackPanel>
+
+                                    </Button>
+                                </StackPanel>
+
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Work Order:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red" Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                            </StackPanel>
+
+
+                        </StackPanel>
+
+
+
+                    </StackPanel>
+
+                </Border>
+            </DataTemplate>
+
+            
+            <DataTemplate x:Key="ReversedTicket">
+                <Border  BorderThickness="1" BorderBrush="DarkGray" CornerRadius="5" Margin="3,1"   Background="{Binding status, Converter={StaticResource StringToColorConverter }}">
+
+                    <StackPanel Orientation="Horizontal">
+
+  
+                        <Button  Style="{StaticResource CustomButtonStyle}"  Width="60"  Height="60" HorizontalContentAlignment="Left" 
+                                            Command="{Binding DataContext.OpenOrderClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding id}">
+                            <TextBlock Text="{Loc Open}" FontSize="18" FontFamily="Consolas" FontWeight="Normal" />
+                        </Button>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Ticket #:" Width="120" TextAlignment="Right" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding closedate}"  Width="180" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding status }" Width="80" Foreground="Blue"  FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding paymenttype}" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding total, StringFormat=c }" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" TextAlignment="Right" />
+                                <TextBlock Text="{Binding balance, StringFormat=c }" Width="auto"  Foreground="{Binding balance,Converter={StaticResource BalanceToColorConverter}}" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Reverse Date:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding reversedate}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                <TextBlock Text="Last UpdateDate:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding lastupdated}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Customer:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding customername}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                                <TextBlock  Text="{Binding phone1}" Width="150" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Sales Person:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding displayname}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                <StackPanel Visibility="{Binding parentid,Converter={StaticResource EmptyToVisibilityConverter}}" Orientation="Horizontal">
+                                    <TextBlock   Text="REFUND TICKET" Width="auto" Foreground="Red" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                    <Button Margin="50,0,0,0"  Command="{Binding DataContext.ViewClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding parentid}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock   Text="Original Ticket: " Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                                            <TextBlock   Text="{Binding parentid}"   Foreground="Blue"   TextAlignment="Center"  Width="70" Height="20"  FontSize="15" FontFamily="Consolas" FontWeight="Normal" />
+
+                                        </StackPanel>
+
+                                    </Button>
+                                </StackPanel>
+
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Work Order:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red" Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                            </StackPanel>
+                            
+                            
+                        </StackPanel>
+
+
+
+                    </StackPanel>
+
+                </Border>
+            </DataTemplate>
+
+
+            <DataTemplate x:Key="ClosedTicket">
+                <Border  BorderThickness="1" BorderBrush="DarkGray" CornerRadius="5" Margin="3,1"   Background="{Binding status, Converter={StaticResource StringToColorConverter }}">
+                    
+                <StackPanel Orientation="Horizontal">
+ 
+                   <Button  Style="{StaticResource CustomButtonStyle}"  Width="60"  Height="60" HorizontalContentAlignment="Left" 
+                                            Command="{Binding DataContext.ViewClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding id}">
+                            <TextBlock Text="{Loc View}" FontSize="18" FontFamily="Consolas" FontWeight="Normal"  />
+                    </Button>
+
+                        <Button  Style="{StaticResource CustomButtonStyle}"  Width="60"  Height="60" HorizontalContentAlignment="Left" 
+                                            Command="{Binding DataContext.ShipOrderClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding id}">
+                            <TextBlock Text="Shipping" FontSize="18" FontFamily="Consolas" FontWeight="Normal"  />
+                        </Button>
+                    
+                    
+                    
+                    
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Ticket #:" Width="120" TextAlignment="Right" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding closedate}"  Width="180" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding status }" Width="80" Foreground="Blue"  FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding paymenttype}" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding total, StringFormat=c }" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" TextAlignment="Right" />
+                                <TextBlock Text="{Binding balance, StringFormat=c }" Width="100"  Foreground="{Binding balance,Converter={StaticResource BalanceToColorConverter}}" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Customer:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding customername}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                                <TextBlock  Text="{Binding phone1}" Width="150" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Sales Person:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding displayname}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                <StackPanel Visibility="{Binding parentid,Converter={StaticResource EmptyToVisibilityConverter}}" Orientation="Horizontal">
+                                    <TextBlock   Text="REFUND TICKET" Width="auto" Foreground="Red" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                    <Button Margin="50,0,0,0"  Command="{Binding DataContext.ViewClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding parentid}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock   Text="Original Ticket: " Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                                            <TextBlock   Text="{Binding parentid}"   Foreground="Blue"   TextAlignment="Center"  Width="70" Height="20"  FontSize="15" FontFamily="Consolas" FontWeight="Normal" />
+
+                                        </StackPanel>
+                                 
+                                    </Button>
+                                </StackPanel>
+                             
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Work Order:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red" Margin="10,0,0,0" TextWrapping="Wrap"/>
+
+                             </StackPanel>
+                            
+                            
+                            
+                        </StackPanel>
+
+
+                    
+                    </StackPanel>
+
+                </Border>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="Query Date Range" Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold" />
+                <StackPanel  Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Bottom" Width="200" >
+                    <TextBlock Text="{Binding StartDate, StringFormat='MM/dd/yy'}"   Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold"  />
+                    <TextBlock Text=" to "                                           Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold"   />
+                    <TextBlock Text="{Binding EndDate, StringFormat='MM/dd/yy'}"   Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold"   />
+                </StackPanel>
+            </StackPanel>
+
+
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding PreviousClicked}">
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/previous.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc Previous}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding TodayClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/today.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc Today}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding NextClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/next.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc Next}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding CustomClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/calendar.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc CustomDate}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding ByTicketIDClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/ticket.png" Height="35" Width="40"/>
+                        <TextBlock Text="By Ticket #"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Closed / Voided Tickets" >
+
+                <ScrollViewer  x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="600">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+
+
+
+
+              
+                        <ItemsControl Name="IC1"  ItemsSource="{Binding HistoryData}" ItemTemplate="{StaticResource ClosedTicket}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                  
+
+
+                </ScrollViewer>
+
+            </TabItem>
+
+            <TabItem Header="Reversed Tickets">
+
+                <ScrollViewer  x:Name="ScrollViewer2" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="600">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+
+
+
+
+            
+                        <ItemsControl Name="IC0"  ItemsSource="{Binding ReversedTickets}" ItemTemplate="{StaticResource ReversedTicket}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+         
+
+
+                </ScrollViewer>
+
+            </TabItem>
+
+            <TabItem Header="Open Tickets">
+
+                <ScrollViewer  x:Name="ScrollViewer3" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="600">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+
+
+
+
+
+                    <ItemsControl Name="IC3"  ItemsSource="{Binding OpenTickets}" ItemTemplate="{StaticResource OpenTicket}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+
+
+                </ScrollViewer>
+
+            </TabItem>
+
+
+            <TabItem Header="Quotes">
+
+                <ScrollViewer  x:Name="ScrollViewer4" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="600">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+
+
+
+
+
+                    <ItemsControl Name="IC4"  ItemsSource="{Binding Quotes}" ItemTemplate="{StaticResource OpenTicket}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+
+
+                </ScrollViewer>
+
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+
+            <Button  Margin="5,5,5,0" Style="{StaticResource CustomButtonStyle}" Command="{Binding Refresh}" CommandParameter="OpenTickets" HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100"    >
+                <StackPanel>
+                    <Image Source="/media/refresh.png" Height="35" Width="40"/>
+                    <TextBlock Text="Load Open Tickets"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button  Margin="5,5,5,0" Style="{StaticResource CustomButtonStyle}" Command="{Binding Refresh}" CommandParameter="Quotes" HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100"    >
+                <StackPanel>
+                    <Image Source="/media/refresh.png" Height="35" Width="40"/>
+                    <TextBlock Text="Load Quotes"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button  Margin="0,5,5,0" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100"   Click="Button_Exit" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/exit.png" Height="35" Width="40"/>
+                    <TextBlock Text="{Loc Exit}"></TextBlock>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+ 
+    </Grid>
+
+  
+</Window>

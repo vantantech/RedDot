@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="AdminDashboard" xml:space="preserve">
+    <value>Admin Dashboard</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CARResponse" xml:space="preserve">
+    <value>CAR Response</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CompanyLabSummary" xml:space="preserve">
+    <value>Company Lab Summary</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Enrollment" xml:space="preserve">
+    <value>Enrollment</value>
+  </data>
+  <data name="EnrollmentSummary" xml:space="preserve">
+    <value>Enrollment Summary</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="IndividualLab" xml:space="preserve">
+    <value>Individual Lab</value>
+  </data>
+  <data name="Lab" xml:space="preserve">
+    <value>Lab</value>
+  </data>
+  <data name="LabID" xml:space="preserve">
+    <value>Lab ID</value>
+  </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>My Profile</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="QuarterlyReportGrading" xml:space="preserve">
+    <value>Quarterly Report Grading</value>
+  </data>
+  <data name="QuarterlySummary" xml:space="preserve">
+    <value>Quarterly Summary</value>
+  </data>
+  <data name="ReferenceTables" xml:space="preserve">
+    <value>Reference Tables</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="SampleProcessing" xml:space="preserve">
+    <value>Sample Processing</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SelectLabs" xml:space="preserve">
+    <value>Select Labs</value>
+  </data>
+  <data name="TrendGraphs" xml:space="preserve">
+    <value>Trend Graphs / Queries</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="ViewListQuarterlyReports" xml:space="preserve">
+    <value>View List of all available Quarterly Reports</value>
+  </data>
+  <data name="LogOff" xml:space="preserve">
+    <value>Log Off</value>
+  </data>
+  <data name="LogOn" xml:space="preserve">
+    <value>Log On</value>
+  </data>
+  <data name="CARBreakdown" xml:space="preserve">
+    <value>CAR Breakdown</value>
+  </data>
+  <data name="GradeHistory" xml:space="preserve">
+    <value>Grade History</value>
+  </data>
+  <data name="LoggedInAs" xml:space="preserve">
+    <value>Logged in as : </value>
+  </data>
+  <data name="NumberOustandingCARs" xml:space="preserve">
+    <value>Number of Outstanding CARs</value>
+  </data>
+  <data name="PossibleProblematicTest" xml:space="preserve">
+    <value>Possible Problematic Test</value>
+  </data>
+  <data name="RecentPostedSamples" xml:space="preserve">
+    <value>Recent Posted Samples</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="UpdateNAList" xml:space="preserve">
+    <value>Update NA List</value>
+  </data>
+  <data name="ProgramAssignment" xml:space="preserve">
+    <value>Program Assignment</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>Apply Filter</value>
+  </data>
+  <data name="EnrollmentbyLocation" xml:space="preserve">
+    <value>Enrollments By Location</value>
+  </data>
+  <data name="EnrollmentByProgram" xml:space="preserve">
+    <value>Enrollments By Program</value>
+  </data>
+  <data name="DataAdminDashboard" xml:space="preserve">
+    <value>Data Administration Dashboard</value>
+  </data>
+  <data name="Programs" xml:space="preserve">
+    <value>Programs</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Division" xml:space="preserve">
+    <value>Division</value>
+  </data>
+  <data name="DivisionManager" xml:space="preserve">
+    <value>Division Manager</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LocationID" xml:space="preserve">
+    <value>Location ID</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Satellite" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="SatelliteOf" xml:space="preserve">
+    <value>Satellite Of</value>
+  </data>
+  <data name="StaticLabID" xml:space="preserve">
+    <value>Static Lab ID</value>
+  </data>
+  <data name="Enrollments" xml:space="preserve">
+    <value>Enrollments</value>
+  </data>
+  <data name="SystemAnnouncements" xml:space="preserve">
+    <value>System Announcements</value>
+  </data>
+  <data name="UserDashboard" xml:space="preserve">
+    <value>User Dashboard</value>
+  </data>
+  <data name="NAListByLocation" xml:space="preserve">
+    <value>NA List by Location</value>
+  </data>
+  <data name="ProgramsBySponsor" xml:space="preserve">
+    <value>Programs By Sponsor</value>
+  </data>
+  <data name="SysAdminDashboard" xml:space="preserve">
+    <value>Super Admin Dashboard</value>
+  </data>
+  <data name="ProgramSetup" xml:space="preserve">
+    <value>Program Setup</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="QuickLinks" xml:space="preserve">
+    <value>Quick Links</value>
+  </data>
+  <data name="EnrolledPrograms" xml:space="preserve">
+    <value>Enrolled Programs</value>
+  </data>
+  <data name="SelectLab" xml:space="preserve">
+    <value>Select Lab</value>
+  </data>
+  <data name="Analyst" xml:space="preserve">
+    <value>Analyst</value>
+  </data>
+  <data name="Delta" xml:space="preserve">
+    <value>Delta</value>
+  </data>
+  <data name="DNR" xml:space="preserve">
+    <value>DNR</value>
+  </data>
+  <data name="FCAR" xml:space="preserve">
+    <value>F-CAR</value>
+  </data>
+  <data name="LabResult" xml:space="preserve">
+    <value>Lab Result</value>
+  </data>
+  <data name="LCL" xml:space="preserve">
+    <value>LCL</value>
+  </data>
+  <data name="NND" xml:space="preserve">
+    <value>NND</value>
+  </data>
+  <data name="NNDResult" xml:space="preserve">
+    <value>NND Result</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="TPU" xml:space="preserve">
+    <value>TPU</value>
+  </data>
+  <data name="UCL" xml:space="preserve">
+    <value>UCL</value>
+  </data>
+  <data name="ZScore" xml:space="preserve">
+    <value>Z-Score</value>
+  </data>
+  <data name="CancelRefresh" xml:space="preserve">
+    <value>Cancel / Refresh</value>
+  </data>
+  <data name="SaveReview" xml:space="preserve">
+    <value>Save / Review</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Finalize" xml:space="preserve">
+    <value>Finalize</value>
+  </data>
+  <data name="PleaseSelectLab" xml:space="preserve">
+    <value>Please Select Lab</value>
+  </data>
+  <data name="CorrectiveActionRequest" xml:space="preserve">
+    <value>Corrective Action Request</value>
+  </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Create New</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="SortOrder" xml:space="preserve">
+    <value>Sort Order</value>
+  </data>
+  <data name="SendSelected" xml:space="preserve">
+    <value>Send Selected</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="IndividualLabReport" xml:space="preserve">
+    <value>Individual Lab Report</value>
+  </data>
+  <data name="PerformanceSummaryReport" xml:space="preserve">
+    <value>Performance Summary Report</value>
+  </data>
+  <data name="CAR" xml:space="preserve">
+    <value>CAR</value>
+  </data>
+  <data name="Mean" xml:space="preserve">
+    <value>Mean</value>
+  </data>
+  <data name="StdDev" xml:space="preserve">
+    <value>Std Dev</value>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Export To Excel</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>FAQ - Frequently Asked Questions</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProgramAreaAccess" xml:space="preserve">
+    <value>Program Area Access</value>
+  </data>
+  <data name="Read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="ExportToPDF" xml:space="preserve">
+    <value>Export to PDF</value>
+  </data>
+  <data name="ExportToWord" xml:space="preserve">
+    <value>Export to Word</value>
+  </data>
+  <data name="DefaultUserDashboard" xml:space="preserve">
+    <value>Default User Dashboard</value>
+  </data>
+  <data name="RestrictedUserDashboard" xml:space="preserve">
+    <value>RestrictedUserDashboard</value>
+  </data>
+  <data name="SuperUserDashboard" xml:space="preserve">
+    <value>Super User Dashboard</value>
+  </data>
+  <data name="SubmitForApproval" xml:space="preserve">
+    <value>Submit For Approval</value>
+  </data>
+  <data name="Revert" xml:space="preserve">
+    <value>Revert</value>
+  </data>
+  <data name="ConfirmDeletion" xml:space="preserve">
+    <value>Confirm Deletion</value>
+  </data>
+  <data name="Sample" xml:space="preserve">
+    <value>Sample</value>
+  </data>
+  <data name="SampleDeletionWarning" xml:space="preserve">
+    <value>Are you sure you want to delete this Sample? All existing Lab Result data linked to this Sample will be deleted.</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>Sorry, you are not Authorized to Perform this Action</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Send Email</value>
+  </data>
+  <data name="UserAdministration" xml:space="preserve">
+    <value>User Administration</value>
+  </data>
+  <data name="BusinessLine" xml:space="preserve">
+    <value>Business Line</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="PostedDate" xml:space="preserve">
+    <value>Posted Date</value>
+  </data>
+  <data name="ProgramID" xml:space="preserve">
+    <value>Program ID</value>
+  </data>
+  <data name="SampleID" xml:space="preserve">
+    <value>Sample ID</value>
+  </data>
+  <data name="AllLabs" xml:space="preserve">
+    <value>All Labs</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="GenerateReport" xml:space="preserve">
+    <value>Generate Report</value>
+  </data>
+  <data name="SelectMethod" xml:space="preserve">
+    <value>Select Method</value>
+  </data>
+  <data name="AllSponsors" xml:space="preserve">
+    <value>All Sponsors</value>
+  </data>
+  <data name="DiscardChanges" xml:space="preserve">
+    <value>Discard Changes</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
+  <data name="ApproveAll" xml:space="preserve">
+    <value>Approve All</value>
+  </data>
+  <data name="AllSamples" xml:space="preserve">
+    <value>All Samples</value>
+  </data>
+  <data name="ReFinalize" xml:space="preserve">
+    <value>Re-Finalize</value>
+  </data>
+  <data name="CompanyPerformanceSummaryReport" xml:space="preserve">
+    <value>Company Performance Summary Report</value>
+  </data>
+</root>

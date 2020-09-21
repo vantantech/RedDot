@@ -1,0 +1,271 @@
+﻿<Window     x:Class="RedDot.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RedDot"
+    x:Name="Window"
+    Title="Red Dot POS" 
+    Width="1024"  Height="768" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow"  Icon="/media/sphere.png" ResizeMode="CanResizeWithGrip" Closed="Window_Closed" SizeChanged="SizeChanged1"  >
+
+
+    
+    
+    
+    <!-- Window Resources -->
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBlock" x:Key="Label">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+            <Style x:Key="ButtonText" TargetType="TextBlock">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect
+                                      ShadowDepth="2"
+                                      Direction="310"
+                                      Color="Black"
+                                      Opacity="0.7"
+                                     BlurRadius="0"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+
+            </Style>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+
+
+    <Grid>
+
+
+        <Rectangle  Fill="Black" Width="1024" Height="768"/>
+
+        <Rectangle  Fill="{Binding MainBackgroundColor}" Width="1024" Height="768"/>
+
+        <Image  Source="{Binding MainBackgroundImage}" Width="1024" Height="768" Stretch="Fill" />
+
+        <Image  Source="/media/reddotbackground.png" Width="1024" Height="768" Stretch="Fill" Opacity=".6" />
+
+  
+        <Grid  x:Name="LayoutRoot"  Width="1024"  Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60"   />
+            </Grid.RowDefinitions>
+    
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                
+   
+
+                <!-- 
+            
+            Buttons
+            
+            
+            -->
+            
+
+
+                    <WrapPanel Margin="0,50,0,0" Grid.Column="1"  Orientation="Horizontal">
+
+
+
+                        <Button  Visibility="{Binding ButtonVisibility.RetailSales}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"   VerticalAlignment="Top"  Click="RetailSales_Click" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/cashregister.png" Width="80" Height="60"></Image>
+                           
+                                <TextBlock Text="{Loc RetailSales}"  Style="{StaticResource ButtonText}" />
+                             
+                            </StackPanel>
+                        </Button>
+
+
+
+
+                        <Button  Visibility="{Binding ButtonVisibility.History}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  Click="TicketHistory_Click" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/orderhistory.png" Width="80" Height="60"></Image>
+                             
+                                <TextBlock Text="{Loc History}"   Style="{StaticResource ButtonText}" />
+                               
+                            </StackPanel>
+                        </Button>
+                        <Button Visibility="{Binding ButtonVisibility.Customer}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  Click="Customer_Click" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/customer.png" Width="80" Height="60"></Image>
+                          
+                                <TextBlock Text="{Loc Customer}"   Style="{StaticResource ButtonText}" />
+                               
+                            </StackPanel>
+                        </Button>
+    
+
+
+
+
+
+                        <Button Visibility="{Binding ButtonVisibility.NoSale}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  Click="Nosale_Click" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/nosale.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc NoSale}"   Style="{StaticResource ButtonText}"/>
+                              
+                            </StackPanel>
+                        </Button>
+                        <Button Visibility="{Binding ButtonVisibility.PayOut}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"   >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/payout.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc PayOut}"  Style="{StaticResource ButtonText}"/>
+                               
+                            </StackPanel>
+                        </Button>
+                        <Button Visibility="{Binding ButtonVisibility.Refund}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/refund.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc Refund}"   Style="{StaticResource ButtonText}" />
+                             
+                            </StackPanel>
+                        </Button>
+                        <Button Visibility="{Binding ButtonVisibility.CreditCard}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/credit.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc CreditCard}"   Style="{StaticResource ButtonText}" />
+                              
+                            </StackPanel>
+                        </Button>
+
+
+                        <Button  Visibility="{Binding ButtonVisibility.GiftCard}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top" Click="GiftCard_Click" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/giftcard.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc GiftCard}"   Style="{StaticResource ButtonText}" />
+                            
+                            </StackPanel>
+                        </Button>
+       
+
+
+                        <Button Visibility="{Binding ButtonVisibility.Appointment}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top" Click="Appointment_Click"  >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/appointment.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc Appointment}"  Style="{StaticResource ButtonText}" />
+                              
+                                </StackPanel>
+                        </Button>
+                        <Button Command="{Binding TimecardClicked}" Visibility="{Binding ButtonVisibility.TimeCard}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/timecard.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc TimeCard}"   Style="{StaticResource ButtonText}" />
+                              </StackPanel>
+                        </Button>
+ 
+  
+
+                        <Button Visibility="{Binding ButtonVisibility.EmployeeCommission}"   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  Click="Employees_Clicked" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/employee.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc EmployeePortal}"   Style="{StaticResource ButtonText}" />
+                               </StackPanel>
+                        </Button>
+                    <Button Command="{Binding EODSettleClicked}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"   >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/settle.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc EODSettle}"   Style="{StaticResource ButtonText}"/>
+                           
+                        </StackPanel>
+                    </Button>
+                        
+                    <Button Command="{Binding BackofficeClicked}" Visibility="{Binding ButtonVisibility.BackOffice}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"   >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/backoffice.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc BackOffice}"  Style="{StaticResource ButtonText}" />
+                               
+                            </StackPanel>
+                        </Button>
+                        <Button Visibility="{Binding ButtonVisibility.BackUp}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="120" Height="120"  VerticalAlignment="Top"  Click="DBBackup" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/harddrive.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc Backup}"   Style="{StaticResource ButtonText}"/>
+                           </StackPanel>
+                        </Button>
+
+                        <Button   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="120" Height="120"  VerticalAlignment="Top"  Click="Exit_Click" >
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="/media/exit.png" Width="80" Height="60"></Image>
+
+                            <TextBlock Text="{Loc Exit}"  Style="{StaticResource ButtonText}" />
+                            </StackPanel>
+                        </Button>
+
+                    </WrapPanel>
+           
+
+                <!--  Right panel where customer logo goes-->
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                      
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="200"/>
+
+                    </Grid.RowDefinitions>
+                     
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                            <TextBlock Text="{Loc Label_Language}" Style="{StaticResource Label}"/>
+                            <ComboBox Name="comboBoxLanguage" SelectionChanged="comboBoxLanguage_SelectionChanged" SelectedValuePath="Content"  Width="100" Margin="5">
+                                <ComboBoxItem Content="English (US)" Tag="en-US" IsSelected="True"/>
+                                <ComboBoxItem Content="Tiếng Việt" Tag="vi-VN"/>
+                                <ComboBoxItem Content="Française" Tag="fr-FR"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                    <Image Grid.Row="1" Source="{Binding StoreLogo}" Width="400"></Image>
+
+                </Grid>
+
+            </Grid>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical">
+
+                <TextBlock Margin="300,0,0,0" x:Name="txtMessage" HorizontalAlignment="Left" Height="30"   Text="TextBlock" VerticalAlignment="Top" Width="680" FontSize="16" Foreground="AliceBlue"/>
+                <TextBlock  Margin="300,0,0,0" x:Name="txtMessage2" HorizontalAlignment="Left" Height="30"   Text="TextBlock" VerticalAlignment="Top" Width="680" FontSize="16" Foreground="AliceBlue"/>
+
+            </StackPanel>
+
+
+        </Grid>
+    </Grid>
+    
+
+    
+    
+    
+</Window>

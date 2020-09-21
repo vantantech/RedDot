@@ -1,0 +1,295 @@
+﻿<Window x:Class="RedDot.ApptDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="Appointment Details"  Width="1024" Height="768" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen"  WindowStyle="None" ResizeMode="NoResize"  >
+
+
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Calendar}">
+                            <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                            <Viewbox Height="400"
+                         Width="400">
+                                <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                            </Viewbox>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <DataTemplate x:Key="CategoryList1">
+                <RadioButton Margin="2"  Command="{Binding DataContext.CategoryClicked1, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding selid}"  Height="50"  GroupName="Categories1"   Style="{StaticResource CheckInButtonStyle}" >
+                    <Border  Height="50"  BorderBrush="Gray" Width="130" >
+                        <StackPanel Orientation="Horizontal">
+                            <Border   Width="30" Height="50" Background="{Binding colorcode}" >
+                                <TextBlock Text="{Binding sortorder}" Width="Auto" Height="Auto" FontSize="15" Foreground="AliceBlue" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <Border  Width="100"  Height="50"  Background="AliceBlue" >
+                                <Grid >
+                                    <TextBlock Text="{Binding description}" Width="Auto" Height="Auto"  FontSize="15" Foreground="Black" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </RadioButton>
+            </DataTemplate>
+
+            <DataTemplate x:Key="CategoryList2">
+                <RadioButton Margin="2"  Command="{Binding DataContext.CategoryClicked2, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}"  Height="50"  GroupName="Categories2"   Style="{StaticResource CheckInButtonStyle}">
+                    <Border  Height="50"  BorderBrush="Gray" Width="130" >
+                        <StackPanel Orientation="Horizontal">
+                            <Border   Width="30" Height="50" Background="{Binding colorcode}" >
+                                <TextBlock Text="{Binding sortorder}" Width="Auto" Height="Auto" FontSize="15" Foreground="AliceBlue" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <Border  Width="100"  Height="50"  Background="AliceBlue" >
+                                <Grid >
+                                    <TextBlock Text="{Binding description}" Width="Auto" Height="Auto"  FontSize="15" Foreground="Black" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </RadioButton>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border CornerRadius="20" BorderThickness="2" BorderBrush="Black">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#66ccff" Offset="0"/>
+                <GradientStop Color="#FF8AAED4" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        
+        
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel  Orientation="Horizontal">
+            <TextBlock Text="Appt:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+            <Button Command="{Binding TimeClicked}"  Style="{StaticResource ButtonStyle1}"  Width="300">
+                    <StackPanel Orientation="Vertical">
+   
+                        <StackPanel Grid.Row="3"  Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Width="80" TextAlignment="Right" Text="Date: " VerticalAlignment="Center" FontSize="20"  />
+                            <DatePicker  Width="150" SelectedDate="{Binding AppointmentDate }" CalendarStyle="{StaticResource styleCalendar}"  Name="startdatepicker" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"   />
+
+                        </StackPanel>
+                        <StackPanel Grid.Row="4"  Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Width="80" TextAlignment="Right" Text="Time: " VerticalAlignment="Center" FontSize="20" />
+                            <ComboBox SelectedIndex="{Binding SelectedTimeIndex,Mode=TwoWay}"  Width="150" Name="combo1"  FontSize="25" >
+
+                            </ComboBox>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </Button>
+                <TextBlock Text="Duration:" Margin="110,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+
+
+                <ComboBox  ItemsSource ="{Binding ApptLengths}" DisplayMemberPath="Description" SelectedValuePath="Length" SelectedValue="{Binding SelectedLength}" FontSize="25" Height="80"  Width="200" >
+ 
+                </ComboBox>
+
+            </StackPanel>
+
+
+        <StackPanel Grid.Row="1"  Orientation="Horizontal">
+            <TextBlock Text="Employee:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+            <Button Command="{Binding EmployeeClicked}"   Style="{StaticResource  ButtonStyle1}" Width="300" >
+ 
+
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <TextBlock  Text="{Binding CurrentAppt.CurrentEmployee.DisplayName}" Width="Auto" Height="20"  FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                            <Image Source="{Binding CurrentAppt.CurrentEmployee.ImageSrc}" Stretch="UniformToFill" Width="100" Height="60" HorizontalAlignment="Center" />
+                    </StackPanel>
+
+
+            </Button>
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock  Text="Flexible" Height="30"   VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="25" Width="100"/>
+
+                    <CheckBox   Margin="5,10,0,0" Height="20" Width="20" IsChecked="{Binding CurrentAppt.Flexible}" >
+                        <CheckBox.LayoutTransform>
+                            <ScaleTransform ScaleX="5" ScaleY="5" />
+                        </CheckBox.LayoutTransform>
+
+                    </CheckBox>
+                </StackPanel>
+          
+               
+            
+                <TextBlock Text="Status:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+
+                <ComboBox SelectedIndex="{Binding SelectedStatus}" FontSize="25" Height="80" Width="200">
+                    <ComboBoxItem>Active</ComboBoxItem>
+                    <ComboBoxItem>Confirmed</ComboBoxItem>
+                     <ComboBoxItem>Cancelled</ComboBoxItem>
+                    <ComboBoxItem>Complete</ComboBoxItem>
+                    <ComboBoxItem>No Show</ComboBoxItem>
+
+                </ComboBox>
+
+            </StackPanel>
+        
+        <StackPanel Grid.Row="2"  Orientation="Horizontal">
+                        <TextBlock Text="Customer:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+            <Button Command="{Binding CustomerClicked}" Style="{StaticResource  ButtonStyle1}" Width="300" >
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding CurrentAppt.CurrentCustomer.DisplayName}" Margin="10,10,0,0" Width="250" FontFamily="Consolas" FontSize="20"  TextAlignment="Left"/>
+                    <TextBlock Text="{Binding CurrentAppt.CurrentCustomer.Phone1}" Margin="10,10,0,0" Width="250" FontFamily="Consolas" FontSize="20"  TextAlignment="Left"/>
+
+                </StackPanel>
+            </Button>
+
+
+        
+      
+
+            </StackPanel>
+
+            <Grid Grid.Row="3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0"  Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Note:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+                        <Button Margin="200,0,0,0"  BorderThickness="0"   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="100" Height="80" Click="TextBox_GotFocus" >
+
+                            <Image Source="/RedDot;component/media/keyboard.png" Height="80" Width="100"/>
+
+                        </Button>
+                    </StackPanel>
+            
+                    <TextBox VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding CurrentAppt.Note}" Width="480" Height="280" FontFamily="Consolas" FontSize="25" GotFocus="TextBox_GotFocus"/>
+
+
+                    
+
+
+                
+
+
+
+                </StackPanel>
+                <Border Grid.Column="1"  BorderBrush="Green"  >
+
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Selected Services:" Margin="10,10,0,0"  FontFamily="Consolas" FontSize="25"  TextAlignment="Left"/>
+                        <StackPanel Orientation="Vertical" Background="LightGray" Height="150">
+                            <ItemsControl ItemsSource="{Binding CurrentAppt.SelectedCategories}" ItemTemplate="{StaticResource CategoryList1}" >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+
+
+                        </StackPanel>
+                        <TextBlock Text="Available Services:" Margin="10,10,0,0"  FontFamily="Consolas" FontSize="25"  TextAlignment="Left"/>
+                        <ScrollViewer  x:Name="ScrollViewer2" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="200" >
+                            <ScrollViewer.Resources>
+                                <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                    <Style.Triggers>
+                                        <Trigger Property="Orientation" Value="Vertical">
+                                            <Setter Property="Width" Value="40"/>
+                                            <Setter Property="Height" Value="Auto" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ScrollViewer.Resources>
+
+
+
+                            <StackPanel Orientation="Vertical" Background="DarkGray">
+                                <ItemsControl   ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource CategoryList2}" >
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+
+
+                            </StackPanel>
+
+
+
+                        </ScrollViewer>
+
+
+
+                    </StackPanel>
+
+                     
+
+               
+                </Border>
+
+            </Grid>
+      
+
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="btnDelete" Command="{Binding DeleteClicked}"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Delete" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/dash.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc Delete}"></TextBlock>
+                </StackPanel>
+            </Button>
+
+                <Button Name="btnTicket"  Command="{Binding TicketClicked}"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Delete" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/ticket.png" Height="40" Width="40"/>
+                        <TextBlock Text="{Loc CreateTicket}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            
+            <Button Command="{Binding SaveClicked}" Margin="100,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_OK" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc BACK}"></TextBlock>
+                </StackPanel>
+            </Button>
+
+          
+            
+        </StackPanel>
+
+
+    </Grid>
+
+    </Border>
+
+</Window>

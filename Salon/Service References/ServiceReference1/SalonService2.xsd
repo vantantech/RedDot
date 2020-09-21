@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RedDotService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RedDotService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="SalesRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Adjustment" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Custom1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerId" type="xs:int" />
+      <xs:element minOccurs="0" name="EmployeeId" type="xs:int" />
+      <xs:element minOccurs="0" name="GratuityRecords" nillable="true" type="tns:ArrayOfGratuityRecord" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Note" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentRecords" nillable="true" type="tns:ArrayOfPaymentRecord" />
+      <xs:element minOccurs="0" name="RewardException" type="xs:int" />
+      <xs:element minOccurs="0" name="SaleItems" nillable="true" type="tns:ArrayOfSalesItemRecord" />
+      <xs:element minOccurs="0" name="SalesDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StationNo" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubTotal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TicketNo" type="xs:int" />
+      <xs:element minOccurs="0" name="Total" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SalesRecord" nillable="true" type="tns:SalesRecord" />
+  <xs:complexType name="ArrayOfGratuityRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GratuityRecord" nillable="true" type="tns:GratuityRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGratuityRecord" nillable="true" type="tns:ArrayOfGratuityRecord" />
+  <xs:complexType name="GratuityRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EmployeeId" type="xs:int" />
+      <xs:element minOccurs="0" name="TicketNo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GratuityRecord" nillable="true" type="tns:GratuityRecord" />
+  <xs:complexType name="ArrayOfPaymentRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PaymentRecord" nillable="true" type="tns:PaymentRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPaymentRecord" nillable="true" type="tns:ArrayOfPaymentRecord" />
+  <xs:complexType name="PaymentRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AuthorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NetAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TicketNo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PaymentRecord" nillable="true" type="tns:PaymentRecord" />
+  <xs:complexType name="ArrayOfSalesItemRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SalesItemRecord" nillable="true" type="tns:SalesItemRecord" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSalesItemRecord" nillable="true" type="tns:ArrayOfSalesItemRecord" />
+  <xs:complexType name="SalesItemRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommissionAmt" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CommissionType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Custom4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Discount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EmployeeId" type="xs:int" />
+      <xs:element minOccurs="0" name="Note" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="ReportCategory" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RewardAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RewardException" type="xs:int" />
+      <xs:element minOccurs="0" name="SupplyFee" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TicketNo" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SalesItemRecord" nillable="true" type="tns:SalesItemRecord" />
+  <xs:complexType name="EmployeeRecord">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:int" />
+      <xs:element minOccurs="0" name="EmployeeId" type="xs:int" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmployeeRecord" nillable="true" type="tns:EmployeeRecord" />
+  <xs:complexType name="LicenseRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Activated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Application" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodeString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MachineID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LicenseRequest" nillable="true" type="tns:LicenseRequest" />
+</xs:schema>

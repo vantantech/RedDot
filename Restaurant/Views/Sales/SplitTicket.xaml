@@ -1,0 +1,86 @@
+﻿<Window x:Class="RedDot.SplitTicket"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+    Title="Split Ticket" Height="768" Width="1024"  WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/media/sphere.png" ResizeMode="NoResize"  >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/SalesResource.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+
+    <Border BorderThickness="3" BorderBrush="Yellow"  CornerRadius="3">
+        <StackPanel Orientation="Vertical">
+            <ScrollViewer x:Name="ScrollViewer1"     Height="650" Width="1024" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden" >
+                <ScrollViewer.Resources>
+                    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Width" Value="Auto"/>
+                                <Setter Property="Height" Value="40" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Resources>
+                <ItemsControl  ItemsSource="{Binding Tickets}" ItemTemplate="{StaticResource ReceiptTemplate}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <StackPanel Margin="0,20,0,0"  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding NewTicketClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/ticket.png" Width="40" Height="40"/>
+                        <TextBlock  Text="New Ticket"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding SeatsToTicketsClicked}" Width="120"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/seatticket.png" Width="80" Height="40"/>
+                        <TextBlock  Text="Seats=>Tickets"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+
+                <Button Style="{StaticResource BottomButtons}"     Command="{Binding BackClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                        <TextBlock Text="{Loc Back}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+ 
+
+
+
+
+
+
+
+    </Border>
+
+
+</Window>

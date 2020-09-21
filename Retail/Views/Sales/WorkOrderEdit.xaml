@@ -1,0 +1,259 @@
+﻿<Window x:Class="RedDot.WorkOrderEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RedDot"
+        mc:Ignorable="d"
+        Title="WorkOrder" Height="870" Width="1500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" >
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightGray" Offset="0"/>
+            <GradientStop Color="DarkCyan" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="buttonText" TargetType="Button">
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Width"  Value="60" />
+                <Setter Property="Margin"  Value="4" />
+            </Style>
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+
+
+
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical">
+
+            <Border Margin="5" BorderThickness="1" HorizontalAlignment="Center" >
+
+                <StackPanel Orientation="Horizontal" Height="40" >
+
+                    <TextBlock  Text="{Binding SalesCustomName1}" FontWeight="Bold"  Height="30" FontSize="16"  />
+                    <TextBox IsEnabled="False"  Text="{Binding CurrentTicket.Custom1}"   Height="30"    Width="50" FontSize="16"   TextAlignment="Center"/>
+                    <TextBlock  Text="{Binding SalesCustomName2}"  FontWeight="Bold"   Height="30" FontSize="16" />
+                    <TextBox IsEnabled="False"  Text="{Binding CurrentTicket.Custom2}"   Height="30"    Width="100" FontSize="16"   TextAlignment="Center"/>
+                    <TextBlock  Text="{Binding SalesCustomName3}"  FontWeight="Bold"   Height="30" FontSize="16" />
+                    <TextBox IsEnabled="False"  Text="{Binding CurrentTicket.Custom3}"   Height="30"    Width="100" FontSize="16"   TextAlignment="Center"/>
+
+                </StackPanel>
+
+            </Border>
+
+
+
+            <ScrollViewer  x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="840">
+                <ScrollViewer.Resources>
+                    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Width" Value="40"/>
+                                <Setter Property="Height" Value="Auto" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Resources>
+
+
+                <Grid  >
+                    <StackPanel Orientation="Vertical">
+
+
+
+
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Rush?: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <ComboBox  IsEnabled="{Binding IsEnabled}" SelectedValue="{Binding CurrentTicket.WorkOrder.custom18}"
+                           ItemsSource="{Binding List3}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="100" Height="40">
+
+                            </ComboBox>
+
+                            <TextBlock Text="Date Promised: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox  IsEnabled="{Binding IsEnabled}" Text="{Binding CurrentTicket.WorkOrder.custom19}" Width="100" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+
+
+
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Enclosure: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <ComboBox  IsEnabled="{Binding IsEnabled}"  SelectedValue="{Binding CurrentTicket.WorkOrder.custom1}"
+                           ItemsSource="{Binding List1}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="194" Height="40">
+
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Build Notes: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" />
+                            <TextBox  IsEnabled="{Binding IsEnabled}"   Text="{Binding CurrentTicket.WorkOrder.custom2}" Width="750" Height="120" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="Black" BorderThickness="1" />
+
+                        </StackPanel>
+
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Subs: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <ComboBox  IsEnabled="{Binding IsEnabled}"  SelectedValue="{Binding CurrentTicket.WorkOrder.custom20}"
+                           ItemsSource="{Binding List4}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="194" Height="40">
+
+                            </ComboBox>
+
+                            <TextBlock Text="Sub Model: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox  IsEnabled="{Binding IsEnabled}" Text="{Binding CurrentTicket.WorkOrder.custom3}" Width="400" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+
+
+                        </StackPanel>
+
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Wrap Color: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom4}" Width="750" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Stitch Color: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom5}" Width="750" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Badging: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom6}" Width="750" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap"  BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Lighting: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <ComboBox  IsEnabled="{Binding IsEnabled}"  SelectedValue="{Binding CurrentTicket.WorkOrder.custom7}"
+                           ItemsSource="{Binding List2}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="194" Height="40">
+
+                            </ComboBox>
+                        
+                                <TextBlock Text="Light Color: " Margin="2" TextAlignment="Right" Width="120" Height="40" FontSize="16" FontWeight="Bold" />
+                                <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom8}" Width="750" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+                           
+                        </StackPanel>
+                
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                            <TextBlock Text="Int. Amp Rack: " Margin="2" TextAlignment="Right" Width="150" Height="30" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" />
+                            <ComboBox IsEnabled="{Binding IsEnabled}"   SelectedValue="{Binding CurrentTicket.WorkOrder.custom9}"
+                           ItemsSource="{Binding List5}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="194" Height="40">
+
+                            </ComboBox>
+                            <TextBlock Text="Ported: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <ComboBox  IsEnabled="{Binding IsEnabled}"  SelectedValue="{Binding CurrentTicket.WorkOrder.custom10}"
+                           ItemsSource="{Binding List3}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="194" Height="40">
+
+                            </ComboBox>
+
+
+                            <TextBlock Text="To Be Shipped: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <ComboBox  IsEnabled="{Binding IsEnabled}"  SelectedValue="{Binding CurrentTicket.WorkOrder.custom11}"
+                           ItemsSource="{Binding List3}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="194" Height="40">
+
+                            </ComboBox>
+                        </StackPanel>
+                      
+                        <StackPanel Margin="2"  Orientation="Horizontal">
+                      
+                        </StackPanel>
+
+
+                    
+                        <TextBlock Text="Additonal Items to be shipped?" Margin="150,0,0,0" TextAlignment="Left" Height="40" FontSize="18" FontWeight="Bold" />
+
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock Text="Speakers: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom12}" Width="750" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+
+
+
+                        <StackPanel   Orientation="Horizontal">
+                            <TextBlock Text="Amps: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom13}" Width="750" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock Text="Wiring: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom14}" Width="750" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+                        <StackPanel   Orientation="Horizontal">
+                            <TextBlock Text="Adapters: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom15}" Width="750" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock Text="Seat Lift: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CurrentTicket.WorkOrder.custom16}" Width="750" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+
+                        <StackPanel   Orientation="Horizontal">
+                            <TextBlock Text="Submitted By: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                            <TextBox IsEnabled="False" Text="{Binding CurrentTicket.WorkOrder.custom17}" Width="400" Height="40" FontSize="16" FontWeight="Normal" Background="LightGray" BorderBrush="Black" BorderThickness="1" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+            </ScrollViewer>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="2"  Orientation="Vertical" HorizontalAlignment="Center">
+
+    
+
+            <Button Style="{StaticResource CustomButtonStyle}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"   Command="{Binding PrintPDFClicked}" >
+                <StackPanel>
+                    <Image Source="/media/pdf.png" Height="40" Width="40"/>
+                    <TextBlock Text="Print or PDF"></TextBlock>
+                </StackPanel>
+            </Button>
+
+
+            <Button Style="{StaticResource CustomButtonStyle}"  Margin="10"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"   Command="{Binding OKClicked}"  >
+                <StackPanel>
+                    <Image Source="/media/ok.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc Done}"></TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+
+
+
+
+</Window>

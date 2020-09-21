@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://salon.reddotpos.com/SalonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RedDotService" />
+  <xs:element name="CloseConnection">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseConnectionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CloseConnectionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTicket">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userid" type="xs:int" />
+        <xs:element minOccurs="0" name="ticketno" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveTicketResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RemoveTicketResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesTicket">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientid" type="xs:int" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="salesrecord" nillable="true" type="q1:SalesRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesTicketResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WriteSalesTicketResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesItem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientid" type="xs:int" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="salesitem" nillable="true" type="q2:SalesItemRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesItemResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WriteSalesItemResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesPayment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientid" type="xs:int" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="payment" nillable="true" type="q3:PaymentRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesPaymentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WriteSalesPaymentResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesGratuity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientid" type="xs:int" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="gratuity" nillable="true" type="q4:GratuityRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteSalesGratuityResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WriteSalesGratuityResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteEmployeeList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="clientid" type="xs:int" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="employee" nillable="true" type="q5:EmployeeRecord" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WriteEmployeeListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WriteEmployeeListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLicense">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="request" nillable="true" type="q6:LicenseRequest" />
+        <xs:element minOccurs="0" name="publickey" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLicenseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/RedDotService" minOccurs="0" name="GetLicenseResult" nillable="true" type="q7:LicenseRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

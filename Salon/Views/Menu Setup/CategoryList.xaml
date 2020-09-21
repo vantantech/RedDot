@@ -1,0 +1,351 @@
+﻿<Window x:Class="RedDot.CategoryList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:local="clr-namespace:RedDot"
+        Title="Inventory" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider    ObjectInstance="{x:Type Colors}"     MethodName="GetProperties"     x:Key="colorPropertiesOdp" />
+            
+            
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+      
+
+
+    
+
+
+            <DataTemplate x:Key="CategoryTemplate" >
+
+    
+                <Grid Margin="2" >
+   
+                        <Button  Command="{Binding DataContext.CategoryClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  CommandParameter="{Binding ID}">
+
+                            <Button.Template>
+                                <ControlTemplate>
+                                <Border  Name="borderbox" BorderThickness="0" Width="230" Background="Transparent">
+                                <Border  BorderThickness="2" BorderBrush="Gray" Width="210" >
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border   Width="50" Height="50"  Background="{Binding CategoryColorCode}" >
+                                            <TextBlock Text="{Binding SortOrder}" Width="Auto" Height="Auto"  FontSize="15" Foreground="AliceBlue" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <Border Width="160"  Height="50"  Background="AliceBlue" >
+                                            <Grid >
+                                                <TextBlock Text="{Binding Description}" Width="Auto" Height="Auto"  FontSize="15" Foreground="Black" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" TargetName="borderbox" Value="Yellow"/>
+                                        </Trigger>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Background" TargetName="borderbox" Value="Red"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                </Grid>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="SelectedProductTemplate">
+                <Border BorderThickness="1"   Margin="1"  BorderBrush="Gray" >
+                    <StackPanel Orientation="Horizontal">
+                        <Button  Command="{Binding DataContext.ProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border Name="borderbox" BorderThickness="0"  Width="{Binding DataContext.ProductBorderWidth,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  Background="Transparent" >
+
+                                        <StackPanel  HorizontalAlignment="Right"  Orientation="Horizontal" Height="{Binding DataContext.ProductHeight,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                                                <Border   Width="50" Height="Auto"  Background="{Binding colorcode}" >
+                                                    <TextBlock  Text="{Binding menuprefix}" Width="Auto" Height="Auto"  FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Foreground="AliceBlue"  TextAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                                <Border Width="{Binding DataContext.ProductWidth,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"    Background="AliceBlue" >
+                                                    <StackPanel Orientation="Vertical">
+
+                                                        <TextBlock Text="{Binding description}"  Width="Auto" Height="{Binding DataContext.DescriptionHeight,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  TextAlignment="Center" TextWrapping="Wrap" FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"></TextBlock>
+
+
+                                                        <Border   Width="Auto" Height="25"  Background="DarkSlateGray" >
+                                                            <TextBlock Text="{Binding price }" Width="Auto" Height="Auto"  FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Foreground="White"  TextAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                      
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" TargetName="borderbox" Value="Yellow"/>
+                                        </Trigger>
+                              
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+
+
+
+                            </Button.Template>
+                        </Button>
+
+                        <Button Visibility="{Binding DataContext.VisibleRemove,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  Command="{Binding DataContext.RemoveItemFromCategoryClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}"    >
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border   Width="50" Height="Auto"  Background="{Binding colorcode}" >
+                                        <Image Source="/media/remove.png" Width="40" Height="40"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                               
+
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+
+
+            </DataTemplate>
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    
+    
+
+
+    
+
+   <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+                     
+                     
+                     
+                <TextBlock Text="Menu Setup" FontWeight="Bold" HorizontalAlignment="Center" FontSize="20"/>
+
+                 <Grid Grid.Row="1">
+            
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                <Border   BorderBrush="Azure" BorderThickness="2" >
+                <StackPanel Orientation="Vertical">
+                    <ScrollViewer  x:Name="ScrollViewer0" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="600" >
+                        <ScrollViewer.Resources>
+                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                <Style.Triggers>
+                                    <Trigger Property="Orientation" Value="Vertical">
+                                        <Setter Property="Width" Value="40"/>
+                                        <Setter Property="Height" Value="Auto" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ScrollViewer.Resources>
+                        <ItemsControl Name="IC0"  ItemsSource="{Binding Categories}"  ItemTemplate="{StaticResource CategoryTemplate}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                        </ItemsControl>
+                    </ScrollViewer>
+
+
+                </StackPanel>
+
+
+            </Border>
+            <StackPanel  Grid.Column="1"  Orientation="Vertical">
+
+                <StackPanel Background="LightGray"  Orientation="Vertical">
+   
+                     <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical"  >
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock FontWeight="Bold"  Text="Sort Order:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                                <TextBox Margin="5,0,0,0" Text="{Binding  CurrentCategory.SortOrder}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+
+                                <TextBlock Margin="50,0,0,0" FontWeight="Bold"  Text="Letter Code:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                                <TextBox Margin="5,0,0,0" Text="{Binding  CurrentCategory.LetterCode}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock FontWeight="Bold" Text="Description:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                                <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentCategory.Description}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="18" FontWeight="Bold" Foreground="Blue" Width="300"/>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock FontWeight="Bold"  Text="Color:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                                <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentCategory.CategoryColorCode}" TextAlignment="Left"  Height="50"  TextWrapping="Wrap" FontSize="15" Width="80" Background="{Binding CurrentCategory.CategoryColorCode}" />
+                                <ComboBox Name="cboColors"     ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" SelectedValuePath="Name" SelectedValue="{Binding CurrentCategory.CategoryColorCode}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Height="18" Margin="0,0,0,2">
+                                                <Border BorderThickness="1" CornerRadius="2" BorderBrush="Black" Width="50" VerticalAlignment="Stretch" Background="{Binding Name}"/>
+                                                <TextBlock Text="{Binding Name}" Margin="8,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button Style="{StaticResource CustomButtonStyle}" Command="{Binding CopyColorToAllClicked}" Height="50" Width="120" >
+                                    <TextBlock Margin="5" Text="Copy To All Items" TextWrapping="Wrap" />
+                                </Button>
+                            </StackPanel>
+                      
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" >
+
+
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock FontWeight="Bold"  Text="Image:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="60"/>
+                                <Button  Margin="5,0,0,0" Width="100" Height="100" Command="{Binding PictureClicked}" >
+                                    <Border  BorderThickness="3" BorderBrush="Blue" >
+                                        <Image Source="{Binding CurrentCategory.ImageSrc}" Width="70" Height="70" />
+                                    </Border>
+                                </Button>
+                                <Button Margin="20,0,0,0"  Style="{StaticResource CustomButtonStyle}" Command="{Binding DeleteCategoryClicked}" HorizontalAlignment="Center"  Height="70"   Width="120"    >
+                                    <StackPanel>
+                                        <Image Source="/RedDot;component/media/x.png" Height="40" Width="40"/>
+                                        <TextBlock Text="Delete Category" FontSize="15" FontWeight="Normal" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                        </StackPanel>
+
+
+                    </StackPanel>
+
+         
+
+              
+
+
+
+
+
+                </StackPanel>
+
+
+                <Border  BorderBrush="Azure" BorderThickness="2" >
+                    <StackPanel Orientation="Vertical">
+                        <ScrollViewer  x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="500" >
+                            <ScrollViewer.Resources>
+                                <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                    <Style.Triggers>
+                                        <Trigger Property="Orientation" Value="Vertical">
+                                            <Setter Property="Width" Value="40"/>
+                                            <Setter Property="Height" Value="Auto" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ScrollViewer.Resources>
+                            <ItemsControl  ItemsSource="{Binding Selected}"  ItemTemplate="{StaticResource SelectedProductTemplate}" >
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                            </ItemsControl>
+                        </ScrollViewer>
+
+
+                    </StackPanel>
+
+
+                </Border>
+            </StackPanel>
+            
+        </Grid>
+                     
+                     
+                   
+
+                <StackPanel Grid.Row="3"  Orientation="Horizontal" HorizontalAlignment="Left">
+
+     
+                    <Button Margin="5"  Style="{StaticResource CustomButtonStyle}" Command="{Binding AddCategoryClicked}" HorizontalAlignment="Center"  Height="70"   Width="120"    >
+                        <StackPanel>
+                            <Image Source="/media/createnew.png" Height="40" Width="40"/>
+                            <TextBlock Text="New Category" FontSize="15" FontWeight="Normal" />
+                        </StackPanel>
+                    </Button>
+                    
+                    
+            <Button Margin="300,0,0,0" Command="{Binding AddNewProductClicked}" CommandParameter="1000" Style="{StaticResource CustomButtonStyle}" Height="70" Width="120"  >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/createnew.png" Width="40" Height="40"/>
+                    <TextBlock  Text="Create New Item" FontSize="15" FontWeight="Normal" />
+                </StackPanel>
+            </Button>
+
+            <Button Margin="30,0,0,0" Style="{StaticResource CustomButtonStyle}" Command="{Binding AddProductClicked}" HorizontalAlignment="Center"  Height="70"   Width="120"    >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/add.png" Height="40" Width="40"/>
+                    <TextBlock Text="Add Item" FontSize="15" FontWeight="Normal" TextAlignment="Center"  TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+
+
+
+
+            <Button  Margin="30,0,0,0"  Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Exit_Click" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/back.png" Width="40" Height="40"/>
+                    <TextBlock  Text="Back" FontSize="15" FontWeight="Normal"/>
+                </StackPanel>
+
+            </Button>
+        </StackPanel>
+
+    </Grid>
+         
+       
+
+
+
+  
+  
+    
+
+
+  
+</Window>

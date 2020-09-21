@@ -1,0 +1,270 @@
+﻿@model IEnumerable<WebAccess.ViewModels.PaymentPivot>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#table1').DataTable({ "bDestroy": "true", "scrollY": "500px", "lengthMenu": [[-1], ["All"]], "sDom": "tr" });
+
+
+
+    });
+
+
+    $(function () {
+
+
+        $("#startdate").datepicker({
+            showOn: "button",
+            buttonImage: "/Content/calendar_small.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            autoclose: true
+        });
+
+
+
+        $("#enddate").datepicker({
+            showOn: "button",
+            buttonImage: "/Content/calendar_small.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            autoclose: true
+        });
+
+
+    })
+
+
+</script>
+
+
+
+
+
+<ul class="breadcrumb">
+    <li><a href="\Home">Home</a></li>
+    <li class="active">Payments</li>
+</ul>
+
+
+<h2>Payment Daily Summary</h2>
+
+@{
+    decimal debittotal = 0;
+    decimal cashtotal = 0;
+    decimal credittotal = 0;
+    decimal giftcardtotal = 0;
+    decimal giftcertificatetotal = 0;
+    decimal rewardtotal = 0;
+    decimal stampcardtotal = 0;
+    decimal tipstotal = 0;
+    decimal allpaymentstotal = 0;
+
+}
+
+
+<p>
+    @using (Html.BeginForm("Index", "Payment"))
+    {
+
+
+
+        <div class="row">
+            <div class="col-sm-2 ">
+                <div class="input-group">
+                    <span class="input-group-addon">Store:</span>
+                    @Html.DropDownList("StoreId", (IEnumerable<SelectListItem>)ViewBag.Stores, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Start Date:</span>
+                    @Html.TextBox("startdate", (string)ViewBag.startdate, new { @class = "form-control", style="max-width: 150px"})
+                </div>
+
+
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-addon">End Date:</span>
+                    @Html.TextBox("enddate", (string)ViewBag.enddate, new { @class = "form-control", style = "max-width: 150px" })
+               
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-1">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary" name="action" value="save" id="action" data-toggle="tooltip" data-placement="right" title="Refresh Data">Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    }
+
+</p>
+
+
+<table class="display" id="table1" width="100%">
+    <thead>
+        <tr>
+
+
+
+            <th>
+                Sale Date
+            </th>
+            <th>
+                Cashier
+            </th>
+
+
+            <th>
+                Cash
+            </th>
+            <th>
+                Credit
+            </th>
+            <th>
+                Debit
+            </th>
+            <th>
+                Gift Card
+            </th>
+            <th>
+                Gift Certificate
+            </th>
+            <th>
+                Reward
+            </th>
+            <th>
+                Stamp Card
+            </th>
+            <th>
+                Tips
+            </th>
+            <th>
+                All Payments
+            </th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            cashtotal += (decimal)item.Cash;
+            credittotal += (decimal)item.Credit;
+            giftcardtotal += (decimal)item.GiftCard;
+            giftcertificatetotal += (decimal)item.GiftCertificate;
+            rewardtotal += (decimal)item.Reward;
+            stampcardtotal += (decimal)item.StampCard;
+            allpaymentstotal += (decimal)item.AllPayments;
+            tipstotal += (decimal)item.Tips;
+            debittotal += (decimal)item.Debit;
+
+        <tr>
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.saledate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cashier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cash)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Credit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Debit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiftCard)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.GiftCertificate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reward)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StampCard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tips)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllPayments)
+            </td>
+
+        </tr>
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+
+            <td>
+                @(cashtotal)
+            </td>
+
+
+            <td>
+                @(credittotal)
+            </td>
+
+            <td>
+                @(debittotal)
+            </td>
+            <td>
+                @(giftcardtotal)
+            </td>
+            <td>
+                @(giftcertificatetotal)
+            </td>
+            <td>
+                @(rewardtotal)
+            </td>
+            <td>
+                @(stampcardtotal)
+            </td>
+            <td>
+                @(tipstotal)
+            </td>
+            <td>
+                @(allpaymentstotal)
+            </td>
+        </tr>
+    </tfoot>
+
+
+</table>
+

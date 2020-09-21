@@ -1,0 +1,123 @@
+﻿<Window x:Class="RedDot.GCManage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Gift Card Management" Height="768" Width="1024"  WindowStartupLocation="CenterScreen" WindowStyle="None"   ResizeMode="NoResize"  >
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1.5,1.5">
+            <GradientStop Color="AliceBlue" Offset="1"/>
+            <GradientStop Color="Navy" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="CustomerTemplate">
+                <Button   Width="800"  Tag="{Binding id}" HorizontalAlignment="Left" >
+
+                    <StackPanel Width="725"  Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock  Margin="5,1,0,0" Text="{Binding cardtype}" Width="200" Height="Auto"  FontSize="14"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock  Margin="5,1,0,0" Text="{Binding accountnumber}" Width="200" Height="Auto"  FontSize="14"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Margin="5,1,0,0" Text="{Binding amount}" Width="100" Height="Auto"  FontSize="14"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Margin="5,1,0,0" Text="{Binding spent}" Width="100" Height="Auto"  FontSize="14"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Margin="5,1,0,0" Text="{Binding balance}" Width="100" Height="Auto"  FontSize="14"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                </Button>
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+
+
+    <!--********************************************************************************
+    **********************************************************************************
+  ____  _             _      ____      _     _ 
+ / ___|| |_ __ _ _ __| |_   / ___|_ __(_) __| |
+ \___ \| __/ _` | '__| __| | |  _| '__| |/ _` |
+  ___) | || (_| | |  | |_  | |_| | |  | | (_| |
+ |____/ \__\__,_|_|   \__|  \____|_|  |_|\__,_|
+ 
+    **********************************************************************
+-->
+
+
+    <Border BorderThickness="3" BorderBrush="Yellow"  CornerRadius="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="450"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Margin="5" >
+                <TextBlock  FontSize="20" Text="Gift Card Management" Foreground="White"/>
+                <Rectangle HorizontalAlignment="Left"  Height="2" Width="200" Fill="Blue" />
+
+            </StackPanel>
+
+
+            <StackPanel Margin="5" Grid.Row="1" Orientation="Vertical">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="5,0,0,0" Text="Type"       Width="200" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="Account Number"       Width="200" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="Credit Purchased"     Width="100" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="Amount Used"          Width="100" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="Remaining Balance"    Width="100" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Bottom" Foreground="White" />
+                </StackPanel>
+                <ScrollViewer   x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible"  VerticalAlignment="Top" Height="400">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+                    <ItemsControl ItemsSource="{Binding GiftCardList}" ItemTemplate="{StaticResource CustomerTemplate}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical">
+                <Rectangle Height="5" Fill="Blue" />
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Margin="5,0,0,0" Text="Total :"                      Width="200" Height="auto"  FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center"  VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TotalPurchased}"     Width="80" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center"  VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TotalUsed}"          Width="80" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center"  VerticalAlignment="Bottom" Foreground="White" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TotalBalance}"       Width="80" Height="auto"   FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center"  VerticalAlignment="Bottom" Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+
+            
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="btnExit" Style="{StaticResource CustomButtonStyle}"    HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120" Click="Button_Click_Exit"   >
+                    <StackPanel >
+                        <Image Source="/media/back.png" Height="40" Width="40"/>
+                        <TextBlock x:Name="tbExit"  Text="{Loc BACK}"/>
+                    </StackPanel>
+                </Button>
+
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

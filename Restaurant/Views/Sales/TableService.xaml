@@ -1,0 +1,182 @@
+﻿<Window  x:Class="RedDot.TableService"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+        Title="Table Service"
+       Width="1024" MinWidth="960" Height="768" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/media/sphere.png"  ResizeMode="NoResize"   >
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+        
+                <ResourceDictionary Source="/Resources/QuickSalesResource.xaml" />
+  
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <local:NumberToColorConverter x:Key="NumberToColorConverter"/>
+            <local:NumberToVisibilityConverter x:Key="NumberToVisibilityConverter"/>
+            <local:NumberToOpacityConverter x:Key="NumberToOpacityConverter" />
+
+            <DataTemplate x:Key="AreaList">
+
+
+                <RadioButton Width="160" Height="70" 
+                             GroupName="Area"
+                             IsChecked="{Binding Selected}"
+                             Style="{StaticResource RoundButtonStyle}"  
+                             Command="{Binding DataContext.AreaClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                             CommandParameter="{Binding ID}" >
+
+
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="{Binding Description}"  Width="auto" Height="25" TextWrapping="Wrap" FontSize="15" TextAlignment="Center"/>
+                        <TextBlock Text="{Binding NumberOfTables}"  Width="auto"  Height="25" FontSize="15" TextAlignment="Center"/>
+
+                    </StackPanel>
+                </RadioButton>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="Table">
+              
+                    <Button  Command="{Binding DataContext.TableClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                        CommandParameter="{Binding ID}"
+                      
+                         Height="{Binding Height}"  Width="{Binding Width}"
+                         Background="Transparent"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         BorderThickness="1">
+                    <Border Background="{Binding Color}" >
+                        <Grid  Background="{Binding TicketCount,Converter={StaticResource NumberToColorConverter}}"  >
+                            <Image Source="{Binding ImageSrc}" Height="{Binding Height}"  Width="{Binding Width}" Stretch="Fill" Opacity="{Binding TicketCount,Converter={StaticResource NumberToOpacityConverter}}"></Image>
+                            <TextBlock  Text="{Binding Number}" FontSize="25"  TextAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="22" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="22" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0"  Visibility="{Binding ElapsedTime,Converter={StaticResource NumberToVisibilityConverter}}" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding ElapsedTime}" FontSize="14"  TextAlignment="Left"  Foreground="White"/>
+                                    <TextBlock Text=" mins" FontSize="14"  TextAlignment="Left"  Foreground="White"/>
+                                </StackPanel>
+
+                              
+
+                                <StackPanel Grid.Row="2"  Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Server}" FontSize="14"  TextAlignment="Left"  Foreground="White"/>
+                                </StackPanel>
+                            </Grid>
+
+
+
+
+                        </Grid>
+                    </Border>
+              
+                    </Button>
+
+          
+             </DataTemplate>
+            
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Table Service" TextAlignment="Center" FontSize="20" FontWeight="Bold" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="800"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <!-- Table section-->
+            <Grid >
+
+                <Image Source="/media/dark_embroidery.png" Height="740" Width="790" Stretch="Fill" />
+                <Image Source="{Binding CurrentArea.BackGroundImage}"  Height="740" Width="790" Stretch="Fill"  />
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding CurrentArea.Description}" FontSize="50" Foreground="White" Opacity="0.3"/>
+
+
+                <ItemsControl ItemsSource="{Binding TableList}"  ItemTemplate="{StaticResource Table}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas  />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Top" Value="{Binding TableTop}"/>
+                            <Setter Property="Canvas.Left" Value="{Binding TableLeft}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                </ItemsControl>
+            </Grid>
+
+
+
+            <!--  button section      -->
+            <Grid Grid.Column="1" >
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="100" />
+
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0" x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="640" >
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+                    <ItemsControl Grid.Row="1" Name="IC1" HorizontalAlignment="Center" ItemsSource="{Binding Areas}" ItemTemplate="{StaticResource  AreaList}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
+              
+                    <Button  Style="{StaticResource BottomButtons}"  Command="{Binding ExitClicked}"  Click="btnExit_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/back.png" Height="40" Width="40"/>
+                            <TextBlock   Style="{StaticResource BottomTextBlock}" Text="{Loc Back}"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+    </StackPanel>
+
+
+    
+    
+
+</Window>

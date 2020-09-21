@@ -1,0 +1,14 @@
+<SIP>
+<Version>1.0</Version>
+<ECRId></ECRId>
+<Request>Sale</Request>
+<RequestId>10041</RequestId>
+<CardGroup></CardGroup>
+<ConfirmAmount>1</ConfirmAmount>
+<InvoiceNbr></InvoiceNbr>
+<BaseAmount></BaseAmount>
+<TipAmount>0</TipAmount>
+<TaxAmount>0</TaxAmount>
+<EBTAmount></EBTAmount>
+<TotalAmount></TotalAmount>
+</SIP>

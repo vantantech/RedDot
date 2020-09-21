@@ -1,0 +1,119 @@
+﻿<Window x:Class="RedDot.GratuityView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="GratuityView" Height="500" Width="500"  WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+
+
+
+
+
+
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <DataTemplate x:Key="Gratuitylist">
+                <Button  Style="{StaticResource CustomButtonStyle}"  Width="120"  Height="120" HorizontalContentAlignment="Left" 
+                                            Command="{Binding DataContext.EmployeeClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding IDStr}">
+
+
+                    <Grid >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{Binding CurrentEmployee.ImageSrc}" Stretch="UniformToFill" Width="90" Height="60" />
+                            <TextBlock  Text="{Binding CurrentEmployee.DisplayName}" Width="Auto" Height="Auto"  FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding AmountStr}" FontSize="20" FontFamily="Consolas" FontWeight="Normal"  />
+                        </StackPanel>
+                    </Grid>
+
+            
+                        
+          
+                </Button>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <ImageBrush ImageSource="/media/keylock.png"/>
+    </Window.Background>
+
+    
+
+    <Border BorderThickness="5" BorderBrush="Blue"  CornerRadius="20">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FF3164a5" Offset="1"/>
+                <GradientStop Color="#FF8AAED4" Offset="0"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        
+      
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="*"/>
+                    <RowDefinition  Height="100"/>
+                    <RowDefinition  Height="80"/>
+                </Grid.RowDefinitions>
+        
+
+                <ItemsControl Grid.Row="0"  ItemsSource="{Binding CurrentTicket.Gratuities}" ItemTemplate="{StaticResource Gratuitylist}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Authorized Tip:"  FontSize="20" Foreground="White"/>
+                    <TextBlock  Text="{Binding CurrentTicket.TipAmount}" FontSize="20" Foreground="White" Width="150"/>
+                 
+                </StackPanel>
+
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Margin="10,0,0,0"  Style="{StaticResource CustomButtonStyle}" Command="{Binding NoTipsClicked}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="100"    >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/notips.png" Height="40" Width="40"/>
+                            <TextBlock Text="No Tips"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0"  Style="{StaticResource CustomButtonStyle}" Command="{Binding EqualClicked}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="100"    >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/equal.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc Equal}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0"  Style="{StaticResource CustomButtonStyle}" Command="{Binding PercentClicked}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="100"    >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/percent.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc Percent}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0"  Style="{StaticResource CustomButtonStyle}"  Command="{Binding ExitClicked}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="100"   >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                            <TextBlock   Text="{Loc Back}"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+
+      
+     
+ 
+        
+        
+    </Border>
+    
+</Window>

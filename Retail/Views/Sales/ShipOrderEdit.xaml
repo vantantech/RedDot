@@ -1,0 +1,355 @@
+﻿<Window x:Class="RedDot.ShipOrderEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RedDot"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="WorkOrder" Height="900" Width="1300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" >
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="LightGray" Offset="0"/>
+            <GradientStop Color="DarkCyan" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="buttonText" TargetType="Button">
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Width"  Value="60" />
+                <Setter Property="Margin"  Value="4" />
+            </Style>
+
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+            <local:InventoryToColorConverter x:Key="NegativeToColorConverter"/>
+
+            <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Calendar}">
+                            <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                            <Viewbox Height="400"
+                         Width="400">
+                                <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                            </Viewbox>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <DataTemplate x:Key="AvailableProductTemplate">
+
+
+                <Button Margin="1"   Command="{Binding DataContext.AvailableProductClicked,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=2,AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Name="borderbox" BorderThickness="1"  Width="600" Background="LightGray" >
+
+                                <Border  Height="25"  BorderBrush="DarkGray" Width="600" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock  Text="{Binding modelnumber}"    Width="100"  TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+
+                                        <TextBlock  Text="{Binding description}"    Width="250"  TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                        <TextBlock  Text="{Binding quantity}"          Width="80" TextAlignment="Right" FontSize="14" ></TextBlock>
+                                        <TextBlock  Text="{Binding price, StringFormat={}{0:C}}"  Width="80" TextAlignment="Right" FontSize="14" ></TextBlock>
+
+                                    </StackPanel>
+                                </Border>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" TargetName="borderbox" Value="Yellow"/>
+                                    <Setter Property="BorderBrush" TargetName="borderbox" Value="Red"/>
+                                </Trigger>
+
+
+
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Background" TargetName="borderbox" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="SelectedProductTemplate">
+
+
+                <Button Margin="1"   Command="{Binding DataContext.SelectedProductClicked,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=2,AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding shipitemid}" >
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Name="borderbox" BorderThickness="1"  Width="600" Background="LightGreen" >
+
+                                <Border  Height="25"  BorderBrush="DarkGray" Width="600" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock  Text="{Binding modelnumber}"    Width="100"  TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+
+                                        <TextBlock  Text="{Binding description}"    Width="250"  TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                        <TextBlock  Text="{Binding quantity}"          Width="80" TextAlignment="Right" FontSize="14" ></TextBlock>
+                                        <TextBlock  Text="{Binding price, StringFormat={}{0:C}}"          Width="80" TextAlignment="Right" FontSize="14" ></TextBlock>
+
+                                    </StackPanel>
+                                </Border>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" TargetName="borderbox" Value="Yellow"/>
+                                    <Setter Property="BorderBrush" TargetName="borderbox" Value="Red"/>
+                                </Trigger>
+
+
+
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Background" TargetName="borderbox" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+
+
+
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+
+            <StackPanel Margin="2"  Orientation="Horizontal">
+                <TextBlock Text="Ticket No: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                <TextBlock  Text="{Binding CurrentTicket.SalesID}" Width="200" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" />
+
+                <TextBlock Text="Ticket Date: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                <TextBlock  Text="{Binding CurrentTicket.SaleDate}" Width="200" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap"  />
+
+            </StackPanel>
+            <TabControl ItemsSource="{Binding Shipments}" SelectedIndex="{Binding SelectedIndex}" Background="Transparent" BorderBrush="Gray" BorderThickness="2">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/media/cargo.png" Height="20" Width="40"/>
+                            <TextBlock Text="Shipment No: " FontSize="16" FontWeight="Bold" />
+                            <TextBlock Text="{Binding ShipmentNumber}" FontSize="16" FontWeight="Bold" />
+                        </StackPanel>
+                     
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+
+                        <StackPanel Orientation="Vertical">
+
+                            <StackPanel Orientation="Vertical">
+
+             
+
+                                <StackPanel Margin="2"  Orientation="Horizontal">
+                                    <TextBlock Text="Customer Name: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding CustName}" Width="350" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1" />
+                  
+                                    <TextBlock Text="Customer Phone: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding PhoneNumber}" Width="350" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1" />
+                                </StackPanel>
+                                <StackPanel Margin="2"  Orientation="Horizontal">
+                                    <TextBlock Text="Address: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding Address}" Width="750" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1" />
+                                </StackPanel>
+                                <StackPanel Margin="2"  Orientation="Horizontal">
+                                    <TextBlock Text="City: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding City}" Width="300" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap"  BorderBrush="Black" BorderThickness="1" />
+
+
+                                    <TextBlock Text="State: " Margin="2" TextAlignment="Right" Width="100" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding State}" Width="70" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+
+
+                                    <TextBlock Text="Zipcode: " Margin="2" TextAlignment="Right" Width="100" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding ZipCode}" Width="150" Height="40" FontSize="16" FontWeight="Normal"  BorderBrush="Black" BorderThickness="1" />
+
+                                </StackPanel>
+
+
+                                <StackPanel Margin="2"  Orientation="Horizontal">
+                                    <TextBlock Text="Shipper: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                     <ComboBox IsEnabled="{Binding IsEnabled}"   SelectedValue="{Binding Shipper}"
+                           ItemsSource="{Binding DataContext.ShipperList, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                           DisplayMemberPath="Name" SelectedValuePath="Name" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Width="100" Height="40">
+
+                                    </ComboBox>
+                                    <TextBlock Text="Tracking No: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                    <TextBox IsEnabled="{Binding IsEnabled}"  Text="{Binding TrackingNo}" Width="150" Height="40" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" BorderBrush="Black" BorderThickness="1" />
+
+                                    <TextBlock Text="ShipDate: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" />
+                                     <DatePicker CalendarStyle="{StaticResource styleCalendar}" Margin="20,0,0,0" Name="startdatepicker" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"   SelectedDate="{Binding ShipDate, Mode=TwoWay}"  />
+                               
+                                </StackPanel>
+
+
+                        
+
+
+
+                                <StackPanel Margin="2"  Orientation="Horizontal">
+                                    <TextBlock Text="Ship Notes: " Margin="2" TextAlignment="Right" Width="150" Height="40" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"   />
+                                    <TextBox  IsEnabled="{Binding IsEnabled}"   Text="{Binding Notes}" Width="750" Height="120" FontSize="16" FontWeight="Normal" TextWrapping="Wrap" AcceptsReturn="True" BorderBrush="Black" BorderThickness="1" />
+                                    <Button Style="{StaticResource CustomButtonStyle}"  Margin="10"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"   Command="{Binding DataContext.DeleteClicked,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}"  >
+                                        <StackPanel>
+                                            <Image Source="/media/x.png" Height="40" Width="40"/>
+                                            <TextBlock Text="{Loc Delete}"></TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+
+
+
+                             </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Items From Ticket - Available" TextAlignment="Left" Height="40" FontSize="18" FontWeight="Bold" />
+
+                                    <ScrollViewer Margin="5"   VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="400" Width="550" Background="White">
+                                        <ScrollViewer.Resources>
+                                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter Property="Width" Value="40"/>
+                                                        <Setter Property="Height" Value="Auto" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ScrollViewer.Resources>
+                                        <StackPanel Orientation="Vertical">
+
+
+
+                                            <ItemsControl  ItemsSource="{Binding DataContext.Available,RelativeSource={RelativeSource Mode=FindAncestor,AncestorLevel=1,AncestorType={x:Type ItemsControl}}}" ItemTemplate="{StaticResource AvailableProductTemplate}" >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Vertical"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+
+
+                                        </StackPanel>
+                                    </ScrollViewer>
+
+
+
+                                </StackPanel>
+                                
+                          
+
+
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Items Included in this shipment"  TextAlignment="Left" Height="40" FontSize="18" FontWeight="Bold" />
+
+
+                                    <ScrollViewer Margin="5"   VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" Height="400"  Width="550" Background="White">
+                                        <ScrollViewer.Resources>
+                                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="Orientation" Value="Vertical">
+                                                        <Setter Property="Width" Value="40"/>
+                                                        <Setter Property="Height" Value="Auto" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ScrollViewer.Resources>
+                                        <StackPanel Orientation="Vertical">
+
+
+
+                                            <ItemsControl  ItemsSource="{Binding Selected}" ItemTemplate="{StaticResource SelectedProductTemplate}" >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ScrollViewer>
+
+                                </StackPanel>
+
+                         
+                            </StackPanel>
+
+    
+
+
+                        </StackPanel>
+
+
+
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+
+            </TabControl>
+
+        </StackPanel>
+
+    
+        <StackPanel Grid.Column="1" Margin="2"  Orientation="Vertical" HorizontalAlignment="Center">
+
+            <Button Style="{StaticResource CustomButtonStyle}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"   Command="{Binding NewClicked}" >
+                <StackPanel>
+                    <Image Source="/media/cargo.png" Height="40" Width="40"/>
+                    <TextBlock Text="New Shipment"></TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Style="{StaticResource CustomButtonStyle}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"   Command="{Binding PrintPDFClicked}" >
+                <StackPanel>
+                    <Image Source="/media/pdf.png" Height="40" Width="40"/>
+                    <TextBlock Text="Print or PDF"></TextBlock>
+                </StackPanel>
+            </Button>
+
+
+            <Button Style="{StaticResource CustomButtonStyle}"  Margin="10"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"   Command="{Binding OKClicked}"  >
+                <StackPanel>
+                    <Image Source="/media/ok.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc Done}"></TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+
+
+
+
+</Window>

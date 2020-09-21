@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="320f7a47-1c77-4677-a202-0feb5f999a75" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://salon.reddotpos.com/SalonService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SalonService.xsd" MetadataType="Schema" ID="bf7ad4f8-0d76-4778-a157-9fdf467e8aa9" SourceId="1" SourceUrl="http://salon.reddotpos.com/SalonService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SalonService.wsdl" MetadataType="Wsdl" ID="9c9c15e3-8418-4e6d-ad23-88d785a8dfb0" SourceId="1" SourceUrl="http://salon.reddotpos.com/SalonService.svc?wsdl" />
+    <MetadataFile FileName="SalonService1.xsd" MetadataType="Schema" ID="1e76eaf0-5177-4361-956b-e03e9eda3022" SourceId="1" SourceUrl="http://salon.reddotpos.com/SalonService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SalonService.disco" MetadataType="Disco" ID="a3365d84-f2a0-447e-8209-2e94025e3537" SourceId="1" SourceUrl="http://salon.reddotpos.com/SalonService.svc?disco" />
+    <MetadataFile FileName="SalonService2.xsd" MetadataType="Schema" ID="bb5804bc-d76b-4baa-b84b-4848b5c2f934" SourceId="1" SourceUrl="http://salon.reddotpos.com/SalonService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

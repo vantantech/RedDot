@@ -1,0 +1,1278 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>daReport</name>
+    </assembly>
+    <members>
+        <member name="T:daReport.ChartBox">
+            <summary>
+            Class representing the ChartBox object.
+            </summary>
+            <remarks>The ChartBox is used in reports where graphical representation of data is used.</remarks>
+        </member>
+        <member name="T:daReport.ICustomPaint">
+            <summary>
+            Class representing the ICustomPaint object.
+            </summary>
+            <remarks>
+            ICustomPaint is the base for all document types and contains some properties and methods
+            common to all document types.
+            </remarks>
+        </member>
+        <member name="F:daReport.ICustomPaint.document">
+            <summary>
+            The <see cref="T:daReport.DaPrintDocument">DaReport.PrintDocument</see> object
+            </summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.horizontalAlignment">
+            <summary>
+            Horizontal alignment of the object compared to the page
+            </summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.verticalAlignment">
+            <summary>
+            Vertical alignment of the object compared to the page
+            </summary>
+        </member>
+        <member name="M:daReport.ICustomPaint.Paint(System.Drawing.Graphics)">
+            <summary>
+            When implemented by a class, the object is painted to the screen.
+            </summary>
+        </member>
+        <member name="M:daReport.ICustomPaint.GetRegion">
+            <summary>
+            When implemented by a class, gets or sets the region the object is contained in.
+            </summary>
+        </member>
+        <member name="M:daReport.ICustomPaint.Clone">
+            <summary>
+            When implemented by a class, creates a deep copy of the object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:daReport.ICustomPaint.HorizontalAlignment">
+            <summary>
+            When implemented by a class, gets or sets the horizontal alignment of the object
+            </summary>
+        </member>
+        <member name="P:daReport.ICustomPaint.VerticalAlignment">
+            <summary>
+            When implemented by a class, gets or sets the vertical alignment of the object
+            </summary>
+        </member>
+        <member name="P:daReport.ICustomPaint.Selectable">
+            <summary>
+            When implemented by a class, gets or sets whether the object is selectable in the Designer pane
+            </summary>
+        </member>
+        <member name="P:daReport.ICustomPaint.X">
+            <summary>
+            When implemented by a class, gets or sets the x-location of the object
+            </summary>
+        </member>
+        <member name="P:daReport.ICustomPaint.Y">
+            <summary>
+            When implemented by a class, gets or sets the y-location of the object
+            </summary>
+        </member>
+        <member name="P:daReport.ICustomPaint.Width">
+            <summary>
+            When implemented by a class, gets or sets the width of the object
+            </summary>
+        </member>
+        <member name="P:daReport.ICustomPaint.Height">
+            <summary>
+            When implemented by a class, gets or sets the height of the object
+            </summary>
+        </member>
+        <member name="T:daReport.ICustomPaint.HorizontalAlignmentTypes">
+            <summary>
+            Enumeration of possible horizontal alignments for the PrintDocument
+            </summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.HorizontalAlignmentTypes.None">
+            <summary>No alignment. Manual placement</summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.HorizontalAlignmentTypes.Left">
+            <summary>Left Alignment on the page</summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.HorizontalAlignmentTypes.Center">
+            <summary>Canter Alignment on the page</summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.HorizontalAlignmentTypes.Right">
+            <summary>Right Alignment on the page</summary>
+        </member>
+        <member name="T:daReport.ICustomPaint.VerticalAlignmentTypes">
+            <summary>
+            Enumeration of possible vertical alignments for the PrintDocument
+            </summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.VerticalAlignmentTypes.None">
+            <summary>No alignment. Manual placement</summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.VerticalAlignmentTypes.Top">
+            <summary>Aligns to the top the page</summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.VerticalAlignmentTypes.Middle">
+            <summary>Aligns to the middle the page</summary>
+        </member>
+        <member name="F:daReport.ICustomPaint.VerticalAlignmentTypes.Bottom">
+            <summary>Aligns to the bottom the page</summary>
+        </member>
+        <member name="M:daReport.ChartBox.Clone">
+            <summary>
+            Clones the structure of the ChartBox, including all properties
+            </summary>
+            <returns><see cref="T:daReport.ChartBox">daReport.ChartBox</see></returns>
+        </member>
+        <member name="M:daReport.ChartBox.GetRegion">
+            <summary>
+            Gets the region of the current ChartBox
+            </summary>
+            <returns>System.Drawing.Rectangle</returns>
+        </member>
+        <member name="M:daReport.ChartBox.Paint(System.Drawing.Graphics)">
+            <summary>
+            Paints the ChartBox
+            </summary>
+            <param name="g">The Graphics object to draw</param>
+            <remarks>Causes the ChartBox to be painted to the screen.</remarks>
+        </member>
+        <member name="M:daReport.ChartBox.AddSerie(System.String,System.Double[],System.Drawing.Color)">
+            <summary>
+            A serie is used to populate the ChartBox.
+            </summary>
+            <param name="serieName">Name of the serie. Displayed in the Legend</param>
+            <param name="values">A array of Double values</param>
+            <param name="serieColor">Color of the bar/pie</param>
+            <remarks>
+            You can add multiple serie to a chart. This would be useful for comparing values over certain years.
+            Please see the "Chart Report" example, especially the City Population chart
+            C# Sample
+            <code language="c#">
+            daPrintDocument.AddChartSerie("chart0","Year 1975.",new double[3]{15.9,11.4,11.2},Color.DarkGreen);
+            </code>
+            VB.Net Sample
+            <code language="Visual Basic">
+            daPrintDocument.AddChartSerie("chart0", "Year 1975.", New Double() {15.9, 11.4, 11.2}, Color.DarkGreen)
+            </code>
+            </remarks>
+        </member>
+        <member name="M:daReport.ChartBox.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,daReport.DaPrintDocument)">
+            <summary>
+            Initializes a new instance of the ChartBox class.
+            </summary>
+            <param name="x">x-position of the new ChartBox</param>
+            <param name="y">y-position of the new ChartBox</param>
+            <param name="width">Width of the new ChartBox</param>
+            <param name="height">Height of the new ChartBox</param>
+            <param name="parent">Parent of the new ChartBox</param>
+        </member>
+        <member name="P:daReport.ChartBox.BorderColor">
+            <summary>
+            Gets/Sets the border color for the ChartBox
+            </summary>
+            <remarks>This property sets the border color of the ChartBox object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.ChartBox.BorderWidth">
+            <summary>
+            Gets/Sets the border width for the ChartBox
+            </summary>
+            <remarks>
+            BorderWidth of the ChartBox. If this is set to zero, then the border is invisible
+            </remarks>
+        </member>
+        <member name="P:daReport.ChartBox.LabelFont">
+            <summary>
+            Gets/Sets the font used for any labels displayed on the ChartReport
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.MapAreaColor">
+            <summary>
+            The background color displayed behind the chart image
+            </summary>
+            <remarks>This property sets the background color displayed behind the chart image. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.ChartBox.Name">
+            <summary>
+            Gets/Sets the name of the chart.
+            </summary>
+            <remarks>This property is used in code when setting other properties programmaticly.</remarks>
+        </member>
+        <member name="P:daReport.ChartBox.ShowLegend">
+            <summary>
+            Gets/Sets whether to display the ChartBox's legend
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.Title">
+            <summary>
+            Gets/Sets the title: value used at the top of the chart
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.TitleFont">
+            <summary>
+            Gets/Sets the font used for the title of the ChartReport
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.Type">
+            <summary>
+            Gets/Sets the type of the ChartBox
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.XCategories">
+            <summary>
+            XCategories is a string array of the categories defined in the chart data.
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.XLabel">
+            <summary>
+            Gets/Sets the value used for labelling the X-axis of the ChartReport
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.HorizontalAlignment">
+            <summary>
+             Gets or sets the horizontal alignment of the ChartBox
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.Height">
+            <summary>
+             Gets or sets the height of the ChartBox
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.VerticalAlignment">
+            <summary>
+             Gets or sets the vertical alignment of the ChartBox
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.Width">
+            <summary>
+             Gets or sets the width of the ChartBox.
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.X">
+            <summary>
+            The X coordinate of the left-upper corner of the element
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.Y">
+            <summary>
+            The Y coordinate of the left-upper corner of the element
+            </summary>
+        </member>
+        <member name="P:daReport.ChartBox.Selectable">
+            <summary>
+            Gets/Sets whether the ChartBox is selectable in the design pane of the DaReport Designer
+            </summary>
+            <remarks>If set to true, then the ChartBox is not selectable in the DaReport Designer application
+            design pane. It is still selectable in the tree view listing of objects.
+            </remarks>
+        </member>
+        <member name="T:daReport.ChartBox.ChartType">
+            <summary>
+            Enumeration of possible chart types
+            </summary>
+        </member>
+        <member name="F:daReport.ChartBox.ChartType.Bar">
+            <summary>Bar Graph</summary>
+        </member>
+        <member name="F:daReport.ChartBox.ChartType.Pie">
+            <summary>Pie Chart</summary>
+        </member>
+        <member name="T:daReport.MarginsChangedHandler">
+            <summary>
+            Represents the method that will handle the MarginsChanged event.
+            </summary>
+            <param name="sender">The source of the event. </param>
+            <remarks>
+            When you create a MarginsChangedHandler delegate, you identify the method that will handle the event.
+            To associate the event with your event handler, add an instance of the delegate to the event. The event
+            handler is called whenever the event occurs, until you remove the delegate.
+            Note: The declaration of your event handler must have the same parameters as the
+            MarginsChangedHandler delegate declaration.
+            </remarks>
+        </member>
+        <member name="T:daReport.PageSizeChangedHandler">
+            <summary>
+            Represents the method that will handle the PageSizeChanged event.
+            </summary>
+            <param name="sender">The source of the event. </param>
+            <remarks>
+            When you create a PageSizeChangedHandler delegate, you identify the method that will handle the event.
+            To associate the event with your event handler, add an instance of the delegate to the event. The event
+            handler is called whenever the event occurs, until you remove the delegate.
+            Note: The declaration of your event handler must have the same parameters as the
+            PageSizeChangedHandler delegate declaration.
+            </remarks>
+        </member>
+        <member name="T:daReport.PageLayoutChangedHandler">
+            <summary>
+            Represents the method that will handle the PageLayoutChanged event.
+            </summary>
+            <param name="sender">The source of the event. </param>
+            <remarks>
+            When you create a PageLayoutChangedHandler delegate, you identify the method that will handle the event.
+            To associate the event with your event handler, add an instance of the delegate to the event. The event
+            handler is called whenever the event occurs, until you remove the delegate.
+            Note: The declaration of your event handler must have the same parameters as the
+            PageLayoutChangedHandler delegate declaration.
+            </remarks>
+        </member>
+        <member name="T:daReport.DaPrintDocument">
+            <summary>
+            Class representing the DaPrintDocument object.
+            </summary>
+            <remarks>The DaPrintDocument parses the XML template files and produces the report. The designer
+            application also uses it to parse all the document objects and place them on the designer pane</remarks>
+        </member>
+        <member name="M:daReport.DaPrintDocument.AddChartSerie(System.String,System.String,System.Double[],System.Drawing.Color)">
+            <summary>
+            A serie is used to populate the ChartBox.
+            </summary>
+            <param name="chartName">The name of the chart to add the serie to</param>
+            <param name="serieName">Name of the serie. Displayed in the Legend</param>
+            <param name="Values">A array of Double values</param>
+            <param name="serieColor">Color of the bar/pie</param>
+            <remarks>
+            This method is used to a serie to a specific chart in the current DaPrintDocument object.
+            See <see cref="M:daReport.ChartBox.AddSerie(System.String,System.Double[],System.Drawing.Color)">daReport.ChartBox.AddSerie</see> for an example
+            of using the method</remarks>
+        </member>
+        <member name="M:daReport.DaPrintDocument.AddData(System.Data.DataTable)">
+            <summary>
+            Adds a DataTable to the collection
+            </summary>
+            <remarks>The DataTable.Name must match the dataSource property in the report definition for a
+            dynamic table</remarks>
+            <param name="newTable">System.Data.DataTable: source data for a dynamic table</param>
+        </member>
+        <member name="M:daReport.DaPrintDocument.InitDynamicObjects(System.Boolean)">
+            <summary>
+            Function to load the Dynamic Document objects in the XML template file
+            </summary>
+            <param name="designMode">Specifies if docuemtn is being loaded into designer</param>
+        </member>
+        <member name="M:daReport.DaPrintDocument.InitStaticObjects(System.Boolean)">
+            <summary>
+            Function to load the Static Document objects in the XML template file
+            </summary>
+            <param name="designMode">Specifies if docuemtn is being loaded into designer</param>
+        </member>
+        <member name="M:daReport.DaPrintDocument.RepeatAlignments(System.Object)">
+            <summary>
+            Public function to reapply alignments to all static and dynamic document objects.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <remarks>This function is called when margins or page layout has been changed, and the alignment
+            of the objects needs to be reset.</remarks>
+        </member>
+        <member name="M:daReport.DaPrintDocument.SetParameters(System.Collections.Hashtable)">
+            <summary>
+            Function to load a Hashtable of parameter values
+            </summary>
+            <param name="parameters">Hashtable of parameter values</param>
+            <remarks>
+            c#
+            <code language="c#">
+            // fill in with some parameters
+            // (parameter names are case sensitive)
+            Hashtable parameters = new Hashtable();
+            parameters.Add("author","Predrag Dukanac");
+            daPrintDocument.SetParameters(parameters);
+            </code>
+            vb.net
+            <code language="Visual Basic">
+            ' fill in with some parameters
+            ' (parameter names are case sensitive)
+            Dim parameters as Hashtable = new Hashtable()
+            parameters.Add("author","Predrag Dukanac")
+            daPrintDocument.SetParameters(parameters)
+            </code>
+            </remarks>
+        </member>
+        <member name="M:daReport.DaPrintDocument.setXML(System.String)">
+            <summary>
+            Function to load XML template from a file
+            </summary>
+            <param name="FileName">File location of XML template file</param>
+        </member>
+        <member name="M:daReport.DaPrintDocument.setXML(System.Xml.XmlDocument,System.String)">
+            <summary>
+            Function to load XML template from a file
+            </summary>
+            <param name="XmlDoc">XMLDoc variable.</param>
+            <param name="XMLDocRoot">XMLDocument Root</param>
+            <remarks>
+            This function can be used to load an XML template file, make some changes to the 
+            XML and then pass through. The XMLDocRoot is used as a starting point for
+            PictureBox image locations
+            </remarks>
+        </member>
+        <member name="M:daReport.DaPrintDocument.SetChartCategories(System.String,System.String[])">
+            <summary>
+            Sets the categories for the specified chart
+            </summary>
+            <param name="chartName"><see cref="T:daReport.ChartBox">daReport.ChartBox</see> to set categories for</param>
+            <param name="theCategories">string array of categories</param>
+            <remarks>
+            This sets grouping for the data being passed into the ChartBox.
+            c#
+            <code language="c#">
+            daPrintDocument.SetChartCategories("chart0",new string[] {"New York","Shangai","Mexico City"});
+            </code>
+            vb.net
+            <code language="c#">
+            daPrintDocument.SetChartCategories("chart0",new string() {"New York","Shangai","Mexico City"})
+            </code>
+            </remarks>
+        </member>
+        <member name="M:daReport.DaPrintDocument.#ctor">
+            <summary>
+            Initializes a new instance of the DaPrintDocument class.
+            </summary>
+        </member>
+        <member name="M:daReport.DaPrintDocument.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the DaPrintDocument class.
+            </summary>
+        </member>
+        <member name="M:daReport.DaPrintDocument.#ctor(System.Collections.Hashtable)">
+            <summary>
+            Initializes a new instance of the DaPrintDocument class.
+            </summary>
+        </member>
+        <member name="M:daReport.DaPrintDocument.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:daReport.DaPrintDocument.Finalize">
+            <summary>
+            Gives DaPrintDocument the opportunity to finalize any child resources
+            </summary>
+        </member>
+        <member name="M:daReport.DaPrintDocument.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="E:daReport.DaPrintDocument.OnMarginsChanged">
+            <summary>
+            Event declaration for the delegate MarginsChangedHandler
+            </summary>
+        </member>
+        <member name="E:daReport.DaPrintDocument.OnPageSizeChanged">
+            <summary>
+            Event declaration for the delegate PageSizeChangedHandler
+            </summary>
+        </member>
+        <member name="E:daReport.DaPrintDocument.OnPageLayoutChanged">
+            <summary>
+            Event declaration for the delegate PageLayoutChangedHandler
+            </summary>
+        </member>
+        <member name="P:daReport.DaPrintDocument.DocRoot">
+            <summary>
+            Gets/Sets the DocRoot for the current XML document
+            </summary>
+            <remarks>This is used to parse for locations of referenced images.</remarks>
+        </member>
+        <member name="P:daReport.DaPrintDocument.Layout">
+            <summary>
+            Gets/Sets the 
+            <see cref="T:daReport.DaPrintDocument.LayoutType">daReport.DaPrintDocument.LayoutType</see>
+            for the current DaPrintDocument
+            </summary>
+        </member>
+        <member name="P:daReport.DaPrintDocument.Margins">
+            <summary>
+            Gets/Sets the margins for this page.
+            </summary>
+            <remarks>When handling the PrintDocument.PrintPage event, you can use this property along with the
+            Bounds property to calculate the printing area for the page.</remarks>
+        </member>
+        <member name="P:daReport.DaPrintDocument.PaperType">
+            <summary>
+            Gets/Sets the 
+            <see cref="T:daReport.Paper.Type">daReport.Paper.Type</see>
+            for the current DaPrintDocument
+            </summary>
+        </member>
+        <member name="P:daReport.DaPrintDocument.Parameters">
+            <summary>
+            A string collection of parameters for the current DaPrintDocument object.
+            </summary>
+            <remarks>You will use the
+            <see cref="M:daReport.DaPrintDocument.SetParameters(System.Collections.Hashtable)">daReport.DaPrintDocument.SetParameters</see>
+            function to set the values of parameters.</remarks>
+        </member>
+        <member name="P:daReport.DaPrintDocument.DynamicObjects">
+            <summary>
+            Gets a collection of <see cref="T:daReport.ICustomPaint">daReport.ICustomPaint</see> objects
+            which display dynamic data. This is only the <see cref="T:daReport.StyledTable">daReport.StyledTable</see>
+            object at the moment.
+            </summary>
+        </member>
+        <member name="P:daReport.DaPrintDocument.StaticObjects">
+            <summary>
+            Gets a collection of <see cref="T:daReport.ICustomPaint">daReport.ICustomPaint</see> objects
+            which only display static data such as TextField, PictureBox, etc
+            </summary>
+        </member>
+        <member name="T:daReport.DaPrintDocument.LayoutType">
+            <summary>
+            Specifies the layout of the report.
+            </summary>
+        </member>
+        <member name="F:daReport.DaPrintDocument.LayoutType.Portrait">
+            <summary>Portrait Layout</summary>
+        </member>
+        <member name="F:daReport.DaPrintDocument.LayoutType.Landscape">
+            <summary>Landscape Layout</summary>
+        </member>
+        <member name="T:daReport.editors.FormatMaskEditor">
+            <summary>
+            FormatMaskEditor: provides editing interface for the FormatMask property
+            </summary>
+        </member>
+        <member name="M:daReport.editors.FormatMaskEditor.#ctor">
+            <summary>
+            Initializes a new instance of the FormatMaskEditor class.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.FormatMaskEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+            <summary>
+            Edits the value of the specified object using the editor style indicated by GetEditStyle.
+            </summary>
+            <param name="context">An ITypeDescriptorContext that can be used to gain additional context information.</param>
+            <param name="provider">An IServiceProvider that this editor can use to obtain services. </param>
+            <param name="value">The object to edit. </param>
+            <returns>The new value of the object.</returns>
+        </member>
+        <member name="M:daReport.editors.FormatMaskEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the editor style used by the EditValue method.
+            </summary>
+            <param name="context">An ITypeDescriptorContext that can be used to gain additional context information. </param>
+            <returns>UITypeEditorEditStyle.Modal indicating the editor will be a modal form </returns>
+        </member>
+        <member name="T:daReport.editors.FormatMaskEditorDialog">
+            <summary>
+            Summary description for FormatMaskEditorDialog.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.FormatMaskEditorDialog.#ctor">
+            <summary>
+            Initializes a new instance of the FormatMaskEditorDialog class.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.FormatMaskEditorDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="M:daReport.editors.FormatMaskEditorDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:daReport.editors.FormatMaskEditorDialog.FormatMask">
+            <summary>
+            Get/Set for format mask value
+            </summary>
+        </member>
+        <member name="T:daReport.editors.PlainTextEditor">
+            <summary>
+            Summary description for StaticTableEditor.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.PlainTextEditor.#ctor">
+            <summary>
+            Edits the value of the specified object using the editor style indicated by GetEditStyle.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.PlainTextEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+            <summary>
+            Edits the value of the specified object using the editor style indicated by GetEditStyle.
+            </summary>
+            <param name="context">An ITypeDescriptorContext that can be used to gain additional context information.</param>
+            <param name="provider">An IServiceProvider that this editor can use to obtain services. </param>
+            <param name="value">The object to edit. </param>
+            <returns>The new value of the object.</returns>
+        </member>
+        <member name="M:daReport.editors.PlainTextEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the editor style used by the EditValue method.
+            </summary>
+            <param name="context">An ITypeDescriptorContext that can be used to gain additional context information. </param>
+            <returns>UITypeEditorEditStyle.Modal indicating the editor will be a modal form </returns>
+        </member>
+        <member name="T:daReport.editors.PlainTextEditorDialog">
+            <summary>
+            Summary description for PlainTextEditorDialog.
+            </summary>
+        </member>
+        <member name="F:daReport.editors.PlainTextEditorDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.PlainTextEditorDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.PlainTextEditorDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:daReport.editors.StaticTableEditor">
+            <summary>
+            Summary description for StaticTableEditor.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.StaticTableEditor.#ctor">
+            <summary>
+            Edits the value of the specified object using the editor style indicated by GetEditStyle.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.StaticTableEditor.EditValue(System.ComponentModel.ITypeDescriptorContext,System.IServiceProvider,System.Object)">
+            <summary>
+            Edits the value of the specified object using the editor style indicated by GetEditStyle.
+            </summary>
+            <param name="context">An ITypeDescriptorContext that can be used to gain additional context information.</param>
+            <param name="provider">An IServiceProvider that this editor can use to obtain services. </param>
+            <param name="value">The object to edit. </param>
+            <returns>The new value of the object.</returns>
+        </member>
+        <member name="M:daReport.editors.StaticTableEditor.GetEditStyle(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Gets the editor style used by the EditValue method.
+            </summary>
+            <param name="context">An ITypeDescriptorContext that can be used to gain additional context information. </param>
+            <returns>UITypeEditorEditStyle.Modal indicating the editor will be a modal form </returns>
+        </member>
+        <member name="T:daReport.editors.StaticTableEditorDialog">
+            <summary>
+            Summary description for StaticTableEditorDialog.
+            </summary>
+        </member>
+        <member name="F:daReport.editors.StaticTableEditorDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.StaticTableEditorDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:daReport.editors.StaticTableEditorDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:daReport.Paper">
+            <summary>
+            Class representing the Paper object.
+            </summary>
+            <remarks>Contains static methods related to Paper objects.</remarks>
+        </member>
+        <member name="M:daReport.Paper.GetPaperSize(daReport.Paper.Type)">
+            <summary>
+            Returns width an height of paper type
+            </summary>
+            <param name="PaperType">PaperType: <see cref="T:daReport.Paper.Type">Type</see> of paper</param>
+            <returns>Returns 2-element array of width and height of the paper type</returns>
+        </member>
+        <member name="M:daReport.Paper.GetType(System.String)">
+            <summary>
+            Returns Paper.Type based on string
+            </summary>
+            <param name="PaperType">PaperType: string name of a paper type</param>
+            <returns>Returns <see cref="T:daReport.Paper.Type">Type</see> of paper</returns>
+            <remarks>If the string is not a valid paper type, then A4 is passed back as the default
+            paper type</remarks>
+        </member>
+        <member name="T:daReport.Paper.Type">
+            <summary>
+            Enumeration of possible paper type selections
+            </summary>
+        </member>
+        <member name="F:daReport.Paper.Type.A4">
+            <summary>A4 paper (210x297mm)</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.A5">
+            <summary>A5 paper (148x210mm</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.Letter">
+            <summary>Letter Paper (8.5x11 in)</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.Legal">
+            <summary>Legal Paper (8.4x14 in)</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.Executive">
+            <summary>Executive paper (184x266mm)</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.EnvelopeMonarch">
+            <summary>Envelope Monarch paper (98x190mm)</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.EnvelopeC5">
+            <summary>EnvelopeC5 paper (162x229mm</summary>
+        </member>
+        <member name="F:daReport.Paper.Type.EnvelopeDL">
+            <summary>Envelope Paper (110x220 mm)</summary>
+        </member>
+        <member name="T:daReport.PictureBox">
+            <summary>
+            Class representing the PictureBox object.
+            </summary>
+            <remarks>The PictureBox is used in reports where images need to be displayed.
+            Compay logo, background image, etc. A background image can be combined with the
+            <see cref="P:daReport.PictureBox.Selectable">daReport.PictureBox.Selectable</see> property
+            so it can't be selected in the Designer Application.
+            </remarks>
+        </member>
+        <member name="M:daReport.PictureBox.SetDocumentRoot(System.String)">
+            <summary>
+            Used to set root location of image file
+            </summary>
+            <remarks>This is the root directory that the image is located in. Defaults to location of
+            xml template location</remarks>
+            <param name="RootLocation">string RootLocation</param>
+        </member>
+        <member name="M:daReport.PictureBox.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,daReport.DaPrintDocument)">
+            <summary>
+            Initializes a new instance of the PictureBox class.
+            </summary>
+            <param name="x">x-position of the new PictureBox</param>
+            <param name="y">y-position of the new PictureBox</param>
+            <param name="width">Width of the new PictureBox</param>
+            <param name="height">Height of the new PictureBox</param>
+            <param name="parent">Parent of the new PictureBox</param>
+        </member>
+        <member name="M:daReport.PictureBox.Dispose">
+            <summary>
+            Releases all resources used by this PictureBox object.
+            </summary>
+        </member>
+        <member name="M:daReport.PictureBox.Paint(System.Drawing.Graphics)">
+            <summary>
+            Paints the PictureBox
+            </summary>
+            <param name="g">The Graphics object to draw</param>
+            <remarks>Causes the PictureBox to be painted to the screen.</remarks>
+        </member>
+        <member name="M:daReport.PictureBox.GetRegion">
+            <summary>
+            Gets the region of the current PictureBox
+            </summary>
+            <returns>System.Drawing.Rectangle</returns>
+        </member>
+        <member name="M:daReport.PictureBox.Clone">
+            <summary>
+            Clones the structure of the PictureBox, including all properties
+            </summary>
+            <returns><see cref="T:daReport.ChartBox">daReport.ChartBox</see></returns>
+        </member>
+        <member name="P:daReport.PictureBox.BorderColor">
+            <summary>
+            Gets/Sets the border color for the PictureBox
+            </summary>
+            <remarks>This property sets the border color of the PictureBox object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.PictureBox.BorderWidth">
+            <summary>
+            Gets/Sets the border width for the PictureBox
+            </summary>
+            <remarks>
+            BorderWidth of the PictureBox. If this is set to zero, then the border is invisible
+            </remarks>
+        </member>
+        <member name="P:daReport.PictureBox.ImageFile">
+            <summary>
+            Location of image file relative to xml template file.
+            </summary>
+            <remarks>For new documents defaults to working directory of Designer.</remarks>
+        </member>
+        <member name="P:daReport.PictureBox.Stretch">
+            <summary>
+            Stretch the image to the container size.
+            </summary>
+            <remarks>
+            If set to true, the image to the container size, otherwise will be displayed as it's physical size.
+            </remarks>
+        </member>
+        <member name="P:daReport.PictureBox.X">
+            <summary>
+            The X coordinate of the left-upper corner of the PictureBox
+            </summary>
+        </member>
+        <member name="P:daReport.PictureBox.Y">
+            <summary>
+            The Y coordinate of the left-upper corner of the PictureBox
+            </summary>
+        </member>
+        <member name="P:daReport.PictureBox.Width">
+            <summary>
+             Gets or sets the width of the PictureBox.
+            </summary>
+        </member>
+        <member name="P:daReport.PictureBox.Height">
+            <summary>
+             Gets or sets the height of the PictureBox
+            </summary>
+        </member>
+        <member name="P:daReport.PictureBox.HorizontalAlignment">
+            <summary>
+             Gets or sets the horizontal alignment of the PictureBox
+            </summary>
+        </member>
+        <member name="P:daReport.PictureBox.VerticalAlignment">
+            <summary>
+             Gets or sets the vertical alignment of the PictureBox
+            </summary>
+        </member>
+        <member name="P:daReport.PictureBox.Selectable">
+            <summary>
+            Gets/Sets whether the PictureBox is selectable in the design pane of the DaReport Designer
+            </summary>
+            <remarks>If set to true, then the PictureBox is not selectable in the DaReport Designer application
+            design pane. It is still selectable in the tree view listing of objects.
+            </remarks>
+        </member>
+        <member name="T:daReport.StyledTable">
+            <summary>
+            Summary description for StyledTable.
+            </summary>
+        </member>
+        <member name="M:daReport.StyledTable.CalculateRelativeDataRowHeight(System.Data.DataRow,System.Drawing.Graphics)">
+            <summary>
+            Returns relative data row height after checking if row will be multi-line
+            </summary>
+            <param name="CurrentRow">Current Data Row to calculate height</param>
+            <param name="g">Current Graphics object</param>
+            <returns>integer value of relative row height</returns>
+        </member>
+        <member name="M:daReport.StyledTable.CalculateRelativeHeaderHeight(System.Drawing.Graphics)">
+            <summary>
+            Returns relative header row height after checking if headers will be multi-line
+            </summary>
+            <param name="g">Graphics Object</param>
+            <returns>integer value of relative Header row height</returns>
+        </member>
+        <member name="M:daReport.StyledTable.GetPossibleRowNumber">
+            <summary>
+            Returns possible number of rows for the current table region
+            </summary>
+            <returns>integer value of possible number of rows for current table</returns>
+        </member>
+        <member name="M:daReport.StyledTable.Paint(System.Drawing.Graphics)">
+            <summary>
+            Paints the StyledTable
+            </summary>
+            <param name="g">The Graphics object to draw</param>
+            <remarks>Causes the PictureBox to be painted to the screen.</remarks>
+        </member>
+        <member name="M:daReport.StyledTable.GetRegion">
+            <summary>
+            Gets the region of the current StyledTable
+            </summary>
+            <returns>System.Drawing.Rectangle</returns>
+        </member>
+        <member name="M:daReport.StyledTable.Clone">
+            <summary>
+            Clones the structure of the StyledTable, including all properties
+            </summary>
+            <returns><see cref="T:daReport.ChartBox">daReport.ChartBox</see></returns>
+        </member>
+        <member name="M:daReport.StyledTable.#ctor">
+            <summary>
+            Initializes a new instance of the StyledTable class.
+            </summary>
+        </member>
+        <member name="M:daReport.StyledTable.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,daReport.DaPrintDocument)">
+            <summary>
+            Initializes a new instance of the StyledTable class.
+            </summary>
+            <param name="originX">x-position of the new StyledTable</param>
+            <param name="originY">y-position of the new StyledTable</param>
+            <param name="width">Width of the new StyledTable</param>
+            <param name="height">Height of the new StyledTable</param>
+            <param name="parent">Parent of the new StyledTable</param>
+        </member>
+        <member name="P:daReport.StyledTable.BorderColor">
+            <summary>
+            Gets/Sets the border color for the StyledTable
+            </summary>
+            <remarks>This property sets the border color of the StyledTable object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.CellHeight">
+            <summary>
+            Gets/Sets the height of every cell in the table
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.Columns">
+            <summary>
+            A collection of <see cref="T:daReport.StyledTableColumn">daReport.StyledTableColumn</see> columns.
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.Data">
+            <summary>
+            Gets/Sets the current System.Data.DataTable which contains the data for the StyledTable object.
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.StaticData">
+            <summary>
+            Gets/Sets the static data for the StyledTable object.
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.DataFont">
+            <summary>
+            Gets/Sets the data font for the StyledTable
+            </summary>
+            <remarks>This property sets the font of the StyledTable data rows. This can be any font
+            from the System.Drawing.Font structure
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.DataFontColor">
+            <summary>
+            Gets/Sets the data font color for the StyledTable
+            </summary>
+            <remarks>This property sets the data row font color of the StyledTable object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.DataSource">
+            <summary>
+            The name for DataTable which exports data to this styled table
+            </summary>
+            <remarks>
+            Relevant for dynamic contents table. The binding itself is done programmaticly with
+            <see cref="M:daReport.DaPrintDocument.AddData(System.Data.DataTable)">daReport.DaPrintDocument.AddData(DataTable)</see>
+            method of the DaPrintDocument class.
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.DrawEmptyRows">
+            <summary>
+            Gets/Sets whether empty rows be drawn if any space in table area remains unused.
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.DrawHeader">
+            <summary>
+            Gets/Sets whether to draw the table header row in the generated report.
+            </summary>
+            <remarks>This will affect how many possible rows can be drawn on the table.
+            See <see cref="M:daReport.StyledTable.GetPossibleRowNumber">daReport.StyledTable.GetPossibleRowNumber</see></remarks>
+        </member>
+        <member name="P:daReport.StyledTable.GroupByField">
+            <summary>
+            Gets/Sets the GroupByField for the data
+            </summary>
+            <remarks>This property is only used for dynamic tables. Grouping occurs on the field specified.</remarks>
+        </member>
+        <member name="P:daReport.StyledTable.HeaderBackgroundColor">
+            <summary>
+            Gets/Sets the header background color for the StyledTable
+            </summary>
+            <remarks>This property sets the header background color of the StyledTable object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.HeaderFont">
+            <summary>
+            Gets/Sets the header font for the StyledTable
+            </summary>
+            <remarks>This property sets the header font of the StyledTable object. This can be any font
+            from the System.Drawing.Font structure
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.HeaderFontColor">
+            <summary>
+            Gets/Sets the header font color for the StyledTable
+            </summary>
+            <remarks>This property sets the header font color of the StyledTable object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.StyledTable.Height">
+            <summary>
+             Gets or sets the height of the StyledTable
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.HorizontalAlignment">
+            <summary>
+             Gets or sets the horizontal alignment of the StyledTable
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.VerticalAlignment">
+            <summary>
+             Gets or sets the vertical alignment of the StyledTable
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.Width">
+            <summary>
+             Gets or sets the width of the StyledTable.
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.X">
+            <summary>
+            The X coordinate of the left-upper corner of the StyledTable
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.Y">
+            <summary>
+            The Y coordinate of the left-upper corner of the StyledTable
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTable.Selectable">
+            <summary>
+            Gets/Sets whether the StyledTable is selectable in the design pane of the DaReport Designer
+            </summary>
+            <remarks>If set to true, then the StyledTable is not selectable in the DaReport Designer application
+            design pane. It is still selectable in the tree view listing of objects.
+            </remarks>
+        </member>
+        <member name="T:daReport.StyledTableColumn">
+            <summary>
+            Class representing the StyledTableColumn object.
+            </summary>
+            <remarks>The StyledTableColumn is used in the
+            <see cref="P:daReport.StyledTable.Columns">daReport.StyledTable.Columns</see> collection
+            </remarks>
+        </member>
+        <member name="M:daReport.StyledTableColumn.Clone">
+            <summary>
+            Clones the structure of the StyledTableColumn, including all properties
+            </summary>
+            <returns><see cref="T:daReport.StyledTableColumn">daReport.StyledTableColumn</see></returns>
+        </member>
+        <member name="M:daReport.StyledTableColumn.#ctor">
+            <summary>
+            Initializes a new instance of the StyledTableColumn class.
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTableColumn.Alignment">
+            <summary>
+             Gets/Sets the horizontal alignment of text in the StyledTableColumn
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTableColumn.FormatMask">
+            <summary>
+            Gets/Sets the FormatMask used to format the data being placed into the row
+            </summary>
+            <remarks>These can be any standard formatting of strings used in the string.Format method. This
+            also depends on the data-type being passed in. For DateTime datatypes, you can use a FormatMask of
+            "yyyy-MM-dd" for example. Or for currency use a "c" (without quotes for both of these examples)</remarks>
+        </member>
+        <member name="P:daReport.StyledTableColumn.Label">
+            <summary>
+            Gets/Sets the label of the column displayed in the report
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTableColumn.Name">
+            <summary>
+            Gets/Sets the name of the column
+            </summary>
+        </member>
+        <member name="P:daReport.StyledTableColumn.Visible">
+            <summary>
+             Gets or sets a value indicating whether the StyledTableColumn is displayed.
+            </summary>
+            <remarks>If set to false, the column will not be displayed in the report.</remarks>
+        </member>
+        <member name="P:daReport.StyledTableColumn.Width">
+            <summary>
+             Gets or sets the width of the StyledTableColumn.
+            </summary>
+            <remarks>This will affect the width of the overall table.</remarks>
+        </member>
+        <member name="T:daReport.StyledTableColumn.AlignmentType">
+            <summary>
+            Enumeration of possible horizontal alignments for the StyledTableColumn text
+            </summary>
+        </member>
+        <member name="F:daReport.StyledTableColumn.AlignmentType.Left">
+            <summary>Left Alignment in the coloumn</summary>
+        </member>
+        <member name="F:daReport.StyledTableColumn.AlignmentType.Center">
+            <summary>Center Alignment in the coloumn</summary>
+        </member>
+        <member name="F:daReport.StyledTableColumn.AlignmentType.Right">
+            <summary>Right Alignment in the coloumn</summary>
+        </member>
+        <member name="T:daReport.TextField">
+            <summary>
+            Class representing the TextField object.
+            </summary>
+            <remarks>The TextField is used in reports where graphical representation of data is used.</remarks>
+        </member>
+        <member name="M:daReport.TextField.#ctor">
+            <summary>
+            Initializes a new instance of the TextField class.
+            </summary>
+        </member>
+        <member name="M:daReport.TextField.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,daReport.DaPrintDocument)">
+            <summary>
+            Initializes a new instance of the TextField class.
+            </summary>
+            <param name="originX">x-position of the new TextField</param>
+            <param name="originY">y-position of the new TextField</param>
+            <param name="width">Width of the new TextField</param>
+            <param name="height">Height of the new TextField</param>
+            <param name="parent">Parent of the new TextField</param>
+        </member>
+        <member name="M:daReport.TextField.Clone">
+            <summary>
+            Clones the structure of the TextField, including all properties
+            </summary>
+            <returns><see cref="T:daReport.TextField">daReport.TextField</see></returns>
+        </member>
+        <member name="M:daReport.TextField.GetRegion">
+            <summary>
+            Gets the region of the current TextField
+            </summary>
+            <returns>System.Drawing.Rectangle</returns>
+        </member>
+        <member name="M:daReport.TextField.Paint(System.Drawing.Graphics)">
+            <summary>
+            Paints the TextField
+            </summary>
+            <param name="g">The Graphics object to draw</param>
+            <remarks>Causes the ChartBox to be painted to the screen.</remarks>
+        </member>
+        <member name="P:daReport.TextField.BackgroundColor">
+            <summary>
+            Gets/Sets the background color for the TextField
+            </summary>
+            <remarks>This property sets the background color of the TextField object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.TextField.BorderColor">
+            <summary>
+            Gets/Sets the border color for the TextField
+            </summary>
+            <remarks>This property sets the border color of the TextField object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:daReport.TextField.BorderWidth" -->
+        <member name="P:daReport.TextField.Font">
+            <summary>
+            Gets/Sets the font used in the TextField object
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.ForegroundColor">
+            <summary>
+            Gets/Sets the foreground color for the TextField
+            </summary>
+            <remarks>This property sets the foreground color of the TextField object. This can be any color
+            from the System.Drawing.Color structure
+            </remarks>
+        </member>
+        <member name="P:daReport.TextField.Text">
+            <summary>
+            Gets/Sets text to be displayed in the TextField object.
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.TextAlignment">
+            <summary>
+             Gets or sets the horizontal alignment of text in the ChartBox
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.TextVerticalAlignment">
+            <summary>
+             Gets or sets the vertical alignment of text in the ChartBox
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.HorizontalAlignment">
+            <summary>
+             Gets or sets the horizontal alignment of the TextField
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.Height">
+            <summary>
+             Gets or sets the height of the TextField
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.VerticalAlignment">
+            <summary>
+             Gets or sets the vertical alignment of the TextField
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.Width">
+            <summary>
+             Gets or sets the width of the TextField.
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.X">
+            <summary>
+            The X coordinate of the left-upper corner of the TextField
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.Y">
+            <summary>
+            The Y coordinate of the left-upper corner of the TextField
+            </summary>
+        </member>
+        <member name="P:daReport.TextField.Selectable">
+            <summary>
+            Gets/Sets whether the TextField is selectable in the design pane of the DaReport Designer
+            </summary>
+            <remarks>If set to true, then the TextField is not selectable in the DaReport Designer application
+            design pane. It is still selectable in the tree view listing of objects.
+            </remarks>
+        </member>
+        <member name="T:daReport.TextField.TextAlignmentType">
+            <summary>
+            Enumeration of possible horizontal alignments for the TextField text
+            </summary>
+        </member>
+        <member name="F:daReport.TextField.TextAlignmentType.Left">
+            <summary>Text is aligned to the left of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextAlignmentType.Center">
+            <summary>Text is aligned to the center of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextAlignmentType.Right">
+            <summary>Text is aligned to the right of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextAlignmentType.Justified">
+            <summary>Text is aligned to both sides of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextAlignmentType.None">
+            <summary>The text is not aligned and will be displayed normally</summary>
+        </member>
+        <member name="T:daReport.TextField.TextVerticalAlignmentType">
+            <summary>
+            Enumeration of possible horizontal alignments for the TextField text
+            </summary>
+        </member>
+        <member name="F:daReport.TextField.TextVerticalAlignmentType.Top">
+            <summary>Text is aligned to the top of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextVerticalAlignmentType.Middle">
+            <summary>Text is aligned to the middle of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextVerticalAlignmentType.Bottom">
+            <summary>Text is aligned to the bottom of the TextField</summary>
+        </member>
+        <member name="F:daReport.TextField.TextVerticalAlignmentType.None">
+            <summary>The text is not aligned and will be displayed normally</summary>
+        </member>
+    </members>
+</doc>

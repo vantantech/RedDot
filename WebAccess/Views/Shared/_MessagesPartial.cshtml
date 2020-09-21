@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebAccess.Models.SystemMessage>
+
+
+
+@foreach (var mess in Model)
+{
+    <div class="row">
+        <div class="col-md-10  col-md-offset-1 alert alert-dismissible @mess.MsgType">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            @if (mess.MsgType == "alert-danger")
+            {
+                <div class="row css_blink">
+                    <div class="col col-sm-8">@mess.Message</div>
+                    <div class="col col-sm-2">@mess.CreatedBy</div>
+                    <div class="col col-sm-1">@mess.UpdateDate.Value.ToShortDateString()</div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col col-sm-8">@mess.Message</div>
+                    <div class="col col-sm-2">@mess.CreatedBy</div>
+                    <div class="col col-sm-1">@mess.UpdateDate.Value.ToShortDateString()</div>
+                 
+                </div>
+            }
+
+
+
+        </div>
+
+    </div>
+}

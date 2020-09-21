@@ -1,0 +1,249 @@
+﻿@model IEnumerable<WebAccess.ViewModels.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#table1').DataTable({ "bDestroy": "true", "scrollY": "500px", "lengthMenu": [[-1], ["All"]], "sDom": "tr" });
+
+ 
+    });
+
+
+    $(function () {
+
+
+        $("#startdate").datepicker({
+            showOn: "button",
+            buttonImage: "/Content/calendar_small.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            autoclose: true
+        });
+
+
+        $("#enddate").datepicker({
+            showOn: "button",
+            buttonImage: "/Content/calendar_small.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            autoclose: true
+        });
+
+    })
+</script>
+
+<ul class="breadcrumb">
+    <li><a href="\Home">Home</a></li>
+    <li class="active">Sales</li>
+</ul>
+
+
+<h2>Tickets</h2>
+
+@{
+    decimal total = 0;
+    decimal subtotal = 0;
+    string tech = "";
+
+}
+
+
+<p>
+    @using (Html.BeginForm("Index", "Sales"))
+    {
+
+
+
+        <div class="row">
+            <div class="col-sm-2 ">
+                <div class="input-group">
+                    <span class="input-group-addon">Store:</span>
+                    @Html.DropDownList("StoreId", (IEnumerable<SelectListItem>)ViewBag.Stores, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+
+            </div>
+            <div class="col-sm-3 ">
+                <div class="input-group">
+                    <span class="input-group-addon">Start Date:</span>
+                    @Html.TextBox("startdate", (string)ViewBag.startdate, new { @class = "form-control", placeholder = "MM/DD/YYYY" })
+                </div>
+
+
+            </div>
+            <div class="col-sm-3 ">
+                <div class="input-group">
+                    <span class="input-group-addon">End Date:</span>
+                    @Html.TextBox("enddate", (string)ViewBag.enddate, new { @class = "form-control", placeholder = "MM/DD/YYYY" })
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-1">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary" name="action" value="save" id="action" data-toggle="tooltip" data-placement="right" title="Refresh Data">Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    }
+
+</p>
+
+
+<table class="display" id="table1" style="width: 500px">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ticketno)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.saledate)
+            </th>
+            <th>Cashier</th>
+            <th>
+                @Html.DisplayNameFor(model => model.subtotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.adjustment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total)
+            </th>
+            <th>
+                Nail Tech
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.note)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.stationno)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            total = total + (decimal)item.total;
+            subtotal = subtotal + (decimal)item.subtotal;
+            tech = "";
+            foreach (var line in item.TicketItems.Select(x => new { x.EmployeeName }).Distinct())
+            {
+                tech = tech + "," + line.EmployeeName;
+            }
+            if (tech != "")
+            {
+                tech = tech.Substring(1);
+            }
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ticketno)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.saledate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subtotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.adjustment)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @(tech)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stationno)
+            </td>
+
+            <td>
+                @Html.ActionLink("Details", "Details", "Sales", new { id = item.id }, null)
+            </td>
+        </tr>
+        }
+
+    </tbody>
+
+
+
+
+
+
+
+    <tfoot>
+        <tr>
+
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                @(subtotal)
+            </td>
+            <td>
+                &nbsp;
+            </td>
+
+            <td>
+                @(total)
+            </td>
+
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+    </tfoot>
+
+
+</table>
+

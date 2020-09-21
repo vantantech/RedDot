@@ -1,0 +1,9 @@
+<SIP>
+<Version>1.0</Version>
+<ECRId></ECRId>
+<Request>CreditAuth</Request>
+<ConfirmAmount></ConfirmAmount>
+<InvoiceNbr></InvoiceNbr>
+<TotalAmount></TotalAmount>
+</SIP>
+

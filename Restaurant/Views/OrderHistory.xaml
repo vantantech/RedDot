@@ -1,0 +1,293 @@
+﻿<Window x:Class="RedDot.OrderHistory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:local="clr-namespace:RedDot"
+  
+        Title="OrderHistory" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+
+                <ResourceDictionary Source="/Resources/QuickSalesResource.xaml" />
+
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+            <local:BalanceToColorConverter x:Key="BalanceToColorConverter"/>
+            <local:ReversedToVisibilityConverter x:Key="ReversedToVisibilityConverter"/>
+            <local:ClosedToVisibilityConverter x:Key="ClosedToVisibilityConverter"/>
+
+
+
+
+
+            <DataTemplate x:Key="TicketList">
+                <RadioButton IsChecked="{Binding selected}" 
+                         Command="{Binding DataContext.SelectClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                         CommandParameter="{Binding id}"
+                         Height="auto" Width="500" GroupName="tickets"   Style="{StaticResource TicketListStyle}">
+
+                    <Border Width="450"  BorderThickness="1" BorderBrush="DarkGray" CornerRadius="3" Margin="2,2"   Background="{Binding status, Converter={StaticResource StringToColorConverter }}">
+
+                        <StackPanel Orientation="Vertical" Background="{Binding transtype, Converter={StaticResource StringToColorConverter }}">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Order #:"             Width="auto" TextAlignment="Right"  Foreground="DarkBlue"   FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding ordernumber }"         Width="50"                          Foreground="DarkBlue"      FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="Receipt #:"             Width="auto" TextAlignment="Right"  Foreground="DarkBlue"   FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                                <TextBlock Text="{Binding id }"         Width="50"                          Foreground="DarkBlue"      FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding saledate}"    Width="auto"                        Foreground="DarkBlue"       FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
+                             
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Status:"         Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                                <TextBlock Text="{Binding status }"     Width="80"                          Foreground="DarkBlue"       FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                                <TextBlock Text="Customer:"         Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding phone1}"  Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                            </StackPanel>
+                            
+                            
+                            
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Payment:"         Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                             
+                                <TextBlock Text="{Binding paymenttype}"             Width="auto"  Foreground="DarkBlue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding total, StringFormat=c }"  Width="auto"  Foreground="DarkBlue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding balance, StringFormat=c }" Width="auto"  Foreground="{Binding balance,Converter={StaticResource BalanceToColorConverter}}" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Text="Server: "            Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding displayname}"     Width="200"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap" />
+                                <TextBlock Text="Tip: "            Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding tip}"     Width="auto"    FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" TextWrapping="Wrap"  />
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+                </RadioButton>
+
+            </DataTemplate>
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Orientation="Vertical">
+
+                <TextBlock Text="Query Date Range" Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold" />
+                <StackPanel  Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Bottom" Width="250" >
+                    <TextBlock Text="{Binding StartDate, StringFormat='MM/dd/yy'}"   Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold"  />
+                    <TextBlock Text=" to "                                           Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold"   />
+                    <TextBlock Text="{Binding EndDate, StringFormat='MM/dd/yy'}"   Width="auto" FontSize="15" FontFamily="Consolas" FontWeight="Bold"   />
+                </StackPanel>
+            </StackPanel>
+
+
+
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding PreviousClicked}">
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/previous.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc Previous}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding TodayClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/today.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc Today}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding NextClicked}" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/next.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc Next}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+
+
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding CustomClicked}" 
+                           >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/calendar.png" Height="35" Width="40"/>
+                        <TextBlock Text="{Loc CustomDate}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="55"   Width="100" 
+                             Command="{Binding ByTicketIDClicked}" 
+                            >
+                    <StackPanel>
+                        <Image Source="/media/ticket.png" Height="35" Width="40"/>
+                        <TextBlock Text="By Ticket #"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+       
+        </StackPanel>
+
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+
+                <ColumnDefinition Width="350"/>
+         
+                <ColumnDefinition Width="110"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical">
+                <ScrollViewer  x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="700">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+
+
+                        <ItemsControl Name="IC1"  ItemsSource="{Binding HistoryData}" ItemTemplate="{StaticResource TicketList}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+
+
+                </ScrollViewer>
+
+
+
+            </StackPanel>
+
+
+
+            <ScrollViewer Grid.Column="1" Visibility="{Binding VisibleTicket}" x:Name="ScrollViewer2" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="700" >
+                <ScrollViewer.Resources>
+                    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Width" Value="40"/>
+                                <Setter Property="Height" Value="Auto" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Resources>
+
+                <local:ReceiptControl Width="310"  HorizontalAlignment="Left" />
+
+
+            </ScrollViewer>
+
+
+
+            <Rectangle Grid.Column="2" Fill="Bisque" />
+
+            <WrapPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+          
+                <Button  Style="{StaticResource  BottomButtons}"  Command="{Binding PrintReceiptClicked}" Height="70"  Width="95" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/receipt.png" Width="40" Height="40"/>
+                        <TextBlock    Text="{Loc PrintReceipt}" />
+                    </StackPanel>
+                </Button>
+                <Button Visibility="{Binding Other}"  Style="{StaticResource  BottomButtons}"  Command="{Binding PrintCreditSlipClicked}" CommandParameter="Other" Height="70"  Width="95">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/receipt.png" Width="40" Height="40"/>
+                        <TextBlock    Text="{Loc PrintCreditSlip}" />
+                    </StackPanel>
+                </Button>
+                <Button Visibility="{Binding Other}"  Style="{StaticResource  BottomButtons}"  Command="{Binding PrintPackagingReceiptClicked}" CommandParameter="Other" Height="70"  Width="95">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/receipt.png" Width="40" Height="40"/>
+                        <TextBlock    Text="{Loc PrintPackagingReceipt}" />
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding ReverseOrderClicked}" Height="70"  Width="95" >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/reverse.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Re-Open"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+      
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding RefundClicked}" Height="70"  Width="95" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/refund.png" Width="60" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc Refund}"  />
+                    </StackPanel>
+                </Button>
+        
+
+                <Button  Style="{StaticResource BottomButtons}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="70"  Width="95"   Click="Button_Exit" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/back.png" Width="40" Height="40"/>
+                        <TextBlock  Text="BACK" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+
+
+        </Grid>
+
+
+
+
+
+
+
+    </Grid>
+
+</Window>

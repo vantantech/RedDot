@@ -1,0 +1,161 @@
+﻿<Window  x:Class="RedDot.CashTenderedView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+      
+        Title="Cash Tendered"  Height="768" Width="724"  WindowStartupLocation="Manual" WindowStyle="None" Icon="/media/sphere.png"  ResizeMode="NoResize"   >
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF31A546" Offset="1"/>
+            <GradientStop Color="#FF8AD49E" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+         
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/ListView.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter" />
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Width="550"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="200" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.ColumnSpan="2" Height="80"  Width="180"  Command="{Binding CashClicked}"   CommandParameter="{Binding ElementName=tbAmount, Path=Text}" >
+                <TextBlock x:Name="tbAmount"  Height="55" Width="150"  FontSize="30" TextAlignment="Right"  />
+
+            </Button>
+           
+            
+            
+            <Button Grid.Column="2"  Content="CLR" Width="80" Height="80" FontSize="24"  Click="ClearClick"/>
+            <Button  Grid.Column="3" Grid.ColumnSpan="2"   HorizontalAlignment="Center"  Width="180" Height="80" FontSize="24" Background="#FF1AD41A"
+                     Command="{Binding CashClicked }"  
+                     CommandParameter="{Binding BalanceStr}" >
+               
+                <TextBlock Text ="{Binding BalanceStr}"/>
+            </Button>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Content="7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="1" Content="8" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="2" Content="9" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Visibility="{Binding Auto1,Converter={StaticResource EmptyToVisibilityConverter}}"   Grid.Column="3" Content="{Binding Auto1}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="24"  Background="#FF23B896"
+                     Command="{Binding CashClicked}"  CommandParameter="{Binding Auto1}"/>
+            <Button  Visibility="{Binding Auto2,Converter={StaticResource EmptyToVisibilityConverter}}"   Grid.Column="4" Content="{Binding Auto2}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="24"  Background="#FF23B896"
+                     Command="{Binding CashClicked}"  CommandParameter="{Binding Auto2}"/>
+
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Content="4" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="1" Content="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="2" Content="6" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Visibility="{Binding Auto3,Converter={StaticResource EmptyToVisibilityConverter}}"   Grid.Column="3" Content="{Binding Auto3}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="24"  Background="#FF23B896" 
+                     Command="{Binding CashClicked}"  CommandParameter="{Binding Auto3}"/>
+            <Button  Visibility="{Binding Auto4,Converter={StaticResource EmptyToVisibilityConverter}}"   Grid.Column="4" Content="{Binding Auto4}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="24"  Background="#FF23B896"
+                     Command="{Binding CashClicked}"  CommandParameter="{Binding Auto4}" />
+
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Content="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="1" Content="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="2" Content="3" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Visibility="{Binding Auto5,Converter={StaticResource EmptyToVisibilityConverter}}"   Grid.Column="3" Content="{Binding Auto5}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="24"  Background="#FF23B896" 
+                     Command="{Binding CashClicked}"  CommandParameter="{Binding Auto5}"/>
+            <Button Visibility="{Binding Auto6,Converter={StaticResource EmptyToVisibilityConverter}}"  Grid.Column="4" Content="{Binding Auto6}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="24"  Background="#FF23B896"
+                     Command="{Binding CashClicked}"  CommandParameter="{Binding Auto6}" />
+
+        </Grid>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+       
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="1" Content="." HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+            <Button  Grid.Column="2" Content="00" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+     
+
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">
+          
+
+
+            <Button  Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="100" Command="{Binding CashClicked}"   CommandParameter="{Binding ElementName=tbAmount, Path=Text}"   >
+                <StackPanel>
+                    <Image Source="/media/ok.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc OK}"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="50,0,0,0" Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                    Width="100" Height="70"  Click="CancelClick"  Tag="">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/back.png" Width="40" Height="40"/>
+                    <TextBlock Margin="20,5,5,5" Text="{Loc Back}" FontSize="15" FontWeight="Normal"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+
+    </Grid>
+
+
+
+</Window>

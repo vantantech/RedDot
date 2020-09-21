@@ -1,0 +1,9 @@
+﻿<Window x:Class="RedDot.WaitView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:control="clr-namespace:RedDot.Control"
+        Title="Wait" Height="300" Width="300" WindowStyle="None" WindowStartupLocation="CenterScreen" Topmost="true">
+    <Grid>
+        <control:LoadingAnimation x:Name="waitbox" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    </Grid>
+</Window>

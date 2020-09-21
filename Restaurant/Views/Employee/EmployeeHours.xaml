@@ -1,0 +1,85 @@
+﻿<Window x:Class="RedDot.EmployeeHours"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:local="clr-namespace:RedDot"
+        Title="Employee" Height="768" Width="1024"    WindowStartupLocation="CenterScreen" WindowStyle="None"  ResizeMode="NoResize"  >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF8AAED4" Offset="1"/>
+            <GradientStop Color="LightSteelBlue" Offset="0"/>
+
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+
+
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Orientation="Vertical">
+
+
+        <local:EmployeeTimeControl />
+
+
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button  Margin="5"  Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="80"   Width="100" Command="{Binding ClockinClicked}" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/Clockin.png" Width="40" Height="40"></Image>
+                    <TextBlock Text="{Loc Clockin}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+            <Button   Margin="5" Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="80"   Width="100" Command="{Binding ClockoutClicked}" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/Clockout.png" Width="40" Height="40"></Image>
+                    <TextBlock Text="{Loc Clockout}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="5" Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"  
+                                        Command="{Binding ExportHoursClicked}" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/csv.png" Height="40" Width="40"/>
+                    <TextBlock Text="Export CSV"></TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Margin="5" Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"  
+                                        Command="{Binding PrintHoursClicked}" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/printer.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc PrintHours}"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Margin="5" Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Right" VerticalAlignment="Top" Height="80"   Width="100"    Click="Button_Cancel" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc Back}"></TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+    </StackPanel>
+
+
+
+
+</Window>

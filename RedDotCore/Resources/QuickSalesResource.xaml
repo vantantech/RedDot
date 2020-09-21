@@ -1,0 +1,171 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:local="clr-namespace:RedDot"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Icons.xaml" />
+        <ResourceDictionary Source="Buttons.xaml" />
+        <ResourceDictionary Source="ListView.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+    <local:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+    <local:StringToColorConverter x:Key="StringToColorConverter"/>
+    <local:StringToBackgroundConverter x:Key="StringToBackgroundConverter"/>
+    <local:InverseConverter x:Key="InverseConverter"/>
+    <local:BooleanToColorConverter x:Key="BooleanToYellowConverter"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+
+    <Style TargetType="TextBlock" x:Key="Label">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <Style TargetType="Button" BasedOn="{StaticResource CustomButtonStyleFlat}" x:Key="BottomButtons">
+        <Setter Property="Width" Value="90"/>
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="Margin" Value="0,5,5,0"/>
+
+    </Style>
+    <Style TargetType="TextBlock" x:Key="BottomTextBlock">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+
+    <LinearGradientBrush x:Key="GradientBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF1C9B37" Offset="1"/>
+        <GradientStop Color="#FF26DE2C" Offset="0.7"/>
+    </LinearGradientBrush>
+
+
+
+
+  
+
+
+
+
+
+
+
+    <!-- DATA TEMPLATE for Category on left of screen-->
+
+    <DataTemplate x:Key="CategoryTemplate" >
+
+        <!-- Category Style 2 simpler-->
+        <Grid Margin="4" >
+            <Border BorderThickness="1" BorderBrush="Gray"  >
+
+                <Button  Command="{Binding DataContext.CategoryProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+
+                        <Button.Template>
+                            <ControlTemplate>
+                            <Border Width="100"  Height="80"  Background="{Binding colorcode}"  >
+                                <StackPanel Orientation="Vertical">
+                            
+                               
+                                    <Image Source="{Binding imgurl}" Width="100" Height="40" Stretch="Fill"/>
+                                    <TextBlock Text="{Binding description}" Width="Auto" Height="Auto"  FontSize="15" Foreground="Black" TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                  
+                             
+                                </StackPanel>
+                            </Border>
+                        </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+            </Border>
+        </Grid>
+
+    </DataTemplate>
+
+    <!-- DATA Template for Product-->
+    <DataTemplate x:Key="ProductTemplate">
+
+        <Border BorderThickness="1"   Margin="1"  BorderBrush="Gray" >
+
+            <Button   Command="{Binding DataContext.ProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding ID}" >
+                <Button.Template>
+                    <ControlTemplate>
+
+                        <StackPanel Orientation="Horizontal">
+                          
+                            <Border Width="100"  Height="120"  Background="{Binding ColorCode}">
+                                <StackPanel Orientation="Vertical">
+                                    <Image Source="{Binding ImgUrl}" Width="100" Height="40" Stretch="Fill" />
+                                    <TextBlock Text="{Binding Description}" Width="Auto" Height="Auto" VerticalAlignment="Center" TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding Description2}" Width="Auto" Height="Auto" VerticalAlignment="Center" TextAlignment="Center" FontSize="12" Foreground="Blue" TextWrapping="Wrap"></TextBlock>
+
+
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Border>
+
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="SimpleProductTemplate">
+
+        <Border BorderThickness="1"  Height="50" Margin="2"  BorderBrush="Gray" >
+
+            <Button   Command="{Binding DataContext.ProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding ID}" >
+                <Button.Template>
+                    <ControlTemplate>
+
+      
+
+                            <Border Width="100"  Height="50"  Background="AliceBlue" >
+                                <StackPanel Orientation="Vertical" Background="{Binding ColorCode}">
+
+                                    <TextBlock Text="{Binding Description}" Width="100"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding PriceStr}"  Width="100"  TextAlignment="Center" FontSize="12"></TextBlock>
+
+                                </StackPanel>
+                            </Border>
+      
+
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Border>
+
+    </DataTemplate>
+
+    <DataTemplate x:Key="SimpleProductTemplate2">
+
+        <Border BorderThickness="1"  Height="50" Margin="2"  BorderBrush="Gray" >
+
+            <Button   Command="{Binding DataContext.ProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding ID}" >
+                <Button.Template>
+                    <ControlTemplate>
+
+
+
+                        <Border Width="100"  Height="50"  Background="AliceBlue" >
+                            <Grid Background="{Binding ColorCode}">
+
+                                <TextBlock Text="{Binding Description}" Width="100"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+
+
+                                <TextBlock Text="{Binding PriceStr}" VerticalAlignment="Bottom" Width="100"  TextAlignment="Center" FontSize="16" Foreground="LightGray" ></TextBlock>
+
+
+                            </Grid>
+                        </Border>
+
+
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Border>
+
+    </DataTemplate>
+</ResourceDictionary>

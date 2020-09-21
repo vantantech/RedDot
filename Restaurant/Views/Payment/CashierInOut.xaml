@@ -1,0 +1,373 @@
+﻿<Window x:Class="RedDot.CashierInOut"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+        Title="Cashier" Height="768" Width="1024"  WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/media/sphere.png" ResizeMode="NoResize"  >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="AliceBlue" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+
+
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/ListView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+            <DataTemplate x:Key="TicketList">
+                <Border Background="White"   CornerRadius="2">
+
+
+                    <Button Command="{Binding DataContext.OpenOrderClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+
+
+                        <StackPanel Orientation="Horizontal" Height="25">
+                            <TextBlock Text="{Binding id}"  Width="50"  FontSize="12" />
+                            <TextBlock Text="{Binding saledate,StringFormat=d}"  Width="80" FontSize="12"/>
+                            <TextBlock Text="{Binding total,StringFormat=c}"  Width="70" FontSize="12" TextAlignment="Right"/>
+                            <TextBlock Text="{Binding rewardearned,StringFormat=c}"  Width="70" FontSize="12" TextAlignment="Right"/>
+                            <TextBlock Text="{Binding rewardused,StringFormat=c}"  Width="70" FontSize="12" TextAlignment="Right"/>
+
+                        </StackPanel>
+                    </Button>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="CreditList">
+                <Border Background="White" BorderThickness="1" BorderBrush="LightGray" CornerRadius="2">
+
+
+                    <Button Command="{Binding DataContext.CreditDeleteClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+
+
+                        <StackPanel Orientation="Horizontal" Height="25">
+                            <TextBlock Text="{Binding id}"  Width="50"  FontSize="12" />
+                            <TextBlock Text="{Binding creditdate, StringFormat=d}"  Width="80" FontSize="12"/>
+                            <TextBlock Text="{Binding points}"  Width="40" FontSize="12" TextAlignment="Right"/>
+                            <TextBlock Text="{Binding cash,StringFormat=c}"  Width="70" FontSize="12" TextAlignment="Right"/>
+                            <TextBlock  Margin="5,0,0,0" Text="{Binding note}"  Width="100" FontSize="12" TextAlignment="Left"/>
+
+                        </StackPanel>
+                    </Button>
+                </Border>
+            </DataTemplate>
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+
+
+
+
+
+
+    <Border BorderThickness="3" BorderBrush="Yellow"  CornerRadius="3">
+        <Grid>
+
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
+              
+           
+
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Height="30" Margin="0,10">
+                <TextBlock  Text="Station : " TextAlignment="Right" Height="25"   FontWeight="ExtraBold" FontSize="15" Width="100"/>
+                <TextBlock   Margin="5,0,0,0" Text="{Binding  StationNo}" TextAlignment="Left"  Height="25"  FontWeight="ExtraBold" FontSize="15" Width="200"/>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Margin="5,0,0,0"  BorderThickness="2" BorderBrush="Black">
+
+                    <StackPanel Orientation="Vertical">
+
+                        <TextBlock Margin="5"  Text="Cashier In" TextAlignment="Center" Height="25"  FontWeight="ExtraBold" FontSize="18" Width="100"/>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$100 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash100}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash100Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$50 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash50}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash50Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$20 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash20}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash20Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$10 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash10}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash10Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$5 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash5}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash5Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$2 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash2}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash2Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$1 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash1}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash1Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.50 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash50cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash50centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.25 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash25cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash25centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.10 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash10cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash10centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.05 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash5cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash5centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.01 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashIn.Cash1cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.Cash1centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+
+                        <Rectangle Margin="5" Width="200" Height="1" Fill="Black"/>
+                        
+                        
+                        
+                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100" FontWeight="ExtraBold"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashIn.CashTotal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                        </StackPanel>
+
+
+                        <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="15,10,5,0" Command="{Binding CashierInClicked}" >
+                            <StackPanel>
+                                <Image Source="/media/cashierin.jpg" Height="40" Width="40"/>
+                                <TextBlock Text="{Loc CashierIn}"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+
+                <Border Margin="5,0,0,0" Grid.Column="1" BorderThickness="2" BorderBrush="Black">
+
+                    <StackPanel Orientation="Vertical">
+
+                        <TextBlock Margin="5"  Text="Cashier Out" TextAlignment="Center" Height="25"  FontWeight="ExtraBold" FontSize="18" Width="100"/>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$100 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash100}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash100Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$50 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash50}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash50Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$20 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash20}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash20Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$10 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash10}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash10Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$5 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash5}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash5Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$2 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash2}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash2Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$1 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash1}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash1Val}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.50 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash50cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash50centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.25 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash25cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash25centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.10 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash10cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash10centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.05 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash5cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash5centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="$0.01 : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CashOut.Cash1cent}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.Cash1centVal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+
+                        </StackPanel>
+
+                        <Rectangle Margin="5" Width="200" Height="1" Fill="Black"/>
+
+
+
+                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100" FontWeight="ExtraBold"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  CashOut.CashTotal}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+                        </StackPanel>
+
+
+                        <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="15,10,5,0" Command="{Binding CashierOutClicked}" >
+                            <StackPanel>
+                                <Image Source="/media/cashierin.jpg" Height="40" Width="40"/>
+                                <TextBlock Text="{Loc CashierOut}"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Border Margin="5,0,0,0"  Grid.Column="2" BorderThickness="2" BorderBrush="Black">
+                    <StackPanel  Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Totals" TextAlignment="Center" Height="25"  TextWrapping="Wrap"  FontSize="18" FontWeight="Bold" Width="240"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total Cash Sales:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox   IsReadOnly="True"  Margin="5,0,0,0" Text="{Binding  CashSales,Mode=OneWay}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total Credit Sales:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox   IsReadOnly="True"  Margin="5,0,0,0" Text="{Binding  CreditSales,Mode=OneWay}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total Check Sales:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox   IsReadOnly="True"  Margin="5,0,0,0" Text="{Binding  CheckSales,Mode=OneWay}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total Gift Card Sales:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox   IsReadOnly="True"  Margin="5,0,0,0" Text="{Binding  GiftCardSales,Mode=OneWay}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+                        </StackPanel>
+
+
+                    
+
+                        <Rectangle Margin="5" Width="200" Height="1" Fill="Black"/>
+
+                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Total : " TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100" FontWeight="ExtraBold"/>
+                            <TextBlock   Margin="5,0,0,0" Text="{Binding  TotalSales}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="20" FontWeight="Bold" Width="80"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Border>
+            </Grid>
+
+
+
+
+
+
+            <StackPanel Orientation="Horizontal" Grid.Row="2">
+
+
+
+
+
+
+
+
+
+
+                <Button  Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="500,10,5,0"  Click="Button_Cancel" >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                        <TextBlock Text="{Loc Back}"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+
+        </Grid>
+    </Border>
+</Window>

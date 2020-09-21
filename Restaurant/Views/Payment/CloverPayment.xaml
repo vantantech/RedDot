@@ -1,0 +1,226 @@
+﻿<Window x:Class="RedDot.CloverPayment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RedDot"
+        mc:Ignorable="d"
+        Title="CloverPayment" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None">
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF31A546" Offset="1"/>
+            <GradientStop Color="#FF163ADC" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/ListView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+
+            <RowDefinition Height="550"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <TextBlock Text="Clover Payment Processor" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Center">
+
+            
+                        <ScrollViewer Name="posscroll" Height="500" Width="380" Background="Black">
+                            <TextBox Text="{Binding POSMessage}" Width="350"  Margin="5"  TextWrapping="Wrap" Foreground="Green" FontFamily="Courier New"  BorderThickness="0" FontSize="15" VerticalAlignment="Top" HorizontalAlignment="Center" Background="Black" />
+                        </ScrollViewer>
+                
+               
+
+
+
+
+
+            </Grid>
+
+            <Grid Grid.Column="1" Visibility="{Binding NumPadVisibility}" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="85" />
+                    <RowDefinition Height="85" />
+                    <RowDefinition Height="85" />
+                    <RowDefinition Height="85" />
+                    <RowDefinition Height="85" />
+
+                </Grid.RowDefinitions>
+
+
+
+
+
+
+                <Grid Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbAmount" Text ="{Binding BalanceStr}" Height="80" Width="160"  FontSize="30" TextAlignment="Right" Background="#FF1AAAD4"  />
+
+
+                    <Button Grid.Column="2"  Content="CLR" Width="80" Height="80" FontSize="24"  Click="ClearClick"/>
+
+
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Content="7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="1" Content="8" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="2" Content="9" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+
+
+
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Content="4" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="1" Content="5" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="2" Content="6" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+
+
+
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Content="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="1" Content="2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="2" Content="3" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+
+                </Grid>
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="85"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="1" Content="." HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+                    <Button  Grid.Column="2" Content="00" HorizontalAlignment="Center" VerticalAlignment="Top" Width="80" Height="80" FontSize="30" Click="btn_Click"/>
+
+
+
+
+                </Grid>
+
+
+            </Grid>
+
+
+
+            <WrapPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button   Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding CreditSaleClicked}"   CommandParameter="{Binding ElementName=tbAmount, Path=Text}"   >
+                    <StackPanel>
+                        <Image Source="/media/creditcard.png" Height="80" Width="80"/>
+                        <TextBlock Text="Sale" FontSize="20"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+  
+
+
+                <Button   Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding VoidClicked}"      >
+                    <StackPanel>
+                        <Image Source="/media/void.png" Height="80" Width="80"/>
+                        <TextBlock Text="{Loc Void}" FontSize="20" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button   Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding CreditAuthClicked}"   CommandParameter="{Binding ElementName=tbAmount, Path=Text}"   >
+                    <StackPanel>
+                        <Image Source="/media/creditcard.png" Height="80" Width="80"/>
+                        <TextBlock Text="Authorize" FontSize="20"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding CommandClicked}"   CommandParameter="Reset"   >
+                    <StackPanel>
+                        <Image Source="/media/reset.png" Height="80" Width="80"/>
+                        <TextBlock Text="Reset" FontSize="20"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button   HorizontalAlignment="Center" VerticalAlignment="Top"  Style="{StaticResource CustomButtonStyle}" Height="120"   Width="120"   Command="{Binding CommandClicked}" CommandParameter="Back">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/back.png" Height="80" Width="80"/>
+                        <TextBlock  Text="{Loc Back}" FontSize="20"  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+            </WrapPanel>
+
+
+        </Grid>
+
+
+
+
+
+
+
+
+        <Grid Grid.Row="3" HorizontalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+
+
+
+
+
+            </StackPanel>
+
+
+        </Grid>
+    </Grid>
+</Window>

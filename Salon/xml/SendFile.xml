@@ -1,0 +1,9 @@
+<SIP>
+  <Version>1.0</Version>
+  <ECRId></ECRId>
+  <Request>SendFile</Request>
+  <FileName></FileName>
+  <FileSize></FileSize>
+  <FileData></FileData>
+  <MultipleMessage></MultipleMessage>
+</SIP>

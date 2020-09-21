@@ -1,0 +1,168 @@
+﻿<Window x:Class="RedDot.CommissionReport"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+        Title="OwnerReport" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="AliceBlue" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+                <ResourceDictionary Source="/Resources/ListView.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+
+
+            <DataTemplate x:Key="Employeelist">
+
+                <RadioButton GroupName="employeeselection" Margin="3" Style="{StaticResource RoundButtonStyle}" Command="{Binding DataContext.EmployeeClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                                            CommandParameter="{Binding ID}"  Height="45" Width="100"  >
+
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding imgurl}" Stretch="UniformToFill" Width="30" Height="30" />
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock  Text="{Binding firstname}" Width="Auto" Height="Auto"  FontSize="12"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock  Text="{Binding lastname}" Width="Auto" Height="Auto"  FontSize="12"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </RadioButton>
+
+            </DataTemplate>
+
+
+            <DataTemplate x:Key="EmployeeTemplate">
+                <RadioButton  Command="{Binding DataContext.EmployeeClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}"  Height="80" Width="100" GroupName="employeeselection"   Style="{StaticResource CheckInButtonStyle}">
+                    <Border BorderThickness="1" BorderBrush="DarkGray">
+                        <StackPanel Orientation="Vertical">
+                            <Grid>
+                                <Image Source="/media/employee.jpg" Stretch="UniformToFill" Width="70" Height="60" />
+                                <Image Source="{Binding imageurl}" Stretch="UniformToFill" Width="70" Height="60" />
+
+
+                            </Grid>
+                            <TextBlock Background="Goldenrod" Text="{Binding displayname}" Width="Auto" Height="Auto"  FontSize="12"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+
+
+                        </StackPanel>
+                    </Border>
+
+
+                </RadioButton>
+
+            </DataTemplate>
+        </ResourceDictionary>
+
+
+    </Window.Resources>
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="DarkSlateGray" />
+        <StackPanel Orientation="Vertical">
+    
+          
+
+                  <StackPanel Orientation="Horizontal" Height="50">
+                        <CheckBox   Margin="5" Height="20" Width="20" IsChecked="{Binding  ShowAll}" >
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                        <TextBlock Margin="-5" Text="Include past employees" TextWrapping="Wrap" Height="40"  Foreground="White"  TextAlignment="Left" VerticalAlignment="Center"   FontSize="16" Width="150"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="50">
+                        <CheckBox   Margin="5" Height="20" Width="20" IsChecked="{Binding  Cut}" >
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                        <TextBlock Margin="-5" Text="Cut paper per tech" Height="30"  Foreground="White"  TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="15" Width="auto"/>
+                    </StackPanel>
+      
+                <RadioButton GroupName="employeeselection" Margin="3" Style="{StaticResource RoundButtonStyle}" Command="{Binding EmployeeClicked}" 
+                                            CommandParameter="1000"  Height="45" Width="180"  >
+
+                            <TextBlock  Text="All Techs" Width="Auto" Height="Auto"  FontSize="16"  TextWrapping="Wrap"  TextAlignment="Left" VerticalAlignment="Center" />
+                        
+             
+
+                </RadioButton>
+
+       
+  
+
+            <RepeatButton Opacity=".5"  HorizontalAlignment="Left"   Background="Gray" Width="200" Height="55" Click="ScrollUp_Click">
+                <Image Source="/media/uparrow.png" Height="50"/>
+            </RepeatButton>
+            <ScrollViewer   x:Name="ScrollViewer1" Style="{StaticResource myStyle}" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Height="500">
+                <ScrollViewer.Resources>
+                    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Width" Value="40"/>
+                                <Setter Property="Height" Value="Auto" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Resources>
+
+                <ItemsControl  ItemsSource="{Binding SalesTechs}"  ItemTemplate="{StaticResource EmployeeTemplate}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel  />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+
+
+            <RepeatButton Opacity=".5" HorizontalAlignment="Left"    Background="Gray" Width="200" Height="55" Click="ScrollDown_Click">
+                <Image Source="/media/downarrow.png" Height="50"/>
+            </RepeatButton>
+
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+
+
+
+
+
+
+            <local:CommissionControl Height="680"  />
+
+
+
+
+            <Button Margin="50,0,10,0" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Exit" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                    <TextBlock Text="{Loc Back}"></TextBlock>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+
+</Window>

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li><a href="\Home">Home</a></li>
+    <li class="active">Send Email</li>
+</ul>
+
+<h3>Send Email</h3>
+
+
+@using (Html.BeginForm("Send", "SendEmail", FormMethod.Post))
+{
+    <table class="table table-striped">
+        <tr>
+            <td width="100">To:</td>
+            <td width="500">
+                <div class="row">
+                    <div class="col col-sm-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">Users List:</span>
+                            @Html.DropDownList("Id", (IEnumerable<SelectListItem>)ViewBag.DistributionLists, "Make Selection...", htmlAttributes: new { @class = "form-control ", style = "min-width: 100%" })
+                        </div>
+                     </div>
+    
+
+
+           </td>
+
+        </tr>
+        <tr><td width="100">Subject:</td><td width="500">@Html.TextBox("Subject", null, new { @class = "form-control", style = "min-width: 100%" })</td></tr>
+        <tr><td width="100">Message:</td><td width="500">@Html.TextArea("Message", new { @class = "form-control", cols = 200, rows = 20, style = "min-width: 100%" })</td></tr>
+
+        <tr><td></td><td>&nbsp;</td></tr>
+        <tr>
+            <td width="100">
+                &nbsp;
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary"   data-toggle="tooltip" data-placement="right" title="Click to Send"><span class="glyphicons glyphicons-send"></span>@PTPLanguages.Resources.SendEmail</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+}
+

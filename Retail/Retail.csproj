@@ -1,0 +1,1237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7CA4B515-CD22-41B3-B257-76B436472761}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RedDot</RootNamespace>
+    <AssemblyName>RedDot</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>C:\RedDot Publish\Retail\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://deploy.reddotpos.com/</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\RedDot Releases\Retail\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\RedDot Releases\Retail\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>RedDot.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>sphere.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>8B003C3A7D2C1BEB809F7E893EE0CF5959C27BEA</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Retail_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.13.8.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetZip.1.13.8\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="DPCtlUruNet, Version=1.0.0.1, Culture=neutral, PublicKeyToken=7f32ef930fec5e5f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\DigitalPersona\U.are.U SDK\Windows\Lib\DotNET\DPCtlUruNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DPCtlXUru, Version=1.0.0.1, Culture=neutral, PublicKeyToken=7f32ef930fec5e5f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\DigitalPersona\U.are.U SDK\Windows\Lib\DotNET\DPCtlXUru.dll</HintPath>
+    </Reference>
+    <Reference Include="DPUruNet, Version=1.0.0.1, Culture=neutral, PublicKeyToken=7f32ef930fec5e5f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\DigitalPersona\U.are.U SDK\Windows\Lib\DotNET\DPUruNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DPXUru, Version=1.0.0.1, Culture=neutral, PublicKeyToken=7f32ef930fec5e5f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\DigitalPersona\U.are.U SDK\Windows\Lib\DotNET\DPXUru.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Compression.LZ4.1.1.11\lib\net45\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Compression.LZ4.Streams.1.1.11\lib\net45\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Hash.xxHash.1.0.6\lib\net45\K4os.Hash.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MigraDoc.DocumentObjectModel">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.Rendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySqlBackup.NET.2.0.12\lib\net461\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlBackup">
+      <HintPath>..\packages\MySqlBackup.NET.2.0.12\lib\net461\MySqlBackup.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting">
+      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="RedDotUpdater">
+      <HintPath>..\Updater\bin\Release\RedDotUpdater.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WpfLocalization, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\WpfLocalization\bin\Release\WpfLocalization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\DropDownButtonBehavior.cs" />
+    <Compile Include="Classes\Fetch.cs" />
+    <Compile Include="Classes\InputBox.cs" />
+    <Compile Include="Classes\RetailLineItem.cs" />
+    <Compile Include="Classes\SalesData.cs" />
+    <Compile Include="Classes\Appointment.cs" />
+    <Compile Include="Classes\ShipOrder.cs" />
+    <Compile Include="Classes\WorkOrder.cs" />
+    <Compile Include="Models\AppointmentModel.cs" />
+    <Compile Include="Classes\Audit.cs" />
+    <Compile Include="Classes\Category.cs" />
+    <Compile Include="Classes\Clickatell.cs" />
+    <Compile Include="Classes\CSVWriter.cs" />
+    <Compile Include="Classes\Customer.cs" />
+    <Compile Include="Models\CustomerModelCore.cs" />
+    <Compile Include="Classes\Employee.cs" />
+    <Compile Include="Classes\EnumTypes.cs" />
+    <Compile Include="Classes\FetchStream.cs" />
+    <Compile Include="Models\GiftCardModel.cs" />
+    <Compile Include="Models\LicenseModel.cs" />
+    <Compile Include="Models\PrintModel.cs" />
+    <Compile Include="ViewModels\EnrollFingerPrintVM.cs" />
+    <Compile Include="ViewModels\GiftCardVM.cs" />
+    <Compile Include="Classes\Globals.cs" />
+    <Compile Include="Classes\IniFile.cs" />
+    <Compile Include="Classes\INPCBase.cs" />
+    <Compile Include="Classes\LD220.cs" />
+    <Compile Include="Classes\Location.cs" />
+    <Compile Include="Classes\Log.cs" />
+    <Compile Include="Classes\LogEventArgs.cs" />
+    <Compile Include="Classes\Payment.cs" />
+    <Compile Include="Service References\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\InventoryReportVM.cs" />
+    <Compile Include="ViewModels\PaymentViewModel.cs" />
+    <Compile Include="Classes\RawPrinterHelper.cs" />
+    <Compile Include="Classes\ReceiptPrinter.cs" />
+    <Compile Include="Classes\RelayCommand.cs" />
+    <Compile Include="Classes\ReportDate.cs" />
+    <Compile Include="Classes\Security.cs" />
+    <Compile Include="ViewModels\ProductReportVM.cs" />
+    <Compile Include="ViewModels\SecurityVM.cs" />
+    <Compile Include="Classes\Setting.cs" />
+    <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="ViewModels\SettingsVM.cs" />
+    <Compile Include="Classes\SingleInstance.cs" />
+    <Compile Include="Classes\TicketCore.cs" />
+    <Compile Include="ViewModels\ShipOrderVM.cs" />
+    <Compile Include="ViewModels\ShippingReportVM.cs" />
+    <Compile Include="ViewModels\ShippingVM.cs" />
+    <Compile Include="ViewModels\TimeCardVM.cs" />
+    <Compile Include="Classes\TimeSlot.cs" />
+    <Compile Include="Classes\TouchMessage.cs" />
+    <Compile Include="ViewModels\UpdateViewModel.cs" />
+    <Compile Include="Classes\Utility.cs" />
+    <Compile Include="Classes\VFD.cs" />
+    <Compile Include="Classes\Visible.cs" />
+    <Compile Include="Converter\BooleanToYellowConverter.cs" />
+    <Compile Include="Converter\CombineGiftCardConverter.cs" />
+    <Compile Include="Converter\NumberToColorConverter.cs" />
+    <Compile Include="Converter\StringToBackgroundConverter.cs" />
+    <Compile Include="DataManager\DBAppointment.cs" />
+    <Compile Include="DataManager\DBAudit.cs" />
+    <Compile Include="DataManager\DBConnect.cs" />
+    <Compile Include="DataManager\DBCustomer.cs" />
+    <Compile Include="DataManager\DBEmployee.cs" />
+    <Compile Include="DataManager\DBHistory.cs" />
+    <Compile Include="DataManager\DBProducts.cs" />
+    <Compile Include="DataManager\DBPromotions.cs" />
+    <Compile Include="DataManager\DBReports.cs" />
+    <Compile Include="DataManager\DBSales.cs" />
+    <Compile Include="DataManager\DBSecurity.cs" />
+    <Compile Include="DataManager\DBSettings.cs" />
+    <Compile Include="DataManager\DBTable.cs" />
+    <Compile Include="DataManager\DBTicket.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\InventoryModel.cs" />
+    <Compile Include="Models\SalesModel.cs" />
+    <Compile Include="Classes\Promotion.cs" />
+    <Compile Include="ViewModels\ServiceVM.cs" />
+    <Compile Include="ViewModels\WeeklySalesReportVM.cs" />
+    <Compile Include="ViewModels\SendSMSVM.cs" />
+    <Compile Include="ViewModels\AppointmentVM.cs" />
+    <Compile Include="ViewModels\ApptDetailsVM.cs" />
+    <Compile Include="ViewModels\CategoryVM.cs" />
+    <Compile Include="ViewModels\CommissionReportVM.cs" />
+    <Compile Include="ViewModels\CustomerVM.cs" />
+    <Compile Include="ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\EODSettleVM.cs" />
+    <Compile Include="ViewModels\InventoryVM.cs" />
+    <Compile Include="ViewModels\ProductVM.cs" />
+    <Compile Include="ViewModels\DailySalesReportVM.cs" />
+    <Compile Include="ViewModels\MonthlySalesReportVM.cs" />
+    <Compile Include="ViewModels\WorkOrderVM.cs" />
+    <Compile Include="Views\Admin_Database.xaml.cs">
+      <DependentUpon>Admin_Database.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\AvailableService.xaml.cs">
+      <DependentUpon>AvailableService.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\AvailableShipping.xaml.cs">
+      <DependentUpon>AvailableShipping.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\InventoryReport.xaml.cs">
+      <DependentUpon>InventoryReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\ProductAdmin.xaml.cs">
+      <DependentUpon>ProductAdmin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ProductReport.xaml.cs">
+      <DependentUpon>ProductReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\SelectedService.xaml.cs">
+      <DependentUpon>SelectedService.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\SelectedShipping.xaml.cs">
+      <DependentUpon>SelectedShipping.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\ServiceSetup.xaml.cs">
+      <DependentUpon>ServiceSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\ShippingSetup.xaml.cs">
+      <DependentUpon>ShippingSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\AlertView.xaml.cs">
+      <DependentUpon>AlertView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\RetailCommisionReport.xaml.cs">
+      <DependentUpon>RetailCommisionReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\RetailMonthlySalesReport.xaml.cs">
+      <DependentUpon>RetailMonthlySalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\RetailWeeklySalesReport.xaml.cs">
+      <DependentUpon>RetailWeeklySalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackupSelect.xaml.cs">
+      <DependentUpon>BackupSelect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\CardScanner.xaml.cs">
+      <DependentUpon>CardScanner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CashTenderedView.xaml.cs">
+      <DependentUpon>CashTenderedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\Confirm.xaml.cs">
+      <DependentUpon>Confirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\ConfirmAudit.xaml.cs">
+      <DependentUpon>ConfirmAudit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\ListPad.xaml.cs">
+      <DependentUpon>ListPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\EmployeeTimeControl.xaml.cs">
+      <DependentUpon>EmployeeTimeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\MonthlySalesControl.xaml.cs">
+      <DependentUpon>MonthlySalesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\AvailableInventory.xaml.cs">
+      <DependentUpon>AvailableInventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\QuickInventory.xaml.cs">
+      <DependentUpon>QuickInventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\RetailDailySalesReport.xaml.cs">
+      <DependentUpon>RetailDailySalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\SelectedInventory.xaml.cs">
+      <DependentUpon>SelectedInventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\DailyPaymentsControl.xaml.cs">
+      <DependentUpon>DailyPaymentsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\RetailDailySalesControl.xaml.cs">
+      <DependentUpon>RetailDailySalesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\MonthlyPaymentsControl.xaml.cs">
+      <DependentUpon>MonthlyPaymentsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\WeeklyPaymentsControl.xaml.cs">
+      <DependentUpon>WeeklyPaymentsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\CreditCardView.xaml.cs">
+      <DependentUpon>CreditCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\CustomDate.xaml.cs">
+      <DependentUpon>CustomDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerMenu.xaml.cs">
+      <DependentUpon>CustomerMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\EmployeeTimeSheets.xaml.cs">
+      <DependentUpon>EmployeeTimeSheets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CreditSelection.xaml.cs">
+      <DependentUpon>CreditSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerActionMenu.xaml.cs">
+      <DependentUpon>CustomerActionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerFoundList.xaml.cs">
+      <DependentUpon>CustomerFoundList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerLookupCreate.xaml.cs">
+      <DependentUpon>CustomerLookupCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerPhone.xaml.cs">
+      <DependentUpon>CustomerPhone.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\CustomerSearch.xaml.cs">
+      <DependentUpon>CustomerSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\EmailCustomer.xaml.cs">
+      <DependentUpon>EmailCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Customer\SearchbyName.xaml.cs">
+      <DependentUpon>SearchbyName.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\DiscountPad.xaml.cs">
+      <DependentUpon>DiscountPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\EditHours.xaml.cs">
+      <DependentUpon>EditHours.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\EmployeeHours.xaml.cs">
+      <DependentUpon>EmployeeHours.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\EmployeeView.xaml.cs">
+      <DependentUpon>EmployeeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\EnrollFingerPrint.xaml.cs">
+      <DependentUpon>EnrollFingerPrint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EODSettle.xaml.cs">
+      <DependentUpon>EODSettle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Appointment\AppointmentView.xaml.cs">
+      <DependentUpon>AppointmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Appointment\ApptDetails.xaml.cs">
+      <DependentUpon>ApptDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\CategoryDetail.xaml.cs">
+      <DependentUpon>CategoryDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\ProductDetail.xaml.cs">
+      <DependentUpon>ProductDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\CommissionControl.xaml.cs">
+      <DependentUpon>CommissionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\Converters.cs" />
+    <Compile Include="Converter\EmptyToVisibilityConverter.cs" />
+    <Compile Include="Converter\InverseConverter.cs" />
+    <Compile Include="Converter\StringToColorConverter.cs" />
+    <Compile Include="Models\History.cs" />
+    <Compile Include="Models\Reports.cs" />
+    <Compile Include="ViewModels\EmployeeListViewModel.cs" />
+    <Compile Include="ViewModels\OrderHistoryVM.cs" />
+    <Compile Include="ViewModels\EmployeeSalesData.cs" />
+    <Compile Include="Views\BackOffice\BackOfficeMenu.xaml.cs">
+      <DependentUpon>BackOfficeMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\RetailReceiptControl.xaml.cs">
+      <DependentUpon>RetailReceiptControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Control\WeeklySalesControl.xaml.cs">
+      <DependentUpon>WeeklySalesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\EditDelete.xaml.cs">
+      <DependentUpon>EditDelete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\EmployeeMenu.xaml.cs">
+      <DependentUpon>EmployeeMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gift Card\GCManage.xaml.cs">
+      <DependentUpon>GCManage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gift Card\GCVerify.xaml.cs">
+      <DependentUpon>GCVerify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gift Card\GiftCardMenu.xaml.cs">
+      <DependentUpon>GiftCardMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gift Card\GiftCardView.xaml.cs">
+      <DependentUpon>GiftCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gift Card\GiftCertificate.xaml.cs">
+      <DependentUpon>GiftCertificate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\NumPad.xaml.cs">
+      <DependentUpon>NumPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PickEmployee.xaml.cs">
+      <DependentUpon>PickEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OperationMenu.xaml.cs">
+      <DependentUpon>OperationMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BackOffice\ReportsMenu.xaml.cs">
+      <DependentUpon>ReportsMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\RetailEmployeeCommissionReport.xaml.cs">
+      <DependentUpon>RetailEmployeeCommissionReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\EmployeeList.xaml.cs">
+      <DependentUpon>EmployeeList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LineItemActionView.xaml.cs">
+      <DependentUpon>LineItemActionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderHistory.xaml.cs">
+      <DependentUpon>OrderHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\More.xaml.cs">
+      <DependentUpon>More.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ShippingReport.xaml.cs">
+      <DependentUpon>ShippingReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\RetailSales.xaml.cs">
+      <DependentUpon>RetailSales.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\RetailSalesView.xaml.cs">
+      <DependentUpon>RetailSalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RewardView.xaml.cs">
+      <DependentUpon>RewardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\ShipOrderEdit.xaml.cs">
+      <DependentUpon>ShipOrderEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\WorkOrderEdit.xaml.cs">
+      <DependentUpon>WorkOrderEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SecurityView.xaml.cs">
+      <DependentUpon>SecurityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Selection.xaml.cs">
+      <DependentUpon>Selection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SendSMS.xaml.cs">
+      <DependentUpon>SendSMS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\SalesVM.cs" />
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\LineItem.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Models\Ticket.cs" />
+    <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Splash.xaml.cs">
+      <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Common\TextPad.xaml.cs">
+      <DependentUpon>TextPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Employee\TimeCardView.xaml.cs">
+      <DependentUpon>TimeCardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TouchMessageBox.xaml.cs">
+      <DependentUpon>TouchMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Update.xaml.cs">
+      <DependentUpon>Update.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\ReceiptResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\SalesResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin_Database.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackOffice\AvailableService.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\AvailableShipping.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\InventoryReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\ProductAdmin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\ProductReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\SelectedService.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\SelectedShipping.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\ServiceSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\ShippingSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Common\AlertView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\RetailCommisionReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\RetailMonthlySalesReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\RetailWeeklySalesReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackupSelect.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\CardScanner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CashTenderedView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\Confirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\ConfirmAudit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\ListPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\EmployeeTimeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\MonthlySalesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackOffice\AvailableInventory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\QuickInventory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\RetailDailySalesReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackOffice\SelectedInventory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\DailyPaymentsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Control\RetailDailySalesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Control\MonthlyPaymentsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Control\WeeklyPaymentsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\CreditCardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\CustomDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackOffice\EmployeeTimeSheets.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CreditSelection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerActionMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerFoundList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerLookupCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerPhone.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\CustomerSearch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\EmailCustomer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Customer\SearchbyName.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\DiscountPad.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Employee\EditHours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\EmployeeHours.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Employee\EmployeeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Employee\EnrollFingerPrint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EODSettle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Appointment\AppointmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Appointment\ApptDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\CategoryDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\ProductDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\CommissionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\TabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BackOffice\BackOfficeMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\RetailReceiptControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Control\WeeklySalesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\EditDelete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\EmployeeMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Gift Card\GCManage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Gift Card\GCVerify.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Gift Card\GiftCardMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Gift Card\GiftCardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Gift Card\GiftCertificate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Login.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\NumPad.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PickEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OperationMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BackOffice\ReportsMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\RetailEmployeeCommissionReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Employee\EmployeeList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LineItemActionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrderHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Common\More.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\ShippingReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sales\RetailSales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sales\RetailSalesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RewardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Sales\ShipOrderEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sales\WorkOrderEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SecurityView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Selection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SendSMS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Splash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Common\TextPad.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Employee\TimeCardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TouchMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Update.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resources\BuildDate.txt" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Resources.vi-VN.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.fr-FR.resx" />
+    <None Include="app.config" />
+    <None Include="Classes\Update.cd" />
+    <Resource Include="media\workorder.png" />
+    <Resource Include="media\refresh.png" />
+    <Resource Include="media\fingerprint.png" />
+    <Resource Include="media\cargo.png" />
+    <Resource Include="media\yellowstar.png" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <AppDesigner Include="Properties\" />
+    <None Include="Retail_TemporaryKey.pfx" />
+    <None Include="Service References\ServiceReference1\RedDot.ServiceReference1.LicenseRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\SalonService.wsdl" />
+    <None Include="Service References\ServiceReference1\SalonService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\SalonService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\SalonService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Resource Include="Resources\Entypo.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Entypo-license.txt" />
+    <Resource Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sphere.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\update.png" />
+    <None Include="Service References\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReference1\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference1\SalonService.disco" />
+    <Resource Include="media\reddotbackground.png" />
+    <Resource Include="media\refund.png" />
+    <Resource Include="media\refund_stamp.png" />
+    <Resource Include="media\ticket.png" />
+    <Resource Include="media\toparrow.png" />
+    <Resource Include="media\uparrow.png" />
+    <Resource Include="media\taxexempt.png" />
+    <Resource Include="media\surcharge.png" />
+    <Resource Include="media\stampcard.png" />
+    <Resource Include="media\timecard.png" />
+    <Resource Include="media\today.png" />
+    <Resource Include="media\stopsign.png" />
+    <Resource Include="Resources\BG.png" />
+    <Resource Include="Resources\FR.png" />
+    <Resource Include="Resources\US.png" />
+    <Resource Include="media\x.png" />
+    <Resource Include="media\cashierIn.jpg" />
+    <Resource Include="media\cashierOut.jpg" />
+    <Resource Include="media\gratuity.jpg" />
+    <Resource Include="media\gratuity.png" />
+    <Resource Include="media\employee.jpg" />
+    <Resource Include="media\dash.png" />
+    <Resource Include="media\exit.png" />
+    <Resource Include="media\exitdoor.png" />
+    <Resource Include="media\exitdoor.jpg" />
+    <Resource Include="media\giftcard.jpg" />
+    <Resource Include="media\giftcertificate.jpg" />
+    <Resource Include="media\giftcertificate.png" />
+    <Resource Include="media\giftcard.png" />
+    <Resource Include="media\settle.png" />
+    <Resource Include="media\payout.png" />
+    <Resource Include="media\hold.png" />
+    <Resource Include="media\priceoverride.png" />
+    <Resource Include="media\customer.png" />
+    <Resource Include="media\phone.jpeg" />
+    <Resource Include="media\phone.png" />
+    <Resource Include="media\print.png" />
+    <Resource Include="media\printer.png" />
+    <Resource Include="media\login.png" />
+    <Resource Include="media\appointment.png" />
+    <Resource Include="media\commission.png" />
+    <Resource Include="media\operation.png" />
+    <Resource Include="media\settings.png" />
+    <Resource Include="media\database.png" />
+    <Resource Include="media\discount.png" />
+    <Resource Include="media\calendar.png" />
+    <Resource Include="media\modifiers.png" />
+    <Resource Include="media\sendsms.png" />
+    <Resource Include="media\csv.png" />
+    <Resource Include="media\excel.png" />
+    <Resource Include="media\salesreport.png" />
+    <Resource Include="media\reports.png" />
+    <Resource Include="media\add.png" />
+    <Resource Include="media\employee.png" />
+    <Resource Include="media\id.png" />
+    <Resource Include="media\coin.png" />
+    <Resource Include="media\referral.png" />
+    <Resource Include="media\phonered.png" />
+    <Resource Include="media\security.png" />
+    <Resource Include="media\edit.png" />
+    <Resource Include="media\allcustomer.png" />
+    <Resource Include="media\customersearch.png" />
+    <Resource Include="media\new.png" />
+    <Resource Include="media\newcustomer.png" />
+    <Resource Include="media\checkamount.png" />
+    <Resource Include="media\more.png" />
+    <Resource Include="media\next.png" />
+    <Resource Include="media\previous.png" />
+    <Resource Include="media\equal.png" />
+    <Resource Include="media\percent.png" />
+    <Resource Include="media\back.png" />
+    <Resource Include="media\cool.jpg" />
+    <Resource Include="media\paid.jpg" />
+    <Resource Include="media\paid.png" />
+    <Resource Include="media\rewardpoints.png" />
+    <Resource Include="media\loc.png" />
+    <Resource Include="media\clock1.jpg" />
+    <Resource Include="media\Clockin.png" />
+    <Resource Include="media\Clockout.png" />
+    <Resource Include="media\cashregister.png" />
+    <Resource Include="media\quicksales.png" />
+    <Resource Include="media\cashdrawer.png" />
+    <Resource Include="media\cancel.png" />
+    <Resource Include="media\inventory.png" />
+    <Resource Include="media\search.png" />
+    <Resource Include="media\displaylayout.png" />
+    <Resource Include="media\product.png" />
+    <Resource Include="media\service.png" />
+    <Resource Include="media\quick.png" />
+    <Resource Include="media\rightarrow.png" />
+    <Resource Include="media\addall.png" />
+    <Resource Include="media\remove.png" />
+    <Resource Include="media\removeall.png" />
+    <Resource Include="media\notes.png" />
+    <Resource Include="media\leftarrow.png" />
+    <Resource Include="media\keyboard.png" />
+    <Resource Include="media\newappointment.png" />
+    <Resource Include="media\cash.png" />
+    <Resource Include="media\save.png" />
+    <Resource Include="media\clone.png" />
+    <Resource Include="media\open.png" />
+    <Resource Include="media\receipt.png" />
+    <Resource Include="media\searchreceipt.png" />
+    <Resource Include="media\alphabet.png" />
+    <Resource Include="media\allreceipts.png" />
+    <Resource Include="media\123.png" />
+    <Resource Include="media\checkin.png" />
+    <Resource Include="media\downarrow.png" />
+    <Resource Include="media\bottomarrow.png" />
+    <Resource Include="media\cost.png" />
+    <Resource Include="media\pdf.png" />
+    <Resource Include="media\email.png" />
+    <Content Include="media\merge.png" />
+    <Content Include="media\home.png" />
+    <Resource Include="media\adjustment.png" />
+    <Resource Include="media\orderhistory.png" />
+    <Resource Include="media\nosale.png" />
+    <Resource Include="media\credit.png" />
+    <Resource Include="media\backoffice.png" />
+    <Resource Include="media\harddrive.png" />
+    <Resource Include="media\money.png" />
+    <Resource Include="media\discountred.png" />
+    <Resource Include="media\gift-certificate.png" />
+    <Resource Include="media\giftcardfill.png" />
+    <Resource Include="media\keylock.png" />
+    <Resource Include="media\lock.png" />
+    <Resource Include="media\services.png" />
+    <Content Include="media\sound6.mp3" />
+    <Resource Include="sphere.ico" />
+    <Resource Include="media\logo.png" />
+    <Resource Include="media\logingreen.png" />
+    <Resource Include="media\logout red.png" />
+    <Resource Include="media\creditblack.png" />
+    <Resource Include="media\creditcard.png" />
+    <Resource Include="media\checkblack.png" />
+    <Resource Include="media\moneyblack.png" />
+    <Resource Include="media\giftcardblack.png" />
+    <Resource Include="media\ok.png" />
+    <Content Include="media\out.wav" />
+    <Resource Include="media\sphere.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>; copy exe and dll to Reactor folder
+
+ROBOCOPY "$(TargetDir) " "$(TargetDir)reactor\ "  reddot.exe  *.dll  
+
+
+; Move all assemblies and related files to lib folder
+
+ROBOCOPY "$(TargetDir) " "$(TargetDir)lib\ " *.dll  *.xml     /MOV  /XF DataManager.dll license.dll
+
+
+
+
+
+if %25errorlevel%25 leq 4 exit 0 else exit %25errorlevel%25</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>cd  $(TargetDir)reactor
+del *.exe 
+del *.dll
+
+cd  $(TargetDir)lib
+del *.* /q</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

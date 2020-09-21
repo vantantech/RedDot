@@ -1,0 +1,354 @@
+﻿<Window x:Class="RedDot.AppointmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+        Title="Appointments" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+            <local:StringToBackgroundConverter x:Key="StringToBackgroundConverter"/>
+            <local:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+    <Grid>
+        <StackPanel Orientation="Vertical">
+
+            <TabControl Height="768" Style="{StaticResource TabControlStyle}">
+                <TabItem Header="Daily" Style="{StaticResource TabItemStyle}">
+
+
+                    <StackPanel Orientation="Vertical">
+
+
+                        <Border  BorderBrush="AliceBlue" BorderThickness="2" Width="auto" Height="620">
+
+                                       
+                                    
+                                    <StackPanel Orientation="Vertical">
+
+
+                                        <!-- Fixed Header Row .. Contains list of employees-->
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding AppointDate,StringFormat={}{0:MM/dd}}" FontSize="25" TextAlignment="Center"  Height="80" Width="75"/>
+
+
+
+                                            <!-- List of  each employee-->
+                                            <ItemsControl  ItemsSource="{Binding AppointmentList}" >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+
+                                                <Border BorderBrush="Blue" Margin="1,0,1,0"  CornerRadius="15,5,0,0"  Width="{Binding DataContext.ColumnWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  >
+                                                            <Border.Background>
+                                                                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                                                    <GradientStop Color="#FFFFC934" Offset="0"/>
+                                                                    <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
+                                                                </LinearGradientBrush>
+                                                            </Border.Background>
+                                                            <!-- employee name and pic-->
+                                                            <StackPanel Orientation="Vertical" >
+                                                               
+                                                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center"   >
+                                                                        <TextBlock  Text="{Binding EmployeeName}"  Height="20"  FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                                                         <Image Source="{Binding ImageSrc}" Stretch="UniformToFill"  Width="60" Height="60" HorizontalAlignment="Center" />
+                                                                    </StackPanel>
+                                                              
+                                                                <Button Command="{Binding DataContext.NewAppointmentClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding EmployeeID}" 
+                                                                            Style="{StaticResource ApptButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="60" >
+                                                                    <StackPanel>
+                                                                        <Image Source="/RedDot;component/media/newappointment.png" Height="40" Width="40"/>
+                                                                        <TextBlock Text="{Loc New}"></TextBlock>
+                                                                    </StackPanel>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Border>
+
+
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                    <StackPanel Orientation="Vertical">
+
+                                        <Button  Style="{StaticResource ApptButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="60" 
+                             Command="{Binding PreviousEmployeeClicked}" >
+                                            <StackPanel>
+                                                <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                                                <TextBlock Text="Previous"></TextBlock>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button  Style="{StaticResource  ApptButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="60" 
+                             Command="{Binding NextEmployeeClicked}" >
+                                            <StackPanel>
+                                                <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                                                <TextBlock Text="Next"></TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                            
+                                            
+                                            
+                                        </StackPanel>
+
+                                <ScrollViewer  x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible"   VerticalAlignment="Top"  Height="490">
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="Auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ScrollViewer.Resources>
+                                    <StackPanel Orientation="Horizontal">
+                                            <!-- time slots  /  column on left most-->
+
+                                        <ItemsControl ItemsSource="{Binding TimeSlots}"  Width="75">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                       
+                                                    <ItemsControl ItemsSource="{Binding Intervals}"  Width="75">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Vertical" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                    <Grid>
+                                                                    
+                                                                        <TextBlock Text="{Binding Time}" TextAlignment="Right"  Height="20" Width="75"/>
+
+                                                                    </Grid>
+                                                                  
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+
+                                                    </ItemsControl>
+                                                       
+                                                    </Grid>
+
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+
+                                        </ItemsControl>
+                                        <!-- List of Appointments for each employee-->
+                                            <ItemsControl Name="ic1" ItemsSource="{Binding AppointmentList}" AlternationCount="2">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                    <Border BorderBrush="Black" BorderThickness="1" Background="AliceBlue" >
+
+                                                        <ItemsControl ItemsSource="{Binding Appointments}" Width="{Binding DataContext.ColumnWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <StackPanel Orientation="Vertical" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+
+
+                                                                    <Button   Visibility="{Binding Visible}" 
+                                                                              Command="{Binding DataContext.AppointmentClicked,RelativeSource={RelativeSource AncestorLevel=2 ,AncestorType=ItemsControl,Mode=FindAncestor}}" 
+                                                                              CommandParameter="{Binding ID}" Style="{StaticResource ApptButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                                              Height="{Binding Height}" Width="{Binding Width}" 
+                                                                              Background="{Binding CustomerFirstName,Converter={StaticResource StringToBackgroundConverter}}">
+                                                                   
+                                                                               <StackPanel Height="{Binding Height}" Orientation="Vertical" VerticalAlignment="Top">
+
+                                                                                <TextBlock Text="{Binding CustomerFirstName}" Visibility="{Binding CustomerFirstName, Converter={StaticResource EmptyToVisibilityConverter}}"   />
+                                                                                <TextBlock Text="{Binding CustomerLastName}" Visibility="{Binding CustomerLastName, Converter={StaticResource EmptyToVisibilityConverter}}"  />
+                                                                                <TextBlock Text="{Binding CustomerPhoneNumber}" Visibility="{Binding CustomerPhone1, Converter={StaticResource EmptyToVisibilityConverter}}"  />
+                                                                                <TextBlock Text="{Binding Note}" Visibility="{Binding Note, Converter={StaticResource EmptyToVisibilityConverter}}" TextWrapping="Wrap"  />
+                                                                            </StackPanel>
+
+
+                                                                        </Button>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+
+                                                            </ItemsControl>
+
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                         
+                                     </StackPanel>
+                                </ScrollViewer>
+
+                            </StackPanel>
+                       
+   
+
+                        </Border>
+
+
+                        <StackPanel  Orientation="Horizontal">
+
+                            <Button Margin="150,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding PreviousDayClicked}" >
+                                <StackPanel>
+                                    <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                                    <TextBlock Text="Previous"></TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Margin="50,10,10,10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding NextDayClicked}" >
+                                <StackPanel>
+                                    <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                                    <TextBlock Text="Next"></TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Margin="50,10,10,10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding CustomDayClicked}" >
+                                <StackPanel>
+                                    <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
+                                    <TextBlock Text="{Loc CustomDate}"></TextBlock>
+                                </StackPanel>
+                            </Button>
+
+                            <Button  Margin="300,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"   Click="Button_Exit" >
+                                <StackPanel>
+                                    <Image Source="/RedDot;component/media/exit.png" Height="40" Width="40"/>
+                                    <TextBlock Text="{Loc Exit}"></TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+
+                    </StackPanel>
+
+
+                </TabItem>
+                <TabItem Header="Weekly" Style="{StaticResource TabItemStyle}">
+
+
+                    <StackPanel  Orientation="Horizontal">
+
+                        <Button Margin="150,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding PreviousWeekClicked}" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                                <TextBlock Text="Previous"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Margin="50,10,10,10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding NextWeekClicked}" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                                <TextBlock Text="Next"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Margin="50,10,10,10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding CustomWeekClicked}" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
+                                <TextBlock Text="{Loc CustomDate}"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button  Margin="300,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"   Click="Button_Exit" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/exit.png" Height="40" Width="40"/>
+                                <TextBlock Text="{Loc Exit}"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+
+
+                </TabItem>
+
+                <TabItem Header="Monthly" Style="{StaticResource TabItemStyle}">
+
+
+                    <StackPanel  Orientation="Horizontal">
+
+                        <Button Margin="150,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding PreviousMonthClicked}" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                                <TextBlock Text="Previous"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Margin="50,10,10,10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding NextMonthClicked}" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                                <TextBlock Text="Next"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Margin="50,10,10,10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="80" 
+                             Command="{Binding CustomMonthClicked}" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
+                                <TextBlock Text="{Loc CustomDate}"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button  Margin="300,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"   Click="Button_Exit" >
+                            <StackPanel>
+                                <Image Source="/RedDot;component/media/exit.png" Height="40" Width="40"/>
+                                <TextBlock Text="{Loc Exit}"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+
+
+                </TabItem>
+            </TabControl>
+ 
+        </StackPanel>
+    </Grid>
+</Window>

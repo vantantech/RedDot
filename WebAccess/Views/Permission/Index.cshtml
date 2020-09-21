@@ -1,0 +1,141 @@
+﻿@model WebAccess.Models.AspNetUser
+@{
+    ViewBag.Title = "Assign Permission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li><a href="\Home">Home</a></li>
+    <li><a href="\Users">Users</a></li>
+ 
+    <li class="active">Permissions</li>
+</ul>
+
+<h3>Assign Permission for  @Html.DisplayFor(modelItem => Model.FirstName) @Html.DisplayFor(modelItem => Model.LastName)</h3>
+<br />
+
+
+@using (Html.BeginForm("Create", "Permission", FormMethod.Post))
+{
+    @Html.Hidden("Id", Model.Id)
+    <div class="row">
+       
+        <div class="col-sm-2">
+            @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewBag.Roles, htmlAttributes: new { @class = "form-control" })
+        
+        </div>
+
+        <div class="col-sm-1 col-sm-offset-1">
+            <input type="submit" value="Assign to User" class="btn btn-primary" />
+        </div>
+    </div>
+
+}
+
+<br />
+
+@using (Html.BeginForm("Index", "Permission", FormMethod.Post))
+{
+
+    @Html.Hidden("Id",Model.Id)
+
+    <table class="table">
+        <tr>
+            <th>
+                @VTTLanguages.Resources.ProgramAreaAccess
+            </th>
+            <th>
+               @VTTLanguages.Resources.Create
+            </th>
+            <th>
+                @VTTLanguages.Resources.Read
+            </th>
+            <th>
+                @VTTLanguages.Resources.Update
+            </th>
+            <th>
+                @VTTLanguages.Resources.Delete
+            </th>
+            <th>
+                @VTTLanguages.Resources.Approve
+            </th>
+
+
+            <th></th>
+        </tr>
+
+        @{ int i = 0;
+           foreach (var item in Model.AspNetUserRoles)
+           {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetRole.Name)
+                    @Html.Hidden("AspNetUserRoles[" + @i + "].RoleId", item.AspNetRole.Id)
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.CheckBox("AspNetUserRoles[" + @i + "].C", item.C)
+                            @Html.ValidationMessageFor(modelItem => item.C, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.CheckBox("nada", item.R, new {disabled="disabled" })
+                            @Html.Hidden("AspNetUserRoles[" + @i + "].R", item.R)
+                          
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.CheckBox("AspNetUserRoles[" + @i + "].U", item.U)
+                            @Html.ValidationMessageFor(modelItem => item.U, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.CheckBox("AspNetUserRoles[" + @i + "].D", item.D)
+                            @Html.ValidationMessageFor(modelItem => item.D, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.CheckBox("AspNetUserRoles[" + @i + "].A", item.A)
+                            @Html.ValidationMessageFor(modelItem => item.A, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </td>
+
+
+                <td>
+                    @Html.ActionLink(@VTTLanguages.Resources.Remove, "Delete", new { UserId = item.UserId, RoleId = item.RoleId })
+                </td>
+            </tr>
+           i = i + 1;
+        }}
+
+        <tr>
+            <td colspan="7">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save and Close" class="btn btn-primary" />
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+

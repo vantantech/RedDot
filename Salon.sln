@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salon", "Salon\Salon.csproj", "{2559461F-00BC-415A-A876-4C771DA94C8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManager", "DataManager\DataManager.csproj", "{0406086F-1590-49ED-8A6D-6317893C041F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSync", "WebSync\WebSync.csproj", "{FBAB0034-FA7A-4B39-8D83-819E015FAC49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerPrinting", "FingerPrinting\FingerPrinting.csproj", "{237DE052-5635-45FF-8DD0-DBDA2583225F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Debug|x86.Build.0 = Debug|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{2559461F-00BC-415A-A876-4C771DA94C8A}.Release|x86.Build.0 = Release|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Debug|x86.Build.0 = Debug|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|x86.ActiveCfg = Release|Any CPU
+		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|x86.Build.0 = Release|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Debug|x86.Build.0 = Debug|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Release|x86.ActiveCfg = Release|Any CPU
+		{FBAB0034-FA7A-4B39-8D83-819E015FAC49}.Release|x86.Build.0 = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|x86.Build.0 = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|x86.ActiveCfg = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42D32174-240A-469C-A13C-C1E6E975A900}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://vantantech.visualstudio.com/defaultcollection
+		SccProjectUniqueName0 = Salon\\Salon.csproj
+		SccProjectName0 = Salon
+		SccAuxPath0 = https://vantantech.visualstudio.com/defaultcollection
+		SccLocalPath0 = Salon
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = DataManager\\DataManager.csproj
+		SccProjectName1 = DataManager
+		SccAuxPath1 = https://vantantech.visualstudio.com/defaultcollection
+		SccLocalPath1 = DataManager
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = WebSync\\WebSync.csproj
+		SccProjectName2 = WebSync
+		SccAuxPath2 = https://vantantech.visualstudio.com/defaultcollection
+		SccLocalPath2 = WebSync
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+EndGlobal

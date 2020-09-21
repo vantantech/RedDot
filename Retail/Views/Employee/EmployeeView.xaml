@@ -1,0 +1,272 @@
+﻿<Window x:Class="RedDot.EmployeeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:local="clr-namespace:RedDot"
+        Title="Employee" Height="768" Width="1024"    WindowStartupLocation="CenterScreen" WindowStyle="None"  ResizeMode="NoResize"  >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF8AAED4" Offset="1"/>
+            <GradientStop Color="LightSteelBlue" Offset="0"/>
+ 
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+
+
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+        
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+        
+                
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+    <Border BorderThickness="3" BorderBrush="Yellow"  CornerRadius="3">
+        <StackPanel Orientation="Vertical">
+
+                 <StackPanel Orientation="Vertical">
+
+                <TextBlock Margin="20" Text="Employee Profile" FontSize="20" FontWeight="Bold" Height="50" HorizontalAlignment="Center" />
+
+                <Grid Height="450">
+
+                        <Grid.Background >
+                            <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1.25">
+                                <GradientStop Color="#FF8AAED4" Offset="0"/>
+                                <GradientStop Color="AliceBlue" Offset="1"/>
+
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="300"/>
+
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Button Width="120" Height="120" Command="{Binding PictureClicked}" >
+                                <Border  BorderThickness="3" BorderBrush="Blue" >
+                                    <Image Source="{Binding CurrentEmployee.ImageSrc}" Width="100" Height="100" />
+                                </Border>
+                            </Button>
+
+
+                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="ID:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox  IsReadOnly="True" Margin="5,0,0,0" Text="{Binding  CurrentEmployee.ID}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="PIN:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                            <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.PIN}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="MSR:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                            <TextBox IsReadOnly="True"  Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.MSRCard}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="170"/>
+                            <Button Content="Set..." Command="{Binding MSRSetClicked}" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Title:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0" Text="{Binding  CurrentEmployee.Title}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="First:" Height="25" TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox Margin="5,0,0,0"   Text="{Binding  CurrentEmployee.FirstName}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Middle:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.MiddleName}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Last:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.LastName}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Display As" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.DisplayName}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Cell:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.Phone1}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Home:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.Phone2}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Other:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.Phone3}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Address:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0" Text="{Binding CurrentEmployee.Address1}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="150"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0" Text="{Binding  CurrentEmployee.Address2}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="150"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="City:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox    Margin="5,0,0,0" Text="{Binding  CurrentEmployee.City}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                                <TextBlock   Text=","  Height="25" FontSize="15" Width="auto"/>
+                                <TextBox   Margin="5,0,0,0" Text="{Binding  CurrentEmployee.State}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="50"/>
+
+                            </StackPanel>
+
+
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Zip Code:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.ZipCode}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="80"/>
+                            </StackPanel>
+
+
+
+   
+
+                            <StackPanel  Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="SSN:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="70"/>
+                                <TextBox   Margin="5,0,0,0" Text="{Binding  CurrentEmployee.SSN}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="150"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                        
+                        
+
+                        <StackPanel Visibility="{Binding VisibleAdmin}" Grid.Column="2" Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Comm Product:" Height="25" TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox Margin="5,0,0,0"   Text="{Binding  CurrentEmployee.CommissionProduct}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Comm Labor:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.CommissionLabor}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Pay Normal:" Height="25" TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                                <TextBox Margin="5,0,0,0"   Text="{Binding  CurrentEmployee.PayNormal}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Pay Overtime:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.PayOvertime}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="BadgeID:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.BadgeID}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+
+    
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Role:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.Role}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <TextBlock  Text="Security Level :" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.SecurityLevel}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Sort Order :" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
+                            <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.SortOrder}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="60">
+                            <TextBlock  Text="Active:" Height="30"  TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="15" Width="100"/>
+
+                            <CheckBox   Margin="5,0,0,0" Height="20" Width="20" IsChecked="{Binding  CurrentEmployee.Active}" >
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                                </CheckBox.LayoutTransform>
+
+                            </CheckBox>
+
+                            <TextBlock  Text="On Schedule:" Height="30"  TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="15" Width="100"/>
+
+                            <CheckBox   Margin="5,0,0,0" Height="20" Width="20" IsChecked="{Binding  CurrentEmployee.OnSchedule}" >
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                                </CheckBox.LayoutTransform>
+
+                            </CheckBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Height="50">
+                            <TextBlock  Text="Finger Print Bypass:" Height="30"  TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="15" Width="150"/>
+
+                            <CheckBox   Margin="5,0,0,0" Height="20" Width="20" IsChecked="{Binding  CurrentEmployee.FingerPrintBypass}" >
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                                </CheckBox.LayoutTransform>
+
+                            </CheckBox>
+
+                        </StackPanel>
+
+                        <StackPanel  Orientation="Horizontal" Height="30">
+                            <TextBlock  Text="Email:" TextAlignment="Right" Height="25"   FontSize="15" Width="70"/>
+                            <TextBox   Margin="5,0,0,0" Text="{Binding  CurrentEmployee.Email}" TextAlignment="Left"  Height="25"   FontSize="15" Width="300"/>
+                        </StackPanel>
+                            
+                            
+                            
+                    </StackPanel>
+                    </Grid>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="10" Command="{Binding EnrollFingerPrintClicked}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/fingerprint.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc EnrollFingerPrint}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="10" Command="{Binding DeleteEmployeeClicked}" >
+                                <StackPanel>
+                                    <Image Source="/RedDot;component/media/dash.png" Height="40" Width="40"/>
+                                    <TextBlock Text="{Loc DeleteEmployee}"></TextBlock>
+                                </StackPanel>
+                            </Button>
+                           
+                            <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Right" VerticalAlignment="Top" Height="80"   Width="120"  Margin="10"  Click="Button_Cancel" >
+                                <StackPanel>
+                                    <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                                    <TextBlock Text="BACK"></TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                    </StackPanel>
+
+        </StackPanel>
+    </Border>
+</Window>

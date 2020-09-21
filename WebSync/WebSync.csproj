@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FBAB0034-FA7A-4B39-8D83-819E015FAC49}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebSync</RootNamespace>
+    <AssemblyName>WebSync</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\RedDot Releases\websync\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WebSync.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>websync.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySqlBackup.NET.2.0.12\lib\net461\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlBackup">
+      <HintPath>..\packages\MySqlBackup.NET.2.0.12\lib\net461\MySqlBackup.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Confirm.xaml.cs">
+      <DependentUpon>Confirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomDate.xaml.cs">
+      <DependentUpon>CustomDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DBEmployee.cs" />
+    <Compile Include="DBTicket.cs" />
+    <Compile Include="IniFile.cs" />
+    <Compile Include="INPCBase.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="SalonWebClient.cs" />
+    <Compile Include="Service References\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="Utility.cs" />
+    <Page Include="Confirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DBConnect.cs" />
+    <Compile Include="DBHistory.cs" />
+    <Compile Include="DBSettings.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="History.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\TabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainWindowVM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Service References\ServiceReference1\SalonService.wsdl" />
+    <None Include="Service References\ServiceReference1\SalonService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\SalonService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\SalonService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="websync.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\websync.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\123.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\addall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\adjustment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\administrator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\allcustomer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\allreceipts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\alphabet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\appointment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\award.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\backoffice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\barcode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\bluearrowdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\bottomarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cashdrawer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cashierIn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cashierOut.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cashregister.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\checkamount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\checkblack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\checkin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\checkout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\checks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\clock1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\Clockin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\Clockout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\clone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\closed-stamp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\coin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\commission.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\cool.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\createnew.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\creditblack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\creditcard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\csv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\customer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\customersearch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\dash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\discount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\discountred.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\displaylayout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\downarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\email.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\employee.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\employee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\equal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\exitdoor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\exitdoor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\files.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\french.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\gift-certificate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\giftcard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\giftcard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\giftcardblack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\giftcardfill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\giftcertificate.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\giftcertificate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\gratuity.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\gratuity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\harddrive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\hold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\id.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\inventory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\keyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\keylock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\leftarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\license.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\loc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\logingreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\logout red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\managegiftcard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\merge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\modifiers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\moneyblack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\more.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\newappointment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\newcustomer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\noemployee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\nosale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\notes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\notips.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\operation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\orderhistory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\paid.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\paid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\payout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\percent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\phone.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\phone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\phonered.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\priceoverride.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\product.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\promotions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\quick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\quicksales.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\receipt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\receiptprinter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\Reddotbackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\referral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\removeall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\reports.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\reverse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\rewardpoints.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\rewards.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\rightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\salesreport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\searchreceipt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\security.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\sendsms.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\service.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\settle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="media\sound6.mp3" />
+    <None Include="Service References\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ServiceReference1\configuration.svcinfo" />
+    <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
+    <None Include="Service References\ServiceReference1\SalonService.disco" />
+    <Resource Include="media\x.png" />
+    <Resource Include="media\websync.png" />
+    <Resource Include="media\webcam2.png" />
+    <Resource Include="media\webcam.png" />
+    <Resource Include="media\void.png" />
+    <Resource Include="media\vietnam.png" />
+    <Resource Include="media\USA Flag.png" />
+    <Resource Include="media\update.png" />
+    <Resource Include="media\uparrow.png" />
+    <Resource Include="media\turns.png" />
+    <Resource Include="media\toparrow.png" />
+    <Resource Include="media\today.png" />
+    <Resource Include="media\timecard.png" />
+    <Resource Include="media\ticket.png" />
+    <Resource Include="media\taxexempt.png" />
+    <Resource Include="media\surcharge.png" />
+    <Resource Include="media\stopsign.png" />
+    <Resource Include="media\starblank.png" />
+    <Resource Include="media\star.png" />
+    <Resource Include="media\stampcard.png" />
+    <Resource Include="media\sphere.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

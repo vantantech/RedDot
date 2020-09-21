@@ -1,0 +1,21 @@
+<SIP>
+	<Record>
+		<Field>
+			<Key>
+				KEY1
+			</Key>
+			<Value>
+				VALUE1
+			</Value>
+		</Field>
+
+		<Field>
+			<Key>
+				KEY2
+			</Key>
+			<Value>
+				VALUE2
+			</Value>
+		</Field>
+	</Record>
+</SIP>

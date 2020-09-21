@@ -1,0 +1,84 @@
+﻿@model WebAccess.Models.AspNetUser
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="breadcrumb">
+    <li><a href="\Home">@VTTLanguages.Resources.Home</a></li>
+    <li><a href="\Users">@VTTLanguages.Resources.Users</a></li>
+    <li class="active">@VTTLanguages.Resources.Location</li>
+</ul>
+
+<br />
+<h3>Assign Locations for : @Model.Email </h3>
+
+<p>
+    @using (Html.BeginForm("Create", "UserStore", FormMethod.Post))
+    {
+        @Html.Hidden("Id", Model.Id)
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <span class="input-group-addon">Location:</span>
+
+                    @Html.DropDownList("StoreId", (IEnumerable<SelectListItem>)ViewBag.Stores, htmlAttributes: new { @class = "form-control" })
+
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Assign To User</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+        </div>
+    }
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            id
+        </th>
+        <th>
+            Store Name
+        </th>
+        <th>
+            Web User ID
+        </th>
+
+
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.stores)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.storename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebUserId)
+            </td>
+
+
+
+            <td>
+                @Html.ActionLink("Remove from User", "Delete", new { id = item.id, userid = Model.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+

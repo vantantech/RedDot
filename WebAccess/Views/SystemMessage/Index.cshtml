@@ -1,0 +1,99 @@
+﻿@model IEnumerable<WebAccess.Models.SystemMessage>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ul class="breadcrumb">
+    <li><a href="\Home">Home</a></li>
+    <li class="active">System Announcements</li>
+</ul>
+<h3>System Announcements</h3>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MsgType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </th>
+        <th>
+            Created By
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Message)
+        </td>
+        <td>
+            @{
+                switch(item.MsgType){
+
+                    case "alert-info":
+                        <text>Information</text>
+                        break;
+                        
+                    case "alert-warning":
+                    <text>Warning</text>
+                        break;
+                        
+                    case "alert-danger":
+                    <text>Critical</text>
+                        break;
+                        
+                    default:
+                        break;
+
+
+
+                }
+}
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

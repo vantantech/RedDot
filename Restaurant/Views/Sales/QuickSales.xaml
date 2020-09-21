@@ -1,0 +1,472 @@
+﻿<Window     x:Class="RedDot.QuickSales"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+     xmlns:local="clr-namespace:RedDot"
+             xmlns:customscreen="clr-namespace:CustomScreens;assembly=CustomScreens"
+    x:Name="OrderEntryWindow"
+    Title="Order Entry" 
+    Width="1024" MinWidth="960" Height="768" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/media/sphere.png"  ResizeMode="NoResize"   >
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/QuickSalesResource.xaml" />
+                <ResourceDictionary Source="../../Resources/TabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:EnumMatchToBooleanConverter x:Key="enumConverter" />
+
+            <Style TargetType="Button" BasedOn="{StaticResource CustomButtonStyleFlat}" x:Key="LineItemButtons">
+                <Setter Property="Width" Value="90"/>
+                <Setter Property="Height" Value="58"/>
+                <Setter Property="Margin" Value="0,5,5,0"/>
+
+            </Style>
+
+            <Style TargetType="Button" BasedOn="{StaticResource CustomButtonStyleFlat}" x:Key="BottomPayments">
+                <Setter Property="Width" Value="90"/>
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Margin" Value="0,5,5,0"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Firebrick" Offset="0.484"/>
+                            <GradientStop Color="Yellow" Offset="0.497"/>
+                            <GradientStop Color="Gold" Offset="0.51"/>
+                            <GradientStop Color="LemonChiffon"  Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource CustomButtonStyleFlat}" x:Key="CashPayments">
+                <Setter Property="Width" Value="90"/>
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Margin" Value="0,5,5,0"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Green" Offset="0.484"/>
+                            <GradientStop Color="Yellow" Offset="0.497"/>
+                            <GradientStop Color="Gold" Offset="0.51"/>
+                            <GradientStop Color="LemonChiffon"  Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Button" BasedOn="{StaticResource CustomButtonStyleFlat}" x:Key="NewButton">
+                <Setter Property="Width" Value="90"/>
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Goldenrod" Offset="0.484"/>
+                            <GradientStop Color="Yellow" Offset="0.497"/>
+                            <GradientStop Color="Gold" Offset="0.51"/>
+                            <GradientStop Color="LemonChiffon"  Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+
+            <!-- Data Template for OPEN Orders-->
+            <DataTemplate x:Key="Ticketlist">
+                <RadioButton Style="{StaticResource RoundButtonStyle}" 
+                             GroupName="tickets"
+                        Command="{Binding DataContext.TicketClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                        CommandParameter="{Binding id}"
+                        BorderThickness="1" Width="105" Height="50" BorderBrush="Black"  >
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Height="25">
+                            <TextBlock   Text="Table: "  Height="23"   Width="50" FontSize="16" />
+                            <TextBlock   Text="{Binding tablenumber}"  Height="23"   Width="55" FontSize="16"  TextAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="25">
+
+                            <TextBlock   Text="Tkt# "  Height="23"   Width="40" FontSize="16" />
+                            <TextBlock   Text="{Binding id}"  Height="23"   Width="65" FontSize="16"  TextAlignment="Left"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </RadioButton>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="SeatTemplate">
+                <RadioButton IsChecked="{Binding Selected}" Style="{StaticResource RoundButtonStyle}" 
+                             GroupName="seats"
+                        Command="{Binding DataContext.SeatClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                        CommandParameter="{Binding SeatNumber}"
+                        BorderThickness="1" Width="50" Height="50" BorderBrush="Black"  >
+                 
+                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0" Background="LightSkyBlue"  >
+                            <Image  Source="/media/chair.png" Stretch="UniformToFill" Width="25" Height="25" />
+                            <TextBlock Text="{Binding SeatNumber}" FontWeight="Bold" FontSize="20"  Margin="5,0,0,0" />
+
+                        </StackPanel>
+               
+
+                </RadioButton>
+
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+      </Window.Resources>
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    -->
+
+
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         ######  ########    ###    ########  ########     ######   ########  #### ########  
+        ##    ##    ##      ## ##   ##     ##    ##       ##    ##  ##     ##  ##  ##     ## 
+        ##          ##     ##   ##  ##     ##    ##       ##        ##     ##  ##  ##     ## 
+         ######     ##    ##     ## ########     ##       ##   #### ########   ##  ##     ## 
+              ##    ##    ######### ##   ##      ##       ##    ##  ##   ##    ##  ##     ## 
+        ##    ##    ##    ##     ## ##    ##     ##       ##    ##  ##    ##   ##  ##     ## 
+         ######     ##    ##     ## ##     ##    ##        ######   ##     ## #### ########  
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ -->
+    <Grid  x:Name="LayoutRoot"  Width="1024" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+       
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+
+
+   
+
+        <!-- Col 0: Left Pane Category/ all buttons-->
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="*"/>
+
+                <RowDefinition Height="225"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+
+                <ContentControl Width="580" Name="mainArea">
+
+                    <customscreen:Classic   Width="580" HorizontalAlignment="Left" />
+
+                </ContentControl>
+                <WrapPanel Orientation="Vertical" Background="{Binding SelectedColor}" Width="100">
+           
+                    <Button   Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Quantity" Style="{StaticResource LineItemButtons}" >
+                        <Grid>
+                            <Image VerticalAlignment="top"  Source="/RedDot;component/media/123.png" Height="50" Width="50"/>
+                            <TextBlock Margin="0,36,0,0" Text="{Loc Quantity}" Style="{StaticResource BottomTextBlock}" />
+                        </Grid>
+                    </Button>
+                    <Button   Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Weight" Style="{StaticResource LineItemButtons}" >
+                        <Grid>
+                            <Image VerticalAlignment="top" Source="/RedDot;component/media/weight.png" Height="45" Width="50"/>
+                            <TextBlock Margin="0,36,0,0" Text="{Loc Weight}" Style="{StaticResource BottomTextBlock}" />
+                        </Grid>
+                    </Button>
+
+                    <Button   Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Seat"  Style="{StaticResource LineItemButtons}"  >
+                        <Grid>
+                            <Image VerticalAlignment="top" Source="/RedDot;component/media/chair.png" Height="45" Width="50"/>
+                            <TextBlock Margin="0,36,0,0"  Text="{Loc Seat}" Style="{StaticResource BottomTextBlock}" />
+                        </Grid>
+                    </Button>
+
+
+                    <Button   Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Discount" Style="{StaticResource LineItemButtons}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/discount.png" Height="30" Width="40"/>
+                            <TextBlock Text="{Loc Discount}" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button  Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Notes"  Style="{StaticResource LineItemButtons}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/notes.png" Height="30" Width="40"/>
+                            <TextBlock Text="{Loc Note}" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button  Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Modifiers"  Style="{StaticResource LineItemButtons}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/modifiers.png" Height="30" Width="40"/>
+                            <TextBlock Text="{Loc Modifiers}" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+         
+                    <Button  Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Combo"  Style="{StaticResource LineItemButtons}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/combo.png" Height="30" Width="40"/>
+                            <TextBlock Text="{Loc EditCombo}" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+                    <Button  Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="Delete"  Style="{StaticResource LineItemButtons}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/dash.png" Height="30" Width="40"/>
+                            <TextBlock Text="{Loc Delete}" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button  Margin="1" Command="{Binding LineItemActionClicked}" CommandParameter="PriceOverride"  Style="{StaticResource LineItemButtons}"  >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/priceoverride.png" Height="30" Width="40"/>
+                            <TextBlock Text="{Loc Price}" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+             
+                </WrapPanel>
+            </StackPanel>
+
+
+
+            <!--  Row 4:  Bottom Buttons-->
+            <WrapPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+                <Button   Style="{StaticResource CashPayments}"   Command="{Binding CashClicked}" CommandParameter="{Binding Balance}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cash.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Binding Balance,StringFormat=c}" />
+                    </StackPanel>
+                </Button>
+
+                <Button   Style="{StaticResource CashPayments}"   Command="{Binding CashClicked}" CommandParameter="{Binding Auto1}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cash.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Binding Auto1,StringFormat=c}" />
+                    </StackPanel>
+                </Button>
+
+                <Button   Style="{StaticResource CashPayments}"   Command="{Binding CashClicked}" CommandParameter="{Binding Auto2}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cash.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Binding Auto2,StringFormat=c}" />
+                    </StackPanel>
+                </Button>
+
+                <Button   Style="{StaticResource CashPayments}"   Command="{Binding CashClicked}" CommandParameter="{Binding Auto3}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cash.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Binding Auto3,StringFormat=c}" />
+                    </StackPanel>
+                </Button>
+
+
+                
+                <Button   Style="{StaticResource BottomPayments}"   Command="{Binding CashTenderClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cash.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc CashTender}" />
+                    </StackPanel>
+                </Button>
+                <Button   Style="{StaticResource BottomPayments}"  Command="{Binding CCPClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/ipp320.png" Width="60" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc Credit}" />
+                    </StackPanel>
+                </Button>
+         
+                <Button   Style="{StaticResource BottomPayments}"  Command="{Binding PreAuthClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/creditcard.png" Width="60" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc PreAuth}" />
+                    </StackPanel>
+                </Button>
+                <Button    Style="{StaticResource BottomPayments}"  Command="{Binding GiftCardClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/giftcard.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc GiftCard}" />
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomPayments}"   Command="{Binding GiftCertificateClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/giftcardblack.png" Width="40" Height="40"/>
+                        <TextBlock  Text="{Loc GiftCertificate}" />
+                    </StackPanel>
+                </Button>
+                <Button   Style="{StaticResource BottomPayments}"  Command="{Binding ExternalClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/delivery.png" Width="60" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="3rd Party" />
+                    </StackPanel>
+                </Button>
+                <Button Visibility="Collapsed" Style="{StaticResource BottomPayments}"   Command="{Binding CheckClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/checkblack.png" Width="40" Height="40"/>
+                        <TextBlock Text="{Loc Check}" />
+                    </StackPanel>
+                </Button>
+                <Button    Style="{StaticResource BottomPayments}"   Command="{Binding DiscountClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/discount.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc TicketDisc}" />
+                    </StackPanel>
+                </Button>
+
+                <Button   Style="{StaticResource BottomPayments}"  Command="{Binding RewardClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/award.png" Width="40" Height="40"/>
+                        <TextBlock  Style="{StaticResource BottomTextBlock}" Text="{Loc Reward}" />
+                    </StackPanel>
+                </Button>
+
+
+
+
+
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding BarTabCustomerClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/customer.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Ticket Name"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding CustomerClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/customerreward.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Link Guest"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding IDCheckClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/driverslicense.png" Width="40" Height="40"/>
+                        <TextBlock  Text="ID Check"  Height="auto"    FontSize="15"  TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding EmployeeClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/waiter.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Chng Server"  Height="auto"    FontSize="15" Width="90" TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource BottomButtons}"   Command="{Binding ChangeTableClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/tablepic.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Chng Table"  Height="auto"    FontSize="15" Width="90" TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding VoidClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/cancel.png" Width="40" Height="40"/>
+                        <TextBlock  Text="{Loc Void}"   Style="{StaticResource BottomTextBlock}"/>
+                    </StackPanel>
+                </Button>
+  
+                <Button   Style="{StaticResource BottomButtons}"  Command="{Binding BackClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/back.png" Height="40" Width="40"/>
+                        <TextBlock   Text="Back/Cancel"  Style="{StaticResource BottomTextBlock}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding HoldClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/hold.png" Width="40" Height="40"/>
+                        <TextBlock  Text="HOLD"  Height="auto"    Style="{StaticResource BottomTextBlock}" />
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding SendOrderClicked}"   >
+                    <StackPanel Orientation="Vertical" >
+                        <Image Source="/media/ok.png" Width="40" Height="40"/>
+                        <TextBlock  Text="DONE/SEND"  Height="auto"    Style="{StaticResource BottomTextBlock}" />
+                    </StackPanel>
+                </Button>
+
+            </WrapPanel>
+
+
+        </Grid>
+
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" Background="AliceBlue" >
+        
+            <Grid Visibility="{Binding VisibleChair}" Height="100" Background="DarkGray">
+                <StackPanel Orientation="Horizontal">
+                    <ScrollViewer Width="300"  >
+                        <ItemsControl  ItemsSource="{Binding Seats}" ItemTemplate="{StaticResource SeatTemplate}" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+
+                            </ItemsControl.ItemsPanel>
+
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Button   Margin="1" Command="{Binding AddChairClicked}"   Width="50" >
+                        <StackPanel Orientation="Vertical">
+                            <Image VerticalAlignment="top" Source="/RedDot;component/media/chair.png" Height="45" Width="50"/>
+                            <TextBlock  Text="+ Seat" Style="{StaticResource BottomTextBlock}" />
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+                
+             
+            </Grid>
+
+            <Border BorderBrush="Black" BorderThickness="1">
+                <ScrollViewer   Visibility="{Binding VisibleTicket}"  x:Name="ScrollViewer2" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="{Binding ReceiptHeight}">
+                    <ScrollViewer.Resources>
+                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                            <Style.Triggers>
+                                <Trigger Property="Orientation" Value="Vertical">
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Height" Value="Auto" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Resources>
+
+                    <local:ReceiptControl Width="320" HorizontalAlignment="Left" />
+
+
+                </ScrollViewer>
+            </Border>
+
+
+
+            <WrapPanel Width="300" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding OrderTypeClicked}"   >
+                    <StackPanel>
+                        <Image Source="/RedDot;component/media/ticket.png" Height="40" Width="40"/>
+                        <TextBlock Text="{Loc OrderType}" Style="{StaticResource BottomTextBlock}" />
+                    </StackPanel>
+                </Button>
+                <Button  Style="{StaticResource BottomButtons}"  Command="{Binding ClearOrderClicked}"  >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/clear_order.png" Width="40" Height="40"/>
+                        <TextBlock  Text="{Loc ClearOrder}"   Style="{StaticResource BottomTextBlock}"/>
+                    </StackPanel>
+                </Button>
+
+                <Button    Style="{StaticResource BottomButtons}" Command="{Binding PrintReceiptClicked}" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/receipt.png" Width="40" Height="40"/>
+                        <TextBlock   Style="{StaticResource BottomTextBlock}" Text="{Loc PrintReceipt}" />
+                    </StackPanel>
+                </Button>
+
+            </WrapPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+
+</Window>
+

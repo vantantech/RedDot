@@ -1,0 +1,640 @@
+﻿<Window     x:Class="RedDot.SalonMainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RedDot"
+    x:Name="Window"
+    Title="Red Dot POS" 
+    Width="1024"  Height="768" WindowStartupLocation="Manual" WindowStyle="None" Icon="/media/sphere.png" ResizeMode="NoResize"    >
+
+   
+    
+    
+    <!-- Window Resources -->
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/ListView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="TextBlock" x:Key="Label">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+            <Style x:Key="ButtonText" TargetType="TextBlock">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect
+                                      ShadowDepth="2"
+                                      Direction="310"
+                                      Color="Black"
+                                      Opacity="0.7"
+                                     BlurRadius="0"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+             
+            </Style>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+
+
+
+
+
+    <Grid>
+
+        <Rectangle  Fill="Black" Width="1920" Height="1080"/>
+
+        <Rectangle  Fill="{Binding MainBackgroundColor}" Width="1024" Height="768"/>
+
+        <Image  Source="{Binding MainBackgroundImage}" Width="1024" Height="768" Stretch="Fill" />
+
+        <Image Name="imgRedDot"  Source="/media/reddotbackground.png" Width="1024" Height="768" Stretch="Fill" Opacity=".6" />
+
+        <Image  Source="{Binding StoreLogo}" Width="330"></Image>
+        
+  
+        <Grid  x:Name="LayoutRoot"  Width="1024"  Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60"   />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="370"/>
+                    <ColumnDefinition Width="370"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+
+
+
+
+                <WrapPanel Margin="10,50,0,0" Grid.Column="1" Orientation="Horizontal">
+
+           
+
+                    <Button Command="{Binding SalonSalesClicked}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"   >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/cashregister.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc SalonSales}"  Style="{StaticResource ButtonText}"/>
+                       
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"  Click="TicketHistory_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/orderhistory.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc History}"  Style="{StaticResource ButtonText}"  />
+                        
+                        </StackPanel>
+                    </Button>
+                    <Button Visibility="{Binding BaseVersion}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"  Click="Customer_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/customer.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Customer}"  Style="{StaticResource ButtonText}"  />
+                         
+                        </StackPanel>
+                    </Button>
+
+
+
+
+
+
+                    <Button  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"  Click="Nosale_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/nosale.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc NoSale}"  Style="{StaticResource ButtonText}"  />
+                          
+                        </StackPanel>
+                    </Button>
+
+
+
+
+                    <Button Visibility="{Binding ProVersion}"   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top" Click="GiftCard_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/giftcard.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc GiftCard}"  Style="{StaticResource ButtonText}"  />
+                         
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button Visibility="{Binding ProVersion}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top" Click="Appointment_Click"  >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/appointment.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Appointment}"  Style="{StaticResource ButtonText}"  />
+                          
+                        </StackPanel>
+                    </Button>
+
+  
+
+
+                    <Button Visibility="{Binding BaseVersion}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"  Click="EmployeePortal_Clicked" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/employee.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc EmployeePortal}"  Style="{StaticResource ButtonText}" TextWrapping="Wrap"  />
+                         
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"  Click="btnReports_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/reports.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Reports}"  Style="{StaticResource ButtonText}" />
+                          
+                        </StackPanel>
+                    </Button>
+
+                    <Button  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top" Click="Admin_Clicked"  >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/administrator.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Admin}"  Style="{StaticResource ButtonText}" />
+                         
+                        </StackPanel>
+                    </Button>
+                    <Button  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="110" Height="110"  VerticalAlignment="Top"  Click="DBBackup" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/harddrive.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Backup}"  Style="{StaticResource ButtonText}"  />
+                          
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top" Click="Help_Clicked"  >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/help.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Help}"  Style="{StaticResource ButtonText}"  />
+
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Left" Width="110" Height="110"  VerticalAlignment="Top"  Click="Exit_Click" >
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/media/exit.png" Width="80" Height="60"></Image>
+                            <TextBlock Text="{Loc Exit}"  Style="{StaticResource ButtonText}"  />
+                       
+                        </StackPanel>
+                    </Button>
+                 
+
+              
+
+                </WrapPanel>
+                
+                
+                
+                <!-- SUB MENUs-->
+                <Grid Grid.Column="2">
+
+                    <StackPanel Orientation="Vertical" Margin="0,300,0,0"  Visibility="{Binding Demo}"  >
+                        <TextBlock Text="DEMO" FontSize="80" Foreground="Red" />
+                        <TextBlock Text="This software is not licensed for " FontSize="20" Foreground="White" />
+
+                        <TextBlock Text="commercial use.  Only used for" FontSize="20" Foreground="White" />
+                        <TextBlock Text=" demo purposes. Close in 30 min." FontSize="20" Foreground="White" />
+
+                    </StackPanel>
+
+
+                    <!--Message -->
+
+
+                    <Grid Name="messagemenu" >
+
+
+
+                        <Rectangle   Fill="Red" />
+                        <Border  BorderThickness="3" BorderBrush="Blue"  CornerRadius="3">
+
+
+                            <StackPanel Orientation="Vertical">
+
+                                <TextBlock Margin="25" Text="ERROR" Foreground="White" FontSize="20"  HorizontalAlignment="Center"/>
+
+                              
+                               <TextBlock Name="tbMessage" Margin="5" Text="" TextWrapping="Wrap" Foreground="White" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
+                        
+                              
+
+
+                            </StackPanel>
+
+
+                        </Border>
+                    </Grid>
+
+                    <!-- Reports Sub Menu -->
+
+                    <Grid Name="reportsmenu" >
+
+                        <Rectangle   Fill="Gray" Opacity=".5" />
+                        <Border  BorderThickness="3" BorderBrush="Blue"  CornerRadius="3">
+
+
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                                <TextBlock Margin="25" Text="Reports" Foreground="White" FontSize="20"  HorizontalAlignment="Center"/>
+
+                                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="Commission_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/commission.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Commission}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="SalesReport_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/salesreport.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Sales}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="RewardReport_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/rewards.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Reward}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+
+
+
+
+                                </WrapPanel>
+
+                            </StackPanel>
+
+
+                        </Border>
+                    </Grid>
+
+
+
+
+
+                    <!-- Customers Sub Menu -->
+
+                    <Grid Name="customersmenu" >
+
+                        <Rectangle   Fill="Gray" Opacity=".5" />
+                        <Border  BorderThickness="3" BorderBrush="Blue"  CornerRadius="3">
+
+
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                                <TextBlock Margin="25" Text="Customers" Foreground="White" FontSize="20"  HorizontalAlignment="Center"/>
+
+                                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="Validate_Click" Tag="ID">
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/id.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc ID}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="Validate_Click" Tag="Name">
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/alphabet.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Name}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"   Click="Validate_Click" Tag="Phone" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/phone.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Phone}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"   Click="Validate_Click" Tag="All" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/allcustomer.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc AllCustomers}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+
+
+
+
+                                </WrapPanel>
+
+                            </StackPanel>
+
+
+                        </Border>
+                    </Grid>
+
+
+
+                    <!-- Gift Card Sub Menu -->
+
+                    <Grid Name="giftcardmenu" >
+
+                        <Rectangle  Fill="Gray" Opacity=".5" />
+                        <Border  BorderThickness="3" BorderBrush="Blue"  CornerRadius="3">
+
+
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                                <TextBlock Margin="25" Text="Gift Card" Foreground="White" FontSize="20"  HorizontalAlignment="Center"/>
+
+                                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
+                                    <Button  Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"  VerticalAlignment="Top"  Click="Verify_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/checkamount.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Verify}"  FontSize="15" TextAlignment="Center" VerticalAlignment="Center" />
+
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"  VerticalAlignment="Top" Click="GiftCardManage_Click"   >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/managegiftcard.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="Manage" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+
+
+
+
+                                </WrapPanel>
+
+                            </StackPanel>
+
+
+                        </Border>
+                    </Grid>
+
+
+                    <!-- Employee Portal Sub Menu-->
+                    <Grid Name="employeemenu" >
+
+                        <Rectangle  Fill="Gray" Opacity=".5" />
+                        <Border  BorderThickness="3" BorderBrush="Blue"  CornerRadius="3">
+
+
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                                <TextBlock Margin="25" Text="Employee Portal" Foreground="White" FontSize="20"  HorizontalAlignment="Center"/>
+
+                                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                    <Button Style="{StaticResource CustomButtonStyle}"  Visibility="{Binding ProVersion}"  Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"  Command="{Binding CheckInClicked}"  HorizontalAlignment="Left"  VerticalAlignment="Top"  >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/checkin.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc CheckIn}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="EmployeeProfile_Clicked" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/employee.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Profile}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button  Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="btnCommission_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/commission.png" Width="80" Height="60"></Image>
+                                            <TextBlock Text="{Loc Commission}" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Button>
+
+
+
+
+                                </WrapPanel>
+
+                            </StackPanel>
+
+
+                        </Border>
+                    </Grid>
+
+                    <!-- Admin Sub Menu -->
+
+                    <Grid Name="adminmenu" >
+
+                        <Rectangle   Fill="Gray" Opacity=".7" />
+                        <Border  BorderThickness="3" BorderBrush="Blue"  CornerRadius="3">
+
+
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                                <TextBlock Margin="25" Text="Administration" Foreground="White" FontSize="20"  HorizontalAlignment="Center"/>
+
+
+                                <WrapPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="btnCreditCardManager_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/creditcard.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="{Loc CreditCardManager}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+                                    
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="btnInventory_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/inventory.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="{Loc MenuSetup}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="Promotions_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/promotions.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="{Loc Promotions}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+                                    <Button  Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" VerticalAlignment="Top"  Click="Send_Clicked" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/RedDot;component/media/sendsms.png" Height="60" Width="80"/>
+
+                                            <TextBlock Text="{Loc SendSMS}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button    Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0" Click="Database_Click" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/database.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="Database"  FontSize="15" TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Command="{Binding SettingsClicked}"  Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"   >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/settings.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="Settings"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"  VerticalAlignment="Top"  Click="EmployeeList_Clicked" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/employee.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="{Loc Employees}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"  Click="Security_Clicked" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/security.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="{Loc Security}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button   Style="{StaticResource CustomButtonStyle}" HorizontalAlignment="Left" Width="{Binding ButtonSize}" Height="{Binding ButtonSize}" Margin="20,20,0,0"  Click="License_Clicked" >
+                                        <StackPanel Orientation="Vertical">
+                                            <Image Source="/media/license.png" Width="80" Height="60"></Image>
+
+                                            <TextBlock Text="{Loc License}"  FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+
+                                        </StackPanel>
+                                    </Button>
+
+                                </WrapPanel>
+
+
+                            </StackPanel>
+
+
+                        </Border>
+                    </Grid>
+                </Grid>
+                
+                
+        
+
+
+
+
+
+             
+                <Grid Grid.Column="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+
+
+                    </Grid.RowDefinitions>
+
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                        <TextBlock Text="{Loc Label_Language}" Style="{StaticResource Label}"/>
+                        <ComboBox  ItemsSource="{Binding LanguageList}"  SelectedValuePath="LanguageCode" SelectedValue="{Binding SelectedLanguage}" Height="40"  Width="200" Margin="5">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Image Source="{Binding Flag}" Width="60" Height="40"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="10" Width="100" Text="{Binding Language}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            
+                         </ComboBox>
+                    </StackPanel>
+
+
+                    <Button Grid.Row="1" Visibility="{Binding ProVersion}" Command="{Binding EditTurnsClicked}" Style="{StaticResource CustomButtonStyle}"    HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"  >
+                        <StackPanel >
+                            <Image Source="/media/turns.png" Height="40" Width="60"/>
+                            <TextBlock Text="{Loc TurnsCheckIn}"/>
+                        </StackPanel>
+                    </Button>
+
+
+                    <ScrollViewer Grid.Row="2" x:Name="ScrollViewer1" VerticalScrollBarVisibility="Auto" Style="{StaticResource myStyle}" VerticalAlignment="Top" Height="500">
+                        <ScrollViewer.Resources>
+                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                <Style.Triggers>
+                                    <Trigger Property="Orientation" Value="Vertical">
+                                        <Setter Property="Width" Value="40"/>
+                                        <Setter Property="Height" Value="Auto" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ScrollViewer.Resources>
+                        <ItemsControl Name="IC1"  ItemsSource="{Binding EmployeeList}"  >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="1" BorderThickness="1" BorderBrush="Black" Width="225" Height="36" Background="Goldenrod" CornerRadius="4"  VerticalAlignment="Center"  HorizontalAlignment="Center"  >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding imageurl}" Stretch="UniformToFill" Width="40" Height="40" />
+                                            <TextBlock Width="100" Text="{Binding displayname}" TextAlignment="Center" FontSize="15" Foreground="Blue"/>
+                                            <TextBlock Margin="0,0,5,0" Width="45" Text="{Binding turncount}" TextAlignment="Right" FontSize="15" Foreground="Blue"/>
+
+                                        </StackPanel>
+                                    </Border>
+
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                </Grid>
+
+            </Grid>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical">
+
+                <TextBlock Margin="200,0,0,0" x:Name="txtMessage" HorizontalAlignment="Left" Height="30"   Text="TextBlock" VerticalAlignment="Top" Width="800" FontSize="16"/>
+                <TextBlock  Margin="200,0,0,0"  HorizontalAlignment="Left" Height="30" Text="{Binding Message}" VerticalAlignment="Top" Width="800" FontSize="16"/>
+
+            </StackPanel>
+
+
+
+        </Grid>
+
+
+
+    </Grid> 
+   
+     
+
+    
+    
+    
+</Window>

@@ -1,0 +1,110 @@
+﻿
+@using Microsoft.AspNet.Identity
+@using WebAccess.Models;
+
+@{
+    string usertype = "blank";
+
+
+
+    string username = User.Identity.GetUserName();
+
+    webaccessEntities context = new webaccessEntities();
+    var obj = context.AspNetUsers.Where(x => x.Email == username).FirstOrDefault();
+    if (obj != null)
+    {
+        usertype = obj.SysUserType.TypeName;
+    }
+
+
+
+
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            @Html.ActionLink(@VTTLanguages.Resources.Home, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+
+                    if (usertype == "StoreAdmin" || usertype == "StoreManager" || usertype == "SysAdmin")
+                    {
+
+
+                        
+
+                
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/Reports"> @VTTLanguages.Resources.Reports <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Sales/Index">Sales</a></li>
+                                <li><a href="/Payment/Index">Payment Summary</a></li>
+                                <li><a href="/Commission/Index">Commissions</a></li>
+                                <li><a href="/Reports/none">None Yet - Do not click</a></li>
+                          
+                                <li class="divider"></li>
+                                <li><a href="/Reports/none">Do Not Click</a></li>
+                    
+                            </ul>
+                        </li>
+
+                    }
+
+
+                    if (usertype == "SysAdmin")
+                    {
+
+
+
+
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/Admin">@VTTLanguages.Resources.Admin <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="/Users">@VTTLanguages.Resources.UserAdministration</a></li>
+                                <li><a href="/Stores">Stores</a></li>
+                                <li><a href="/SystemMessage">@VTTLanguages.Resources.SystemAnnouncements</a></li>
+                                <li><a href="/SendEmail">@VTTLanguages.Resources.SendEmail</a></li>
+                                <li><a href="/Settings">Settings</a></li>
+                                <li><a href="/License">License</a></li>
+                            </ul>
+                        </li>
+                    }
+
+
+    
+  
+
+
+        <!-- My Profile Menu Link -->
+
+                    <li>@Html.ActionLink(@VTTLanguages.Resources.MyProfile, "Index", "Manage")</li>
+
+                    <li>@Html.ActionLink("FAQ", "FAQ", "StaticContent")</li>
+                }
+
+
+                <!--  Login link .. can be accessed by all including guest (non-authenticated users)-->
+            </ul>
+            @Html.Partial("_LoginPartial")
+
+
+
+        </div>
+    </div>
+</div>
+
+

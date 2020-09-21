@@ -1,0 +1,250 @@
+﻿@model WebAccess.ViewModels.Ticket
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ticket #@(Model.ticketno)</h2>
+
+<div>
+
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            Sale Date
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saledate)
+        </dd>
+
+
+        <dt>
+            Customer
+        </dt>
+
+
+
+
+
+
+        <dd>
+            @Html.DisplayFor(model => model.customerid)
+        </dd>
+
+        <dt>
+            SubTotal
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subtotal)
+        </dd>
+
+
+        <dt>
+            Adjustment
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adjustment)
+        </dd>
+
+
+
+        <dt>
+            Total
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+
+
+        <dt>
+            Note
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.note)
+        </dd>
+
+        <dt>
+            Cashier
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.custom1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.custom1)
+        </dd>
+        <dt>
+            Void Reason
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.custom4)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stationno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stationno)
+        </dd>
+
+    </dl>
+</div>
+
+
+
+<table class="table" style="width:400px">
+    <tr>
+        <th>
+            Qty
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Discount
+        </th>
+
+
+        <th>
+            Nail Tech
+        </th>
+        <th>
+            Note
+        </th>
+
+
+
+    </tr>
+
+    @foreach (var item in Model.TicketItems)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.discount)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.note)
+        </td>
+
+
+
+
+    </tr>
+    }
+
+</table>
+
+
+
+
+<table class="table" style="width:300px">
+    <tr>
+        <th colspan="4">
+            <b>PAYMENTS </b> 
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model.payments)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.authorcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.netamount)
+        </td>
+        <td>
+            @if (item.voided == 1)
+    {
+        <text>VOIDED</text>
+}
+else
+{
+        <text></text>
+}
+        </td>
+
+    </tr>
+    }
+
+</table>
+
+<table class="table" style="width:300px">
+    <tr>
+        <th colspan="2">
+            <b>TIPS</b> 
+       
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model.TicketTips)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+
+
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>

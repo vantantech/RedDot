@@ -1,0 +1,201 @@
+﻿@model WebAccess.Models.SysSetting
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SysSetting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Item)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value4)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value4)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description5)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description5)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value5)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value5)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description6)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description6)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value6)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value6)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description7)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description7)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value7)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value7)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description8)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description8)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value8)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value8)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description9)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description9)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value9)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value9)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description10)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description10)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value10)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value10)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

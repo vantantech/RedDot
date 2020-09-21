@@ -1,0 +1,175 @@
+﻿
+@model IEnumerable<WebAccess.Models.sale>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<script type="text/javascript">
+    $('#panel4').DataTable({ "bDestroy": "true", "scrollY": "250px", "lengthMenu": [[-1], ["All"]], "sDom": "tr" });
+
+    $("#StoreId4").change(function () {
+        // $('#panel1').dataTable().fnDestroy();
+        $("#dvMonthlySales").load('@(Url.Action("GetMonthlySales", "Dashboard", null, Request.Url.Scheme))?StoreId=' + $("#StoreId4").val() + '&move=&reportdate=@((string)ViewBag.ReportDate)');
+    });
+
+    $("#previous4").click(function () {
+
+        $("#dvMonthlySales").load('@(Url.Action("GetMonthlySales", "Dashboard", null, Request.Url.Scheme))?StoreId=' + $("#StoreId4").val() + '&move=previous&reportdate=@((string)ViewBag.ReportDate)');
+    });
+
+    $("#next4").click(function () {
+
+        $("#dvMonthlySales").load('@(Url.Action("GetMonthlySales", "Dashboard", null, Request.Url.Scheme))?StoreId=' + $("#StoreId4").val() + '&move=next&reportdate=@((string)ViewBag.ReportDate)');
+    });
+
+
+</script>
+
+
+
+
+
+<table height="400">
+    <tr>
+        <td valign="top">
+
+
+
+
+
+            <p>
+
+
+                <div class="row">
+                    <div class="col-sm-2">
+
+
+                        <button type="button" class="btn btn-primary" name="previous4" id="previous4" data-toggle="tooltip" data-placement="right" title="Previous" style="width:100px">Previous</button>
+
+                    </div>
+                    <div class="col-sm-7 ">
+                        @if ((bool)ViewBag.MultipleStores)
+                        {
+                            <div class="input-group">
+                                <span class="input-group-addon">Store:</span>
+                                @Html.DropDownList("StoreId4", (IEnumerable<SelectListItem>)ViewBag.Stores, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        }
+                        </div>
+
+                    <div class="col-sm-2">
+
+
+                        <button type="button" class="btn btn-primary" name="next4" id="next4" data-toggle="tooltip" data-placement="right" title="Next" style="width:100px">Next</button>
+
+                    </div>
+
+                </div>
+            </p>
+
+            <p>
+                <h4> Month Of: @(ViewBag.ReportDate as string)</h4>
+            </p>
+
+
+
+            @{
+                decimal total = 0;
+
+            }
+
+            <table id="panel4" class="display table table-striped" cellspacing="0">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.ticketno)
+                        </th>
+
+                        <th width="200px">
+                            @Html.DisplayNameFor(model => model.saledate)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.total)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.status)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        if (item.status == "Closed")
+                        {
+                            total = total + (decimal)item.total;
+                        }
+
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ticketno)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.saledate)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.total)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.status)
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Details", "Details", "Sales", new { id = item.id }, null)
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+
+                <tfoot>
+                    <tr>
+
+                        <td>
+                            &nbsp;
+                        </td>
+
+                        <td>
+                            &nbsp;
+                        </td>
+
+
+
+                        <td>
+                            @(total)
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tfoot>
+
+
+            </table>
+
+
+
+
+        </td>
+    </tr>
+</table>
+
+

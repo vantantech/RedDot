@@ -1,0 +1,10 @@
+<SIP>
+<Version>1.0</Version>
+<ECRId></ECRId>
+<RequestId></RequestId>
+<Request>CreditAuthComplete</Request>
+<TransactionId></TransactionId>
+<TotalAmount></TotalAmount>
+<TipAmount></TipAmount>
+</SIP>
+

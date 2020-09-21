@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SalonService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://salon.reddotpos.com/SalonService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://salon.reddotpos.com/SalonService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://salon.reddotpos.com/SalonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RedDotService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISalonService_CloseConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseConnection" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_CloseConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_RemoveTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveTicket" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_RemoveTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesTicket_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesTicket" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesTicket_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesTicketResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesItem_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesItem" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesItem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesPayment_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesPayment" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesPayment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesPaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesGratuity_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesGratuity" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteSalesGratuity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteSalesGratuityResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteEmployeeList_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteEmployeeList" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteEmployeeList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteEmployeeListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISalonService">
+    <wsdl:operation name="CloseConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/CloseConnection" message="tns:ISalonService_CloseConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/CloseConnectionResponse" message="tns:ISalonService_CloseConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/RemoveTicket" message="tns:ISalonService_RemoveTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/RemoveTicketResponse" message="tns:ISalonService_RemoveTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesTicket">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteSalesTicket" message="tns:ISalonService_WriteSalesTicket_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteSalesTicketResponse" message="tns:ISalonService_WriteSalesTicket_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesItem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteSalesItem" message="tns:ISalonService_WriteSalesItem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteSalesItemResponse" message="tns:ISalonService_WriteSalesItem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesPayment">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteSalesPayment" message="tns:ISalonService_WriteSalesPayment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteSalesPaymentResponse" message="tns:ISalonService_WriteSalesPayment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesGratuity">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteSalesGratuity" message="tns:ISalonService_WriteSalesGratuity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteSalesGratuityResponse" message="tns:ISalonService_WriteSalesGratuity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteEmployeeList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteEmployeeList" message="tns:ISalonService_WriteEmployeeList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteEmployeeListResponse" message="tns:ISalonService_WriteEmployeeList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ISalonService" type="tns:ISalonService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CloseConnection">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/CloseConnection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTicket">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/RemoveTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesTicket">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/WriteSalesTicket" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesItem">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/WriteSalesItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesPayment">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/WriteSalesPayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteSalesGratuity">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/WriteSalesGratuity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteEmployeeList">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/WriteEmployeeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SalonService">
+    <wsdl:port name="BasicHttpBinding_ISalonService" binding="tns:BasicHttpBinding_ISalonService">
+      <soap:address location="http://salon.reddotpos.com/SalonService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

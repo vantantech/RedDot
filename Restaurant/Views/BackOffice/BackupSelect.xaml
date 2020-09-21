@@ -1,0 +1,106 @@
+﻿<Window x:Class="RedDot.BackupSelect"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:local="clr-namespace:RedDot"
+        Title="EmployeeList" Height="768" Width="1024"  WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/media/sphere.png"  ResizeMode="NoResize"  >
+
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/Resources/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="DriveTemplate">
+                <Button  Click="DriveClick"   Tag="{Binding Name}"  Style="{StaticResource CustomButtonStyle}"    HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120" Margin="10" >
+                    <Grid >
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding Name}"  FontSize="15"/>
+                            <TextBlock Text="{Binding DriveType}" FontSize="15" />
+                            <TextBlock Text="{Binding VolumeLabel}" FontSize="15" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+
+
+    <!--********************************************************************************
+    **********************************************************************************
+  ____  _             _      ____      _     _ 
+ / ___|| |_ __ _ _ __| |_   / ___|_ __(_) __| |
+ \___ \| __/ _` | '__| __| | |  _| '__| |/ _` |
+  ___) | || (_| | |  | |_  | |_| | |  | | (_| |
+ |____/ \__\__,_|_|   \__|  \____|_|  |_|\__,_|
+ 
+    **********************************************************************
+-->
+
+
+    <Border BorderThickness="3" BorderBrush="Yellow"  CornerRadius="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <Button  Click="DriveClick"   Tag="{Binding Preset}"  Style="{StaticResource CustomButtonStyle}"    HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="150" Margin="10" >
+                <Grid >
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Preset:" FontSize="15" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Preset}" FontSize="15" FontWeight="Bold" />
+
+                    </StackPanel>
+                </Grid>
+            </Button>
+
+            <ScrollViewer Grid.Row="1" x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible"  VerticalAlignment="Top" Height="550">
+                <ScrollViewer.Resources>
+                    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Width" Value="40"/>
+                                <Setter Property="Height" Value="Auto" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Resources>
+                <ItemsControl  Margin="10" ItemsSource="{Binding DriveList}" ItemTemplate="{StaticResource DriveTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_Click_Exit" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/back.png" Width="40" Height="40"/>
+                        <TextBlock  Text="BACK" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
+
