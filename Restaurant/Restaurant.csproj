@@ -265,6 +265,7 @@
     <Compile Include="Class\ConfigParameters.cs" />
     <Compile Include="Class\ListType.cs" />
     <Compile Include="Class\PayDay.cs" />
+    <Compile Include="Class\Printer.cs" />
     <Compile Include="Class\ReportGroup.cs" />
     <Compile Include="Class\ResponseEventArgs.cs" />
     <Compile Include="Class\SalesReport.cs" />

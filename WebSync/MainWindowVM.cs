@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -54,7 +55,7 @@ namespace WebSync
 
 
 
-
+        string backupdirectory;
 
         public MainWindowVM(Window parent)
         {
@@ -86,14 +87,21 @@ namespace WebSync
             StartDate           = DateTime.Today;
             EndDate             = DateTime.Today;
 
-            HistoryData         = _history.GetOrders(StartDate, EndDate);
+      
 
 
 
             WebUserId = GlobalSettings.Instance.WebUserID;
+            StoreCode = GlobalSettings.Instance.StoreCode;
+            StorePass= GlobalSettings.Instance.StorePass;
+
+            backupdirectory = GlobalSettings.Instance.BackupDirectory;
+
+            //clean before backup
 
 
-        
+            LoadHistory();
+
         }
 
 
@@ -106,8 +114,17 @@ namespace WebSync
         // |_|    \__,_|_.__/|_|_|\___| |_|   |_|  \___/| .__/ \___|_|   \__|\__, |
         //                                              |_|                  |___/ 
         //------------------------------------------------------------------------------------------
+      private FileInfo[] fiArray;
+        public FileInfo[] FiArray
+        {
+            get { return fiArray; }
+            set
+            {
 
-
+                fiArray = value;
+                NotifyPropertyChanged("FiArray");
+            }
+        }
 
         private string message;
         public string Message
@@ -156,7 +173,8 @@ namespace WebSync
 
 
         public int WebUserId { get; set; }
-
+        public string StoreCode { get; set; }
+        public string StorePass { get; set; }
 
 
     
@@ -178,7 +196,12 @@ namespace WebSync
           
             HistoryData = _history.GetOrders(StartDate, EndDate);
             logger.Info("History Data Loaded.");
- 
+
+            DirectoryInfo di = new DirectoryInfo(backupdirectory);
+            FileInfo[] fi = di.GetFiles();
+            Array.Sort(fi, (x, y) => StringComparer.OrdinalIgnoreCase.Compare(x.CreationTime, y.CreationTime));
+            FiArray = fi;
+
         }
 
 
@@ -298,7 +321,7 @@ namespace WebSync
 
                 foreach(DataRow item in HistoryData.Rows)
                 {
-                    m_webclient.SyncTicket(WebUserId, int.Parse(item["id"].ToString()));
+                    m_webclient.SyncTicket(StoreCode, StorePass, int.Parse(item["id"].ToString()));
                 }
 
                 logger.Info("Sync List Completed Successfully.");
@@ -317,10 +340,12 @@ namespace WebSync
         {
             try
             {
-              
+                string storecode = GlobalSettings.Instance.StoreCode;
+                string password = GlobalSettings.Instance.StorePass;
                 SalonWebClient m_webclient = new SalonWebClient();
                
                     m_webclient.SyncEmployees(WebUserId);
+                m_webclient.SyncMenu(storecode, password);
 
                     logger.Info("Employee Sync Successfully.");
             }

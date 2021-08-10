@@ -228,6 +228,7 @@ namespace RedDot
                     command.Connection = _connection;
                     command.CommandType = System.Data.CommandType.Text;
                     command.CommandText = query;
+                    command.CommandTimeout = 864000;
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                     adapter.Fill(table);

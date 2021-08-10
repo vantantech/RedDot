@@ -450,6 +450,14 @@ namespace RedDot
             CSVWriter.WriteDataTable(dt, filename, true);
 
         }
+
+        public void ImportInventoryCSV(string filename)
+        {
+
+            DataTable dt = m_dbproducts.GetInActiveProductsCSV();
+            CSVWriter.WriteDataTable(dt, filename, true);
+
+        }
     }
 
 

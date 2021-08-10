@@ -121,7 +121,8 @@ namespace RedDot.DataManager
             return _dbconnect.Command(querystring);
         }
 
-        public bool DBInsertCreditPayment(int salesid, decimal requested_amount,
+        public bool DBInsertCreditPayment(int salesid,
+            decimal requested_amount,
             string CardGroup,
             string ApprovalCode,
             string CardType,
@@ -132,7 +133,7 @@ namespace RedDot.DataManager
             decimal cashbackamount,
             decimal tip,
             string TransType,
-            string PinVerified,
+            int PinVerified,
             string SignatureLine,
             string TipAdjustAllowed,
             string EMV_ApplicationName,
@@ -180,7 +181,7 @@ namespace RedDot.DataManager
                     " tipadjustallowed,emv_applicationname,emv_cryptogram,emv_cryptogramtype,emv_aid,cardholdername,custom1, custom2) values (" + 
                     salesid + ",'" + CardGroup + "'," + authamt + "," + requested_amount + ",'" + ApprovalCode + "','" +
                     CardType + "','" + MaskedPAN + "'," + tip + ",'" + paymentdate.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
-                    cashbackamount + ",'" + CardAcquisition + "','" + ResponseId + "','" + TransType + "'," + (PinVerified==null?"0":PinVerified) + "," +
+                    cashbackamount + ",'" + CardAcquisition + "','" + ResponseId + "','" + TransType + "'," + PinVerified + "," +
                     SignatureLine + "," + TipAdjustAllowed + ",'" + (EMV_ApplicationName==null?"":EMV_ApplicationName) + "','" + (EMV_Cryptogram==null?"":EMV_Cryptogram) + "','" +
                     (EMV_CryptogramType==null?"":EMV_CryptogramType) + "','" + (EMV_AID==null?"":EMV_AID) + "','" + (EMV_CardholderName==null?"":EMV_CardholderName.Replace("'","''")) + "','" + CloverPaymentId + "','" + CloverOrderId +  "')";
 
@@ -214,7 +215,7 @@ namespace RedDot.DataManager
         public bool DBVoidPayment(int id)
         {
             string querystring = "";
-            querystring = "update payment set void = 1, voiddate ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'  where id =" + id;
+            querystring = "update payment set void = 1, transtype='VOIDED', voiddate ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'  where id =" + id;
             return _dbconnect.Command(querystring);
         }
 
@@ -239,12 +240,7 @@ namespace RedDot.DataManager
             return _dbconnect.Command(querystring);
         }
 
-        public bool DBVoidRewardREDEEM(int salesid)
-        {
-            string querystring = "";
-            querystring = "update customerrewards set void = 1, voiddate ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'  where salesid =" + salesid + " and transtype='REDEEM'";
-            return _dbconnect.Command(querystring);
-        }
+
 
         public bool DBInsertGratuity(int salesid, int employeeid, decimal amount)
         {
@@ -254,19 +250,22 @@ namespace RedDot.DataManager
         }
 
         // DATA UPDATE
-
-        public bool DBDeleteCustomerReward(int salesid)
+        public bool DBVoidRewardREDEEM(int salesid)
         {
             string querystring = "";
-
-            //need to delete a previous reward record incase this is a reversed ticket the user closed it again
-            querystring = "delete from customerrewards where transtype='ADD' and salesid=" + salesid;
+            querystring = "update customerrewards set void = 1,Note='Voided', voiddate ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'  where salesid =" + salesid + " and transtype='REDEEM' and void=0";
+            return _dbconnect.Command(querystring);
+        }
+        public bool DBVoidCustomerReward(int salesid)
+        {
+            string querystring = "";
+            querystring = "update customerrewards set void = 1,Note='Voided', voiddate ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'  where salesid =" + salesid + " and transtype='ADD' and void=0";
             return _dbconnect.Command(querystring);
         }
 
         public bool DBInsertCustomerReward(int customerid,int salesid, DateTime saledate, decimal tickettotal, decimal rewardamount, string transtype,string note)
         {
-            DBDeleteCustomerReward(salesid);
+            DBVoidCustomerReward(salesid);
 
             string querystring = "insert into customerrewards (customerid,salesid,saledate,tickettotal,amount,transtype,note) values (" + customerid + "," + salesid + ",'" + saledate.ToString("yyyy-MM-dd HH:mm:ss") + "'," + tickettotal + "," + rewardamount + ",'" + transtype + "','" + note + "')";
 

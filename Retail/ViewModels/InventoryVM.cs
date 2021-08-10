@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RedDot;
 using System.Data;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
 using System.Windows;
-using System.Drawing.Printing;
-using System.Drawing;
+using System.Windows.Input;
 
 
 
@@ -80,6 +72,8 @@ namespace RedDot
         public ICommand ExportActiveClicked { get; set; }
         public ICommand ExportInActiveClicked { get; set; }
 
+        public ICommand ImportClicked { get; set; }
+
         private Visibility m_visibleselected;
 
         private Visibility m_visiblenewproduct;
@@ -129,6 +123,8 @@ namespace RedDot
             ExportAllClicked              = new RelayCommand(ExecuteExportAllClicked, param => true);
             ExportActiveClicked = new RelayCommand(ExecuteExportActiveClicked, param => true);
             ExportInActiveClicked = new RelayCommand(ExecuteExportInActiveClicked, param => true);
+            ImportClicked = new RelayCommand(ExecuteImportClicked, param => true);
+
 
 
             m_parent                      = parent;
@@ -228,7 +224,7 @@ namespace RedDot
             set
             {
                 m_parentcategory = value;
-                NotifyPropertyChanged("CurrentCategory");
+                NotifyPropertyChanged("ParentCategory");
             }
         }
 
@@ -849,6 +845,28 @@ namespace RedDot
 
             }
 
+        }
+
+
+        public void ExecuteImportClicked(object obj)
+        {
+            try
+            {
+                System.Windows.Forms.SaveFileDialog ofd = new System.Windows.Forms.SaveFileDialog();
+                ofd.DefaultExt = "csv";
+                ofd.Filter = "CSV Files (*.csv)|*.csv|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+
+                    m_inventorymodel.ExportInActiveInventoryCSV(ofd.FileName);
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("ExecuteExportClicked:" + e.Message);
+
+            }
         }
         #endregion
 

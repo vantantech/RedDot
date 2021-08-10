@@ -671,10 +671,13 @@ namespace RedDot
             }
         }
 
+       
         public int SelectedIndex
         {
             get { return m_selectedindex; }
             set { m_selectedindex = value;
+
+        /*
                 switch(m_selectedindex)
                 {
                     case 0: //daily
@@ -694,10 +697,11 @@ namespace RedDot
                         RunMonthlyReport();
                      
                         break;
-                }
+                } */
                 NotifyPropertyChanged("SelectedIndex"); }
         }
 
+        
 
         public DateTime DailyStartDate
         {

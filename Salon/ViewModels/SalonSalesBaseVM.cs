@@ -9,6 +9,7 @@ using System.Data;
 using com.clover.remotepay.sdk;
 using GlobalPayments.Api.Terminals;
 using Clover;
+using RedDot.Models;
 
 namespace RedDot
 {
@@ -84,6 +85,9 @@ namespace RedDot
                 else return false;
             }
         }
+
+
+
         public bool CanExecuteOpenTicket
         {
             get
@@ -327,9 +331,32 @@ namespace RedDot
                 request.OrderID = result.First().CloverOrderId;
                 request.PaymentID = result.First().CloverPaymentId;
 
-                if (location == "Clover") cloverConnector.DisplayPaymentReceiptOptions(request );
-                else
-                    ReceiptPrinterModel.PrintCreditSlip(CurrentTicket, result.First(), "**---COPY---**");
+
+                switch (GlobalSettings.Instance.CreditCardProcessor)
+                {
+
+                    case "CardConnect":
+
+                        CardConnectModel.PrintReceipt(CurrentTicket.SalesID);
+
+                        break;
+
+                    case "Clover":
+
+                        if (location == "Clover") cloverConnector.DisplayPaymentReceiptOptions(request);
+                        else
+                            ReceiptPrinterModel.PrintCreditSlip(CurrentTicket, result.First(), "**---COPY---**");
+                        break;
+
+                    default:
+
+                        ReceiptPrinterModel.PrintCreditSlip(CurrentTicket, result.First(), "**---COPY---**");
+                        break;
+
+                }
+
+
+
               
 
               

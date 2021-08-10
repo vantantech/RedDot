@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebAccess.Models.store>
+
+@{
+    ViewBag.Title = "Stores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stores</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.storename)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebUserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.storecode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.connectionstring)
+        </th>
+ 
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.storename)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebUserId)
+        </td>
+        <td>
+            @Html.ActionLink(item.storename,"index",new {storecode=item.storecode })
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.connectionstring)
+        </td>
+
+    </tr>
+}
+
+</table>

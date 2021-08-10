@@ -222,9 +222,17 @@ namespace RedDot
                           "total_payment,  coalesce(tips, 0) as totaltips," +
                           "total_payment + coalesce(tips, 0) as payment_plus_tips from(" + summary +
                           ") as summary  order by saledate, id ";
+            try
+            {
+                return m_dbconnect.GetData(query);
+            }catch(Exception ex)
+            {
+                TouchMessageBox.Show(ex.Message);
+                TouchMessageBox.Show(ex.InnerException.Message);
+                return null;
+            }
 
-
-            return m_dbconnect.GetData(query);
+          
 
 
         }

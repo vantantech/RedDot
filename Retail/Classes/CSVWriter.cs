@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,6 +37,24 @@ namespace RedDot
         writer.Close();
     }
 
+
+    public static void ReadCSV(string filename)
+        {
+            using (TextFieldParser parser = new TextFieldParser(filename))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+                while (!parser.EndOfData)
+                {
+                    //Processing row
+                    string[] fields = parser.ReadFields();
+                    foreach (string field in fields)
+                    {
+                        //TODO: Process field
+                    }
+                }
+            }
+        }
         private static string QuoteValue(string value)
         {
             return String.Concat("\"",

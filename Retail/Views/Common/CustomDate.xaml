@@ -53,12 +53,12 @@
 
             <StackPanel Grid.Row="1"  Orientation="Horizontal" HorizontalAlignment="Center" Width="450">
                 <TextBlock Text="Start Date:" VerticalAlignment="Center" FontSize="20" Foreground="White" />
-                <DatePicker CalendarStyle="{StaticResource styleCalendar}" Margin="20,0,0,0" Name="startdatepicker" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"  SelectedDateChanged="startdatepicker_SelectedDateChanged" SelectedDate="{x:Static sys:DateTime.Now}"  />
+                <DatePicker CalendarStyle="{StaticResource styleCalendar}" Margin="20,0,0,0" Name="startdatepicker" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"  SelectedDateChanged="startdatepicker_SelectedDateChanged"   />
             </StackPanel>
 
             <StackPanel Visibility="{Binding VisibleEndDate}" Grid.Row="2"  Orientation="Horizontal" HorizontalAlignment="Center" Width="450">
                 <TextBlock Text=" End Date:" VerticalAlignment="Center" FontSize="20" Foreground="White" />
-                <DatePicker CalendarStyle="{StaticResource styleCalendar}" Margin="20,0,0,0"  Name="enddatepicker" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="20"  SelectedDateChanged="enddatepicker_SelectedDateChanged" SelectedDate="{x:Static sys:DateTime.Now}"  />
+                <DatePicker CalendarStyle="{StaticResource styleCalendar}" Margin="20,0,0,0"  Name="enddatepicker" HorizontalAlignment="Left" VerticalAlignment="Center"  FontSize="20"  SelectedDateChanged="enddatepicker_SelectedDateChanged"   />
                 <Button Margin="10" Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Center" Height="34"   Width="100"   Click="Button_Same"  >
                     <StackPanel>
                         

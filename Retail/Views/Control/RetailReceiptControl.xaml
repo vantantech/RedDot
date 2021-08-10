@@ -132,7 +132,7 @@
                 
                 <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Height="30" >
                     <TextBlock   Text="Order#"  Height="30" FontWeight="Medium"   Width="Auto" FontSize="16" TextAlignment="Center"/>
-                    <TextBlock   Text="{Binding Path=CurrentTicket.SalesID}"   Height="30"   Width="100" FontSize="16"  TextAlignment="Center"/>
+                    <TextBlock   Text="{Binding Path=CurrentTicket.TicketNo}"   Height="30"   Width="100" FontSize="16"  TextAlignment="Center"/>
 
 
                     <Button Command="{Binding EmployeeClicked}" Background="Transparent">

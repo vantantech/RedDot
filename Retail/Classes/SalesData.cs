@@ -14,6 +14,8 @@ namespace RedDot
     {
 
         public int SalesID { get; set; }
+
+        public string TicketNo { get { return GlobalSettings.Instance.Shop.StorePrefix + SalesID; } }
         public DateTime CloseDate { get; set; }
           public string PaymentType { get; set; }
         public decimal TotalSales { get; set; }

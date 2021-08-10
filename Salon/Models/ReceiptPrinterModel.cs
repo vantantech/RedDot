@@ -346,7 +346,9 @@ namespace RedDot
                 printer.PrintLF(new String('=', receiptchars));
 
                printer.DoubleHeight();
-               printer.PrintLF(payment.CardGroup.ToUpper() + " " + payment.TransType.ToUpper());
+                if (payment.Voided) printer.PrintLF(" ***CREDIT VOIDED****");
+                else   printer.PrintLF(payment.CardGroup.ToUpper() + " " + payment.TransType.ToUpper());
+
 
                 printer.DoubleHeightOFF();
 

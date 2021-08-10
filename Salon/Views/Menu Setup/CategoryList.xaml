@@ -75,40 +75,27 @@
             <DataTemplate x:Key="SelectedProductTemplate">
                 <Border BorderThickness="1"   Margin="1"  BorderBrush="Gray" >
                     <StackPanel Orientation="Horizontal">
-                        <Button  Command="{Binding DataContext.ProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+                        <Button   Command="{Binding DataContext.ProductClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
                             <Button.Template>
                                 <ControlTemplate>
-                                    <Border Name="borderbox" BorderThickness="0"  Width="{Binding DataContext.ProductBorderWidth,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  Background="Transparent" >
 
-                                        <StackPanel  HorizontalAlignment="Right"  Orientation="Horizontal" Height="{Binding DataContext.ProductHeight,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
-                                                <Border   Width="50" Height="Auto"  Background="{Binding colorcode}" >
-                                                    <TextBlock  Text="{Binding menuprefix}" Width="Auto" Height="Auto"  FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Foreground="AliceBlue"  TextAlignment="Center" VerticalAlignment="Center" />
-                                                </Border>
-                                                <Border Width="{Binding DataContext.ProductWidth,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"    Background="AliceBlue" >
-                                                    <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Vertical">
+                                        <Border  Width="{Binding DataContext.ProductWidth,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"   Background="AliceBlue" >
 
-                                                        <TextBlock Text="{Binding description}"  Width="Auto" Height="{Binding DataContext.DescriptionHeight,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  TextAlignment="Center" TextWrapping="Wrap" FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"></TextBlock>
+                                            <TextBlock Text="{Binding description}"  Width="Auto" Height="{Binding DataContext.ProductHeight,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  TextAlignment="Center" TextWrapping="Wrap" FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"></TextBlock>
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Background="DarkSlateGray" >
+                                            <Border   Width="50" Height="Auto"  Background="{Binding colorcode}" >
+                                                <TextBlock  Text="{Binding menuprefix}" Width="Auto" Height="Auto"  FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Foreground="AliceBlue"  TextAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <Border Width="{Binding DataContext.ProductWidth2,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"   Height="25"  Background="DarkSlateGray" >
+                                                <TextBlock Text="{Binding price }" Width="Auto" Height="Auto"    FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Foreground="White"  TextAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                        </StackPanel>
 
+                                    </StackPanel>
 
-                                                        <Border   Width="Auto" Height="25"  Background="DarkSlateGray" >
-                                                            <TextBlock Text="{Binding price }" Width="Auto" Height="Auto"  FontSize="{Binding DataContext.ProductFontSize,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Foreground="White"  TextAlignment="Center" VerticalAlignment="Center" />
-                                                        </Border>
-
-                                                    </StackPanel>
-                                                </Border>
-                                            </StackPanel>
-                                      
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" TargetName="borderbox" Value="Yellow"/>
-                                        </Trigger>
-                              
-                                    </ControlTemplate.Triggers>
                                 </ControlTemplate>
-
-
-
                             </Button.Template>
                         </Button>
 

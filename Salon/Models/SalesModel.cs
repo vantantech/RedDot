@@ -14,6 +14,8 @@ using TriPOS.SignatureFiles;
 using TriPOS.ResponseModels;
 using POSLink;
 using System.Xml;
+using RedDot.Models;
+using RedDot.Models.CardConnect;
 
 namespace RedDot
 {
@@ -657,13 +659,14 @@ namespace RedDot
             decimal authamt = 0;
             decimal cashback = 0;
             decimal tip = 0;
+            int pinverified = (e.PinVerified == "1" ? 1 : 0);
 
 
             if (e.AuthorizedAmount != null && e.AuthorizedAmount != "") authamt = int.Parse(e.AuthorizedAmount) / 100m;
             if (e.CashbackAmount != null && e.CashbackAmount != "") cashback = int.Parse(e.CashbackAmount) / 100m;
             if (e.TipAmount != null && e.TipAmount != "") tip = int.Parse(e.TipAmount) / 100m;
 
-            return dbticket.DBInsertCreditPayment(salesid, requested_amount, e.CardGroup, e.ApprovalCode, e.CardType, e.MaskedPAN, e.CardAcquisition, e.ResponseId, authamt, cashback, tip, e.TransType, e.PinVerified, e.SignatureLine, e.TipAdjustAllowed, e.EMV_ApplicationName, e.EMV_Cryptogram, e.EMV_CryptogramType, e.EMV_AID, e.CardholderName, paymentdate, "", "");
+            return dbticket.DBInsertCreditPayment(salesid, requested_amount, e.CardGroup, e.ApprovalCode, e.CardType, e.MaskedPAN, e.CardAcquisition, e.ResponseId, authamt, cashback, tip, e.TransType,pinverified, e.SignatureLine, e.TipAdjustAllowed, e.EMV_ApplicationName, e.EMV_Cryptogram, e.EMV_CryptogramType, e.EMV_AID, e.CardholderName, paymentdate, "", "");
         }
 
         //for Global Payment SDK
@@ -698,11 +701,12 @@ namespace RedDot
             //CardHolderVerificationMethod == "1" , pin verified online
             //CardHolderVerificationMethod == "2" , off line pin
 
+            int pinverified = int.Parse(resp.CardHolderVerificationMethod);
 
             if (resp.TransactionType == "AUTH") tipadjustallowed = "1"; else tipadjustallowed = "0";
 
 
-            return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.AuthorizationCode, resp.PaymentType, resp.MaskedCardNumber, resp.EntryMethod, resp.TransactionId, (decimal)resp.TransactionAmount, (decimal)resp.CashBackAmount, (decimal)resp.TipAmount, resp.TransactionType, resp.CardHolderVerificationMethod, signature, tipadjustallowed, resp.ApplicationPreferredName, resp.ApplicationCryptogram, resp.ApplicationCryptogramType.ToString(), resp.ApplicationId, resp.CardHolderName, paymentdate, "", "");
+            return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.AuthorizationCode, resp.PaymentType, resp.MaskedCardNumber, resp.EntryMethod, resp.TransactionId, (decimal)resp.TransactionAmount, (decimal)resp.CashBackAmount, (decimal)resp.TipAmount, resp.TransactionType, pinverified, signature, tipadjustallowed, resp.ApplicationPreferredName, resp.ApplicationCryptogram, resp.ApplicationCryptogramType.ToString(), resp.ApplicationId, resp.CardHolderName, paymentdate, "", "");
         }
 
 
@@ -727,7 +731,7 @@ namespace RedDot
                 var val = extra.Values.ToArray()[0].ToString();
                 if (val.ToString().ToUpper() == "SIGNATURE") signature = "2";
             }
-            return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.cardTransaction.authCode, resp.cardTransaction.cardType.ToString(), resp.cardTransaction.last4, resp.cardTransaction.entryType.ToString(), resp.cardTransaction.referenceId, (decimal)resp.amount / 100, (decimal)resp.cashbackAmount / 100, (decimal)resp.tipAmount / 100, transtype, "0", signature, "0", "", "", "", "", resp.cardTransaction.cardholderName, paymentdate, resp.id, resp.order.id);
+            return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.cardTransaction.authCode, resp.cardTransaction.cardType.ToString(), resp.cardTransaction.last4, resp.cardTransaction.entryType.ToString(), resp.cardTransaction.referenceId, (decimal)resp.amount / 100, (decimal)resp.cashbackAmount / 100, (decimal)resp.tipAmount / 100, transtype,0, signature, "0", "", "", "", "", resp.cardTransaction.cardholderName, paymentdate, resp.id, resp.order.id);
         }
 
         //payment for Vantiv
@@ -819,11 +823,22 @@ namespace RedDot
            
 
 
-            return dbticket.DBInsertCreditPayment(salesid, resp.SubTotalAmount, resp.PaymentType.ToUpper(), resp.ApprovalNumber, resp.CardLogo.ToUpper(), MaskCardNumber(resp), resp.EntryMode.ToUpper(), resp.TransactionId, (decimal)resp.ApprovedAmount, (decimal)resp.CashbackAmount, (decimal)resp.TipAmount,transtype.ToUpper(),resp.PinVerified?"2":"0", signature, "0", ApplicationLabel, cryptogram, cryptogramtype, ApplicationIdentifier, resp.CardHolderName, paymentdate, "", "");
+            return dbticket.DBInsertCreditPayment(salesid, resp.SubTotalAmount, resp.PaymentType.ToUpper(), resp.ApprovalNumber, resp.CardLogo.ToUpper(), MaskCardNumber(resp), resp.EntryMode.ToUpper(), resp.TransactionId, (decimal)resp.ApprovedAmount, (decimal)resp.CashbackAmount, (decimal)resp.TipAmount,transtype.ToUpper(),resp.PinVerified?1:0, signature, "0", ApplicationLabel, cryptogram, cryptogramtype, ApplicationIdentifier, resp.CardHolderName, paymentdate, "", "");
 
 
         }
 
+        //payment for Card Connect
+        public static bool InsertCreditPayment(string transtype,int salesid, decimal requested_amount,decimal tip,CCSaleResponse resp, DateTime paymentdate)
+        {
+            string signatureline = "0";
+            string tipadjustallowed = "0";
+            decimal netamount = resp.amount - tip;
+            DBTicket dbticket = new DBTicket();
+            int pinverified = resp.EMV_Data.PIN == "Verified by PIN" ? 1 : 0;
+            return dbticket.DBInsertCreditPayment(salesid,  netamount, "CREDIT", resp.authcode, resp.EMV_Data.Network_Label, "****", resp.EMV_Data.Entry_method, resp.retref,resp.amount, 0,tip, transtype.ToUpper(), pinverified, signatureline, tipadjustallowed, resp.EMV_Data.Application_Label,resp.EMV_Data.AID,resp.EMV_Data.IAD, resp.EMV_Data.AID, resp.receiptData.nameOnCard, paymentdate, "", "");
+
+        }
 
         //payment for PAX
         public static bool InsertCreditPayment(string transtype, int salesid, decimal requested_amount, PaymentResponse resp, DateTime paymentdate)
@@ -923,7 +938,7 @@ namespace RedDot
             string ApplicationLabel =  findXMl(resp.ExtData,"APPPN");
             string ApplicationIdentifier = findXMl(resp.ExtData,"AID");
 
-            return dbticket.DBInsertCreditPayment(salesid, int.Parse(resp.RequestedAmount)/100.00m, resp.CardType.ToUpper(), resp.AuthCode, resp.CardType.ToUpper(), resp.BogusAccountNum,entrymode, resp.RefNum, int.Parse(resp.ApprovedAmount)/100.00m,cashbackamount, tip, transtype.ToUpper(),  "0", signature, "0", ApplicationLabel, cryptogram, cryptogramtype, ApplicationIdentifier,"customername", paymentdate, "", "");
+            return dbticket.DBInsertCreditPayment(salesid, int.Parse(resp.RequestedAmount)/100.00m, resp.CardType.ToUpper(), resp.AuthCode, resp.CardType.ToUpper(), resp.BogusAccountNum,entrymode, resp.RefNum, int.Parse(resp.ApprovedAmount)/100.00m,cashbackamount, tip, transtype.ToUpper(), 0, signature, "0", ApplicationLabel, cryptogram, cryptogramtype, ApplicationIdentifier,"customername", paymentdate, "", "");
 
 
         }
@@ -997,7 +1012,7 @@ namespace RedDot
             string transtype = "REFUND";
 
 
-            return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.cardTransaction.authCode, resp.cardTransaction.cardType.ToString(), resp.cardTransaction.last4, resp.cardTransaction.entryType.ToString(), resp.cardTransaction.referenceId, (decimal)resp.amount / 100, 0, 0, transtype, "0", "0", "1", "", "", "", "", resp.cardTransaction.cardholderName, paymentdate, resp.id, resp.orderRef.id);
+            return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.cardTransaction.authCode, resp.cardTransaction.cardType.ToString(), resp.cardTransaction.last4, resp.cardTransaction.entryType.ToString(), resp.cardTransaction.referenceId, (decimal)resp.amount / 100, 0, 0, transtype, 0, "0", "1", "", "", "", "", resp.cardTransaction.cardholderName, paymentdate, resp.id, resp.orderRef.id);
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,48 +21,79 @@ namespace RedDot
     /// </summary>
     public partial class RemoteScreen : Window
     {
+        public RemoteScreenVM remotescreenvm { get; set; }
         DispatcherTimer timer;
         int ctr = 0;
+        int max = 50;
         public RemoteScreen()
         {
             InitializeComponent();
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 10);
             timer.Tick += new EventHandler(timer_Tick);
+
+            remotescreenvm = new RemoteScreenVM();
+            this.DataContext = remotescreenvm;
         }
 
 
         void timer_Tick(object sender, EventArgs e)
         {
             ctr++;
-            if (ctr > 21)
+            if (ctr > max)
             {
                 ctr = 1;
             }
-            PlaySlideShow(ctr);
+
+            // string filename = ((ctr < 10) ? "pack://siteoforigin:,,,/" + "images/Plane0" + ctr + ".jpeg" : "pack://siteoforigin:,,,/" + "images/Plane" + ctr + ".jpeg");
+            string filename = ((ctr < 10) ? "c:/reddot/images/ad" + ctr + ".jpg" : "c:/reddot/images/ad" + ctr + ".jpg");
+            if (File.Exists(filename))
+            {
+
+                PlaySlideShow(filename);
+            }
+            else
+            {
+                //resets max once it hits a file not found
+                max = ctr;
+            }
+
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ctr = 1;
-            PlaySlideShow(ctr);
+
+
             timer.Start();
 
         }
-        private void PlaySlideShow(int ctr)
+        private void PlaySlideShow(string filename)
         {
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            string filename = ((ctr < 10) ? "pack://siteoforigin:,,,/" + "images/Plane0" + ctr + ".jpeg" : "pack://siteoforigin:,,,/" + "images/Plane" + ctr + ".jpeg");
-           image.UriSource = new Uri(filename);
-            
-            image.EndInit();
-            myImage.Source = image;
-            myImage.Stretch = Stretch.Uniform;
-            progressBar1.Value = ctr;
+            try
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+
+
+                image.UriSource = new Uri(filename);
+
+                image.EndInit();
+                myImage.Source = image;
+                myImage.Stretch = Stretch.Uniform;
+                progressBar1.Value = ctr;
+
+
+
+            }
+            catch
+            {
+
+            }
+
         }
 
 
- 
-  
+
+
     }
 }

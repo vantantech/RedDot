@@ -15,13 +15,50 @@ namespace RedDotService
     public class SalonService : ISalonService
     {
         DBTicket m_dbticket;
+        DBMenu m_dbmenu;
 
-     
+        DB_A0B2A3_webaccessEntities context;
+
+        string m_connectionstring="";
 
         public SalonService()
         {
-            m_dbticket = new DBTicket();
+            context = new DB_A0B2A3_webaccessEntities();
+
         }
+
+        public string Authenticate(string storecode, string password)
+        {
+            try
+            {
+          
+                var store = context.stores.Where(x => x.storecode == storecode).FirstOrDefault();
+
+
+                //var salt = store.salt;
+                // var pass = HMac.ComputeHMAC_SHA256(Encoding.ASCII.GetBytes(password), Encoding.ASCII.GetBytes(salt));
+                // string hmac = System.Text.Encoding.ASCII.GetString(pass);
+
+                var hashedpassword = store.hmac;
+
+                if (HMac.VerifyHashedPassword(hashedpassword, password))
+                {
+                    m_connectionstring = store.connectionstring;
+                }
+                else return "User/pass not found";
+
+
+                m_dbticket = new DBTicket(m_connectionstring);
+                m_dbmenu = new DBMenu(m_connectionstring);
+
+                return m_dbmenu.GetStatus();
+            }catch(Exception ex)
+            {
+                return ex.Message;
+            }
+
+        }
+   
 
         public bool CloseConnection()
         {
@@ -32,7 +69,7 @@ namespace RedDotService
         public bool RemoveTicket(int userid,int ticketno)
         {
            
-            return m_dbticket.DBRemoveTicket(userid, ticketno);
+            return m_dbticket.DBRemoveTicket( ticketno);
         }
 
     
@@ -112,6 +149,22 @@ namespace RedDotService
         public LicenseRequest GetLicense(LicenseRequest request, string publickey)
         {
             return Licensing.GetLicense(request, publickey);
+        }
+
+        public string WriteCategory(Category cat)
+        {
+            return m_dbmenu.DBInsertCategory(cat);
+        }
+
+        public string GetConnectionString()
+        {
+            return m_connectionstring;
+        }
+
+        public string GetStatus()
+        {
+            if (m_dbmenu is null) return "null";
+            return m_dbmenu.GetStatus();
         }
 
 

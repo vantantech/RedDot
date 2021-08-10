@@ -10,8 +10,7 @@ using System.Globalization;
 using System.Threading;
 using System.Diagnostics;
 using NLog;
-
-
+using System.IO;
 
 namespace WebSync
 {
@@ -94,9 +93,13 @@ namespace WebSync
          
 
             m_webclient = new SalonWebClient();
+            lastdailysynced = DateTime.Now;
+            lastsynced = DateTime.Now;
 
-         
-                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            //backup on startup
+            DBBackup();
+
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0,timer_interval , 0);
                 dispatcherTimer.Start();
@@ -110,13 +113,19 @@ namespace WebSync
             {
                
                     if (busy) return;
+                    busy = true;
 
                     lastchecked = DateTime.Now;
                     int WebUserId = GlobalSettings.Instance.WebUserID;
+                string storecode = GlobalSettings.Instance.StoreCode;
+                string storepass = GlobalSettings.Instance.StorePass;
 
-                //do daily sync here
-                    if((DateTime.Now - lastdailysynced).TotalHours > 24 )
+                TimeSpan dailyspan = (DateTime.Now - lastdailysynced);
+                logger.Info("daily span:" + dailyspan.TotalHours);
+                //do daily sync here - backups
+                    if (dailyspan.TotalHours > 24 )
                     {
+                    logger.Info("Daily span is greater than 24 hours");
 
                        //employee sync
                        try
@@ -124,6 +133,9 @@ namespace WebSync
                             m_webclient.SyncEmployees(WebUserId);
                             lastdailysynced = DateTime.Now;
                             logger.Info("Employee Sync Successfully.");
+
+                            //backup
+                            DBBackup();
                         }
                         catch(Exception ex)
                         {
@@ -132,8 +144,7 @@ namespace WebSync
 
 
 
-                    //backup
-                    DBBackup();
+                    
 
 
                     }
@@ -152,7 +163,7 @@ namespace WebSync
 
                    mainwindow.BottomMessage = "Last Checked:" + lastchecked.ToString() + "   Last Synced:" + lastsynced.ToString();
 
-                    busy = true;
+                
                   
 
                     if (websynctime != "") //if not blank , then test for time match
@@ -180,17 +191,19 @@ namespace WebSync
                     mw.LoadHistory();
 
 
+
+
                     if (SyncList.Rows.Count > 0)
                     {
                         lastsynced = DateTime.Now;
-                    logger.Info("Sync tickets:" + SyncList.Rows.Count + " tickets found.");
+                        logger.Info("Sync tickets:" + SyncList.Rows.Count + " tickets found.");
 
                         foreach (DataRow item in SyncList.Rows)
                         {
                                 try
                                 {
                                     int salesid = int.Parse(item["id"].ToString());
-                                    m_webclient.SyncTicket(WebUserId, salesid);
+                                    m_webclient.SyncTicket(storecode,storepass, salesid);
 
                                     Thread.Sleep(500);
                                 }catch(Exception ex)
@@ -229,10 +242,30 @@ namespace WebSync
             {
                 string backupdirectory = GlobalSettings.Instance.BackupDirectory;
 
-              
+                //clean before backup
+                logger.Info("Backup started to:  " + backupdirectory);
 
-             
-                    DBConnect db = new DBConnect();
+                DirectoryInfo di = new DirectoryInfo(backupdirectory);
+                FileInfo[] fiArray = di.GetFiles();
+                Array.Sort(fiArray, (x, y) => StringComparer.OrdinalIgnoreCase.Compare(x.CreationTime, y.CreationTime));
+                int days = 7;
+                foreach (FileInfo fi in fiArray)
+                {
+                    TimeSpan diff = fi.CreationTime.Subtract(DateTime.Now);
+                    logger.Info("File name: " + fi.Name);
+                    logger.Info("File age (days): " + Math.Abs(diff.TotalDays));
+                    if (Math.Abs(diff.TotalDays) > days )
+                    {
+                        logger.Info("Deleting : " + fi.Name);
+                        fi.Delete();
+                    }
+                        
+                   
+                        
+                }
+
+
+                DBConnect db = new DBConnect();
                  
                     //"C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysqldump"
                     db.Backup(backupdirectory);

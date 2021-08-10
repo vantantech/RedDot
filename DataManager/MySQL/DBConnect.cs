@@ -386,6 +386,11 @@ namespace RedDot.DataManager
 
                 if (this.OpenConnection() == true)
                 {
+                    //need to remove the force group column restrictions for newer version of Mysql
+                   // string query1 ="set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
+                   // MySqlCommand cmd = new MySqlCommand(query1, _connection);
+                   // cmd.ExecuteNonQuery();
+
                     MySqlCommand command = new MySqlCommand();
                     command.Connection = _connection;
                     command.CommandType = System.Data.CommandType.Text;
@@ -493,7 +498,7 @@ namespace RedDot.DataManager
                 string file = backupdirectory + "\\reddot-" + DatabaseName + year + "-" + month + "-" + day + "-" + hour + "-" + minute + ".sql";
 
 
-                string constring = string.Format(@"server={0};user={1};pwd={2};database={3};", DatabaseServer, "root", "sparcman", DatabaseName);
+                string constring = string.Format(@"server={0};user={1};pwd={2};database={3};", DatabaseServer, "root", Password, DatabaseName);
 
                 using (MySqlConnection conn = new MySqlConnection(constring))
                 {
@@ -523,7 +528,7 @@ namespace RedDot.DataManager
         {
             try
             {
-                string constring = string.Format(@"server={0};user={1};pwd={2};database={3};",DatabaseServer,"root","sparcman","mysql");
+                string constring = string.Format(@"server={0};user={1};pwd={2};database={3};",DatabaseServer,"root",Password,DatabaseName);
               
                 using (MySqlConnection conn = new MySqlConnection(constring))
                 {

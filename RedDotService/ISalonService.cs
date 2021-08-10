@@ -14,21 +14,22 @@ namespace RedDotService
     public interface ISalonService
     {
 
-      
+        [OperationContract]
+        string Authenticate(string storecode, string password);
 
 
         [OperationContract]
         bool CloseConnection();
 
-       
+
 
 
         [OperationContract]
-        bool RemoveTicket(int userid,int ticketno);
+        bool RemoveTicket(int userid, int ticketno);
 
-    
 
-     
+
+
         [OperationContract]
         string WriteSalesTicket(int clientid, SalesRecord salesrecord);
 
@@ -36,7 +37,7 @@ namespace RedDotService
         [OperationContract]
         string WriteSalesItem(int clientid, SalesItemRecord salesitem);
 
-    
+
 
 
 
@@ -53,6 +54,16 @@ namespace RedDotService
 
         [OperationContract]
         LicenseRequest GetLicense(LicenseRequest request, string publickey);
+
+
+        [OperationContract]
+        string WriteCategory(Category cat);
+
+        [OperationContract]
+        string GetConnectionString();
+
+        [OperationContract]
+        string GetStatus();
 
     }
 
@@ -106,12 +117,12 @@ namespace RedDotService
     public class SalesItemRecord
     {
 
-      
+
         [DataMember]
         public int TicketNo { get; set; }
         [DataMember]
         public string Description { get; set; }
- 
+
         [DataMember]
         public decimal Discount { get; set; }
 
@@ -148,7 +159,7 @@ namespace RedDotService
         public decimal RewardAmount { get; set; }
         [DataMember]
         public int RewardException { get; set; }
-      
+
     }
 
 
@@ -156,12 +167,12 @@ namespace RedDotService
     public class PaymentRecord
     {
 
-      
+
         [DataMember]
         public int TicketNo { get; set; }
         [DataMember]
         public string Description { get; set; }
-    
+
 
         [DataMember]
         public decimal Amount { get; set; }
@@ -181,7 +192,7 @@ namespace RedDotService
     public class GratuityRecord
     {
 
-       
+
         [DataMember]
         public int TicketNo { get; set; }
         [DataMember]
@@ -190,7 +201,7 @@ namespace RedDotService
 
         [DataMember]
         public decimal Amount { get; set; }
- 
+
 
 
 
@@ -234,5 +245,24 @@ namespace RedDotService
         [DataMember]
         public string Comment { get; set; }
 
+    }
+
+    [DataContract]
+    public class Category
+    {
+        [DataMember]
+        public int id { get; set; }
+        [DataMember]
+        public string colorcode { get; set; }
+        [DataMember]
+        public string lettercode { get; set; }
+        [DataMember]
+        public string description { get; set; }
+        [DataMember]
+        public string imagesrc { get; set; }
+        [DataMember]
+        public string cattype { get; set; }
+        [DataMember]
+        public int sortorder { get; set; }
     }
 }

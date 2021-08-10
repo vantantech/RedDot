@@ -18,7 +18,7 @@ namespace RedDot
         private  static GlobalSettings _Instance;
      
    
-        private Object _remotescreen;
+    
         private Object _notificationscreen;
 
         public static GlobalSettings Instance
@@ -43,7 +43,7 @@ namespace RedDot
         }
 
 
-
+        public Ticket CurrentTicket { get; set; }
 
 
         public string[] GetAllUserNames { get; private set; }
@@ -52,6 +52,9 @@ namespace RedDot
 
         public string[] GetAllUserPins { get; private set; }
         public int[] GetallPinIDs { get; private set; }
+
+        public string SessionKey { get; set; }
+        public DateTime SessionExpire { get; set; }
 
         public IDataInterface RedDotData
         {
@@ -104,10 +107,7 @@ namespace RedDot
         }
 
 
-        public Object RemoteScreen {
-            get { return _remotescreen; }
-            set { _remotescreen = value; }
-        }
+        public RemoteScreen RemoteScreen { get; set; }
 
         public Object NotificationScreen
         {
@@ -361,13 +361,13 @@ namespace RedDot
 
         public decimal RewardPercent
         {
-            get { return _dbsettings.DecimalGetSetting("Reward","RewardPercent","Reward Percent","5"); }
+            get { return _dbsettings.DecimalGetSetting("Reward","RewardPercent","Reward Percent","1"); }
             set { _dbsettings.DecimalSaveSetting("RewardPercent", value); }
         }
 
         public decimal CashRewardPercent
         {
-            get { return _dbsettings.DecimalGetSetting("Reward", "CashRewardPercent", "Cash Reward Percent", "5"); }
+            get { return _dbsettings.DecimalGetSetting("Reward", "CashRewardPercent", "Cash Reward Percent", "1"); }
             set { _dbsettings.DecimalSaveSetting("CashRewardPercent", value); }
         }
 
@@ -452,6 +452,7 @@ namespace RedDot
             set { _dbsettings.BoolSaveSetting("AllowCashBack", value); }
         }
 
+
         public bool AllowTipOnCashSales
         {
             get { return _dbsettings.BoolGetSetting("Ticket", "AllowTipOnCashSales", "Allow Tip On Cash Sales", "false"); }
@@ -465,7 +466,11 @@ namespace RedDot
             set { _dbsettings.BoolSaveSetting("PrintCreditSlipOnClose", value); }
         }
 
-
+        public bool AutoCapture
+        {
+            get { return _dbsettings.BoolGetSetting("CreditCard", "AutoCapture", "Credit Auto Capture", "true"); }
+            set { _dbsettings.BoolSaveSetting("AutoCapture", value); }
+        }
 
         public bool PrintCustomerCopy
         {
@@ -583,7 +588,11 @@ namespace RedDot
             set { _dbsettings.BoolSaveSetting("ShowCommissionOnReport", value); }
         }
 
-
+        public bool ShowCustomerScreen
+        {
+            get { return _dbsettings.BoolGetSetting("Application", "ShowCustomerScreen", "Show Customer Screen", "true"); }
+            set { _dbsettings.BoolSaveSetting( "ShowCustomerScreen", value); }
+        }
 
         public bool AutoHideClosedTicket
         {
@@ -598,6 +607,20 @@ namespace RedDot
             set { _dbsettings.BoolSaveSetting("AutoHideClosedTicket", value); }
         }
 
+
+        public bool AutoCloseMenu
+        {
+            get
+            {
+                if (_dbsettings == null) TouchMessageBox.Show("NULLL");
+
+
+                return _dbsettings.BoolGetSetting("Ticket", "AutoCloseProduct", "Auto Close Menu", "false");
+
+
+            }
+            set { _dbsettings.BoolSaveSetting("AutoCloseProduct", value); }
+        }
 
         public bool PrintBarCode
         {
@@ -1061,6 +1084,10 @@ namespace RedDot
             }
         }
 
+  
+
+
+
         public string WebSyncUpdateTime
         {
             get { return _dbsettings.StringGetSetting("Webservice", "WebSyncUpdateTime", "WebSync Update Time", "9:30 pm"); }
@@ -1074,11 +1101,7 @@ namespace RedDot
         }
 
 
-        public string CreditCardProcessor
-        {
-            get { return _dbsettings.StringGetSetting("CreditCard", "CreditCardProcessor", "Credit Card Processor", "External","list", "Clover,External,VANTIV,HeartSIP,PAX_S300,HSIP_ISC250"); }
-            set { _dbsettings.StringSaveSetting("CreditCardProcessor", value.ToString()); }
-        }
+ 
 
 
         public string SalesViewMode
@@ -1111,8 +1134,104 @@ namespace RedDot
 
         public string ElementExpressURL
         {
-            get { return _dbsettings.StringGetSetting("Credit Card", "ElementExpressURL", "Element Express URL", "https://transaction.elementexpress.com/"); }
+            get { return _dbsettings.StringGetSetting("CreditCard", "ElementExpressURL", "Element Express URL", "https://transaction.elementexpress.com/"); }
             set { _dbsettings.StringSaveSetting( "ElementExpressURL", value.ToString()); }
         }
+
+
+
+
+        public string BoltBaseURL
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "BoltBaseURL", "Bolt Base URL", "https://bolt.cardpointe.com/api"); }
+            set { _dbsettings.StringSaveSetting("BoltBaseURL", value.ToString()); }
+        }
+
+        public string CardConnectURL
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "CardConnectURL", "Card Connect URL", "https://boltgw.cardconnect.com/cardconnect/rest"); }
+            set { _dbsettings.StringSaveSetting("CardConnectURL", value.ToString()); }
+        }
+
+        public string CardConnectUsernamePassword
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "CardConnectUsernamePassword", "CardConnect Username Password", "vantanprod:2#jfFVnn&9K4g=sMJ3xu"); }
+            set { _dbsettings.StringSaveSetting("CardConnectUsernamePassword", value.ToString()); }
+        }
+
+        public string CardConnectAuthorization
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "CardConnectAuthorization", "CardConnect Authorization", "FJjybuRK6EDYAVAWtP+0ufZ6Vnru3QjbHc3pJiyKW4I="); }
+            set { _dbsettings.StringSaveSetting("CardConnectAuthorization", value.ToString()); }
+        }
+
+        public string MerchantID
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "MerchantID", "Merchant ID", "496440222883"); }
+            set { _dbsettings.StringSaveSetting("MerchantID", value.ToString()); }
+        }
+
+
+
+
+        string _hsn = "";
+        public string HardwareSerialNumber
+        {
+            get
+            {
+                if (_hsn == "")
+                {
+                    _hsn = Utility.GetINIString("HardwareSerialNumber", "CreditCard", "C032UQ03960675");
+                }
+                return _hsn;
+            }
+            set
+            {
+                _hsn = value.ToString();
+                Utility.PutINIString("HardwareSerialNumber", "CreditCard",  value.ToString());
+            }
+        }
+
+        string _model = "";
+        public string PinPadModel
+        {
+            get
+            {
+                if (_model == "")
+                {
+                    _model = Utility.GetINIString("PinPadModel", "CreditCard", "Mini2");
+                }
+                return _model;
+            }
+            set
+            {
+                _model = value.ToString();
+                Utility.PutINIString("PinPadModel", "CreditCard", value.ToString());
+            }
+        }
+
+        string _creditcardprocessor = "";
+        public string CreditCardProcessor
+        {
+            get
+            {
+                if (_creditcardprocessor == "")
+                {
+                    _creditcardprocessor = Utility.GetINIString("Processor", "CreditCard",  "External");
+                }
+                return _creditcardprocessor;
+            }
+            set
+            {
+                _creditcardprocessor = value.ToString();
+                Utility.PutINIString("Processor", "CreditCard", value.ToString());
+            }
+        }
+
     }
+
 }
+
+
+
+

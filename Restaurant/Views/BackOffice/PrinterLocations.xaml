@@ -132,7 +132,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="10,0,10,0" Text="Loc Name:" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"  Width="120"/>
 
-                        <TextBox Margin="5" BorderBrush="Black" Text="{Binding SelectedPrinter}"
+                        <TextBox Margin="5" BorderBrush="Black" Text="{Binding SelectedPrinter.Description}"
                                  Width="200" TextWrapping="Wrap" 
                                  FontSize="20" Height="40"
                                   GotFocus="TextBox_GotFocus"/>
@@ -140,7 +140,7 @@
                     </StackPanel>
                      <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="10,0,10,0" Text="Assigned To:" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"  Width="120"/>
-                        <ComboBox  ItemsSource="{Binding PrinterList}"  SelectedValuePath="StrValue" SelectedValue="{Binding AssignedPrinter}" Height="40"  Width="200" Margin="5" >
+                        <ComboBox  ItemsSource="{Binding PrinterList}"  SelectedValuePath="StrValue" SelectedValue="{Binding SelectedPrinter.AssignedPrinter}" Height="40"  Width="200" Margin="5" >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" >
@@ -156,7 +156,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="10,0,10,0" Text="Printer Type:" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"  Width="120"/>
 
-                        <ComboBox  ItemsSource="{Binding PrinterModes}"  SelectedValuePath="StrValue" SelectedValue="{Binding PrintMode}" Height="40"  Width="200" Margin="5">
+                        <ComboBox  ItemsSource="{Binding PrinterModes}"  SelectedValuePath="StrValue" SelectedValue="{Binding SelectedPrinter.PrintMode}" Height="40"  Width="200" Margin="5">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
 
@@ -174,7 +174,7 @@
                             <TextBlock Text="Receipt Printer Options"  FontSize="20" TextAlignment="Center" FontWeight="Bold" Background="LightGray" Height="40" />
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Margin="10,0,10,0" Text="Paper Width (mm): " FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" TextAlignment="Right"  Width="200"/>
-                                <ComboBox  ItemsSource="{Binding ReceiptWidths}"  SelectedValuePath="StrValue" SelectedValue="{Binding ReceiptWidth}" Height="40"  Width="120" >
+                                <ComboBox  ItemsSource="{Binding ReceiptWidths}"  SelectedValuePath="StrValue" SelectedValue="{Binding SelectedPrinter.ReceiptWidth}" Height="40"  Width="120" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                          
@@ -189,7 +189,7 @@
                                 
                                 <TextBlock Margin="10,0,10,0" Text="Print as Label Format:" Height="30" FontSize="20" TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"   Width="200"/>
 
-                                <CheckBox  Margin="0,12,0,0"  Height="30" Width="30" IsChecked="{Binding  IsLabel}" >
+                                <CheckBox  Margin="0,12,0,0"  Height="30" Width="30" IsChecked="{Binding  SelectedPrinter.IsLabel}" >
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="3" ScaleY="3" />
                                     </CheckBox.LayoutTransform>
@@ -209,7 +209,7 @@
                             <StackPanel Orientation="Horizontal" Height="60">
                                 <TextBlock Margin="10,0,10,0" Text="Label Landscape:"  FontSize="20" TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"   Width="200"/>
 
-                                <CheckBox Margin="0,12,0,0" Height="30" Width="30" IsChecked="{Binding  LandScape}" >
+                                <CheckBox Margin="0,12,0,0" Height="30" Width="30" IsChecked="{Binding  SelectedPrinter.LandScape}" >
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="3" ScaleY="3" />
                                     </CheckBox.LayoutTransform>

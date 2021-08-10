@@ -1,0 +1,129 @@
+﻿@model IEnumerable<WebAccess.Models.category>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    img {
+        max-width: 25%;
+        max-height: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+</style>
+
+
+
+<style type="text/css">
+    .tg {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-h3q6 {
+            background-color: #ffc702;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-hyan {
+            background-color: #34cdf9;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-2pvn {
+            background-color: #fcff2f;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+</style>
+
+
+<table class="tg">
+    <tbody>
+        <tr>
+            <td class="tg-0lax"></td>
+            <td class="tg-0lax"></td>
+        </tr>
+        <tr>
+            <td class="tg-h3q6">Staff</td>
+            <td class="tg-0lax" rowspan="4">
+
+
+                Child Table or Div
+
+
+                @foreach (var item in Model)
+                {
+
+                <div class="row" style="background: linear-gradient(red,yellow)">
+
+
+
+
+                    @Html.DisplayFor(modelItem => item.description)
+
+
+
+                </div>
+
+
+                }
+
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-hyan">Time</td>
+        </tr>
+        <tr>
+            <td class="tg-2pvn">Service</td>
+        </tr>
+        <tr>
+            <td class="tg-0lax"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+

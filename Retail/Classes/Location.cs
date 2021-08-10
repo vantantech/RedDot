@@ -58,8 +58,11 @@ namespace RedDot
             set { _dbsettings.SaveSetting("StoreType", value.ToString()); }
         }
 
-
-
+        public string StorePrefix
+        {
+            get { return _dbsettings.GetStringSetting("StorePrefix"); }
+            set { _dbsettings.SaveSetting("StorePrefix", value.ToString()); }
+        }
 
     }
 }

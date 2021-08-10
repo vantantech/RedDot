@@ -1,0 +1,370 @@
+﻿@model IEnumerable<WebAccess.Models.sale>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+        $('#table1').DataTable({ "bDestroy": "true", "scrollY": "500px", "lengthMenu": [[-1], ["All"]], "sDom": "tr" });
+
+ 
+    });
+
+
+    $(function () {
+
+
+        $("#startdate").datepicker({
+            showOn: "button",
+            buttonImage: "/Content/calendar_small.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            autoclose: true
+        });
+
+
+        $("#enddate").datepicker({
+            showOn: "button",
+            buttonImage: "/Content/calendar_small.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            autoclose: true
+        });
+
+    })
+
+
+
+    $('a.edit').click(function () {
+        var url = $(this).attr('href');
+        window.open(url, "popupWindow", "width=900,height=600,scrollbars=yes");
+        return false;
+    });
+</script>
+
+<ul class="breadcrumb">
+    <li><a href="\Home">Home</a></li>
+    <li class="active">Sales</li>
+</ul>
+
+
+<h2>Tickets</h2>
+
+@{
+    decimal total = 0;
+
+
+
+}
+
+
+<p>
+    @using (Html.BeginForm("Index", "Sales"))
+    {
+
+
+
+        <div class="row">
+            <div class="col-sm-2 ">
+                <div class="input-group">
+                    <span class="input-group-addon">Store:</span>
+                    @Html.DropDownList("StoreId", (IEnumerable<SelectListItem>)ViewBag.Stores, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+
+            </div>
+            <div class="col-sm-3 ">
+                <div class="input-group">
+                    <span class="input-group-addon">Start Date:</span>
+                    @Html.TextBox("startdate", (string)ViewBag.startdate, new { @class = "form-control", placeholder = "MM/DD/YYYY" })
+                </div>
+
+
+            </div>
+            <div class="col-sm-3 ">
+                <div class="input-group">
+                    <span class="input-group-addon">End Date:</span>
+                    @Html.TextBox("enddate", (string)ViewBag.enddate, new { @class = "form-control", placeholder = "MM/DD/YYYY" })
+                </div>
+
+
+            </div>
+
+            <div class="col-sm-1">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary" name="action" value="save" id="action" data-toggle="tooltip" data-placement="right" title="Refresh Data">Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    }
+
+</p>
+
+
+<table class="display" id="table1" style="width: 500px">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ticketno)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.saledate)
+            </th>
+  
+
+            <th>
+                @Html.DisplayNameFor(model => model.total)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.note)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+
+
+
+            <th> Details</th>
+            <th>Payments</th>
+            <th>Tips</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            total = total + (decimal)item.total;
+ 
+   
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ticketno)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.saledate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employeeid)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+
+
+            <td>
+
+
+                <table class="table" style="width:400px">
+                    <tr>
+                        <th>
+                            Qty
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Discount
+                        </th>
+
+
+                        <th>
+                            Nail Tech
+                        </th>
+                        <th>
+                            Note
+                        </th>
+
+
+
+                    </tr>
+
+                    @foreach (var item2 in item.salesitems)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.quantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.description)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.price)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.discount)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.employeeid)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.note)
+                            </td>
+
+
+
+
+                        </tr>
+                    }
+
+                </table>
+
+    
+            </td>
+
+            <td>
+
+                <table class="table" style="width:300px">
+                    <tr>
+                        <th colspan="4">
+                            <b>PAYMENTS </b>
+                        </th>
+
+
+                    </tr>
+
+                    @foreach (var item2 in item.payments)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.description)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.authorcode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.netamount)
+                            </td>
+                            <td>
+                                @if (item2.voided == 1)
+                                {
+                                    <text>VOIDED</text>
+                                }
+                                else
+                                {
+                                    <text></text>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </td>
+
+            <td>
+
+                <table class="table" style="width:300px">
+                    <tr>
+                        <th colspan="2">
+                            <b>TIPS</b>
+
+                        </th>
+
+
+                    </tr>
+   
+                    @foreach (var item2 in item.gratuities)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.employeeid)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.amount)
+                            </td>
+
+
+                        </tr>
+                    }
+
+                </table>
+            </td>
+            <td>
+         
+
+                @Html.ActionLink("Details", "Details", "Sales", new { id = item.id }, new { @class = "btn btn-success", target = "popup", onclick = "window.open('../Sales/Details?id=" + item.id + "','popup','width=1000,height=1000'); return false;" })
+
+
+            </td>
+        </tr>
+        }
+
+    </tbody>
+
+
+
+
+
+
+
+    <tfoot>
+        <tr>
+
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+
+            <td>
+                &nbsp;
+            </td>
+
+            <td>
+                &nbsp;
+            </td>
+
+            <td>
+                @(total)
+            </td>
+
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+    </tfoot>
+
+
+</table>
+

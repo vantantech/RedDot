@@ -340,7 +340,12 @@
                     <TextBlock Text="Print All" FontSize="15" FontWeight="Normal" />
                 </StackPanel>
             </Button>
-  
+            <Button Margin="5"  Style="{StaticResource CustomButtonStyle}" Command="{Binding ImportClicked}" HorizontalAlignment="Center"  Height="70"   Width="120"    >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/csv.png" Height="40" Width="40"/>
+                    <TextBlock Text="Import" FontSize="15" FontWeight="Normal" />
+                </StackPanel>
+            </Button>
 
             <Button Margin="5" Style="{StaticResource CustomButtonStyleFlat}"  Height="70"   Width="120" >
                 <i:Interaction.Behaviors>

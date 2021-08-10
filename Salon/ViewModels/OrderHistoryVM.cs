@@ -5,6 +5,8 @@ using GlobalPayments.Api.Services;
 using GlobalPayments.Api.Terminals;
 using GlobalPayments.Api.Terminals.Abstractions;
 using NLog;
+using RedDot.Models;
+using RedDot.Models.CardConnect;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -110,6 +112,10 @@ namespace RedDot
         CloverListener ccl;
 
         private TriPOSModel triposmodel = new TriPOSModel(GlobalSettings.Instance.LaneId);  //Vantiv - WorldPay
+   
+
+
+
         BackgroundWorker worker = new BackgroundWorker();
     
 
@@ -632,6 +638,7 @@ namespace RedDot
                     case "PAX_S300":
                     case "HSIP_ISC250":
                     case "VANTIV":
+                    case "CardConnect":
                         PAXRefund pax = new PAXRefund(CurrentTicket);
                         Utility.OpenModal(m_parent, pax);
                         break;
@@ -641,6 +648,7 @@ namespace RedDot
                         CloverRefund clover = new CloverRefund(CurrentTicket, m_security);
                         Utility.OpenModal(m_parent, clover);
                         break;
+
 
 
                     case "External":
@@ -762,7 +770,9 @@ namespace RedDot
                         case "VANTIV":
                             if (CaptureVantiv(payment) == false) allresult = false;
                             break;
-
+                        case "CardConnect":
+                            if (CaptureCardConnect(payment) == false) allresult = false;
+                            break;
                     }
 
 
@@ -908,6 +918,50 @@ namespace RedDot
 
 
         }
+
+
+        private bool CaptureCardConnect(DataRow payment)
+        {
+
+
+
+            decimal NetAmount = decimal.Parse(payment["netamount"].ToString());
+            decimal TipAmount = decimal.Parse(payment["tipamount"].ToString());
+            string ResponseId = payment["responseid"].ToString();
+            string AuthCode = payment["authorcode"].ToString();
+            int ID = int.Parse(payment["id"].ToString());
+
+
+            logger.Info("COMMAND:Credit Capture , Amount=" + NetAmount + ",Tip=" + TipAmount);
+
+ 
+            CCCaptureResponse resp = CardConnectModel.Capture(ResponseId,AuthCode, NetAmount + TipAmount);
+            logger.Info("CREDIT COMPLETE=> reference number:" + resp.retref + ", ticket=" + payment["salesid"] + ",responseid=" + ResponseId + ", amount=" + NetAmount + TipAmount);
+
+
+
+            logger.Info("Credit Capture:RECEIVED:" + resp.ToString());
+            logger.Info("Credit Capture:HRef=" + resp.retref);
+            if (resp.resptext == "Approval")
+            {
+
+
+                m_salesmodel.UpdatePaymentCapture(ID, TipAmount,decimal.Parse(resp.amount), NetAmount, resp.retref);
+
+                TouchMessageBox.ShowSmall("Settled:" + ResponseId + " Amount:" + (NetAmount + TipAmount).ToString(), 1);
+                return true;
+            }
+            else
+            {
+                logger.Error(resp.resptext);
+                TouchMessageBox.Show("CAPTURE FAILED !!!! ERROR:  " + resp.resptext);
+                return false;
+            }
+
+
+
+        }
+
 
         public void ExecuteQueryBatchClicked(object obj)
         {
@@ -1153,6 +1207,14 @@ namespace RedDot
         {
             if (!m_security.WindowNewAccess("ReverseTicket")) return;
 
+            if(CurrentTicket.SaleDate < DateTime.Today)
+            {
+                if (!m_security.HasAccess("EditOldTicket"))
+                {
+                    TouchMessageBox.Show("Access Denied, You can not edit old tickets");
+                    return;
+                }
+            }
 
             // confirm reason for reversing ticket
             ConfirmAudit win;

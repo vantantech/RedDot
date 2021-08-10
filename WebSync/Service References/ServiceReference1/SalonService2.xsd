@@ -94,4 +94,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EmployeeRecord" nillable="true" type="tns:EmployeeRecord" />
+  <xs:complexType name="LicenseRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Activated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Application" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CodeString" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MachineID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LicenseRequest" nillable="true" type="tns:LicenseRequest" />
+  <xs:complexType name="Category">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cattype" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="colorcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="imagesrc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="lettercode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="sortorder" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Category" nillable="true" type="tns:Category" />
 </xs:schema>

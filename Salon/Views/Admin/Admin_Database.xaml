@@ -87,6 +87,18 @@
                         <TextBlock  Text="Wipe GiftCard Data" FontSize="15" FontWeight="Normal"/>
                     </StackPanel>
                 </Button>
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_ExportDatabase" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/databaseexport.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Backup Database" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_ImportDatabase" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/databaseimport.jpg" Width="40" Height="40"/>
+                        <TextBlock  Text="Restore Database" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
                 <Button  Margin="100,5,5,5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_Exit" >
                     <StackPanel Orientation="Vertical">
                         <Image Source="/media/back.png" Width="40" Height="40"/>

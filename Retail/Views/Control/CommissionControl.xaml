@@ -250,7 +250,7 @@
                                                         <TextBlock Text="Order #:  "  Width="100" TextAlignment="Right" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
                                                         <Button Command="{Binding DataContext.ViewTicketClicked, RelativeSource={RelativeSource AncestorLevel=2 ,AncestorType=ItemsControl,Mode=FindAncestor}}" CommandParameter="{Binding SalesID}" >
 
-                                                        <TextBlock Text="{Binding SalesID}"  Width="50" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
+                                                        <TextBlock Text="{Binding TicketNo}"  Width="50" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
 
                                                         </Button>
                                                     </StackPanel>

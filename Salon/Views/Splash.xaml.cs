@@ -18,6 +18,7 @@ using com.clover.remotepay.sdk;
 using com.clover.remotepay.transport;
 using RedDot;
 using RedDot.DataManager;
+using RedDot.Models;
 
 namespace RedDot
 {
@@ -45,8 +46,20 @@ namespace RedDot
      
             DataBase = dbconnect.DataBase;
 
+            switch (GlobalSettings.Instance.CreditCardProcessor)
+            {
+                case "PAX_S300":
+                    tbMessage.Text = "Looking for PAX S300 ..." + GlobalSettings.Instance.SIPDefaultIPAddress + (char)13 + (char)10;
+                    break;
+                case "CardConnect":
+                    tbMessage.Text = "Looking for " + GlobalSettings.Instance.PinPadModel + " , HSN=" + GlobalSettings.Instance.HardwareSerialNumber + (char)13 + (char)10;
+                    break;
+                case "Clover":
+                    tbMessage.Text = "Looking for Clover ..." + (char)13 + (char)10;
+                    break;
 
-            tbMessage.Text = "Looking for Processor..." + (char)13 + (char)10;
+            }
+       
 
             dispatchTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatchTimer.Interval = new TimeSpan(0, 0, 2);
@@ -67,13 +80,16 @@ namespace RedDot
             switch (GlobalSettings.Instance.CreditCardProcessor)
             {
                 case "PAX_S300":
-                    tbMessage.Text = "Looking for PAX S300 ..." + GlobalSettings.Instance.SIPDefaultIPAddress + (char)13 + (char)10;
-                    break;
-
-                case "Clover":
-
-                    tbMessage.Text = "Looking for Clover ..." + (char)13 + (char)10;
                    
+                    break;
+                case "CardConnect":
+        
+
+                    bool resp = CardConnectModel.Connect();
+                    if (resp) TouchMessageBox.ShowSmall(GlobalSettings.Instance.PinPadModel +  " Found..");
+                    else TouchMessageBox.ShowSmall("Connection to Pin Pad Fail!!");
+                    break;
+                case "Clover":
 
                     const String APPLICATION_ID = "RedDot Salon:1.1.2";
                     ICloverConnector cloverConnector;

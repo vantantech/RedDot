@@ -15,8 +15,7 @@ using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Diagnostics;
-
-
+using RedDot.Models;
 
 namespace RedDot
 {
@@ -245,7 +244,7 @@ namespace RedDot
             PendingClicked = new RelayCommand(ExecutePendingClicked, param => this.CanExecuteOpenTicket);
             ReOpenClicked = new RelayCommand(ExecuteReOpenClicked, param => this.CanExecutePendingTicket);
             // OpenOrderClicked = new RelayCommand(ExecuteOpenOrderClicked, param => this.CanExecute);
-            TaxExemptClicked = new RelayCommand(ExecuteTaxExemptClicked, param => this.CanExecuteOpenTicket);
+            TaxExemptClicked = new RelayCommand(ExecuteTaxExemptClicked, param => this.CanExecuteNotClosed);
 
             //Ticket Search Buttons
             SearchByCustomerClicked = new RelayCommand(ExecuteSearchByCustomerClicked, param => this.CanExecute);
@@ -1762,49 +1761,63 @@ namespace RedDot
 
 
             if (!m_security.ManagerOverrideAccess("VoidPayment", "Manager Override Needed")) return;
-     
 
-
-            Confirm dlg;
-
-            try
+            Selection sel = new Selection("Edit", "Void");
+            sel.ShowDialog();
+            if(sel.Action == "Edit")
             {
-                if (CurrentTicket.Status == "Closed")
-                {
-                    MessageBox.Show("Ticket is closed.  Can not modify");
-                    return;
-                }
+                CustomDate cd = new CustomDate(Visibility.Hidden,pay.PaymentDate);
+              
+                cd.ShowDialog();
 
-          
+                CurrentTicket.UpdatePaymentDate(pay.ID, cd.StartDate);
+                CurrentTicket.Reload();
 
-                if (pay.Description == "Gift Card")
-                {
-                    dlg = new Confirm("Deleting Gift Card from payment will refund charged amount back to gift card. Proceed?");
-                }
-                else
-                {
-                    dlg = new Confirm("Delete " + pay.Description + " Payment?");
-                }
-
-                Utility.OpenModal(m_parent, dlg);
-                if (dlg.Action == "Yes")
-                {
-                    AuditModel.WriteLog(m_security.CurrentEmployee.FullName, "Delete Payment", "amount:" + pay.Amount.ToString() + " netamount: " + pay.NetAmount.ToString(), "payment", CurrentTicket.SalesID);
-                    CurrentTicket.VoidPayment((int)paymentid);
-
-           
-                    SetVisibility();
-
-                }
-
-
-
-            }
-            catch (Exception e)
+            }else
             {
+                Confirm dlg;
 
-                MessageBox.Show("Error deleting line item: " + e.Message);
+                try
+                {
+                    if (CurrentTicket.Status == "Closed")
+                    {
+                        MessageBox.Show("Ticket is closed.  Can not modify");
+                        return;
+                    }
+
+
+
+                    if (pay.Description == "Gift Card")
+                    {
+                        dlg = new Confirm("Deleting Gift Card from payment will refund charged amount back to gift card. Proceed?");
+                    }
+                    else
+                    {
+                        dlg = new Confirm("Delete " + pay.Description + " Payment?");
+                    }
+
+                    Utility.OpenModal(m_parent, dlg);
+                    if (dlg.Action == "Yes")
+                    {
+                        AuditModel.WriteLog(m_security.CurrentEmployee.FullName, "Delete Payment", "amount:" + pay.Amount.ToString() + " netamount: " + pay.NetAmount.ToString(), "payment", CurrentTicket.SalesID);
+                        CurrentTicket.VoidPayment((int)paymentid);
+
+
+                        SetVisibility();
+
+                    }
+
+
+
+                }
+                catch (Exception e)
+                {
+
+                    MessageBox.Show("Error deleting line item: " + e.Message);
+                }
             }
+
+
         }
 
         public void ExecuteVoidClicked(object salesid)
@@ -1994,7 +2007,7 @@ namespace RedDot
         {
            // CurrentTicket.PrintPDFReceipt();
 
-            CurrentTicket.PrintReceiptPDF(true);
+            PrintModel.PrintReceiptPDF(CurrentTicket,true);
 
 
             
@@ -2003,7 +2016,7 @@ namespace RedDot
 
         public void ExecuteEmailPDFClicked(object button)
         {
-            CurrentTicket.PrintReceiptPDF(false);
+            PrintModel.PrintReceiptPDF(CurrentTicket,false);
 
             if(CurrentTicket.WorkOrder != null)
             CurrentTicket.WorkOrder.PrintPDF(false);
@@ -2561,7 +2574,7 @@ namespace RedDot
 
             try
             {
-                CustomDate cd = new CustomDate(Visibility.Visible);
+                CustomDate cd = new CustomDate(Visibility.Visible, DateTime.Now);
                
 
                 Utility.OpenModal(m_parent, cd);

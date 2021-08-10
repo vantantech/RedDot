@@ -280,29 +280,18 @@
                 <Button   Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding CreditRefundClicked}"   CommandParameter="{Binding ElementName=tbAmount, Path=Text}"   >
                     <StackPanel>
                         <Image Source="/media/refund.png" Height="80" Width="80"/>
-                        <TextBlock Text="{Loc Credit}" FontSize="20"/>
+                        <TextBlock Text="Credit" FontSize="20"/>
                     </StackPanel>
                 </Button>
 
-                <Button   Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding DebitRefundClicked}"   CommandParameter="{Binding ElementName=tbAmount, Path=Text}"   >
-                    <StackPanel>
-                        <Image Source="/media/refund.png" Height="80" Width="80"/>
-                        <TextBlock Text="{Loc Debit}" FontSize="20"/>
-                    </StackPanel>
-                </Button>
+
                 
-                
-                <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding CommandClicked}"   CommandParameter="OpenLane"   >
-                    <StackPanel>
-                        <Image Source="/media/open.png" Height="80" Width="80"/>
-                        <TextBlock Text="{Loc Open Lane}" FontSize="20"/>
-                    </StackPanel>
-                </Button>
+
 
                 <Button  Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="120"   Width="120" Command="{Binding CommandClicked}"   CommandParameter="Reset"   >
                     <StackPanel>
                         <Image Source="/media/reset.png" Height="80" Width="80"/>
-                        <TextBlock Text="{Loc Reset}" FontSize="20"/>
+                        <TextBlock Text="Reset" FontSize="20"/>
                     </StackPanel>
                 </Button>
 

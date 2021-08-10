@@ -192,6 +192,21 @@
 
                                     </ComboBox>
                                 </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Credit Card Processor:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <ComboBox  ItemsSource="{Binding CreditCardProcessorList}"  SelectedValuePath="StrValue" SelectedValue="{Binding CreditCardProcessor}" Height="40"  Width="200" Margin="5">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+
+
+                                                <TextBlock VerticalAlignment="Center" Margin="10" Width="100" Text="{Binding Description}"/>
+
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+
+                                    </ComboBox>
+                                </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Element Express URL:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
                                     <TextBox  Text="{Binding ElementExpressURL}" 
@@ -200,7 +215,7 @@
                           GotFocus="TextBox_GotFocus"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Credit Card IP Address:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBlock Text="Pin Pad IP Address:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
                                     <TextBox  Text="{Binding IPAddress}" 
                           Margin="10,5,0,0" Width="300"
                           Height="30" FontSize="15"
@@ -208,9 +223,50 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Credit Card Port:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBlock Text="Http Port:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
                                     <TextBox  Text="{Binding SIPPort}" 
                           Margin="10,5,0,0" Width="100"
+                          Height="30" FontSize="15"
+                          GotFocus="TextBox_GotFocus"/>
+                                </StackPanel>
+
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Bolt URL:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBox  Text="{Binding BoltURL}" 
+                          Margin="10,5,0,0" Width="300"
+                          Height="30" FontSize="15"
+                          GotFocus="TextBox_GotFocus"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="CardPointe Gateway URL:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBox  Text="{Binding CardPointeURL}" 
+                          Margin="10,5,0,0" Width="300"
+                          Height="30" FontSize="15"
+                          GotFocus="TextBox_GotFocus"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="API UserName/Password:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBox  Text="{Binding APIUsernamePassword}" 
+                          Margin="10,5,0,0" Width="300"
+                          Height="30" FontSize="15"
+                          GotFocus="TextBox_GotFocus"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="API Authorization:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBox  Text="{Binding APIAuthorization}" 
+                          Margin="10,5,0,0" Width="300"
+                          Height="30" FontSize="15"
+                          GotFocus="TextBox_GotFocus"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Merchant ID:" Margin="10,5,0,0" Width="230" FontFamily="Consolas" FontSize="15"  TextAlignment="Right"/>
+                                    <TextBox  Text="{Binding MerchantID}" 
+                          Margin="10,5,0,0" Width="300"
                           Height="30" FontSize="15"
                           GotFocus="TextBox_GotFocus"/>
                                 </StackPanel>

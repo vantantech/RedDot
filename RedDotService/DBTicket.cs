@@ -16,10 +16,10 @@ namespace RedDotService
 
    
 
-        public DBTicket()
+        public DBTicket(string connectionstring)
         {
           
-            _dbconnect = new DBConnect();
+            _dbconnect = new DBConnect(connectionstring);
         }
 
         public void Log(string message)
@@ -49,14 +49,14 @@ namespace RedDotService
 
         // DATA INSERTS
 
-        public bool DBRemoveTicket(int userid, int ticketno)
+        public bool DBRemoveTicket(int salesid)
         {
             //delete old record if exist
 
             try
             {
 
-                DataTable dt = _dbconnect.GetData("select * from sales where userid=" + userid + " and ticketno=" + ticketno);
+                DataTable dt = _dbconnect.GetData("select * from sales where id=" + salesid);
 
                 foreach(DataRow item in dt.Rows)
                 {
@@ -97,7 +97,7 @@ namespace RedDotService
 
                 
                 
-                if (DBRemoveTicket(userid,sr.TicketNo) == false) return "failed delete";
+                if (DBRemoveTicket(sr.TicketNo) == false) return "failed delete";
                
 
               

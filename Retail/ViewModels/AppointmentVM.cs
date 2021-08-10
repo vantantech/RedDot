@@ -252,7 +252,7 @@ namespace RedDot
 
         public void ExecuteCustomDayClicked(object tagstr)
         {
-            CustomDate cd = new CustomDate(Visibility.Hidden);
+            CustomDate cd = new CustomDate(Visibility.Hidden,DateTime.Now);
               Utility.OpenModal(m_parent,cd);
             if(AppointDate != cd.StartDate)
             {

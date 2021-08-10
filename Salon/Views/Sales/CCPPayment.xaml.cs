@@ -24,7 +24,7 @@ namespace RedDot
         private GlobalPaymentVM gpvm;
         private TriPOSVM triposvm;
         private PAXVM paxvm;
-
+        private CardConnectVM cardconnectvm;
         public CCPPayment(Ticket ticket, string transtype, Payment payment)
         {
             InitializeComponent();
@@ -45,11 +45,19 @@ namespace RedDot
 
                 case "WORLDPAY":
                 case "VANTIV":
-                triposvm = new TriPOSVM(this, ticket, transtype, payment);
-                this.DataContext = triposvm;
+                    triposvm = new TriPOSVM(this, ticket, transtype, payment);
+                    this.DataContext = triposvm;
                     break;
 
+                case "CARDCONNECT":
+                    cardconnectvm = new CardConnectVM(this, ticket, transtype, payment);
+                    this.DataContext = cardconnectvm;
+                    break;
             }
+
+
+           
+   
         }
 
 

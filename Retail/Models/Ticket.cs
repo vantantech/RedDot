@@ -193,6 +193,12 @@ namespace RedDot
             get { return m_salesid; }
             set { m_salesid = value; NotifyPropertyChanged("SalesID"); }
         }
+
+
+        public string TicketNo
+        {
+            get { return GlobalSettings.Instance.Shop.StorePrefix + m_salesid; }
+        }
         public int NumOfCustumers
         {
             get { return m_numofcustomers; }
@@ -1512,6 +1518,11 @@ namespace RedDot
             return null;
         }
 
+        public void UpdatePaymentDate(int paymentid, DateTime date)
+        {
+            m_dbTicket.DBUpdatePaymentDate(paymentid, date);
+        }
+
         public LineItem GetLineItemLine(int id)
         {
 
@@ -1713,8 +1724,8 @@ namespace RedDot
 
                 printer.Left();
 
-                if (CurrentEmployee.DisplayName == "[None]") printer.PrintLF(Utility.FormatPrintRow(" ", "Ticket #:" + SalesID, receiptwidth));
-                else printer.PrintLF(Utility.FormatPrintRow(CurrentEmployee.Role + ":" + CurrentEmployee.DisplayName, "Ticket #:" + SalesID, receiptwidth));
+                if (CurrentEmployee.DisplayName == "[None]") printer.PrintLF(Utility.FormatPrintRow(" ", "Ticket #:" + store.StorePrefix + SalesID, receiptwidth));
+                else printer.PrintLF(Utility.FormatPrintRow(CurrentEmployee.Role + ":" + CurrentEmployee.DisplayName, "Ticket #:" + store.StorePrefix + SalesID, receiptwidth));
 
      
 
@@ -1874,338 +1885,7 @@ namespace RedDot
 
      
 
-        public void PrintReceiptPDF(bool display)
-        {
-
-        
-           XFont font = new XFont("Courier New", 8, XFontStyle.Bold);
-           // XFont font = new XFont("Times New Roman", 10, XFontStyle.Bold);
-
-            XFont fontitalic = new XFont("Courier New", 8, XFontStyle.Italic | XFontStyle.Bold);
-            XFont fontbold = new XFont("Courier New", 10, XFontStyle.Bold);
-            // Create pen.
-            Pen blackPen = new Pen(Color.Black, 2);
-            Brush blackBrush = new SolidBrush(Color.Black);
-            Location store = GlobalSettings.Instance.Shop;
-
-            int fontHeight = (int)font.GetHeight();
-            int fontBoldHeight = (int)fontbold.GetHeight();
-
-            int startX = 50;
-            int startY = 20;
-            int XOffset = 0;
-            int YOffset = 0;
-            int rightLimit = 550;
-            string receiptstr;
-
-            int savedY = 0;
-
-
-     
-
-            PdfDocument document = new PdfDocument();
-
-            PdfPage page = document.AddPage();
-            XGraphics gfx = XGraphics.FromPdfPage(page);
-        
-            XTextFormatter tf = new XTextFormatter(gfx);
-            XRect rect = new XRect(0, 0, page.Width, page.Height);
-
-            // Draw the text
-
-            // gfx.DrawString("Hello, World!", font, XBrushes.Black,rect,XStringFormats.Center);
-
-
-            if (store == null)
-            {
-
-                MessageBox.Show("Shop/store info missing");
-                return;
-            }
-
-
-            string bitmapfile = GlobalSettings.Instance.StoreLogo;
-            if (File.Exists(bitmapfile))
-                if (GlobalSettings.Instance.StoreLogo != "") gfx.DrawImage(new Bitmap(bitmapfile), startX, startY, 200, 40);
-
-
-
-            XOffset = 500;
-            YOffset = 20;
-            //customer invoide #
-            PrintRightAlign(gfx, "Invoice #" + SalesID, fontbold, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontBoldHeight;
-            //Ticket Date and Time
-            PrintRightAlign(gfx, SaleDate.ToString(), font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawLine(blackPen, startX, startY + YOffset,  rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            savedY = YOffset;
-            PrintRightAlign(gfx, store.Address1, font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            PrintRightAlign(gfx, store.City + "," + store.State + " " + store.Zip, font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            PrintRightAlign(gfx, store.Phone, font, rightLimit, startY + YOffset);
-
-            //customer info
-            if (CurrentCustomer != null)
-            {
-                //YOffset = YOffset + fontHeight;
-                YOffset = savedY;
-                gfx.DrawString(CurrentCustomer.FirstName + " " + CurrentCustomer.LastName, font, new SolidBrush(Color.Black), startX, startY + YOffset);
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString(CurrentCustomer.Address1, font, new SolidBrush(Color.Black), startX, startY + YOffset);
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString(CurrentCustomer.City + "," + CurrentCustomer.State + " " + CurrentCustomer.ZipCode, font, new SolidBrush(Color.Black), startX, startY + YOffset);
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString(CurrentCustomer.Phone1, font, new SolidBrush(Color.Black), startX, startY + YOffset);
-
-            }
-            else
-            {
-                //YOffset = YOffset + fontHeight * 3;
-                YOffset = savedY;
-                gfx.DrawString("[Customer info ...]", fontbold, new SolidBrush(Color.Black), startX, startY + YOffset);
-
-
-            }
-
-            //custom info
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString(GlobalSettings.Instance.SalesCustomName1 + Custom1, font, new SolidBrush(Color.Black), startX, startY + YOffset);
-
-            // YOffset = YOffset + fontHeight;
-            gfx.DrawString(GlobalSettings.Instance.SalesCustomName2 + Custom2, font, new SolidBrush(Color.Black), startX + 200, startY + YOffset);
-
-            // YOffset = YOffset + fontHeight;
-            gfx.DrawString(GlobalSettings.Instance.SalesCustomName3 + Custom3, font, new SolidBrush(Color.Black), startX + 400, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-
-            if (IsRefund)
-            {
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString("****************************************************************************", fontbold, new SolidBrush(Color.Black), startX, startY + YOffset);
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString("***************************      REFUND       ******************************", fontbold, new SolidBrush(Color.Black), startX, startY + YOffset);
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString("****************************************************************************", fontbold, new SolidBrush(Color.Black), startX, startY + YOffset);
-            }
-
-            //Title for ticket items
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Description", fontbold, new SolidBrush(Color.Black), startX, startY + YOffset);
-            PrintRightAlign(gfx, "Qty", fontbold, rightLimit - 160, startY + YOffset);
-            PrintRightAlign(gfx, "Price", fontbold, rightLimit - 80, startY + YOffset);
-            PrintRightAlign(gfx, "Total", fontbold, rightLimit, startY + YOffset);
-            // line beneath title line
-            YOffset = YOffset + fontHeight/2;
-            gfx.DrawLine(blackPen, startX, startY + YOffset,  rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight ;
-            //loop through items
-            foreach (LineItem line in LineItems)
-            {
-
-                if(YOffset > 700)
-                {
-                    page = document.AddPage();
-                    gfx = XGraphics.FromPdfPage(page);
-                    YOffset = 50;
-                }
-
-                if (line.Quantity != 0)
-                {
-                    //reduce description if it's too long so doesn't overwrite the quantity and price
-                    receiptstr = line.ModelNumber + "--" + line.Description;
-                    if (receiptstr.Length > 70) receiptstr = receiptstr.Substring(0, 70) + "...";
-
-                    //prints price and surcharge together as one line
-
-
-                    gfx.DrawString(receiptstr, font, new SolidBrush(Color.Black), startX, startY + YOffset);
-
-
-
-
-
-                    PrintRightAlign(gfx, line.Quantity.ToString(), font, rightLimit - 160, startY + YOffset);
-                    PrintRightAlign(gfx, line.PriceSurcharge.ToString(), font, rightLimit - 80, startY + YOffset);
-                    PrintRightAlign(gfx, (line.PriceSurcharge * line.Quantity).ToString(), font, rightLimit, startY + YOffset);
-
-
-
-
-                    //prints discount
-                    if (line.Discount > 0)
-                    {
-                        YOffset = YOffset + fontHeight;
-                        gfx.DrawString("     **Promo Discount**", font, new SolidBrush(Color.Black), startX, startY + YOffset);
-                        PrintRightAlign(gfx, String.Format("-{0:0.00}", line.Discount * line.Quantity), font, rightLimit, startY + YOffset);
-                    }
-
-                    if (line.Note.Length > 0)
-                    {
-                        YOffset = YOffset + fontHeight;
-                       // gfx.DrawString(line.Note, fontitalic, new SolidBrush(Color.Black), startX, startY + YOffset);
-                        PrintLeftAlign(gfx, line.Note, font, startX, startY + YOffset,fontHeight,350);
-
-                        int rtncount = line.Note.Count(x => x == (char)13);
-                        YOffset = YOffset + fontHeight * rtncount;
-                    }
-
-
-                }
-                else
-                {
-                    // =====Service===== line
-
-                    gfx.DrawString(line.Description, fontbold, new SolidBrush(Color.Black), startX, startY + YOffset);
-
-                }
-
-                YOffset = YOffset + fontHeight;
-            }
-
-            XOffset = 250;
-
-            YOffset = YOffset + fontHeight/2;
-            gfx.DrawLine(blackPen, startX + XOffset, startY + YOffset,  rightLimit, startY + YOffset); //line below items
-
-
-       
-            rect = new XRect(startX, startY + YOffset, 220, 100);
-            //  gfx.DrawRectangle(XBrushes.SeaShell, rect);
-            tf.Alignment = XParagraphAlignment.Justify;
-            tf.DrawString(Note, fontitalic, new SolidBrush(Color.Black), rect, XStringFormats.TopLeft);
-
-
-
-
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Parts:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, ProductTotal.ToString(), font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Labor:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, LaborTotal.ToString(), font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Shop Fee:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, ShopFee.ToString(), font, rightLimit, startY + YOffset);
-
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Shipping:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, ShippingTotal.ToString(), font, rightLimit, startY + YOffset);
-
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Adjustments:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx,"-" + Discount.ToString(), font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight/2;
-            gfx.DrawLine(blackPen, startX + XOffset, startY + YOffset, rightLimit, startY + YOffset); //line below Discount
-
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Sub-Total:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, SubTotal.ToString(), font, rightLimit, startY + YOffset);
-
-
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Sales Tax:" + (TaxExempt ? "  (Tax Exempt)" : ""), fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, SalesTax.ToString(), font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Total:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, Total.ToString(), font, rightLimit, startY + YOffset);
-
-
-
-            //Payments
-            YOffset = YOffset + fontHeight * 2;
-            gfx.DrawString("Payments:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            YOffset = YOffset + fontHeight;
-            //loop through payments
-
-            foreach (Payment pay in Payments)
-            {
-                YOffset = YOffset + fontHeight;
-
-                gfx.DrawString(pay.PaymentDate.ToShortDateString() + " " + pay.Description, font, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-                PrintRightAlign(gfx, pay.AmountStr, font, rightLimit, startY + YOffset);
-
-            }
-
-
-
-            YOffset = YOffset + fontHeight/2;
-            gfx.DrawLine(blackPen, startX + XOffset, startY + YOffset,  rightLimit, startY + YOffset); //line below payments
-
-
-            YOffset = YOffset + fontHeight;
-            gfx.DrawString("Total Payments:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, TotalPayment.ToString(), font, rightLimit, startY + YOffset);
-
-            YOffset = YOffset + fontHeight/2;
-            gfx.DrawLine(blackPen, startX + XOffset, startY + YOffset, rightLimit, startY + YOffset);
-            gfx.DrawLine(blackPen, startX + XOffset, startY + YOffset + 5, rightLimit, startY + YOffset + 5); //double lines
-
-            YOffset = YOffset + fontHeight * 2;
-            gfx.DrawString("Balance:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-            PrintRightAlign(gfx, BalanceStr, font, rightLimit, startY + YOffset);
-
-            if (CreditCardSurcharge > 0)
-            {
-                YOffset = YOffset + fontHeight * 3;
-                gfx.DrawString("CC Surcharge:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-                PrintRightAlign(gfx, CreditCardSurcharge.ToString(), font, rightLimit, startY + YOffset);
-
-                YOffset = YOffset + fontHeight;
-                gfx.DrawString("Adj. Payment:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
-                PrintRightAlign(gfx, AdjustedPayment.ToString(), font, rightLimit, startY + YOffset);
-
-            }
-
-            //Payment notice
-            YOffset = YOffset + fontHeight * 2;
-            rect = new XRect(startX, startY + YOffset, 550, 100);
-            //  gfx.DrawRectangle(XBrushes.SeaShell, rect);
-            tf.Alignment = XParagraphAlignment.Justify;
-            tf.DrawString(GlobalSettings.Instance.PaymentNotice, fontitalic, new SolidBrush(Color.Black), rect, XStringFormats.TopLeft);
-
-         
-       
-       
-         
-
-
-
-            //Receipt notice
-            YOffset = YOffset + fontHeight * 4;
-            rect = new XRect(startX, startY + YOffset, 500, 100);
-            //  gfx.DrawRectangle(XBrushes.SeaShell, rect);
-            tf.Alignment = XParagraphAlignment.Justify;
-            tf.DrawString(GlobalSettings.Instance.ReceiptNotice, fontitalic, new SolidBrush(Color.Black), rect, XStringFormats.TopLeft);
-
-
-            // Save the document...
-            string filename = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) +  "\\pdf\\Ticket" + SalesID.ToString() + ".pdf";
-            document.Save(filename);
-
-
-            // ...and start a viewer.
-            if(display)
-            Process.Start(filename);
-        }
+      
 
 
         public void EmailPDF()
@@ -2218,18 +1898,18 @@ namespace RedDot
                 string workorderfile="";
                 string AppPath;
                 string attachments;
-               
+
 
                 AppPath = System.AppDomain.CurrentDomain.BaseDirectory;
 
-                attachfile = AppPath + "pdf\\Ticket" + SalesID.ToString() + ".pdf";
+                attachfile = AppPath + "pdf\\Ticket" + TicketNo + ".pdf";
 
-                attachments = "Ticket" + SalesID.ToString() + ".pdf";
+                attachments = "Ticket" + TicketNo + ".pdf";
 
                 if (WorkOrder != null)
                 {
-                    workorderfile = AppPath + "pdf\\WorkOrder" + WorkOrder.id.ToString() + ".pdf";
-                    attachments += " + WorkOrder" + WorkOrder.id.ToString() + ".pdf";
+                    workorderfile = AppPath + "pdf\\WorkOrder" + WorkOrder.WorkOrderNo + ".pdf";
+                    attachments += " + WorkOrder" + WorkOrder.WorkOrderNo + ".pdf";
                 }
                  
 
@@ -2239,7 +1919,7 @@ namespace RedDot
                     return;
                 }
 
-                EmailCustomer eml = new EmailCustomer(CurrentCustomer.Email, "Ticket:" + SalesID.ToString(), "Your Ticket:" + SalesID.ToString() + " has been attached", attachments);
+                EmailCustomer eml = new EmailCustomer(CurrentCustomer.Email, "Ticket:" + TicketNo, "Your Ticket:" + TicketNo + " has been attached", attachments);
                 eml.ShowDialog();
 
                 if (eml.Action == "cancel") return;
@@ -2339,9 +2019,9 @@ namespace RedDot
         void pdoc_PrintLargeReceipt(object sender, PrintPageEventArgs e)
         {
             Graphics graphics = e.Graphics;
-            Font font = new Font("Courier New", 8, System.Drawing.FontStyle.Bold);
-            Font fontitalic = new Font("Courier New", 8, System.Drawing.FontStyle.Italic | System.Drawing.FontStyle.Bold);
-            Font fontbold = new Font("Courier New", 10, System.Drawing.FontStyle.Bold);
+            Font font = new Font("Courier New", 7, System.Drawing.FontStyle.Bold);
+            Font fontitalic = new Font("Courier New", 7, System.Drawing.FontStyle.Italic | System.Drawing.FontStyle.Bold);
+            Font fontbold = new Font("Courier New", 8, System.Drawing.FontStyle.Bold);
             // Create pen.
             Pen blackPen = new Pen(Color.Black, 2);
             Brush blackBrush = new SolidBrush(Color.Black);
@@ -2380,7 +2060,7 @@ namespace RedDot
                 XOffset = 500;
                 YOffset = 20;
                 //customer invoide #
-                PrintRightAlign(graphics, "Invoice #" + SalesID, fontbold, rightLimit, startY + YOffset);
+                PrintRightAlign(graphics, "Invoice #" + TicketNo, fontbold, rightLimit, startY + YOffset);
 
                 YOffset = YOffset + fontBoldHeight;
                 //Ticket Date and Time
@@ -2408,6 +2088,12 @@ namespace RedDot
                     YOffset = YOffset + fontHeight;
                     graphics.DrawString(CurrentCustomer.Address1, font, new SolidBrush(Color.Black), startX, startY + YOffset);
                     YOffset = YOffset + fontHeight;
+
+                    if (CurrentCustomer.Address2.Trim() != "")
+                    {
+                        graphics.DrawString(CurrentCustomer.Address2, font, new SolidBrush(Color.Black), startX, startY + YOffset);
+                        YOffset = YOffset + fontHeight;
+                    }
                     graphics.DrawString(CurrentCustomer.City + "," + CurrentCustomer.State + " " + CurrentCustomer.ZipCode, font, new SolidBrush(Color.Black), startX, startY + YOffset);
                     YOffset = YOffset + fontHeight;
                     graphics.DrawString(CurrentCustomer.Phone1, font, new SolidBrush(Color.Black), startX, startY + YOffset);
@@ -2463,12 +2149,8 @@ namespace RedDot
                     if (line.Quantity != 0)
                     {
                         //reduce description if it's too long so doesn't overwrite the quantity and price
-                        receiptstr = line.ModelNumber + "--" +  line.Description ;
+                        receiptstr = line.ModelNumber ;
                         if (receiptstr.Length > 70) receiptstr = receiptstr.Substring(0, 70) + "...";
-
-                        //prints price and surcharge together as one line
-                       
-
                             graphics.DrawString(receiptstr, font, new SolidBrush(Color.Black), startX, startY + YOffset);
                          
 
@@ -2479,22 +2161,23 @@ namespace RedDot
                             PrintRightAlign(graphics, line.PriceSurcharge.ToString(), font, rightLimit - 80, startY + YOffset);
                             PrintRightAlign(graphics, (line.PriceSurcharge * line.Quantity).ToString(), font, rightLimit, startY + YOffset);
 
-                       
-
+                        YOffset = YOffset + fontHeight;
+                        receiptstr = line.Description;
+                        if (receiptstr.Length > 140) receiptstr = receiptstr.Substring(0, 140) + "...";
+                        graphics.DrawString(receiptstr, fontitalic, new SolidBrush(Color.Gray), startX + 5, startY + YOffset);
 
                         //prints discount
-                            if (line.Discount > 0)
+                        if (line.Discount > 0)
                             {
                                 YOffset = YOffset + fontHeight;
-                                graphics.DrawString("     **Promo Discount**", font, new SolidBrush(Color.Black), startX, startY + YOffset);
+                                graphics.DrawString("     **Promo Discount**", fontitalic, new SolidBrush(Color.Gray), startX + 5, startY + YOffset);
                                 PrintRightAlign(graphics,  String.Format("-{0:0.00}", line.Discount * line.Quantity), font, rightLimit, startY + YOffset);
                             }
  
                        if (line.Note.Length > 0)
                        {
                            YOffset = YOffset + fontHeight;
-                           graphics.DrawString(line.Note, fontitalic, new SolidBrush(Color.Black), startX, startY + YOffset);
-                            PrintLeftAlign(graphics, line.Note, font, startX, startY + YOffset, fontHeight,350);
+                            PrintLeftAlign(graphics, line.Note, fontitalic, new SolidBrush(Color.Gray), startX + 5, startY + YOffset, fontHeight,345);
 
                             int rtncount = line.Note.Count(x => x == (char)13);
                            YOffset = YOffset + fontHeight*rtncount;
@@ -2522,7 +2205,7 @@ namespace RedDot
 
              
             
-                PrintLeftAlign(graphics, Note, font, startX, startY + YOffset,fontHeight, 150);
+                PrintLeftAlign(graphics, Note, fontitalic, new SolidBrush(Color.Black),startX, startY + YOffset,fontHeight, 150);
 
                 graphics.DrawString("Parts:", fontbold, new SolidBrush(Color.Black), startX + XOffset, startY + YOffset);
                 PrintRightAlign(graphics, ProductTotal.ToString(), font, rightLimit, startY + YOffset);
@@ -2612,12 +2295,12 @@ namespace RedDot
 
                 //Payment notice
                 YOffset = YOffset + fontHeight * 4;
-                graphics.DrawString(GlobalSettings.Instance.PaymentNotice, fontitalic, new SolidBrush(Color.Black), startX, startY + YOffset);
+                graphics.DrawString(GlobalSettings.Instance.PaymentNotice, fontitalic, new SolidBrush(Color.Gray), startX, startY + YOffset);
 
 
                 //Receipt notice
                 YOffset = YOffset + fontHeight * 4;
-                graphics.DrawString(GlobalSettings.Instance.ReceiptNotice, font, new SolidBrush(Color.Black), startX, startY + YOffset);
+                graphics.DrawString(GlobalSettings.Instance.ReceiptNotice, fontitalic, new SolidBrush(Color.Gray), startX, startY + YOffset);
                // PrintLeftAlign(graphics, GlobalSettings.Instance.ReceiptNotice, font, startX, startY + YOffset, fontHeight, 350);
             
 
@@ -2641,7 +2324,7 @@ namespace RedDot
             graphics.DrawString(receiptline, font, new SolidBrush(Color.Black), rightlimit - graphics.MeasureString(receiptline, font).Width, Y);
         }
 
-        private int PrintLeftAlign(XGraphics graphics, string receiptline, XFont font, int X, int Y, int height,int width)
+        private int PrintLeftAlign(XGraphics graphics, string receiptline, XFont font,Brush brush, int X, int Y, int height,int width)
         {
 
             List<string> lines = WrapText(receiptline.Trim(), width, font.Name, (float)font.Size);
@@ -2650,14 +2333,14 @@ namespace RedDot
 
             foreach (var item in lines)
             {
-                graphics.DrawString(item, font, new SolidBrush(Color.Black), X, YOffset);
+                graphics.DrawString(item, font, brush, X, YOffset);
                 YOffset = YOffset + height;
             }
 
             return YOffset;
         }
 
-        private int PrintLeftAlign(Graphics graphics, string receiptline, Font font, int X, int Y, int height,int width)
+        private int PrintLeftAlign(Graphics graphics, string receiptline, Font font,Brush brush, int X, int Y, int height,int width)
         {
 
             List<string> lines = WrapText(receiptline, width, font.Name, font.Size);
@@ -2667,7 +2350,7 @@ namespace RedDot
 
             foreach (var item in lines)
             {
-                graphics.DrawString(item, font, new SolidBrush(Color.Black), X, YOffset);
+                graphics.DrawString(item, font,brush, X, YOffset);
                 YOffset = YOffset + height;
             }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RedDot.Class;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace RedDot
 
         public ICommand AddNewPrinterClicked { get; set; }
 
-        private int selectedid = 0;
+    
         public PrinterLocationVM()
         {
 
@@ -38,11 +39,14 @@ namespace RedDot
             PrinterModes.Add(new ListPair() { Description = "Receipt - EPSON", StrValue = "EPSON" });
             PrinterModes.Add(new ListPair() { Description = "Receipt - STAR", StrValue = "STAR" });
             PrinterModes.Add(new ListPair() { Description = "Label Writer", StrValue = "LABEL" });
+            PrinterModes.Add(new ListPair() { Description = "Zebra Printer", StrValue = "ZEBRA" });
 
             ReceiptWidths = new List<ListPair>();
             ReceiptWidths.Add(new ListPair() { Description = "80 mm (3-1/8\")", StrValue = "80" });
             ReceiptWidths.Add(new ListPair() { Description = "58 mm (2-1/4\")", StrValue = "58" });
-          
+
+            SelectedPrinter = new RedDotPrinter();
+            SelectedPrinter.Description = "Please select printer ";
         }
 
         public List<ListPair> PrinterModes { get; set; }
@@ -72,82 +76,15 @@ namespace RedDot
             }
         }
 
-        private int m_receiptwidth;
-        public int ReceiptWidth
+
+        private RedDotPrinter m_selectedprinter;
+        public RedDotPrinter SelectedPrinter
         {
-            get { return m_receiptwidth; }
-            set
-            {
-                m_receiptwidth = value;
-                NotifyPropertyChanged("ReceiptWidth");
-            }
-        }
-
-
-
-
-
-
-        private string m_selectedprinter;
-        public string SelectedPrinter
-        {
-            get { return m_selectedprinter; }   
+            get { return m_selectedprinter; }
             set
             {
                 m_selectedprinter = value;
                 NotifyPropertyChanged("SelectedPrinter");
-            
-            }
-        }
-
-        private string m_assignedprinter;
-        public string AssignedPrinter
-        {
-            get { return m_assignedprinter; }
-            set
-            {
-                m_assignedprinter = value;
-                NotifyPropertyChanged("AssignedPrinter");
-              
-            }
-        }
-
-
-        private string m_printmode;
-        public string PrintMode
-        {
-            get { return m_printmode; }
-            set
-            {
-                m_printmode = value;
-                NotifyPropertyChanged("PrintMode");
-
-            }
-        }
-
-
-
-        private bool m_islabel;
-        public bool IsLabel
-        {
-            get { return m_islabel; }
-            set
-            {
-                m_islabel = value;
-                NotifyPropertyChanged("IsLabel");
-
-            }
-        }
-
-        private bool m_landscape;
-        public bool LandScape
-        {
-            get { return m_landscape; }
-            set
-            {
-                m_landscape = value;
-                NotifyPropertyChanged("LandScape");
-
             }
         }
 
@@ -172,10 +109,14 @@ namespace RedDot
 
         private void LoadLocations()
         {
+            
             Locations = printermodel.GetPrinterLocations();
-            foreach(DataRow row in Locations.Rows)
+
+            if (SelectedPrinter == null) return;
+
+            foreach (DataRow row in Locations.Rows)
             {
-                if ((int)row["id"] == selectedid) row["selected"] = true;
+                if ((int)row["id"] == SelectedPrinter.id) row["selected"] = true;
             }
         }
 
@@ -207,23 +148,11 @@ namespace RedDot
             {
                 id = (int)m_id;
 
-                DataRow selected = printermodel.GetPrinter(id);
-                if(selected != null)
-                {
-                    SelectedPrinter = selected["description"].ToString();
-                    AssignedPrinter = selected["assignedprinter"].ToString();
-                    selectedid = (int)selected["id"];
-                    PrintMode = selected["printermode"].ToString();
-                    IsLabel = selected["islabel"].ToString() == "1" ? true : false;
-                    LandScape= selected["landscape"].ToString() == "1" ? true : false;
-                 
-
-                    if (selected["receiptwidth"].ToString() != "")
-                        ReceiptWidth = int.Parse(selected["receiptwidth"].ToString());
-                    else ReceiptWidth = 80;
-                }
+               RedDotPrinter sel = ReceiptPrinterModel.GetPrinterObject(id);
 
 
+
+                SelectedPrinter = sel;
 
             }catch(Exception ex)
             {
@@ -235,9 +164,9 @@ namespace RedDot
         public void ExecuteSaveClicked(object obj)
         {
 
-            if (selectedid > 0)
+            if (SelectedPrinter.id > 0)
             {
-                  printermodel.UpdatePrinterLocation_AssignedPrinter(selectedid, m_assignedprinter, m_selectedprinter, m_printmode, m_receiptwidth, m_islabel,  m_landscape);
+                  printermodel.UpdatePrinterLocation_AssignedPrinter(SelectedPrinter);
               
                 LoadLocations();
             }
@@ -247,7 +176,7 @@ namespace RedDot
         public void ExecuteDeleteClicked(object obj)
         {
 
-            if (selectedid > 0)
+            if (SelectedPrinter.id > 0)
             {
                 ConfirmDelete cnf = new ConfirmDelete("Delete Printer from System??? ") { Topmost = true };
                 cnf.ShowDialog();
@@ -257,10 +186,10 @@ namespace RedDot
                     again.ShowDialog();
                     if(again.Action == Confirm.OK)
                     {
-                        printermodel.DeletePrinterLocation(selectedid);
-                        selectedid = 0;
-                        SelectedPrinter = "";
-                        AssignedPrinter = "";
+                        printermodel.DeletePrinterLocation(SelectedPrinter.id);
+                        SelectedPrinter.id = 0;
+                        SelectedPrinter = null;
+                      
                         LoadLocations();
                     }
                 }
@@ -273,9 +202,9 @@ namespace RedDot
         public void ExecuteTestPrintClicked(object obj)
         {
 
-            if (selectedid > 0)
+            if (SelectedPrinter.id > 0)
             {
-                ReceiptPrinterModel.TestPrint(AssignedPrinter, PrintMode, m_receiptwidth, m_landscape);
+                ReceiptPrinterModel.TestPrint(SelectedPrinter);
             }
 
         }

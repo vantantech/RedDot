@@ -452,7 +452,7 @@ namespace RedDot
 
         public void ExecuteCustomMonthClicked(object tagstr)
         {
-            CustomDate cd = new CustomDate(Visibility.Hidden);
+            CustomDate cd = new CustomDate(Visibility.Hidden, DateTime.Now);
 
             cd.ShowDialog();
             //Utility.OpenModal(this, cd);

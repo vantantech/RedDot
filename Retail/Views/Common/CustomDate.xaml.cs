@@ -23,11 +23,12 @@ namespace RedDot
         public DateTime StartDate;
         public DateTime EndDate;
         public Visibility VisibleEndDate { get; set; }
-        public CustomDate(Visibility visibleenddate)
+        public CustomDate(Visibility visibleenddate, DateTime date)
         {
             VisibleEndDate = visibleenddate;
             InitializeComponent();
             this.DataContext = this;
+            this.startdatepicker.SelectedDate = date;
         }
 
         private void startdatepicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

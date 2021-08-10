@@ -221,8 +221,10 @@ namespace RedDot
 
             //create a blank appointment object
             Appointment appt = new Appointment(m_interval);
-            DateTime currenttime = new DateTime(m_appointdate.Year, m_appointdate.Month, m_appointdate.Day, 01, 00, 00);
+            DateTime currenttime = new DateTime(m_appointdate.Year, m_appointdate.Month, m_appointdate.Day, 09, 00, 00);
             appt.ApptDate = currenttime;
+            appt.Length = m_interval;
+        
             appt.CurrentEmployee = new Employee(employeeid);
             ApptDetails dlg = new ApptDetails(appt, m_security,true);
             Utility.OpenModal(m_parent, dlg);

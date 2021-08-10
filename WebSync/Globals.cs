@@ -183,7 +183,16 @@ namespace WebSync
             set { _dbsettings.SaveSetting("BackupDirectory", value.ToString()); }
         }
 
+
+        public string StoreCode
+        {
+            get { return _dbsettings.StringGetSetting("Webservice", "StoreCode", "Store Code", ""); }
+        }
   
+        public string StorePass
+        {
+            get { return _dbsettings.StringGetSetting("Webservice", "StorePass", "Store Password", ""); }
+        }
 
         string _databasename = "";
         public string DatabaseName

@@ -43,6 +43,8 @@ namespace RedDot
 
         public List<LanguageType> LanguageList { get; set; }
 
+        public List<ListPair> CreditCardProcessorList { get; set; }
+
         public string DataBaseName
         {
             get { return GlobalSettings.Instance.DatabaseName; }
@@ -50,6 +52,16 @@ namespace RedDot
             {
                 GlobalSettings.Instance.DatabaseName = value;
                 NotifyPropertyChanged("DataBaseName");
+            }
+        }
+
+        public string CreditCardProcessor
+        {
+            get { return GlobalSettings.Instance.CreditCardProcessor; }
+            set
+            {
+                GlobalSettings.Instance.CreditCardProcessor = value;
+                NotifyPropertyChanged("CreditCardProcessor");
             }
         }
 
@@ -61,6 +73,52 @@ namespace RedDot
                 GlobalSettings.Instance.ElementExpressURL = value;
             }
         }
+
+        public string BoltURL
+        {
+            get { return GlobalSettings.Instance.BoltBaseURL; }
+            set
+            {
+                GlobalSettings.Instance.BoltBaseURL = value;
+            }
+        }
+
+        public string CardPointeURL
+        {
+            get { return GlobalSettings.Instance.CardConnectURL; }
+            set
+            {
+                GlobalSettings.Instance.CardConnectURL = value;
+            }
+        }
+
+        public string APIUsernamePassword
+        {
+            get { return GlobalSettings.Instance.CardConnectUsernamePassword; }
+            set
+            {
+                GlobalSettings.Instance.CardConnectUsernamePassword = value;
+            }
+        }
+
+        public string APIAuthorization
+        {
+            get { return GlobalSettings.Instance.CardConnectAuthorization; }
+            set
+            {
+                GlobalSettings.Instance.CardConnectAuthorization = value;
+            }
+        }
+
+        public string MerchantID
+        {
+            get { return GlobalSettings.Instance.MerchantID; }
+            set
+            {
+                GlobalSettings.Instance.MerchantID = value;
+            }
+        }
+
         public string IPAddress
         {
             get { return GlobalSettings.Instance.SIPDefaultIPAddress; }
@@ -146,8 +204,20 @@ namespace RedDot
             LanguageList.Add(new LanguageType() { Language = "Tiếng Việt", LanguageCode = "vi-VN", Flag = "/media/vietnam.png" });
             LanguageList.Add(new LanguageType() { Language = "Française", LanguageCode = "fr-FR", Flag = "/media/french.png" });
 
+            CreditCardProcessorList = new List<ListPair>();
+            CreditCardProcessorList.Add(new ListPair() {Description= "Clover" ,StrValue = "Clover"});
+            CreditCardProcessorList.Add(new ListPair() { Description = "Card Connect", StrValue = "CardConnect" });
+            CreditCardProcessorList.Add(new ListPair() { Description = "External", StrValue = "External" });
+            CreditCardProcessorList.Add(new ListPair() { Description = "VANTIV", StrValue = "VANTIV" });
+            CreditCardProcessorList.Add(new ListPair() { Description = "HeartSIP", StrValue = "HeartSIP" });
+            CreditCardProcessorList.Add(new ListPair() { Description = "PAX_S300", StrValue = "PAX_S300" });
+            CreditCardProcessorList.Add(new ListPair() { Description = "HSIP_ISC250", StrValue = "HSIP_ISC250" });
+
+
 
             DataBases = _dbconnect.GetData("show databases");
+
+
           
         }
 

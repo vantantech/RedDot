@@ -29,20 +29,19 @@ namespace RedDotService
         }
   
         //Constructor
-        public DBConnect()
+        public DBConnect(string connectionstring="")
         {
-            Initialize();
+            Initialize(connectionstring);
             OpenConnection();
 
         }
 
         //Initialize values
-        private void Initialize()
+        private void Initialize(string connectionstring)
         {
 
-
-
-                m_connectionstring = GetConnectionStringINI();
+            if (connectionstring != "") m_connectionstring = connectionstring;
+            else  m_connectionstring = GetConnectionStringINI();
 
               
             _connection = new SqlConnection(m_connectionstring);
@@ -54,18 +53,10 @@ namespace RedDotService
 
         private string GetConnectionStringINI()
         {
-            //  _connectionstring = "SERVER=localhost;Port=3306;DATABASE=reddot;UID=root;PASSWORD=sparcman;";
+   
             try
             {
-                var MyIni = new IniFile("RedDot.Ini");
 
-
-                //m_server = MyIni.Read("Server", "Database");
-               // m_database = MyIni.Read("Database", "Database");
-               // m_port = MyIni.Read("Port", "Database");
-
-
-                //return "SERVER=" + m_server + ";Port=" + m_port + ";DATABASE=" + m_database + ";UID=a0b2a3_reddot1;PASSWORD=sparcman95;";
 
 
                 return "Data Source=SQL5033.myASP.NET;Initial Catalog=DB_A0B2A3_webaccess;User Id=DB_A0B2A3_webaccess_admin;Password=Sparcman95!;";

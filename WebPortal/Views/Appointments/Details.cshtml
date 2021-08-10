@@ -1,0 +1,35 @@
+﻿@model WebAccess.Models.store
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>store</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.storename)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.storename)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WebUserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WebUserId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -974,9 +974,281 @@ namespace WebSync.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LicenseRequest", Namespace="http://schemas.datacontract.org/2004/07/RedDotService")]
+    [System.SerializableAttribute()]
+    public partial class LicenseRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ActivatedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ApplicationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CodeStringField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MachineIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Activated {
+            get {
+                return this.ActivatedField;
+            }
+            set {
+                if ((this.ActivatedField.Equals(value) != true)) {
+                    this.ActivatedField = value;
+                    this.RaisePropertyChanged("Activated");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Application {
+            get {
+                return this.ApplicationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ApplicationField, value) != true)) {
+                    this.ApplicationField = value;
+                    this.RaisePropertyChanged("Application");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CodeString {
+            get {
+                return this.CodeStringField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CodeStringField, value) != true)) {
+                    this.CodeStringField = value;
+                    this.RaisePropertyChanged("CodeString");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Comment {
+            get {
+                return this.CommentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommentField, value) != true)) {
+                    this.CommentField = value;
+                    this.RaisePropertyChanged("Comment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreateDate {
+            get {
+                return this.CreateDateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreateDateField, value) != true)) {
+                    this.CreateDateField = value;
+                    this.RaisePropertyChanged("CreateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MachineID {
+            get {
+                return this.MachineIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MachineIDField, value) != true)) {
+                    this.MachineIDField = value;
+                    this.RaisePropertyChanged("MachineID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Category", Namespace="http://schemas.datacontract.org/2004/07/RedDotService")]
+    [System.SerializableAttribute()]
+    public partial class Category : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string cattypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string colorcodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string descriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string imagesrcField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string lettercodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int sortorderField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string cattype {
+            get {
+                return this.cattypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.cattypeField, value) != true)) {
+                    this.cattypeField = value;
+                    this.RaisePropertyChanged("cattype");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string colorcode {
+            get {
+                return this.colorcodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.colorcodeField, value) != true)) {
+                    this.colorcodeField = value;
+                    this.RaisePropertyChanged("colorcode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.descriptionField, value) != true)) {
+                    this.descriptionField = value;
+                    this.RaisePropertyChanged("description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string imagesrc {
+            get {
+                return this.imagesrcField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.imagesrcField, value) != true)) {
+                    this.imagesrcField = value;
+                    this.RaisePropertyChanged("imagesrc");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string lettercode {
+            get {
+                return this.lettercodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.lettercodeField, value) != true)) {
+                    this.lettercodeField = value;
+                    this.RaisePropertyChanged("lettercode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int sortorder {
+            get {
+                return this.sortorderField;
+            }
+            set {
+                if ((this.sortorderField.Equals(value) != true)) {
+                    this.sortorderField = value;
+                    this.RaisePropertyChanged("sortorder");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.ISalonService")]
     public interface ISalonService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/Authenticate", ReplyAction="http://tempuri.org/ISalonService/AuthenticateResponse")]
+        string Authenticate(string storecode, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/Authenticate", ReplyAction="http://tempuri.org/ISalonService/AuthenticateResponse")]
+        System.Threading.Tasks.Task<string> AuthenticateAsync(string storecode, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/CloseConnection", ReplyAction="http://tempuri.org/ISalonService/CloseConnectionResponse")]
         bool CloseConnection();
@@ -1019,6 +1291,30 @@ namespace WebSync.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/WriteEmployeeList", ReplyAction="http://tempuri.org/ISalonService/WriteEmployeeListResponse")]
         System.Threading.Tasks.Task<string> WriteEmployeeListAsync(int clientid, WebSync.ServiceReference1.EmployeeRecord employee);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/GetLicense", ReplyAction="http://tempuri.org/ISalonService/GetLicenseResponse")]
+        WebSync.ServiceReference1.LicenseRequest GetLicense(WebSync.ServiceReference1.LicenseRequest request, string publickey);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/GetLicense", ReplyAction="http://tempuri.org/ISalonService/GetLicenseResponse")]
+        System.Threading.Tasks.Task<WebSync.ServiceReference1.LicenseRequest> GetLicenseAsync(WebSync.ServiceReference1.LicenseRequest request, string publickey);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/WriteCategory", ReplyAction="http://tempuri.org/ISalonService/WriteCategoryResponse")]
+        string WriteCategory(WebSync.ServiceReference1.Category cat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/WriteCategory", ReplyAction="http://tempuri.org/ISalonService/WriteCategoryResponse")]
+        System.Threading.Tasks.Task<string> WriteCategoryAsync(WebSync.ServiceReference1.Category cat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/GetConnectionString", ReplyAction="http://tempuri.org/ISalonService/GetConnectionStringResponse")]
+        string GetConnectionString();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/GetConnectionString", ReplyAction="http://tempuri.org/ISalonService/GetConnectionStringResponse")]
+        System.Threading.Tasks.Task<string> GetConnectionStringAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/GetStatus", ReplyAction="http://tempuri.org/ISalonService/GetStatusResponse")]
+        string GetStatus();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalonService/GetStatus", ReplyAction="http://tempuri.org/ISalonService/GetStatusResponse")]
+        System.Threading.Tasks.Task<string> GetStatusAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1046,6 +1342,14 @@ namespace WebSync.ServiceReference1 {
         
         public SalonServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public string Authenticate(string storecode, string password) {
+            return base.Channel.Authenticate(storecode, password);
+        }
+        
+        public System.Threading.Tasks.Task<string> AuthenticateAsync(string storecode, string password) {
+            return base.Channel.AuthenticateAsync(storecode, password);
         }
         
         public bool CloseConnection() {
@@ -1102,6 +1406,38 @@ namespace WebSync.ServiceReference1 {
         
         public System.Threading.Tasks.Task<string> WriteEmployeeListAsync(int clientid, WebSync.ServiceReference1.EmployeeRecord employee) {
             return base.Channel.WriteEmployeeListAsync(clientid, employee);
+        }
+        
+        public WebSync.ServiceReference1.LicenseRequest GetLicense(WebSync.ServiceReference1.LicenseRequest request, string publickey) {
+            return base.Channel.GetLicense(request, publickey);
+        }
+        
+        public System.Threading.Tasks.Task<WebSync.ServiceReference1.LicenseRequest> GetLicenseAsync(WebSync.ServiceReference1.LicenseRequest request, string publickey) {
+            return base.Channel.GetLicenseAsync(request, publickey);
+        }
+        
+        public string WriteCategory(WebSync.ServiceReference1.Category cat) {
+            return base.Channel.WriteCategory(cat);
+        }
+        
+        public System.Threading.Tasks.Task<string> WriteCategoryAsync(WebSync.ServiceReference1.Category cat) {
+            return base.Channel.WriteCategoryAsync(cat);
+        }
+        
+        public string GetConnectionString() {
+            return base.Channel.GetConnectionString();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetConnectionStringAsync() {
+            return base.Channel.GetConnectionStringAsync();
+        }
+        
+        public string GetStatus() {
+            return base.Channel.GetStatus();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetStatusAsync() {
+            return base.Channel.GetStatusAsync();
         }
     }
 }

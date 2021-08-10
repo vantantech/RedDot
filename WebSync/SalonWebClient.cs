@@ -13,6 +13,7 @@ namespace WebSync
     public class SalonWebClient
     {
         private DBTicket m_dbticket;
+        private DBMenu m_dbmenu;
         private DBHistory m_dbhistory;
         private DBEmployee m_dbemployee;
         private DBConnect m_dbconnect;
@@ -22,6 +23,7 @@ namespace WebSync
         {
           
             m_dbticket = new DBTicket();
+            m_dbmenu = new DBMenu();
             m_dbhistory = new DBHistory();
             m_dbemployee = new DBEmployee();
             m_dbconnect = new DBConnect();
@@ -30,14 +32,16 @@ namespace WebSync
 
 
 
-        public void SyncTicket(int userid, int salesid)
+        public void SyncTicket(string storecode,string password, int salesid)
         {
             try
             {
                 SalonServiceClient client = new SalonServiceClient();
+
              
 
                 client.Endpoint.Address = new System.ServiceModel.EndpointAddress("http://salon.reddotpos.com/SalonService.svc");
+                client.Authenticate(storecode, password);
 
                 SalesRecord sr = GetSaleRecord(salesid);
 
@@ -46,7 +50,7 @@ namespace WebSync
                 sr.GratuityRecords = GetGratuityRecord(salesid);
               
 
-                string result = client.WriteSalesTicket(userid, sr);
+                string result = client.WriteSalesTicket(0, sr);
             
                 m_dbhistory.UpdateSyncDate(salesid);
 
@@ -94,6 +98,38 @@ namespace WebSync
            
         }
 
+
+        public void SyncMenu(string storecode, string password)
+        {
+            try
+            {
+                SalonServiceClient client = new SalonServiceClient();
+                client.Endpoint.Address = new System.ServiceModel.EndpointAddress("http://salon.reddotpos.com/SalonService.svc");
+                string ret = client.Authenticate(storecode, password);
+
+                string connstr = client.GetStatus();
+
+             
+
+                List<Category> catlist = GetCategoryRecord();
+
+                foreach (var cat in catlist)
+                {
+                    string result = client.WriteCategory(cat);
+ 
+                }
+
+                client.CloseConnection();
+                client.Close();
+                logger.Info("Category Successfully:" );
+            }
+            catch (Exception ex)
+            {
+                logger.Error("SyncCategory:" + ex.Message);
+
+            }
+
+        }
 
         public  void SyncSalesItem(int userid, int salesid)
         {
@@ -370,6 +406,28 @@ namespace WebSync
             }
 
             return employee;
+        }
+
+
+        private  List<Category> GetCategoryRecord()
+        {
+            List<Category> category = new List<Category>();
+
+            var categories = m_dbmenu.GetCategoryList();
+            foreach(DataRow rec in categories.Rows)
+            {
+                Category cat = new Category();
+                cat.cattype = rec["cattype"].ToString();
+                cat.id = int.Parse(rec["id"].ToString());
+                cat.description = rec["description"].ToString();
+                cat.colorcode = rec["colorcode"].ToString();
+                cat.imagesrc = rec["imagesrc"].ToString();
+                cat.lettercode = rec["lettercode"].ToString();
+                cat.sortorder = int.Parse(rec["sortorder"].ToString());
+                category.Add(cat);
+            }
+
+            return category;
         }
     }
 }

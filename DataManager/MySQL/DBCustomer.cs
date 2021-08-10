@@ -203,7 +203,7 @@ namespace RedDot.DataManager
 
             //exclude void payments 06/15/2018
 
-            query = "select * from customerrewards where void=0 and customerid = " + id;
+            query = "select * from customerrewards where  customerid = " + id;
 
             return _dbconnect.GetData(query);
         }

@@ -160,7 +160,7 @@ namespace RedDot
                 if (rtn > 0)
                 {
                     AuditModel.WriteLog("system", "login succeed", password, "Login", 0);
-                    logger.Info("login succeeded:" + password);
+                    logger.Info("login succeeded" );
                     PIN = password.Substring(0, passlen);
                  
                     return rtn;
@@ -181,8 +181,8 @@ namespace RedDot
                 if (rtn > 0)
                 {
                     AuditModel.WriteLog("system", "login succeed", password, "Login", 0);
-                    logger.Info("login succeeded:" + password);
-                PIN = "";
+                    logger.Info("login succeeded");
+                    PIN = "";
                   
                     return rtn;
                 }

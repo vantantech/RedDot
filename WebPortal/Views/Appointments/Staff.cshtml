@@ -1,0 +1,188 @@
+﻿@model IEnumerable<WebAccess.Models.employee>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+
+        $('table.display').DataTable({ "scrollY": "600px", "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]], "pageLength": 100 });
+
+    });
+
+</script>
+
+
+
+<style>
+    img {
+        max-width: 25%;
+        max-height: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+</style>
+
+
+
+<style type="text/css">
+    .tg {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%
+    }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-h3q6 {
+            background-color: #ffc702;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-hyan {
+            background-color: #34cdf9;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-2pvn {
+            background-color: #fcff2f;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+
+    div.scrollable {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+    }
+
+    .rcorners1 {
+        border-radius: 75px;
+        background: #73AD21;
+        margin: 20px;
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        padding: 30px 0;
+    }
+
+    .rcorners0 {
+
+        background: white;
+  
+        width: 140px;
+        height: 140px;
+    }
+
+    .center{
+        text-align:center;
+    }
+
+    div.a {
+        font-size: 20px;
+    }
+</style>
+
+
+<table class="tg" height="600px">
+    <tbody>
+        <tr>
+            <td class="tg-0lax"></td>
+            <td class="tg-0lax"></td>
+        </tr>
+        <tr>
+            <td class="tg-h3q6" width="100px">Staff</td>
+            <td class="tg-0lax" rowspan="4">
+
+
+                <div class="scrollable">
+
+              
+
+                    <div class="row" >
+                        @foreach (var item in Model)
+                        {
+
+
+                        <div class="col col-sm-1 rcorners0">
+                                <div class="rcorners1" style="background-color: green">
+                                    <div class="a">
+                                        @(item.firstname.Substring(0,1))
+                                    </div>
+                                @Html.DisplayFor(modelItem => item.firstname)
+                                </div>
+                        </div>
+
+
+
+                            }
+
+                    </div>
+
+
+                 
+                </div>
+
+          
+
+      
+
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-hyan">Time</td>
+        </tr>
+        <tr>
+            <td class="tg-2pvn">Service</td>
+        </tr>
+        <tr>
+            <td class="tg-0lax"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+

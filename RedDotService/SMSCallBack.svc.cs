@@ -14,7 +14,7 @@ namespace RedDotService
         DBTicket m_dbticket;
         public SMSCallBack()
         {
-            m_dbticket = new DBTicket();
+           
         }
   
 

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebAccess.Models.store>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stores</h2>
+
+@if (Model != null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.storename)
+            </th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.storename)
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+
+}else
+{
+    <text> Invalid store id </text>
+}
+

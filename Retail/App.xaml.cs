@@ -128,7 +128,7 @@ namespace RedDot
 
 
           
-            Updater.CheckAndUpdate(true);
+           Updater.CheckAndUpdate(true);
 
 
 

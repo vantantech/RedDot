@@ -45,7 +45,9 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Ticket #:" Width="120" TextAlignment="Right" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
-                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding DataContext.StorePrefix , RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"   />
                                 <TextBlock  Text="{Binding saledate}"  Width="180" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
                                 <TextBlock Text="{Binding status }" Width="80" Foreground="Blue"  FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
                                 <TextBlock Text="{Binding paymenttype}" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
@@ -87,7 +89,9 @@
 
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Work Order:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
-                                <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red" Margin="10,0,0,0" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding DataContext.StorePrefix , RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                                <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red"  TextWrapping="Wrap"/>
 
                             </StackPanel>
 
@@ -116,7 +120,9 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Ticket #:" Width="120" TextAlignment="Right" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
-                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding DataContext.StorePrefix , RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" />
                                 <TextBlock  Text="{Binding closedate}"  Width="180" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
                                 <TextBlock Text="{Binding status }" Width="80" Foreground="Blue"  FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
                                 <TextBlock Text="{Binding paymenttype}" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
@@ -158,6 +164,8 @@
 
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Work Order:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding DataContext.StorePrefix , RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
                                 <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red" Margin="10,0,0,0" TextWrapping="Wrap"/>
 
                             </StackPanel>
@@ -196,7 +204,10 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Ticket #:" Width="120" TextAlignment="Right" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
-                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding DataContext.StorePrefix , RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
+                                <TextBlock Text="{Binding id }" Width="60" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"   />
+                              
                                 <TextBlock  Text="{Binding closedate}"  Width="180" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0"/>
                                 <TextBlock Text="{Binding status }" Width="80" Foreground="Blue"  FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
                                 <TextBlock Text="{Binding paymenttype}" Width="100"  Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Margin="10,0,0,0" />
@@ -231,6 +242,8 @@
 
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock Text="Work Order:"  Width="120" TextAlignment="Right" FontSize="15"   FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+                                <TextBlock Text="{Binding DataContext.StorePrefix , RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Width="auto" Foreground="Blue" FontSize="15" FontFamily="Consolas" FontWeight="Normal"  Margin="10,0,0,0" />
+
                                 <TextBlock  Text="{Binding workordernumber}" Width="200" HorizontalAlignment="Left" FontSize="15" FontFamily="Consolas" FontWeight="Normal" Foreground="Red" Margin="10,0,0,0" TextWrapping="Wrap"/>
 
                              </StackPanel>

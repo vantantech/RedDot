@@ -137,6 +137,11 @@ namespace RedDot
             get { return m_productwidth; }
         }
 
+
+        public int ProductBorderWidth2
+        {
+            get { return m_productwidth - 50; }
+        }
         public int ProductBorderWidth
         {
             get { return m_productwidth + 70; }

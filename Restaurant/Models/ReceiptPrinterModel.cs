@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RedDot.Class;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -34,15 +35,39 @@ namespace RedDot
         {
             return m_dbsettings.GetPrinter(id);
         }
+
+        public static RedDotPrinter GetPrinterObject(int id)
+        {
+            RedDotPrinter prntr = new RedDotPrinter();
+            DBSettings m_dbsettings = new DBSettings();
+            DataRow selected =  m_dbsettings.GetPrinter(id);
+            if (selected != null)
+            {
+                prntr.Description = selected["description"].ToString();
+                prntr.AssignedPrinter = selected["assignedprinter"].ToString();
+                prntr.id = (int)selected["id"];
+                prntr.PrintMode = selected["printermode"].ToString();
+                prntr.IsLabel = selected["islabel"].ToString() == "1" ? true : false;
+                prntr.LandScape= selected["landscape"].ToString() == "1" ? true : false;
+
+
+                if (selected["receiptwidth"].ToString() != "")
+                    prntr.ReceiptWidth= int.Parse(selected["receiptwidth"].ToString());
+                else prntr.ReceiptWidth= 80;
+            }
+
+            return prntr;
+
+        }
         public bool AddPrinterLocations(string description, string assignedprinter)
         {
             return m_dbsettings.AddPrinterLocation(description, assignedprinter);
         }
 
 
-        public bool UpdatePrinterLocation_AssignedPrinter(int id, string assignedprinter, string description, string printermode, int receiptwidth, bool islabel, bool landscape)
+        public bool UpdatePrinterLocation_AssignedPrinter(RedDotPrinter selected)
         {
-            return m_dbsettings.UpdatePrinterLocation_AssignedPrinter(id, assignedprinter, description, printermode, receiptwidth, islabel, landscape);
+            return m_dbsettings.UpdatePrinterLocation_AssignedPrinter(selected.id,selected.AssignedPrinter, selected.Description, selected.PrintMode, selected.ReceiptWidth, selected.IsLabel, selected.LandScape);
         }
 
       
@@ -1058,31 +1083,42 @@ namespace RedDot
             }
         }
 
-        public static void TestPrint(string printername, string m_mode, int receiptwidth,  bool landscape)
+        public static void TestPrint(RedDotPrinter Selected)
         {
-            if (m_mode.ToUpper() == "LABEL")
-                TestPrintLabel(printername,landscape);
+            if (Selected.PrintMode.ToUpper() == "LABEL" || Selected.PrintMode.ToUpper() == "ZEBRA")
+                TestPrintLabel(Selected);
             else
-                TestPrintReceipt(printername, m_mode, receiptwidth);
+                TestPrintReceipt(Selected.Description, Selected.PrintMode, Selected.ReceiptWidth);
         }
 
 
-        public static void TestPrintLabel(string printername,  bool landscape)
+        public static void TestPrintLabel(RedDotPrinter selected)
         {
             PrintDocument pdoc = null;
             //System.Windows.Forms.PrintDialog pd = new System.Windows.Forms.PrintDialog();
 
         
             pdoc = new PrintDocument();
-            pdoc.PrinterSettings.PrinterName = printername;
-            pdoc.DefaultPageSettings.Landscape = landscape;
-       
 
-            // pdoc.DefaultPageSettings.Landscape = false;
-            pdoc.PrintPage += (sender, e) => pdoc_TestPrintLabel( e);  //this method allows you to pass parameters
+            try
+            {
+                pdoc.PrinterSettings.PrinterName = selected.AssignedPrinter;
+
+                if (selected.PrintMode == "LABEL")
+                    pdoc.DefaultPageSettings.Landscape = selected.LandScape;
+
+
+                // pdoc.DefaultPageSettings.Landscape = false;
+                pdoc.PrintPage += (sender, e) => pdoc_TestPrintLabel(e);  //this method allows you to pass parameters
                 pdoc.Print();
 
-         
+            }catch(Exception ex)
+            {
+                TouchMessageBox.Show("TestPrintLabel:" + ex.Message);
+            }
+
+
+
         }
 
         public static void pdoc_TestPrintLabel(PrintPageEventArgs e)
@@ -1343,19 +1379,8 @@ namespace RedDot
                 foreach(DataRow prn in printers.Rows)
                 {
                     int printerid = (int)prn["id"];
+                    RedDotPrinter SelectedPrinter = GetPrinterObject(printerid);
                 
-                    string printerlocation = prn["description"].ToString();
-                    string printername = prn["assignedprinter"].ToString();
-                    bool islabel = prn["islabel"].ToString() == "1" ? true : false;
-                    bool landscape = prn["landscape"].ToString() == "1" ? true : false;
-             
-
-                    int receiptwidth = 48;//default character width for receipt paper
-
-                    if(prn["receiptwidth"].ToString() != "")
-                        receiptwidth= int.Parse(prn["receiptwidth"].ToString());
-
-                    string mode = prn["printermode"].ToString();
 
                     lineitems = new ObservableCollection<LineItem>();
 
@@ -1375,8 +1400,8 @@ namespace RedDot
                     if (lineitems.Count > 0)
                     {
                     
-                        if (mode.ToUpper() == "LABEL")
-                            PrintLabelPrinter(ticket.OrderNumber, lineitems, printername, landscape);
+                        if (SelectedPrinter.PrintMode.ToUpper() == "LABEL" || SelectedPrinter.PrintMode.ToUpper() == "ZEBRA")
+                            PrintLabelPrinter(ticket.OrderNumber, lineitems, SelectedPrinter);
                         else
                         {
                             collaboration_lineitems = new ObservableCollection<LineItem>(); //reset collection
@@ -1392,7 +1417,7 @@ namespace RedDot
                                 }
                             }
 
-                            PrintItem(ticket, lineitems, collaboration_lineitems, printerlocation, printername, receiptwidth, mode, doubleheight, doublewidth, doubleimpact, islabel);
+                            PrintItem(ticket, lineitems, collaboration_lineitems, SelectedPrinter.Description, SelectedPrinter.AssignedPrinter, SelectedPrinter.ReceiptWidth, SelectedPrinter.PrintMode, doubleheight, doublewidth, doubleimpact, SelectedPrinter.LandScape);
                         }
                         printed = true;
                     }
@@ -1417,14 +1442,15 @@ namespace RedDot
 
         }
 
-        private static void PrintLabelPrinter(int ordernumber,ObservableCollection<LineItem> lineitems, string printername , bool landscape)
+        private static void PrintLabelPrinter(int ordernumber,ObservableCollection<LineItem> lineitems,RedDotPrinter selected)
         {
             PrintDocument pdoc = null;
             //System.Windows.Forms.PrintDialog pd = new System.Windows.Forms.PrintDialog();
 
             pdoc = new PrintDocument();
-            pdoc.PrinterSettings.PrinterName = printername;
-            pdoc.DefaultPageSettings.Landscape = landscape;
+            pdoc.PrinterSettings.PrinterName = selected.AssignedPrinter;
+            if (selected.PrintMode == "LABEL")
+                pdoc.DefaultPageSettings.Landscape = selected.LandScape;
          
 
 
@@ -1440,8 +1466,9 @@ namespace RedDot
                     pdoc = new PrintDocument();
             
                    
-                    pdoc.PrinterSettings.PrinterName = printername;
-                    pdoc.DefaultPageSettings.Landscape = landscape;
+                    pdoc.PrinterSettings.PrinterName = selected.AssignedPrinter;
+                    if (selected.PrintMode == "LABEL")
+                        pdoc.DefaultPageSettings.Landscape = selected.LandScape;
 
                     pdoc.PrintPage += (sender, e) => pdoc_PrintLabel(ordernumber, line, count, totalcount, e);
                    
@@ -1484,7 +1511,10 @@ namespace RedDot
 
             y += fontGiantHeight;
 
-            graphics.DrawString(line.Description, fontbold, blackBrush, 0, y);
+            if(line.Description.Length > 15)
+                graphics.DrawString(line.Description, font, blackBrush, 0, y);
+            else
+                graphics.DrawString(line.Description, fontbold, blackBrush, 0, y);
 
             y += fontBoldHeight;
 

@@ -125,6 +125,65 @@ namespace RedDot
             }
         }
 
+
+        private void Button_ExportDatabase(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string backupdirectory = GlobalSettings.Instance.BackupDirectory;
+
+                BackupSelect bk = new BackupSelect(backupdirectory);
+
+                bk.ChosenDrive = "";
+
+                Utility.OpenModal(this, bk);
+
+                if (bk.ChosenDrive != "")
+                {
+                    DBConnect db = new DBConnect();
+                    if (bk.ChosenDrive != backupdirectory) backupdirectory = bk.ChosenDrive + "backup";
+                    //"C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysqldump"
+                    db.Backup(backupdirectory);
+                    MessageBox.Show("Backup successful to  " + backupdirectory);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
+        }
+
+        private void Button_ImportDatabase(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string backupdirectory = GlobalSettings.Instance.BackupDirectory;
+
+                // Create OpenFileDialog
+                Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+
+                // Launch OpenFileDialog by calling ShowDialog method
+                Nullable<bool> result = openFileDlg.ShowDialog();
+                // Get the selected file name and display in a TextBox.
+                // Load content of file in a TextBlock
+                if (result == true)
+                {
+                 
+                    DBConnect db = new DBConnect();
+
+                    db.Restore(openFileDlg.FileName);
+                    MessageBox.Show("Restore from " + openFileDlg.FileName + " successful");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message);
+            }
+        }
+
     }
 
 

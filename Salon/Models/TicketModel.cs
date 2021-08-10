@@ -14,6 +14,7 @@ using RedDot.DataManager;
 using GlobalPayments.Api.Terminals;
 using RedDot.Models;
 using System.ComponentModel;
+using RedDot.Models.CardConnect;
 
 namespace RedDot
 {
@@ -1548,7 +1549,10 @@ namespace RedDot
             return SalesModel.InsertCreditPayment(SalesID, requested_amount, resp, paymentdate, cardgroup);
         }
 
-
+        public bool InsertCreditPayment(string transtype,decimal requested_amount,decimal tip, CCSaleResponse resp, DateTime paymentdate)
+        {
+            return SalesModel.InsertCreditPayment(transtype, SalesID, requested_amount,tip, resp, paymentdate);
+        }
 
         public bool InsertCreditPayment(string transtype, decimal requested_amount, TriPOS.ResponseModels.SaleResponse resp, DateTime paymentdate)
         {
@@ -1577,7 +1581,7 @@ namespace RedDot
 
         public void DeleteReward()
         {
-            m_dbTicket.DBDeleteCustomerReward(SalesID);
+            m_dbTicket.DBVoidCustomerReward(SalesID);
         }
  
         public void DeleteGratuity( int employeeid=0)

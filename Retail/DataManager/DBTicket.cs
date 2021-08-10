@@ -154,8 +154,15 @@ namespace RedDot
             return _dbconnect.Command(querystring);
         }
 
-  
-   
+        public bool DBUpdatePaymentDate(int paymentid, DateTime date)
+        {
+            if (paymentid == 0) return false;
+
+            string querystring = "";
+            querystring = "Update payment set paymentdate = '" + date.ToString("yyyy-MM-dd") + "'  where id =" + paymentid;
+            return _dbconnect.Command(querystring);
+        }
+
 
         public bool DBUpdateSalesItemString(int lineitemid, string fieldstr , string fieldval)
         {

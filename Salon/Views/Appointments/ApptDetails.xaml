@@ -69,171 +69,114 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border CornerRadius="20" BorderThickness="2" BorderBrush="Black">
+    <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#66ccff" Offset="0"/>
                 <GradientStop Color="#FF8AAED4" Offset="1"/>
             </LinearGradientBrush>
         </Border.Background>
-        
-        
         <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="100"/>
-
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
-        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*">
+                    
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
 
-        <StackPanel  Orientation="Horizontal">
-            <TextBlock Text="Appt:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
-            <Button Command="{Binding TimeClicked}"  Style="{StaticResource ButtonStyle1}"  Width="300">
-                    <StackPanel Orientation="Vertical">
-   
-                        <StackPanel Grid.Row="3"  Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Width="80" TextAlignment="Right" Text="Date: " VerticalAlignment="Center" FontSize="20"  />
-                            <DatePicker  Width="150" SelectedDate="{Binding AppointmentDate }" CalendarStyle="{StaticResource styleCalendar}"  Name="startdatepicker" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20"   />
+            <StackPanel   Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Width="80" TextAlignment="Right" Text="Time: " VerticalAlignment="Center" FontSize="20" />
+                <ListBox SelectedIndex="{Binding SelectedTimeIndex,Mode=TwoWay}" Height="730"  Width="120" Name="combo1" SelectionMode="Extended" FontSize="25" >
 
-                        </StackPanel>
-                        <StackPanel Grid.Row="4"  Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock Width="80" TextAlignment="Right" Text="Time: " VerticalAlignment="Center" FontSize="20" />
-                            <ComboBox SelectedIndex="{Binding SelectedTimeIndex,Mode=TwoWay}"  Width="150" Name="combo1"  FontSize="25" >
-
-                            </ComboBox>
-                        </StackPanel>
-
-                    </StackPanel>
-
-                </Button>
-                <TextBlock Text="Duration:" Margin="110,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
-
-
-                <ComboBox  ItemsSource ="{Binding ApptLengths}" DisplayMemberPath="Description" SelectedValuePath="Length" SelectedValue="{Binding SelectedLength}" FontSize="25" Height="80"  Width="200" >
- 
-                </ComboBox>
-
+                </ListBox>
             </StackPanel>
+            
+            
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="200"/>
+               
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="1"  Orientation="Horizontal">
-            <TextBlock Text="Employee:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
-            <Button Command="{Binding EmployeeClicked}"   Style="{StaticResource  ButtonStyle1}" Width="300" >
- 
+                <StackPanel  Orientation="Horizontal">
+                    <DatePicker  Width="300" SelectedDate="{Binding AppointmentDate }" CalendarStyle="{StaticResource styleCalendar}"  Name="startdatepicker" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30"   />
+                    <TextBlock Text="Duration:"  Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
 
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                    <ComboBox  ItemsSource ="{Binding ApptLengths}" DisplayMemberPath="Description" SelectedValuePath="Length" SelectedValue="{Binding SelectedLength}" FontSize="25" Height="80"  Width="200" >
+
+                    </ComboBox>
+
+                    <TextBlock Text="Status:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+
+                    <ComboBox SelectedIndex="{Binding SelectedStatus}" FontSize="25" Height="50" Width="200">
+                        <ComboBoxItem>Active</ComboBoxItem>
+                        <ComboBoxItem>Confirmed</ComboBoxItem>
+                        <ComboBoxItem>Cancelled</ComboBoxItem>
+                        <ComboBoxItem>Complete</ComboBoxItem>
+                        <ComboBoxItem>No Show</ComboBoxItem>
+
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1"  Orientation="Horizontal">
+                    <TextBlock Text="Customer:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+                         <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding CurrentAppt.CurrentCustomer.DisplayName}" Margin="10,10,0,0" Width="250" FontFamily="Consolas" FontSize="20"  TextAlignment="Left"/>
+                            <TextBlock Text="{Binding CurrentAppt.CurrentCustomer.Phone1}" Margin="10,10,0,0" Width="250" FontFamily="Consolas" FontSize="20"  TextAlignment="Left"/>
+
+                        </StackPanel>
+
+               
+                    <Button Command="{Binding CustomerClicked}" Margin="100,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_OK" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/customer.png" Height="40" Width="40"/>
+                            <TextBlock Text="Find Customer"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2"  Orientation="Horizontal">
+                    <TextBlock Text="Techs:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
+                    <Button Command="{Binding EmployeeClicked}"   Style="{StaticResource  ButtonStyle1}" Width="300" >
+
+
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                             <TextBlock  Text="{Binding CurrentAppt.CurrentEmployee.DisplayName}" Width="Auto" Height="20"  FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
                             <Image Source="{Binding CurrentAppt.CurrentEmployee.ImageSrc}" Stretch="UniformToFill" Width="100" Height="60" HorizontalAlignment="Center" />
-                    </StackPanel>
+                        </StackPanel>
 
 
-            </Button>
-
-                <StackPanel Orientation="Vertical">
-                    <TextBlock  Text="Flexible" Height="30"   VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="25" Width="100"/>
-
-                    <CheckBox   Margin="5,10,0,0" Height="20" Width="20" IsChecked="{Binding CurrentAppt.Flexible}" >
-                        <CheckBox.LayoutTransform>
-                            <ScaleTransform ScaleX="5" ScaleY="5" />
-                        </CheckBox.LayoutTransform>
-
-                    </CheckBox>
-                </StackPanel>
-          
-               
-            
-                <TextBlock Text="Status:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
-
-                <ComboBox SelectedIndex="{Binding SelectedStatus}" FontSize="25" Height="80" Width="200">
-                    <ComboBoxItem>Active</ComboBoxItem>
-                    <ComboBoxItem>Confirmed</ComboBoxItem>
-                     <ComboBoxItem>Cancelled</ComboBoxItem>
-                    <ComboBoxItem>Complete</ComboBoxItem>
-                    <ComboBoxItem>No Show</ComboBoxItem>
-
-                </ComboBox>
-
-            </StackPanel>
-        
-        <StackPanel Grid.Row="2"  Orientation="Horizontal">
-                        <TextBlock Text="Customer:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
-            <Button Command="{Binding CustomerClicked}" Style="{StaticResource  ButtonStyle1}" Width="300" >
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding CurrentAppt.CurrentCustomer.DisplayName}" Margin="10,10,0,0" Width="250" FontFamily="Consolas" FontSize="20"  TextAlignment="Left"/>
-                    <TextBlock Text="{Binding CurrentAppt.CurrentCustomer.Phone1}" Margin="10,10,0,0" Width="250" FontFamily="Consolas" FontSize="20"  TextAlignment="Left"/>
-
-                </StackPanel>
-            </Button>
-
-
-        
-      
-
-            </StackPanel>
-
-            <Grid Grid.Row="3" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="500"/>
-                    <ColumnDefinition Width="*"/>
-
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0"  Orientation="Vertical">
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Note:" Margin="10,10,0,0" Width="150" FontFamily="Consolas" FontSize="25"  TextAlignment="Right"/>
-                        <Button Margin="200,0,0,0"  BorderThickness="0"   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="100" Height="80" Click="TextBox_GotFocus" >
-
-                            <Image Source="/RedDot;component/media/keyboard.png" Height="80" Width="100"/>
-
-                        </Button>
-                    </StackPanel>
-            
-                    <TextBox VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding CurrentAppt.Note}" Width="480" Height="280" FontFamily="Consolas" FontSize="25" GotFocus="TextBox_GotFocus"/>
-
-
-                    
-
-
-                
-
-
-
-                </StackPanel>
-                <Border Grid.Column="1"  BorderBrush="Green"  >
+                    </Button>
 
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Selected Services:" Margin="10,10,0,0"  FontFamily="Consolas" FontSize="25"  TextAlignment="Left"/>
-                        <StackPanel Orientation="Vertical" Background="LightGray" Height="150">
-                            <ItemsControl ItemsSource="{Binding CurrentAppt.SelectedCategories}" ItemTemplate="{StaticResource CategoryList1}" >
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
+                        <TextBlock  Text="Flexible" Height="30"   VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="25" Width="100"/>
 
+                        <CheckBox   Margin="5,10,0,0" Height="20" Width="20" IsChecked="{Binding CurrentAppt.Flexible}" >
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="4" ScaleY="4" />
+                            </CheckBox.LayoutTransform>
 
-                        </StackPanel>
-                        <TextBlock Text="Available Services:" Margin="10,10,0,0"  FontFamily="Consolas" FontSize="25"  TextAlignment="Left"/>
-                        <ScrollViewer  x:Name="ScrollViewer2" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="200" >
-                            <ScrollViewer.Resources>
-                                <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
-                                    <Style.Triggers>
-                                        <Trigger Property="Orientation" Value="Vertical">
-                                            <Setter Property="Width" Value="40"/>
-                                            <Setter Property="Height" Value="Auto" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ScrollViewer.Resources>
+                        </CheckBox>
+                    </StackPanel>
 
 
 
-                            <StackPanel Orientation="Vertical" Background="DarkGray">
-                                <ItemsControl   ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource CategoryList2}" >
+
+                </StackPanel>
+                <Border Grid.Row="3"  BorderBrush="Green"  >
+                    <StackPanel Orientation="Horizontal" >
+                        <StackPanel Orientation="Vertical" Width="400">
+                            <TextBlock Text="Selected Services:" Margin="10,10,0,0"  FontFamily="Consolas" FontSize="25"  TextAlignment="Left"/>
+                            <StackPanel Orientation="Vertical" Background="LightGray" Height="150">
+                                <ItemsControl ItemsSource="{Binding CurrentAppt.SelectedCategories}" ItemTemplate="{StaticResource CategoryList1}" >
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <WrapPanel Orientation="Horizontal"/>
@@ -243,52 +186,110 @@
 
 
                             </StackPanel>
+                        </StackPanel>
+
+
+                        <StackPanel Orientation="Vertical" Width="500">
+                            <TextBlock Text="Available Services:" Margin="10,10,0,0"  FontFamily="Consolas" FontSize="25"  TextAlignment="Left"/>
+                            <ScrollViewer   VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="150" >
+                                <ScrollViewer.Resources>
+                                    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                        <Style.Triggers>
+                                            <Trigger Property="Orientation" Value="Vertical">
+                                                <Setter Property="Width" Value="40"/>
+                                                <Setter Property="Height" Value="Auto" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ScrollViewer.Resources>
 
 
 
-                        </ScrollViewer>
+                                <StackPanel Orientation="Vertical" Background="DarkGray">
+                                    <ItemsControl   ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource CategoryList2}" >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+
+                                </StackPanel>
 
 
 
+                            </ScrollViewer>
+                        </StackPanel>
                     </StackPanel>
+          
 
-                     
 
-               
+
+
                 </Border>
 
-            </Grid>
-      
 
+                <Grid Grid.Row="4" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
 
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="btnDelete" Command="{Binding DeleteClicked}"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Delete" >
-                <StackPanel>
-                    <Image Source="/RedDot;component/media/dash.png" Height="40" Width="40"/>
-                    <TextBlock Text="{Loc Delete}"></TextBlock>
-                </StackPanel>
-            </Button>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
 
-                <Button Name="btnTicket"  Command="{Binding TicketClicked}"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Delete" >
-                    <StackPanel>
-                        <Image Source="/RedDot;component/media/ticket.png" Height="40" Width="40"/>
-                        <TextBlock Text="{Loc CreateTicket}"></TextBlock>
+                   
+                        <TextBlock Text="Note:"  Width="150" FontFamily="Consolas" FontSize="25"  />
+                        <Button   BorderThickness="0"   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="100" Height="80" Click="TextBox_GotFocus" >
+                            <Image Source="/RedDot;component/media/keyboard.png" Height="80" Width="100"/>
+
+                         </Button>
+                    
+
+                   
+
                     </StackPanel>
-                </Button>
-            
-            <Button Command="{Binding SaveClicked}" Margin="100,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_OK" >
-                <StackPanel>
-                    <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
-                    <TextBlock Text="{Loc BACK}"></TextBlock>
+                    <TextBox Grid.Column="1" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding CurrentAppt.Note}" 
+                             Width="750" Height="190" 
+                             FontFamily="Consolas" FontSize="25" 
+                             GotFocus="TextBox_GotFocus"/>
+
+
+                </Grid>
+
+
+
+                <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="btnDelete" Command="{Binding DeleteClicked}"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Delete" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/dash.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc Delete}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="btnTicket"  Command="{Binding TicketClicked}"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_Delete" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/ticket.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc CreateTicket}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding SaveClicked}" Margin="100,10,10,10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="70"   Width="120"   Click="Button_OK" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc BACK}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+
+
+
                 </StackPanel>
-            </Button>
-
-          
-            
-        </StackPanel>
 
 
-    </Grid>
+            </Grid>
+        </Grid>
+        
+     
 
     </Border>
 

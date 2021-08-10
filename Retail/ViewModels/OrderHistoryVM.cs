@@ -30,7 +30,10 @@ namespace RedDot
         private DateTime _enddate;
         private int _subid;
 
-
+        public string StorePrefix
+        {
+            get { return GlobalSettings.Instance.Shop.StorePrefix; }
+        }
 
         public ICommand Refresh { get; set; }
   
@@ -354,7 +357,7 @@ namespace RedDot
 
             try
             {
-                CustomDate cd = new CustomDate(Visibility.Visible);
+                CustomDate cd = new CustomDate(Visibility.Visible, DateTime.Now);
                 Utility.OpenModal(_parent, cd);
                 //Utility.OpenModal(this, cd);
 

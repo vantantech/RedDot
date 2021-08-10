@@ -183,7 +183,7 @@ namespace RedDot
             if (value.ToString() == "50") return "Orange";
 
             if (value.ToString() == "100") return "Red";
-
+       
 
 
             return "Transparent";
@@ -510,4 +510,38 @@ namespace RedDot
             return 200;
         }
     }
+
+
+    public class VoidToBackgroundConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+
+            if (value == null) return "White";
+
+
+            if (value.ToString() == "1") return "DarkGray";
+
+
+
+
+            return "White";
+            // return Binding.DoNothing;
+        }
+
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is bool)
+            {
+                if ((bool)value == true)
+                    return "yes";
+                else
+                    return "no";
+            }
+            return "no";
+        }
+    }
+
 }

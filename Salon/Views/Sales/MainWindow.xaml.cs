@@ -24,6 +24,10 @@ using System.Management;
 using NLog;
 using RedDot.DataManager;
 using System.Net;
+using RedDot.Models;
+using System.IO.Compression;
+using System.Drawing;
+using RedDot.Models.CardConnect;
 
 namespace RedDot
 {
@@ -839,6 +843,69 @@ namespace RedDot
             Client.DownloadFile("http://salon.reddotpos.com/update/datamanager.dll", @"C:\reddot\update\datamanager.dll");
         }
 
+
+        private void Test_Click(object sender, RoutedEventArgs eventArgs)
+        {
+            string hsn = "C032UQ03960675";
+            //string hsn = "20160SC25043693";
+
+            CCSaleResponse resp =  CardConnectModel.authCard(3, 1.23m);
+            if (resp == null) TouchMessageBox.Show("Error");
+            else
+            {
+                TouchMessageBox.Show(resp.resptext);
+                string base64String = resp.signature;
+                byte[] imageBytes = Convert.FromBase64String(base64String);
+                byte[] expanded = Decompress(imageBytes);
+
+                string filepath = "c:\\temp\\test2.bmp";
+                File.WriteAllBytes(filepath, expanded);
+
+                Bitmap bmp;
+                using (var ms = new MemoryStream(expanded))
+                {
+                    bmp = new Bitmap(ms);
+                }
+            }
+          
+        }
+
+        public static void Decompress(FileInfo fileToDecompress)
+        {
+            using (FileStream originalFileStream = fileToDecompress.OpenRead())
+            {
+                string currentFileName = fileToDecompress.FullName;
+                string newFileName = currentFileName.Remove(currentFileName.Length - fileToDecompress.Extension.Length);
+
+                using (FileStream decompressedFileStream = File.Create(newFileName))
+                {
+                    using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
+                    {
+                        decompressionStream.CopyTo(decompressedFileStream);
+                    
+                    }
+                }
+            }
+        }
+        byte[] Compress(byte[] b)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (GZipStream z = new GZipStream(ms, CompressionMode.Compress, true))
+                    z.Write(b, 0, b.Length);
+                return ms.ToArray();
+            }
+        }
+        byte[] Decompress(byte[] b)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using (var bs = new MemoryStream(b))
+                using (var z = new GZipStream(bs, CompressionMode.Decompress))
+                    z.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
     }
 
 

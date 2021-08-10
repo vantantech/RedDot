@@ -24,6 +24,15 @@ namespace RedDot
         public int id { get; set; }
         public int salesid { get; set; }
 
+        public string TicketNo
+        {
+            get { return GlobalSettings.Instance.Shop.StorePrefix + salesid; }
+        }
+
+        public string WorkOrderNo
+        {
+            get { return GlobalSettings.Instance.Shop.StorePrefix + id; }
+        }
         public string workordertype { get; set; }
         public string custom1 { get; set; }
         public string custom2 { get; set; }
@@ -385,7 +394,7 @@ namespace RedDot
 
                 YOffset = YOffset + fontHeight;
 
-                gfx.DrawString("Enclosure Build Log    TICKET #: " + CurrentTicket.SalesID, fontboldbold, new SolidBrush(Color.Black), Xoffset + 150, YOffset);
+                gfx.DrawString("Enclosure Build Log    TICKET #: " + CurrentTicket.TicketNo + ", Work Order #: " + WorkOrderNo, fontboldbold, new SolidBrush(Color.Black), Xoffset , YOffset);
 
                 YOffset = YOffset + fontHeight * 2;
 
@@ -421,6 +430,12 @@ namespace RedDot
                     gfx.DrawString("Adress:", font, new SolidBrush(Color.Black), Xoffset, YOffset);
                     gfx.DrawString(CurrentTicket.CurrentCustomer.Address1, font, new SolidBrush(Color.Black), Xoffset + taboffset, YOffset);
                     YOffset = YOffset + fontHeight;
+                    if(CurrentTicket.CurrentCustomer.Address2.Trim() != "")
+                    {
+                        gfx.DrawString(CurrentTicket.CurrentCustomer.Address2, font, new SolidBrush(Color.Black), Xoffset + taboffset, YOffset);
+                        YOffset = YOffset + fontHeight;
+                    }
+     
                     gfx.DrawString(CurrentTicket.CurrentCustomer.City + "," + CurrentTicket.CurrentCustomer.State + " " + CurrentTicket.CurrentCustomer.ZipCode, font, new SolidBrush(Color.Black), Xoffset + taboffset, YOffset);
                     YOffset = YOffset + fontHeight;
 
@@ -553,7 +568,7 @@ namespace RedDot
 
 
                 // Save the document...
-                string filename = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\pdf\\WorkOrder" + id.ToString() + ".pdf";
+                string filename = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\pdf\\WorkOrder" + WorkOrderNo + ".pdf";
                 document.Save(filename);
 
 

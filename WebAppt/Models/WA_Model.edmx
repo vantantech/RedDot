@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="webaccessDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="store">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="storename" Type="nvarchar" MaxLength="50" />
+          <Property Name="WebUserId" Type="int" />
+          <Property Name="storecode" Type="nchar" MaxLength="10" />
+          <Property Name="connectionstring" Type="nvarchar(max)" />
+          <Property Name="hmac" Type="nvarchar(max)" />
+          <Property Name="salt" Type="nvarchar(max)" />
+          <Property Name="dbserver" Type="nvarchar" MaxLength="50" />
+          <Property Name="dbname" Type="nvarchar" MaxLength="50" />
+          <Property Name="dbpassword" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="webaccessDataModelStoreContainer">
+          <EntitySet Name="store" EntityType="Self.store" Schema="dbo" store:Type="Tables" />
+          </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="webaccessDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="webaccessEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="stores" EntityType="webaccessDataModel.store" />
+          </EntityContainer>
+        <EntityType Name="store">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="storename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WebUserId" Type="Int32" />
+          <Property Name="storecode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="connectionstring" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hmac" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="salt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dbserver" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dbname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dbpassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="webaccessDataModelStoreContainer" CdmEntityContainer="webaccessEntities">
+          <EntitySetMapping Name="stores">
+            <EntityTypeMapping TypeName="webaccessDataModel.store">
+              <MappingFragment StoreEntitySet="store">
+                <ScalarProperty Name="dbpassword" ColumnName="dbpassword" />
+                <ScalarProperty Name="dbname" ColumnName="dbname" />
+                <ScalarProperty Name="dbserver" ColumnName="dbserver" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="hmac" ColumnName="hmac" />
+                <ScalarProperty Name="connectionstring" ColumnName="connectionstring" />
+                <ScalarProperty Name="storecode" ColumnName="storecode" />
+                <ScalarProperty Name="WebUserId" ColumnName="WebUserId" />
+                <ScalarProperty Name="storename" ColumnName="storename" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

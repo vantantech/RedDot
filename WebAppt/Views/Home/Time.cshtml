@@ -1,0 +1,235 @@
+﻿@model WebAccess.Models.employee
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript" class="init">
+    $(document).ready(function () {
+
+        $('table.display').DataTable({ "scrollY": "600px", "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]], "pageLength": 100 });
+
+    });
+
+</script>
+
+
+
+<style>
+    img {
+        max-width: 25%;
+        max-height: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+</style>
+
+
+
+<style type="text/css">
+    .tg {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%
+    }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-h3q6 {
+            background-color: #ffc702;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-gray {
+            background-color: lightgray;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-2pvn {
+            background-color: #fcff2f;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+
+    div.scrollable {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+    }
+
+
+    .Abox {
+        background: white;
+        width: 120px;
+        height: 120px;
+        text-align: center;
+        padding: 15px 0;
+        margin: 1px;
+    }
+
+    .rcorners0 {
+        background: white;
+        width: 120px;
+        height: 120px;
+        text-align: center;
+        padding: 6px 0;
+        margin: 1px;
+    }
+
+
+    .rcorners1 {
+        border-radius: 75px;
+        background: #73AD21;
+        margin: 5px;
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+
+
+    .center {
+        text-align: center;
+    }
+
+    div.a {
+        font-size: 60px;
+    }
+
+
+    div.b {
+        font-size: 40px;
+    }
+
+
+    div.c {
+        font-size: 20px;
+    }
+
+    a:link {
+        color: Black;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: pink;
+        background-color: transparent;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: red;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: yellow;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+
+    /* Dashed border */
+    hr.dashed {
+        border-top: 3px dashed #bbb;
+    }
+
+    /* Dotted border */
+    hr.dotted {
+        border-top: 3px dotted #bbb;
+    }
+
+    /* Solid border */
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    /* Rounded border */
+    hr.rounded {
+        border-top: 8px solid #bbb;
+        border-radius: 5px;
+    }
+</style>
+
+
+
+
+          
+
+                    @for(int i=0; i < 10;i++)
+                    {
+                        <div class="row">
+                            <div class="col col-sm-2 Abox">
+
+                                <div class="a">
+                                    @for(int j=0;j<4;j++)
+                                    {
+                                        <div> @i</div>
+                                    }
+                                 
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <hr class="dotted" />
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

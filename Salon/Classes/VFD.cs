@@ -78,6 +78,12 @@ namespace RedDot
             }
         }
 
+
+        public static void WriteVFD(string description, decimal price, string description2, decimal price2)
+        {
+            new VFD(GlobalSettings.Instance.DisplayComPort).WriteDisplay(description, price, description2, price2);
+        }
+
         public  void WriteRaw(string description, string description2)
         {
             string printline;

@@ -569,7 +569,7 @@ namespace RedDot
             {
                
 
-               if(row["transtype"].ToString() == "ADD")
+               if(row["transtype"].ToString() == "ADD" && row["void"].ToString() != "1")
                 {
                     if (row["tickettotal"].ToString() != "") total = total + (decimal)row["tickettotal"];
                     if (row["amount"].ToString() != "") totalearned = totalearned + (decimal)row["amount"];

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RedDot.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace RedDot
     {
         private GlobalPaymentVM gpvm;
         private TriPOSVM triposvm;
+        private CardConnectVM cardconnectvm;
         public PAXRefund(Ticket ticket)
         {
             InitializeComponent();
@@ -38,6 +40,11 @@ namespace RedDot
                 case "VANTIV":
                     triposvm = new TriPOSVM(this,  ticket, "REFUND", null);
                     this.DataContext = triposvm;
+                    break;
+
+                case "CARDCONNECT":
+                    cardconnectvm = new CardConnectVM(this, ticket, "REFUND", null);
+                    this.DataContext = cardconnectvm;
                     break;
 
             }

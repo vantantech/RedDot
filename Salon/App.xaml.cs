@@ -155,7 +155,11 @@ namespace RedDot
 
                 }
 
-             
+                string query1 = "set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
+                conn.Command(query1);
+
+                string query2 = "set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';";
+                conn.Command(query2);
 
 
                 if (LicenseModel.CheckLicense())
@@ -176,7 +180,7 @@ namespace RedDot
                         demo = true;
                     }
                 }
-
+                
 
                 //LIcense check is done so start application window 
 
@@ -189,29 +193,30 @@ namespace RedDot
                 if (demo) GlobalSettings.Instance.VersionNumber = "DEMO " + GlobalSettings.Instance.VersionNumber;
 
 
-
                 m_remotescreen = new RemoteScreen();
-
+                GlobalSettings.Instance.RemoteScreen = m_remotescreen;
 
                 System.Windows.Forms.Screen s1;
+
 
                 System.Windows.Forms.Screen s0 = System.Windows.Forms.Screen.AllScreens[0]; //main screen
                 GlobalSettings.Instance.r0 = s0.WorkingArea;
                 Rectangle resolution = s0.Bounds;
 
-
-                if (System.Windows.Forms.Screen.AllScreens.Count() > 1)
+                int screencount = System.Windows.Forms.Screen.AllScreens.Count();
+                if (screencount > 1 && GlobalSettings.Instance.ShowCustomerScreen)
                 {
 
-                    s1 = System.Windows.Forms.Screen.AllScreens[1]; //left screen
+                    s1 = System.Windows.Forms.Screen.AllScreens[1]; //last screen .. so most likely the customer screen
 
                     GlobalSettings.Instance.r1 = s1.WorkingArea;
 
                     m_remotescreen.WindowState = System.Windows.WindowState.Normal;
+                    m_remotescreen.WindowStyle = WindowStyle.None;
                     m_remotescreen.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
                     m_remotescreen.Top = GlobalSettings.Instance.r1.Top;
                     m_remotescreen.Left = GlobalSettings.Instance.r1.Left;
-                    // m_remotescreen.Show();
+                    //m_remotescreen.Show();
                 }
 
 

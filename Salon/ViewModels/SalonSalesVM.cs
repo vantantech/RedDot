@@ -94,7 +94,7 @@ namespace RedDot
         //private MenuSetupModel                          m_inventorymodel;
 
 
-        private bool m_autocloseproduct;
+        private bool m_autoclosemenu = GlobalSettings.Instance.AutoCloseMenu;
 
 
         private int m_selectedindex;
@@ -1029,6 +1029,10 @@ namespace RedDot
         public void LoadTicket(int salesid)
         {
             CurrentTicket = m_salesmodel.LoadTicket(salesid);
+            GlobalSettings.Instance.CurrentTicket = CurrentTicket;
+            GlobalSettings.Instance.RemoteScreen.remotescreenvm.RefreshTicket();
+
+
             if (CurrentTicket != null)
             {
                 vfd.WriteDisplay("Ticket : ", CurrentTicket.SalesID.ToString(), "Total", CurrentTicket.Total);
@@ -1359,6 +1363,13 @@ namespace RedDot
 
         public void ExecuteDateClicked(object button)
         {
+          
+                if (!m_security.WindowNewAccess("EditOldTicket"))
+                {
+                    TouchMessageBox.Show("Access Denied, You can not edit date");
+                    return;
+                }
+        
             CustomDate cd = new CustomDate(Visibility.Hidden);
         
             Utility.OpenModal(m_parent, cd);
@@ -1465,17 +1476,12 @@ namespace RedDot
 
                    dispatcherTimer.Stop();
 
-                if(m_salesviewmode == "Small")
+                if (m_autoclosemenu)
                 {
                     VisibleCategory = Visibility.Visible;
 
                    VisibleProduct = Visibility.Hidden;
 
-                }else
-                {
-                 
-
-                    if (m_autocloseproduct) VisibleProduct = Visibility.Hidden;
                 }
                    
                    
@@ -1982,6 +1988,30 @@ namespace RedDot
                                     Utility.OpenModal(m_parent, clover);
 
                                     break;
+
+
+
+                                case "CardConnect":
+
+                                    var resp =CardConnectModel.Void(pay.ResponseId,pay.AuthorCode,pay.Amount);
+                                    if (resp.respstat== "A")
+                                    {
+                                        //update payment
+                                        CurrentTicket.VoidPayment(pay.ID);
+                                        CurrentTicket.DeleteGratuity();
+
+                                        Payment payment = m_salesmodel.GetPayment(pay.ResponseId);
+                                        //print debit slip
+                                        ReceiptPrinterModel.AutoPrintCreditSlip(CurrentTicket, payment);
+
+                                
+                                    }
+                                    else
+                                    {
+                                        logger.Error("VOID TRANSACTION FAILED !!!! ERROR:  " + resp.resptext);
+                                        TouchMessageBox.Show("VOID TRANSACTION FAILED !!!! ERROR:  " + resp.resptext);
+                                    }
+                                    break;
                             }
 
 
@@ -2126,8 +2156,30 @@ namespace RedDot
                     case "WORLDPAY":
                     case "PAX":
                     case "VANTIV":
-                        CCPPayment ccp2 = new CCPPayment(CurrentTicket, "SALE", null); //pax300 and isc250 on global payments
+                        CCPPayment ccp2 = new CCPPayment(CurrentTicket, "SALE", null);
                         Utility.OpenModal(m_parent, ccp2);
+                        break;
+
+                    case "CardConnect":
+                 
+                        
+                            string referencenumber = CardConnectModel.ProcessCredit(CurrentTicket.SalesID, CurrentTicket.Balance,GlobalSettings.Instance.AutoCapture);
+                            if (referencenumber != "")
+                            {
+                                //this will run the auto tip logic or bring up tip screen if manual mode
+                                if (CurrentTicket != null) CurrentTicket.SplitTips();
+
+                                Payment payment = m_salesmodel.GetPayment(referencenumber);
+
+                                //print credit slip
+                                if (GlobalSettings.Instance.PrintCreditSlipOnClose)
+                                    ReceiptPrinterModel.AutoPrintCreditSlip(CurrentTicket, payment);
+
+                              
+                            }
+                       
+
+
                         break;
 
                  
@@ -2137,6 +2189,8 @@ namespace RedDot
                         CloverPayment pay = new CloverPayment(CurrentTicket,m_security,"SALE",null,"");
                         Utility.OpenModal(m_parent, pay);
                         break;
+             
+
 
 
                 }
@@ -2693,7 +2747,8 @@ namespace RedDot
         {
                 VisibleCategory = Visibility.Visible;
                 VisibleProduct = Visibility.Hidden;
-              
+            GlobalSettings.Instance.CurrentTicket = null;
+            GlobalSettings.Instance.RemoteScreen.remotescreenvm.RefreshTicket();
         }
 
         public void ExecuteCategoryBackClicked(object button)
@@ -2867,6 +2922,7 @@ namespace RedDot
                     case "PAX_S300":
                     case "HSIP_ISC250":
                     case "VANTIV":
+                    case "CardConnect":
                         PAXRefund pax = new PAXRefund(CurrentTicket);
                         Utility.OpenModal(m_parent, pax);
                         break;

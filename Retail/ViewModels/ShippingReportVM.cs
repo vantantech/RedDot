@@ -84,7 +84,7 @@ namespace RedDot
 
         public void ExecuteCustomClicked(object tagstr)
         {
-            CustomDate cd = new CustomDate(Visibility.Visible);
+            CustomDate cd = new CustomDate(Visibility.Visible, DateTime.Now);
 
             cd.ShowDialog();
             //Utility.OpenModal(this, cd);

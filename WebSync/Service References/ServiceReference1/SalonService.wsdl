@@ -7,6 +7,12 @@
       <xsd:import schemaLocation="http://salon.reddotpos.com/SalonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/RedDotService" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="ISalonService_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
   <wsdl:message name="ISalonService_CloseConnection_InputMessage">
     <wsdl:part name="parameters" element="tns:CloseConnection" />
   </wsdl:message>
@@ -49,7 +55,35 @@
   <wsdl:message name="ISalonService_WriteEmployeeList_OutputMessage">
     <wsdl:part name="parameters" element="tns:WriteEmployeeListResponse" />
   </wsdl:message>
+  <wsdl:message name="ISalonService_GetLicense_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLicense" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_GetLicense_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLicenseResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteCategory" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_WriteCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_GetConnectionString_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetConnectionString" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_GetConnectionString_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetConnectionStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_GetStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatus" />
+  </wsdl:message>
+  <wsdl:message name="ISalonService_GetStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStatusResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISalonService">
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/Authenticate" message="tns:ISalonService_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/AuthenticateResponse" message="tns:ISalonService_Authenticate_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CloseConnection">
       <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/CloseConnection" message="tns:ISalonService_CloseConnection_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/CloseConnectionResponse" message="tns:ISalonService_CloseConnection_OutputMessage" />
@@ -78,9 +112,34 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteEmployeeList" message="tns:ISalonService_WriteEmployeeList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteEmployeeListResponse" message="tns:ISalonService_WriteEmployeeList_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetLicense">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/GetLicense" message="tns:ISalonService_GetLicense_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/GetLicenseResponse" message="tns:ISalonService_GetLicense_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/WriteCategory" message="tns:ISalonService_WriteCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/WriteCategoryResponse" message="tns:ISalonService_WriteCategory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectionString">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/GetConnectionString" message="tns:ISalonService_GetConnectionString_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/GetConnectionStringResponse" message="tns:ISalonService_GetConnectionString_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISalonService/GetStatus" message="tns:ISalonService_GetStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISalonService/GetStatusResponse" message="tns:ISalonService_GetStatus_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISalonService" type="tns:ISalonService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Authenticate">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/Authenticate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CloseConnection">
       <soap:operation soapAction="http://tempuri.org/ISalonService/CloseConnection" style="document" />
       <wsdl:input>
@@ -137,6 +196,42 @@
     </wsdl:operation>
     <wsdl:operation name="WriteEmployeeList">
       <soap:operation soapAction="http://tempuri.org/ISalonService/WriteEmployeeList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLicense">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/GetLicense" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteCategory">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/WriteCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConnectionString">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/GetConnectionString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <soap:operation soapAction="http://tempuri.org/ISalonService/GetStatus" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

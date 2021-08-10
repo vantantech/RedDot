@@ -26,7 +26,7 @@ namespace RedDot
             string query = "Select  sales.* , TIME(sales.closedate) as time,(sales.total - coalesce(pay.netamount,0)) as balance, pay.paymenttype, customer.phone1 from sales" +
                          " left outer join customer on sales.customerid = customer.id " +
                      " left outer join (select salesid,sum(netamount) as netamount,group_concat(description) as paymenttype from payment group by salesid ) as pay on sales.id = pay.salesid " +
-                     " where sales.id=" + salesid + " and sales.status != 'Open'   " +
+                     " where sales.id=" + salesid +
                     " order by closedate desc ";
 
 
