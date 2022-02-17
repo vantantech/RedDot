@@ -22,11 +22,16 @@ namespace RedDot
 
         public string Option1 { get; private set; }
         public string Option2 { get; private set; }
+
+        public string Option3 { get; private set; }
         public string Action { get; set; }
-        public Selection(string option1, string option2)
+        public Selection(string option1, string option2, string option3="")
         {
             Option1 = option1;
             Option2 = option2;
+
+            Option3 = option3;
+
             InitializeComponent();
             this.DataContext = this;
         }

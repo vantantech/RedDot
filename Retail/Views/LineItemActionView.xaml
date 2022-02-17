@@ -39,12 +39,7 @@
                             <TextBlock Text="{Loc Quantity}"/>
                         </StackPanel>
                     </Button>
-                    <Button Name="btnPickEmployee"  Margin="10"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"  Click="Validate_Click"  Tag="Employee" >
-                    <StackPanel>
-                        <Image Source="/RedDot;component/media/employee.png" Height="40" Width="40"/>
-                        <TextBlock Text="{Loc PickEmployee}"/>
-                    </StackPanel>
-                </Button>
+
                     <Button Name="btnPriceOverride"  Margin="10" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="100"   Click="Validate_Click" Tag="PriceOverride"  >
                     <StackPanel>
                         <Image Source="/RedDot;component/media/priceoverride.png" Height="40" Width="40"/>

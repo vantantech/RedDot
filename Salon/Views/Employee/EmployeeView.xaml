@@ -277,7 +277,15 @@
                                       GotFocus="TextBox_GotFocus"/>
 
                 </StackPanel>
-                
+
+                <StackPanel Orientation="Horizontal" Height="30">
+                    <TextBlock  Text="Daily Fee:" Height="25" TextAlignment="Right"   FontSize="15" Width="120"/>
+                    <TextBox Margin="5,0,0,0"   Text="{Binding  CurrentEmployee.DailyFee}" TextAlignment="Left" Height="25" 
+                                     FontSize="15" Width="200"
+                                      GotFocus="TextBox_GotFocus"/>
+
+                </StackPanel>
+
                 <StackPanel  Orientation="Horizontal" Height="30">
                     <TextBlock  Text="SSN:" TextAlignment="Right" Height="25"   FontSize="15" Width="120"/>
                     <TextBox   Margin="5,0,0,0" Text="{Binding  CurrentEmployee.SSN}" TextAlignment="Left"  Height="25" 

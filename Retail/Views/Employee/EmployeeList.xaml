@@ -21,11 +21,13 @@
 
                 <ResourceDictionary Source="/Resources/Buttons.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
+            <local:EmployeeBackgroundConverter x:Key="EmployeeBackgroundConverter"/>
+            
+            
             <DataTemplate x:Key="Employeelist">
                <Button     Click="EmployeeClicked" Tag="{Binding ID}"  Margin="5,5,5,5" >
-                    <Grid >
-                        <StackPanel Orientation="Vertical">
+                    <Grid Background="White" >
+                        <StackPanel Orientation="Vertical" Background="{Binding Role,Converter={StaticResource EmployeeBackgroundConverter }}">
                             <Image Source="{Binding ImageSrc}" Stretch="UniformToFill" Width="90" Height="70" />
                              <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 

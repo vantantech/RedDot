@@ -56,6 +56,7 @@ namespace RedDot
         private DataTable m_monthlysummary;
 
         public ICommand BackClicked { get; set; }
+        public ICommand RunReportClicked { get; set; }
 
         public ICommand PreviousDayClicked { get; set; }
         public ICommand NextDayClicked { get; set; }
@@ -103,6 +104,7 @@ namespace RedDot
         public SalesReportVM(Window parent, int employeeid)
         {
             BackClicked = new RelayCommand(ExecuteBackClicked, param => this.CanExecute);
+            RunReportClicked = new RelayCommand(ExecuteRunReportClicked, param => this.CanExecute);
 
             PreviousDayClicked = new RelayCommand(ExecutePreviousDayClicked, param => this.CanExecute);
             NextDayClicked = new RelayCommand(ExecuteNextDayClicked, param => this.CanExecute);
@@ -677,27 +679,7 @@ namespace RedDot
             get { return m_selectedindex; }
             set { m_selectedindex = value;
 
-        /*
-                switch(m_selectedindex)
-                {
-                    case 0: //daily
-                        break;
 
-                    case 1: //daily
-                        break;
-
-                    case 2: //weekly
-
-
-                        RunWeeklyReport();
-                        break;
-                 
-                     
-                    case 3: //monthly
-                        RunMonthlyReport();
-                     
-                        break;
-                } */
                 NotifyPropertyChanged("SelectedIndex"); }
         }
 
@@ -765,7 +747,32 @@ namespace RedDot
         }
 
 
+        public void ExecuteRunReportClicked(object obj)
+        {
+            switch (m_selectedindex)
+            {
+                case 0: //daily
+                    RunDailyReport();
+                    break;
+                case 1: //daily
+                    RunDailyReport();
 
+                    break;
+                case 2: //weekly
+                    RunWeeklyReport();
+                    break;
+                case 3: // monthly
+                    RunMonthlyReport();
+                    break;
+
+                case 4: // custom
+                    RunCustomReport();
+
+                    break;
+
+          
+            }
+        }
 
         /// <summary>
         /// Daily Report Command Functions

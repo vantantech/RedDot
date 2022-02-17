@@ -344,24 +344,12 @@ namespace RedDot.Models
 
 
             //Payment notice
-         
-            rect = new XRect(startX, startY + YOffset, 300, 150);
-            //  gfx.DrawRectangle(XBrushes.SeaShell, rect);
-
-
-            tf.Alignment = XParagraphAlignment.Justify;
-            tf.DrawString(GlobalSettings.Instance.PaymentNotice, fontsmallitalic, new SolidBrush(Color.Black), rect, XStringFormats.TopLeft);
-
-           // PrintLeftAlign(gfx, GlobalSettings.Instance.PaymentNotice, fontitalic, new SolidBrush(Color.Gray), startX, startY + YOffset, fontHeight, 300);
+             YOffset =   PrintLeftAlign(gfx, GlobalSettings.Instance.PaymentNotice, font, startX, startY + YOffset, fontHeight, 150);
 
 
             //Receipt notice
-            YOffset = YOffset + fontHeight * 4;
-            rect = new XRect(startX, startY + YOffset, 300, 150);
-            //  gfx.DrawRectangle(XBrushes.SeaShell, rect);
-            tf.Alignment = XParagraphAlignment.Justify;
-            tf.DrawString(GlobalSettings.Instance.ReceiptNotice, fontsmallitalic, new SolidBrush(Color.Black), rect, XStringFormats.TopLeft);
-
+            YOffset = YOffset + fontHeight ;
+            YOffset =  PrintLeftAlign(gfx, GlobalSettings.Instance.ReceiptNotice, font, startX, startY + YOffset, fontHeight, 150);
 
 
 
@@ -498,6 +486,11 @@ namespace RedDot.Models
             graphics.DrawString(receiptline, font, new SolidBrush(Color.Black), rightlimit - graphics.MeasureString(receiptline, font).Width, Y);
         }
 
+
+        private static int PrintLeftAlign(XGraphics graphics, string receiptline, XFont font, int X, int Y, int height, int width)
+        {
+           return PrintLeftAlign(graphics, receiptline, font, new SolidBrush(Color.Black), X, Y,  height,  width);
+        }
         private static int PrintLeftAlign(XGraphics graphics, string receiptline, XFont font, Brush brush, int X, int Y, int height, int width)
         {
 

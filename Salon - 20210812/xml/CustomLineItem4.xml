@@ -1,0 +1,10 @@
+<SIP>
+<Version>1.0</Version>
+<ECRId></ECRId>
+<Request>LineItem</Request>
+<RequestId>10041</RequestId>
+<LineItemTextLeft>Long name item567890ABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJ</LineItemTextLeft>
+<LineItemTextRight>$12345678901234567890123456789012345678.90</LineItemTextRight>
+<LineItemRunningTextLeft>TOTAL</LineItemRunningTextLeft>
+<LineItemRunningTextRight>$12345678901234567890123456789012345678.90</LineItemRunningTextRight>
+</SIP>

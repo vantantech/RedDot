@@ -1,0 +1,8 @@
+<SIP>
+  <Version>1.0</Version>
+  <ECRId>1004</ECRId>
+  <Request>EDITFORM</Request>
+  <FormText>Enter 9 digit ZipCode</FormText>
+  <RequestId>10041</RequestId>
+  <EditBoxFormat>NNNNN-NNNN</EditBoxFormat>
+</SIP>

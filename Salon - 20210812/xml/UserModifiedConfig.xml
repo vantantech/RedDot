@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ConfigParameters xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ECRId>1004</ECRId>
+  <ResetDelay>3</ResetDelay>
+  <ConfirmAmount>false</ConfirmAmount>
+  <EnableTaxPercent>true</EnableTaxPercent>
+  <TaxPercent>8.25</TaxPercent>
+  <EnableTipPercent>false</EnableTipPercent>
+  <TipPercent>0</TipPercent>
+  <EnableEBTPercent>true</EnableEBTPercent>
+  <EBTPercent>100</EBTPercent>
+  <EnableLineItem>false</EnableLineItem>
+  <FieldCount>30</FieldCount>
+  <ServerLabel1>Enter Tip Amount For Stylist Joe</ServerLabel1>
+  <ServerLabel2>Enter Tip Amount For Stylist Mae</ServerLabel2>
+  <ServerLabel3>Enter Tip Amount For Stylist Bob</ServerLabel3>
+  <ServerLabel4>Enter Tip Amount For Stylist Sal</ServerLabel4>
+  <ServerLabel5>Enter Tip Amount For Stylist Tom</ServerLabel5>
+  <CustomForms>
+    <FormName>DOB</FormName>
+    <IsPreForm>true</IsPreForm>
+    <IsPostForm>false</IsPostForm>
+  </CustomForms>
+  <CustomForms>
+    <FormName>ThankYou</FormName>
+    <IsPreForm>false</IsPreForm>
+    <IsPostForm>true</IsPostForm>
+  </CustomForms>
+  <AckDelay>0</AckDelay>
+  <BoldMandatorytags>false</BoldMandatorytags>
+  <EnableMultiCardSelection>false</EnableMultiCardSelection>
+  <TerminalId>5572626</TerminalId>
+  <ApplicationId>PI8HD33M</ApplicationId>
+  <DownloadType>FULL</DownloadType>
+  <DownloadTime>NOW</DownloadTime>
+  <DownloadPort>8001</DownloadPort>
+  <DownloadURL>SSLHPS.TEST.HPSDNLD.NET</DownloadURL>
+  <Header1>ABC Salon</Header1>
+  <Header2>1234 Main</Header2>
+  <Header3>Houston, TX 77001</Header3>
+  <Header4>888.963.3600</Header4>
+  <Footer1>THANK YOU!</Footer1>
+  <Footer2>Visit us at</Footer2>
+  <Footer3>www.heartlandpaymentsystems.com</Footer3>
+  <Footer4>for exciting coupons</Footer4>
+  <IsSerial>false</IsSerial>
+  <IsTCP>true</IsTCP>
+  <IsOther>false</IsOther>
+  <Client>0</Client>
+  <IsSSL>false</IsSSL>
+  <IsBluetooth>false</IsBluetooth>
+  <IsHTTP>false</IsHTTP>
+  <IPAddress>192.168.1.250</IPAddress>
+  <IsIPConnectFirst>false</IsIPConnectFirst>
+  <IsConnectClick>false</IsConnectClick>
+  <IPPort>12345</IPPort>
+  <SerialPort>COM6</SerialPort>
+  <SerialParity>8N1</SerialParity>
+  <BaudRate>115200</BaudRate>
+  <ParityValue>None</ParityValue>
+  <DataBits>8</DataBits>
+  <StopBits>One</StopBits>
+  <SIPForceNAK>0</SIPForceNAK>
+  <POSForceNAK>0</POSForceNAK>
+  <MaxBufferSize>5120</MaxBufferSize>
+  <VersionNumber>3.3.1</VersionNumber>
+</ConfigParameters>

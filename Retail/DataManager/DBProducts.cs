@@ -153,6 +153,20 @@ namespace RedDot
             return m_dbconnect.GetData(query, "Product");
         }
 
+
+        public DataTable GetRefundProducts(int salesid)
+        {
+            string query;
+
+            // query = "select category.description as category, category.colorcode as catcolorcode, product.*,coalesce(cost,0)*coalesce(qoh,0) as itemvalue, location.description as locationname   from category inner join cat2prod on category.id = cat2prod.catid inner join product on cat2prod.prodid = product.id  left outer join location on product.locationid = location.id  where category.id =" + catid + " order by product.modelnumber ";
+
+            query = "select CategoryProduct.* from  CategoryProduct inner join salesitem on CategoryProduct.id = salesitem.productid where salesitem.salesid = " + salesid;
+
+   
+
+            return m_dbconnect.GetData(query, "Product");
+        }
+
         //Available products .. 
         public DataTable GetProductsNOTByCat(string type,int catid)
         {
@@ -236,20 +250,21 @@ namespace RedDot
 
         }
 
-        public bool DBDeductInventory(int productid)
+        public bool DBDeductInventory(int productid, int quantity)
         {
             string query;
 
-            query = "update product set qoh = qoh - 1  where product.id=" + productid;
+            query = "update product set qoh = qoh - " + quantity + "  where product.id=" + productid;
             return m_dbconnect.Command(query);
 
         }
 
-        public bool DBAddToInventory(int productid)
+        public bool DBAddToInventory(int productid, int quantity)
         {
             string query;
 
-            query = "update product set qoh = qoh + 1  where product.id=" + productid;
+            query = "update product set qoh = qoh + " + quantity + "  where product.id=" + productid;
+                 
             return m_dbconnect.Command(query);
 
         }

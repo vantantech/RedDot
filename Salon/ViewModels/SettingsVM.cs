@@ -119,6 +119,23 @@ namespace RedDot
             }
         }
 
+        public string PinPadModel
+        {
+            get { return GlobalSettings.Instance.PinPadModel; }
+            set
+            {
+                GlobalSettings.Instance.PinPadModel = value;
+            }
+        }
+
+        public string HSN
+        {
+            get { return GlobalSettings.Instance.HardwareSerialNumber; }
+            set
+            {
+                GlobalSettings.Instance.HardwareSerialNumber = value;
+            }
+        }
         public string IPAddress
         {
             get { return GlobalSettings.Instance.SIPDefaultIPAddress; }
@@ -127,7 +144,22 @@ namespace RedDot
                 GlobalSettings.Instance.SIPDefaultIPAddress = value;
             }
         }
-
+        public string Port
+        {
+            get { return GlobalSettings.Instance.Port; }
+            set
+            {
+                GlobalSettings.Instance.Port = value;
+            }
+        }
+        public string SIPDefaultIPAddress
+        {
+            get { return GlobalSettings.Instance.SIPDefaultIPAddress; }
+            set
+            {
+                GlobalSettings.Instance.SIPDefaultIPAddress = value;
+            }
+        }
         public string SIPPort
         {
             get { return GlobalSettings.Instance.SIPPort; }

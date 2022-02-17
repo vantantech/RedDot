@@ -576,6 +576,7 @@ namespace RedDot
                     visit++;
                 }
                else
+                if (row["transtype"].ToString() == "REDEEM" && row["void"].ToString() != "1")
                     if (row["amount"].ToString() != "") rewardused = rewardused + (decimal)row["amount"];
             }
 

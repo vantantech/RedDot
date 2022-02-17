@@ -57,7 +57,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300"/>
                             <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="*"/>
 
                         </Grid.ColumnDefinitions>
 
@@ -190,7 +190,8 @@
     
                             <StackPanel Orientation="Horizontal" Height="30">
                                 <TextBlock  Text="Role:" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
-                                <TextBox   Margin="5,0,0,0"  Text="{Binding  CurrentEmployee.Role}" TextAlignment="Left" Height="25"  TextWrapping="Wrap" FontSize="15" Width="120"/>
+                            <ComboBox ItemsSource ="{Binding Roles}" DisplayMemberPath="description" SelectedValuePath="returnstring" SelectedValue="{Binding  CurrentEmployee.Role}" FontSize="15" Height="40"  Width="200"   >
+                            </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="30">
                                 <TextBlock  Text="Security Level :" Height="25"  TextAlignment="Right"  TextWrapping="Wrap"  FontSize="15" Width="120"/>
@@ -218,6 +219,8 @@
                                 </CheckBox.LayoutTransform>
 
                             </CheckBox>
+                            
+                     
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Height="50">
@@ -229,7 +232,14 @@
                                 </CheckBox.LayoutTransform>
 
                             </CheckBox>
+                            <TextBlock  Text="Sales Person:" Height="30"  TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="15" Width="100"/>
 
+                            <CheckBox   Margin="5,0,0,0" Height="20" Width="20" IsChecked="{Binding  CurrentEmployee.Sales}" >
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                                </CheckBox.LayoutTransform>
+
+                            </CheckBox>
                         </StackPanel>
 
                         <StackPanel  Orientation="Horizontal" Height="30">

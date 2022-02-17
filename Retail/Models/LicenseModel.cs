@@ -28,7 +28,7 @@ namespace RedDot
 
 
 
-        public static bool CheckLicense()
+        public static bool CheckLicense(string softwaretype)
         {
             try
             {
@@ -41,13 +41,30 @@ namespace RedDot
 
                 if (license == machineid)
                 {
-                    return true;
+                    if (GetSoftware() != softwaretype)
+                    {
+                        MessageBox.Show("Not licensed for Retail App.  Exiting.");
+                        Application.Current.Shutdown();
+                        Environment.Exit(0);
+
+                    }
+
                 }
                 else
                 {
 
-                    return false;
+
+                    if (!RequestLicense(softwaretype))
+                    {
+
+                        TouchMessageBox.Show("Request has been sent to Server for license .. please check back soon.");
+                        return false;
+                    }
+
+
                 }
+
+                return true;
 
             }
             catch (Exception ex)
@@ -157,6 +174,14 @@ namespace RedDot
 
                 SaveLicense(response.CodeString);
                 TouchMessageBox.Show("License downloaded successfully");
+
+                if (GetSoftware() != application)
+                {
+                    MessageBox.Show("Not licensed for Retail App.  Exiting.");
+                    Application.Current.Shutdown();
+                    Environment.Exit(0);
+
+                }
                 return true;
             }
             else
@@ -168,6 +193,9 @@ namespace RedDot
         public static void SaveLicense(string codestring)
         {
             string licensepath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + m_licensename;
+
+            //first delete any existing license
+            File.Delete(licensepath);
 
             System.CodeDom.Compiler.CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateExecutable = false;
@@ -184,9 +212,17 @@ namespace RedDot
 
             if (File.Exists(licensepath))
             {
-                Assembly DLL = Assembly.LoadFile(@licensepath);
+               // Assembly DLL = Assembly.LoadFile(@licensepath);
+
+                //This method does not load the file but just read the data from the file and closes it
+                //therefore the file is not locked by the Assembly so can be overwritten by new license if needed
+                Assembly DLL= Assembly.Load(File.ReadAllBytes(@licensepath));
+
+
                 Type type = DLL.GetType("License");
                 return Decrypt((string)type.GetMethod("LoadEncryptedLicense").Invoke(null, null), GetPrivateKey());
+
+        
 
             }
             else

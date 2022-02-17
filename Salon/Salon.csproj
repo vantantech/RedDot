@@ -114,7 +114,7 @@
       <HintPath>..\..\..\HeartSIP\HeartSIP 3.3\20180118 - 3.3.0.26222\HeartPOS\VisualStudio\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="GlobalPayments.Api">
-      <HintPath>..\..\..\..\RedDot Published\restaurant\Lib\GlobalPayments.Api.dll</HintPath>
+      <HintPath>..\..\..\..\RedDot Releases\RedDot Core\GlobalPayments.Api.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
@@ -156,14 +156,11 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Clover.RemotePayWindows.4.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Nexmo.Api, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nexmo.Csharp.Client.3.2.2\lib\net461\Nexmo.Api.dll</HintPath>
-    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="POSLink">
-      <HintPath>..\..\..\..\Program Files\PAX\POSLink\POSLink.dll</HintPath>
+      <HintPath>..\packages\POSLink\POSLink.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
@@ -243,6 +240,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\WpfLocalization\bin\Release\WpfLocalization.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.2.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.2.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ArpEntity.cs" />
@@ -256,9 +268,10 @@
     <Compile Include="Classes\IpFinder.cs" />
     <Compile Include="Classes\ListPair.cs" />
     <Compile Include="Classes\POSPayment.cs" />
-    <Compile Include="Classes\StringToImage.cs" />
+    <Compile Include="Classes\Converters\StringToImage.cs" />
     <Compile Include="Classes\TapTipKeyboard.cs" />
     <Compile Include="Classes\TicketTotals.cs" />
+    <Compile Include="Classes\TipSummary.cs" />
     <Compile Include="Models\CardConnectModel.cs" />
     <Compile Include="Models\CardConnect\CCCaptureRequest.cs" />
     <Compile Include="Models\CardConnect\CCCaptureResponse.cs" />
@@ -297,7 +310,7 @@
     <Compile Include="Classes\ReceiptPrinter.cs" />
     <Compile Include="Classes\ReportCat.cs" />
     <Compile Include="Classes\SalesData.cs" />
-    <Compile Include="Classes\Converters.cs" />
+    <Compile Include="Classes\Converters\Converters.cs" />
     <Compile Include="Classes\Appointment.cs" />
     <Compile Include="Classes\SoftwareLicense.cs" />
     <Compile Include="Classes\TicketEmployee.cs" />
@@ -406,6 +419,7 @@
     <Compile Include="ViewModels\GiftCardVM.cs" />
     <Compile Include="ViewModels\RewardReportVM.cs" />
     <Compile Include="ViewModels\SendSMSVM.cs" />
+    <Compile Include="ViewModels\SummaryReportVM.cs" />
     <Compile Include="ViewModels\TriPOSVM.cs" />
     <Compile Include="Views\Admin\Admin_Database.xaml.cs">
       <DependentUpon>Admin_Database.xaml</DependentUpon>
@@ -430,6 +444,9 @@
     </Compile>
     <Compile Include="Views\Common\ColorPicker.xaml.cs">
       <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CommissionSummaryControl.xaml.cs">
+      <DependentUpon>CommissionSummaryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\DailyPaymentSummaryControl.xaml.cs">
       <DependentUpon>DailyPaymentSummaryControl.xaml</DependentUpon>
@@ -473,6 +490,9 @@
     <Compile Include="Views\Reports\SalesReportLarge.xaml.cs">
       <DependentUpon>SalesReportLarge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\SummaryReport.xaml.cs">
+      <DependentUpon>SummaryReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\CloverPayment.xaml.cs">
       <DependentUpon>CloverPayment.xaml</DependentUpon>
     </Compile>
@@ -482,7 +502,7 @@
     <Compile Include="Views\Sales\CreditCapture.xaml.cs">
       <DependentUpon>CreditCapture.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Sales\MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\CCPPayment.xaml.cs">
@@ -744,6 +764,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\CommissionSummaryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\DailyPaymentSummaryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -800,6 +824,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Reports\SummaryReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Sales\CloverPayment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -812,7 +840,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Sales\MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1357,6 +1385,7 @@
     <Resource Include="media\fingerprint.png" />
     <Resource Include="media\databaseexport.png" />
     <Resource Include="media\databaseimport.jpg" />
+    <Resource Include="media\profits.png" />
     <Content Include="media\sound6.mp3" />
     <Resource Include="media\sphere.png" />
     <Resource Include="media\stampcard.png" />

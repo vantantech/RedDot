@@ -27,6 +27,7 @@ namespace RedDot
         public decimal TotalSupplyFee { get; set; }
         public decimal TotalCommission { get; set; }
 
+
         public ObservableCollection<SalonLineItem> SalesItem { get; set; }
 
         public int ServiceCount { get { return SalesItem.Count(); } }

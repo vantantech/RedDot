@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -16,6 +17,30 @@ namespace RedDot
 {
     public class Utility
     {
+
+        public static Stopwatch GetStopwatch()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
+            return stopwatch;
+        }
+        public static TimeSpan GetElapsedTime(DateTime time1, DateTime time2 = default(DateTime))
+        {
+            if (time2 == default(DateTime))
+            {
+                time2 = DateTime.Now;
+            }
+
+            long ticks = time2.Ticks - time1.Ticks;
+
+            TimeSpan elapsedTime = new TimeSpan(ticks);
+
+            return elapsedTime;
+        }
+
+
         public static string GetPictureFile()
         {
             OpenFileDialog picfile = new OpenFileDialog();

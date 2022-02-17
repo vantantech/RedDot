@@ -23,6 +23,16 @@ namespace RedDot
             }
         }
 
-    
+        public string DateString
+        {
+            get
+            {
+                if (StartDate == DateTime.Today && StartDate == EndDate)
+                    //return "Today";
+                    return StartDate.ToString("yyyyMMdd");
+                else return StartDate.ToString("yyyyMMdd") + "_" + EndDate.ToString("yyyyMMdd");
+            }
+        }
+
     }
 }

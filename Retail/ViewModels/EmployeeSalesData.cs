@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace RedDot
 {
-    //employee's daily ticket totals
+   
     public class EmployeeSalesData : INPCBase
     {
 
@@ -17,54 +17,42 @@ namespace RedDot
         public Visibility SubTotalVisiblity { get; set; }
 
 
-
-
-        
-
-        private ObservableCollection<SalesData> _employeesales;
-
-
-
-        //private decimal _commissionpercent;
-        private decimal _grandtotalsales = 0;
-        private decimal _grandtotalcost = 0;
-        private decimal _grandtotaladjustments = 0;
-        private decimal _grandtotalcommissionadjustments = 0;
-
-        Reports _reports;
-        public EmployeeSalesData(int employeeid, DateTime startdate, DateTime enddate)
+        public EmployeeSalesData(Employee employee)
         {
 
-
+            CurrentEmployee = employee;
             SubTotalVisiblity = Visibility.Collapsed;
-
-            CurrentEmployee = new Employee(employeeid);
-
-
-        
-
-            _reports = new Reports();
-
-          
-
-            EmployeeSales = _reports.GetEmployeeCommission(CurrentEmployee.ID, startdate, enddate);
-
-            CalculateTotals();
             
         }
 
+        public EmployeeSalesData(int id)
+        {
+
+            CurrentEmployee =new Employee(id);
+             SubTotalVisiblity = Visibility.Collapsed;
+
+        }
 
 
+        //----------------------------------Properties ----------------------------------------------------------------------------
 
-        //----------------------------------Public Properties ----------------------------------------------------------------------------
-        public ObservableCollection<SalesData> EmployeeSales { get { return _employeesales; } set { _employeesales = value; NotifyPropertyChanged("EmployeeSales"); } }
+
+        private ObservableCollection<SalesData> _employeesales;
+        public ObservableCollection<SalesData> EmployeeSales { 
+            get { return _employeesales; } 
+            set { 
+                _employeesales = value;
+                CalculateTotals();
+                NotifyPropertyChanged("EmployeeSales");
+            } 
+        }
 
 
         public decimal GrandTotalCommission { get; set; }
 
         public decimal GrandTotalMargin { get { return (GrandTotalSales - GrandTotalCost) ; } }
 
-
+        private decimal _grandtotalsales = 0;
         public decimal GrandTotalSales
         {
 
@@ -74,6 +62,7 @@ namespace RedDot
 
         }
 
+        private decimal _grandtotaladjustments = 0;
         public decimal GrandTotalAdjustments
         {
 
@@ -83,7 +72,7 @@ namespace RedDot
 
         }
 
-
+        private decimal _grandtotalcommissionadjustments = 0;
         public decimal GrandTotalCommissionAdjustments
         {
 
@@ -93,6 +82,7 @@ namespace RedDot
 
         }
 
+        private decimal _grandtotalcost = 0;
         public decimal GrandTotalCost
         {
             get { return _grandtotalcost; }
@@ -108,18 +98,14 @@ namespace RedDot
             decimal totalcommission = 0;
             decimal totalcommissionadjust = 0;
 
-                foreach (SalesData salesdata in EmployeeSales)
-                {
-                    totalsales = totalsales + salesdata.TotalSales;
-                    totalcost = totalcost + salesdata.TotalCost;
+            foreach (SalesData salesdata in EmployeeSales)
+            {
+                totalsales = totalsales + salesdata.TotalSales;
+                totalcost = totalcost + salesdata.TotalCost;
                 totalcommission += salesdata.TotalCommission;
-                    totaladjust += salesdata.TotalAdjustments;
-                    totalcommissionadjust += salesdata.TotalCommissionAdjustment;
+                totaladjust += salesdata.TotalAdjustments;
+                totalcommissionadjust += salesdata.TotalCommissionAdjustment;
             }
-
-
-
-
 
 
             GrandTotalSales = totalsales;

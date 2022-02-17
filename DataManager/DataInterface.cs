@@ -36,6 +36,7 @@ namespace RedDot.DataManager
         DataTable GetSettingbyID(int id);
 
         bool WipeSalesData();
+        bool WipeSalesDataCustom(DateTime startdate, DateTime enddate);
         bool WipeCustomerData();
         bool WipeGiftCardData();
 

@@ -7,7 +7,7 @@ using RedDot;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Forms;
-
+using System.Diagnostics;
 
 namespace RedDot
 {
@@ -172,9 +172,13 @@ namespace RedDot
 
 
 
-
+            Stopwatch stopwatch = Utility.GetStopwatch();
 
             dailyreport = new DailyRevenue();
+
+
+
+
             dailyreport.SalesCat = new ObservableCollection<ReportCat>();
 
             dailyreport.DOW = reportdate.DayOfWeek.ToString().Substring(0, 3).ToUpper();
@@ -182,6 +186,8 @@ namespace RedDot
 
             //get the daily service/product sold
             dt = _dbreports.GetSalesRevenue(startdate, enddate);
+
+            TouchMessageBox.Show((stopwatch.ElapsedMilliseconds / 1000).ToString() + " seconds to run");
 
 
             totalrevenue = 0;

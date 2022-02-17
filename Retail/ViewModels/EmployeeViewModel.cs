@@ -65,7 +65,16 @@ namespace RedDot
             }
         }
 
-
+        private List<CustomList> newlist;
+        public List<CustomList> Roles
+        {
+            get { return newlist; }
+            set
+            {
+                newlist = value;
+                NotifyPropertyChanged("Roles");
+            }
+        }
         public bool IsAdmin { get; set; }
 
         private Security _security;
@@ -99,6 +108,15 @@ namespace RedDot
             ReportDates = new List<ReportDate>();
             m_currentdate = new ReportDate();
 
+
+            List<CustomList> newlist = new List<CustomList>();
+            var listarray = GlobalSettings.Instance.EmployeeRoles.Split(',');
+            foreach (var item in listarray)
+            {
+                newlist.Add(new CustomList { returnstring = item, description = item });
+            }
+
+            Roles = newlist;
 
             FillDateList();
             SelectedDateID = 1;  //this will set selected date to today

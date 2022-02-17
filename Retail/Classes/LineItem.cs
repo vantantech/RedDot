@@ -283,7 +283,7 @@ namespace RedDot
         {
             get
             {
-                if (ID > 0) return Utility.FormatPrintRow(" " + Quantity + "  " + ModelNumber + "--" +  Description," " +   PriceStr, 46) + Utility.FormatPrintRow(" ", PriceStrExtended, 10);
+                if (ID > 0) return Utility.FormatPrintRow(" " + Quantity + "  " + ModelNumber ," " +   PriceStr, 46) + Utility.FormatPrintRow(" ", PriceStrExtended, 10);
                 else return Description;
             }
 

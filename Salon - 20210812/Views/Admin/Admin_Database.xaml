@@ -1,0 +1,115 @@
+﻿<Window  x:Class="RedDot.Admin_Database"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+        Title="Database Administration" Height="800" Width="1024" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None"
+            x:Name="root"  >
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    
+    
+    
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+    
+            </ResourceDictionary.MergedDictionaries>
+            
+    
+
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    
+
+    <DockPanel>
+
+        <Grid Width="1024">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            
+            
+            <TextBlock Margin="25" Text="Database View (Read Only -- Not Editable)" Foreground="White" FontSize="20" HorizontalAlignment="Center"/>
+
+
+            <!--TabControl with ItemsSource bound to an ObservableCollection-->
+            <TabControl Grid.Row="1" Margin="10" x:Name="tabControl" TabStripPlacement="Top"  VerticalContentAlignment="Center"     ItemsSource="{Binding TableList, ElementName=root}" >
+
+
+                <!-- Set the TabItem Header by using the ItemTemplate property to bind to the Header property of the MyObject instance-->
+                <TabControl.ItemTemplate >
+                    <DataTemplate>
+                        <Border BorderThickness="3" >
+                            <TextBlock Text="{Binding Header}"/>
+                        </Border>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+
+                <!-- A DataTemplate for the TabObject type, the content of the TabItems .. Gridview linked to dataview-->
+                <TabControl.ContentTemplate >
+                    <DataTemplate  >
+
+                        <DataGrid  ItemsSource="{Binding EditableTable}" Name="grdData" HorizontalAlignment="Left" Height="433" Margin="24,79,0,0" VerticalAlignment="Top" />
+
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+
+            </TabControl>
+
+
+            <StackPanel  Grid.Row="2"   Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_WipeSalesData" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/x.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Wipe Sales Data" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_WipeCustomerData" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/x.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Wipe Customer Data" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_WipeGiftCardData" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/x.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Wipe GiftCard Data" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_ExportDatabase" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/databaseexport.png" Width="40" Height="40"/>
+                        <TextBlock  Text="Backup Database" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+                <Button  Margin="5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_ImportDatabase" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/databaseimport.jpg" Width="40" Height="40"/>
+                        <TextBlock  Text="Restore Database" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+                <Button  Margin="100,5,5,5" Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_Exit" >
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="/media/back.png" Width="40" Height="40"/>
+                        <TextBlock  Text="BACK" FontSize="15" FontWeight="Normal"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+
+        </Grid>
+
+
+    </DockPanel>
+</Window>

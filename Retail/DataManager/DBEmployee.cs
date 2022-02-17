@@ -33,6 +33,24 @@ namespace RedDot
 
         }
 
+
+        public DataTable GetSalesEmployees()
+        {
+            DataTable tbl = new DataTable();
+            string sql = "Select * from employee where active=1 and sales=1  order by role, displayname";
+            tbl = m_dbconnect.GetData(sql);
+            return tbl;
+
+        }
+        public DataTable GetSalesReps()
+        {
+            DataTable tbl = new DataTable();
+            string sql = "Select * from employee where active=1 and role = 'Sales Rep' order by displayname";
+            tbl = m_dbconnect.GetData(sql);
+            return tbl;
+
+        }
+
         public DataTable GetEmployeeOnSchedule()
         {
             DataTable tbl = new DataTable();

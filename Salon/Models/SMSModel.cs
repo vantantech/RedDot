@@ -1,4 +1,4 @@
-﻿using Nexmo.Api;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +77,7 @@ namespace RedDot.Models
                        
                    // break;
 
-
+/*
                 case "Nexmo API":
                     string res2 = "";
                     var client = new Client(creds: new Nexmo.Api.Request.Credentials
@@ -99,7 +99,7 @@ namespace RedDot.Models
                     }
 
                     return res2;
-
+*/
                    // break;
                 
             }
@@ -134,7 +134,7 @@ namespace RedDot.Models
 
                     return ClickatellRest.GetBalance(m_apikey);
 
-
+/*
                 case "Nexmo API":
 
                     var client = new Client(creds: new Nexmo.Api.Request.Credentials
@@ -145,7 +145,7 @@ namespace RedDot.Models
 
                   
                     return client.Account.GetBalance().value.ToString();
-               
+               */
             }
             return "0";
         }

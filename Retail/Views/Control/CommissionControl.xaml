@@ -85,99 +85,14 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="2"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-            <!-- Employee Info-->
-            <Border Grid.Row="0" BorderThickness="1" BorderBrush="Blue">
-
-                <StackPanel Orientation="Horizontal">
-
   
-                <StackPanel Orientation="Vertical">
-                    <!-- Report Dates-->
-                     <TextBlock Text="{Binding CurrentDate.StartDate, StringFormat='MM/dd/yy'}"   Width="auto" Style="{StaticResource ReportStyle}" FontWeight="Bold"  />
-                    <TextBlock Text=" to "                                           Width="auto" Style="{StaticResource ReportStyle}" FontWeight="Bold"   />
-                    <TextBlock Text="{Binding CurrentDate.EndDate, StringFormat='MM/dd/yy'}"   Width="auto" Style="{StaticResource ReportStyle}" FontWeight="Bold"   />
-
-                </StackPanel>
-
- 
-
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding TodayClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc Today}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-
-                    <ComboBox IsEnabled="{Binding EnableReportDates}" ItemsSource ="{Binding ReportDates}" DisplayMemberPath="ReportString" SelectedValuePath="ReportDateID" SelectedValue="{Binding SelectedDateID}" FontSize="15" Height="60"  Width="200"   >
-                    </ComboBox>
-                </StackPanel>
-
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding CustomClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc CustomDate}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding PrintCommissionLargeClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/printer.png" Height="40" Width="40"/>
-                            <TextBlock Text="Print Large"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding PrintCommissionClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/receipt.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc Print}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding ExportCommissionCSVClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/csv.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc Export}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <StackPanel Visibility="Collapsed" Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding ExportCommissionExcelClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/excel.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc Export}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </StackPanel>
-            </Border>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1">
 
@@ -253,8 +168,16 @@
                                                         <TextBlock Text="{Binding TicketNo}"  Width="50" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
 
                                                         </Button>
+
+              
+
                                                     </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" Margin="5,5,5,0">
+                                                    <StackPanel Orientation="Horizontal" Margin="5,5,5,0">
+                                                        <TextBlock Text="Customer :  "  Width="100"  TextAlignment="Right" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
+                                                        <TextBlock Text="{Binding CustomerName}" Width="100" FontSize="14" Style="{StaticResource ReportStyle}" FontWeight="Normal" TextWrapping="Wrap" />
+                                                    </StackPanel>
+
+                                                    <StackPanel Orientation="Horizontal" Margin="5,5,5,0">
                                                         <TextBlock Text="Date:  "  Width="100"  TextAlignment="Right" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
                                                         <TextBlock Text="{Binding CloseDate}" Width="100" FontSize="14" Style="{StaticResource ReportStyle}" FontWeight="Normal" TextWrapping="Wrap" />
                                                         </StackPanel>
@@ -283,7 +206,10 @@
                                                                     <TextBlock   Text="{Binding Description}"                                             Width="350" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
                                                                     <TextBlock   Text="{Binding Quantity}"                         TextAlignment="Center" Width="100" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
                                                                     <TextBlock Text="{Binding AdjustedPrice, StringFormat=c}"      TextAlignment="Right" Width="80" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
-                                                                    <TextBlock Foreground="{Binding CostColor}" Text="{Binding CostStr}"                TextAlignment="Right" Width="80" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
+                                                                    <Button Command="{Binding DataContext.EditCostClicked, RelativeSource={RelativeSource AncestorLevel=3 ,AncestorType=ItemsControl,Mode=FindAncestor}}" CommandParameter="{Binding ID}" >
+
+                                                                        <TextBlock Foreground="{Binding CostColor}" Text="{Binding CostStr}"                TextAlignment="Right" Width="80" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
+                                                                      </Button>
                                                                     <TextBlock Text="{Binding TotalMargin, StringFormat=c}"              TextAlignment="Right" Width="80" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
                                                                     <TextBlock  Text="{Binding TotalCommission, StringFormat=c}"         TextAlignment="Right" Width="100"  Foreground="Blue" Style="{StaticResource ReportStyle}" FontWeight="Normal" />
 

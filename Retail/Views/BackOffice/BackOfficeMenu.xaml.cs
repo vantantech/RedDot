@@ -113,11 +113,7 @@ namespace RedDot
             }
         }
 
-        private void Update_Clicked(object sender, RoutedEventArgs e)
-        {
-            Update upt = new Update();
-            Utility.OpenModal(this, upt);
-        }
+
 
         private void Labor_Click(object sender, RoutedEventArgs e)
         {

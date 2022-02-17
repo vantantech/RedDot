@@ -108,8 +108,8 @@ namespace RedDot
                     {
                         DeviceType = DeviceType.PAX_S300,
                         ConnectionMode = ConnectionModes.TCP_IP,
-                        IpAddress = GlobalSettings.Instance.SIPDefaultIPAddress,
-                        Port = "10009",
+                        IpAddress = GlobalSettings.Instance.IPAddress,
+                        Port = GlobalSettings.Instance.Port,
                         Timeout = 30000
                     });
 

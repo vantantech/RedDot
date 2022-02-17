@@ -19,15 +19,13 @@ namespace RedDot
         private DBEmployee _dbEmployee;
    
 
-  
-
-
 
         private string _pin;
         private string _msrcard;
         private bool _active;
         private bool _onschedule;
         private bool _fingerprintbypass;
+        private bool _sales;
         private string _lastname;
         private string _firstname;
         private string _middlename;
@@ -146,7 +144,7 @@ namespace RedDot
             if (employeerow["fingerprintbypass"].ToString() != "") _fingerprintbypass = int.Parse(employeerow["fingerprintbypass"].ToString()) == 1 ? true : false;
             if (employeerow["commissionproduct"].ToString() != "") _commissionproduct = decimal.Parse(employeerow["commissionproduct"].ToString()); else _commissionproduct = 0;
             if (employeerow["commissionlabor"].ToString() != "") _commissionlabor = decimal.Parse(employeerow["commissionlabor"].ToString()); else _commissionlabor = 0;
-
+            if (employeerow["sales"].ToString() != "") _sales = int.Parse(employeerow["sales"].ToString()) == 1 ? true : false;
 
             _lastname = employeerow["lastname"].ToString();
             _middlename                                                          = employeerow["middlename"].ToString();
@@ -224,6 +222,19 @@ namespace RedDot
                 NotifyPropertyChanged("FingerPrintBypass");
             }
         }
+
+
+        public bool Sales
+        {
+            get { return _sales; }
+            set
+            {
+                _sales = value;
+                _dbEmployee.UpdateBoolean(ID, "sales", _sales);
+                NotifyPropertyChanged("Sales");
+            }
+        }
+
 
         public string MSRCard {get { return _msrcard; }
             set

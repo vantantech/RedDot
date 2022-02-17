@@ -1,0 +1,255 @@
+﻿<UserControl x:Class="RedDot.DailyPaymentsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RedDot"
+             mc:Ignorable="d" 
+                 d:DesignHeight="710" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="CustomButtonStyle">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF2778BB" Offset="0.51"/>
+                        <GradientStop Color="#FF2683C5" Offset="0.484"/>
+                        <GradientStop Color="#FF8CD4FF" Offset="1"/>
+                        <GradientStop Color="#FF1973AE" Offset="0.497"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderBrush" Value="#FF2B5F91"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="MinWidth" Value="20"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Rectangle Stroke="{TemplateBinding BorderBrush}" RadiusX="10" RadiusY="10" Fill="{TemplateBinding Background}"/>
+                            <Rectangle VerticalAlignment="Top" Height="10" Margin="7,2,7,1" RadiusX="10" RadiusY="10">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#11FFFFFF" Offset="1"/>
+                                        <GradientStop Color="#B2FFFFFF" Offset="0"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle x:Name="rectangle" RadiusX="15" RadiusY="15" Fill="White" Margin="1" Opacity="0"/>
+                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Margin="{TemplateBinding Padding}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" TargetName="rectangle" Value="0.2"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Opacity" TargetName="rectangle" Value="0.3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Fill" TargetName="rectangle" Value="#666"/>
+                                <Setter Property="Opacity" TargetName="rectangle" Value="0.6"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="CustomButtonStyleFlat">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF2778BB" Offset="0.51"/>
+                        <GradientStop Color="#FF2683C5" Offset="0.484"/>
+                        <GradientStop Color="#FF8CD4FF" Offset="1"/>
+                        <GradientStop Color="#FF1973AE" Offset="0.497"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderBrush" Value="#FF2B5F91"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="MinWidth" Value="90"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Rectangle Stroke="{TemplateBinding BorderBrush}" RadiusX="5" RadiusY="5" Fill="{TemplateBinding Background}"/>
+
+                            <Rectangle x:Name="rectangle" RadiusX="5" RadiusY="5" Fill="White" Margin="1" Opacity="0"/>
+                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Margin="{TemplateBinding Padding}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" TargetName="rectangle" Value="0.2"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Opacity" TargetName="rectangle" Value="0.6"/>
+                                <Setter Property="Fill" TargetName="rectangle" Value="Red"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Fill" TargetName="rectangle" Value="#666"/>
+                                <Setter Property="Opacity" TargetName="rectangle" Value="0.6"/>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+    </UserControl.Resources>
+
+
+    <Grid Background="AliceBlue" >
+        <StackPanel Orientation="Vertical">
+            <Border Grid.Row="0" BorderThickness="1" BorderBrush="Blue" >
+
+                <StackPanel Orientation="Horizontal">
+
+
+
+                    <Button Margin="10,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
+                             Command="{Binding PreviousDayClicked}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                            <TextBlock Text="Previous"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
+                             Command="{Binding NextDayClicked}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                            <TextBlock Text="Next"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
+                             Command="{Binding CustomDayClicked}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc Day}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
+                             Command="{Binding PrintDayClicked}" >
+                        <StackPanel>
+                            <Image Source="/RedDot;component/media/receiptprinter.png" Height="40" Width="40"/>
+                            <TextBlock Text="{Loc PrintReport}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+
+
+                    <Button Margin="500,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Right" VerticalAlignment="Top" Height="60"   Width="70" 
+                            Command="{Binding BackClicked}" >
+                        <StackPanel>
+                            <Image Source="/media/back.png" Width="40" Height="40"/>
+                            <TextBlock  Text="BACK" FontSize="15" FontWeight="Normal"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="Daily Payment Report" Height="50"  FontSize="20" FontFamily="Consolas" Width="300" />
+                <TextBlock  TextAlignment="Center"  Text="{Binding DailyRevenueSalesReport.DOW}"        Width="100" Height="50"  FontSize="20" FontFamily="Consolas"  />
+                <TextBlock TextAlignment="Center"  Text="{Binding DailyRevenueSalesReport.ReportDate}"   Width="100" Height="50"  FontSize="20" FontFamily="Consolas"  />
+
+            </StackPanel>
+
+
+            <Grid>
+           
+
+             
+
+                <StackPanel Orientation="Vertical"  >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,2,0,2"  Text="Cashier"           TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Ticket #"             TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Cash"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Credit"              TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Gift Card"           TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Gift Cert"    TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Reward"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Stamp Card"              TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="Tips"           TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="All Payments"    TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+
+                    </StackPanel>
+                    <ScrollViewer  Name="ScrollViewer2" Height="550" >
+                        <ScrollViewer.Resources>
+                            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                <Style.Triggers>
+                                    <Trigger Property="Orientation" Value="Vertical">
+                                        <Setter Property="Width" Value="40"/>
+                                        <Setter Property="Height" Value="Auto" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ScrollViewer.Resources>
+
+
+                        <ItemsControl  ItemsSource="{Binding DailyPayments}" AlternationCount="2">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="1" BorderBrush="Gray">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding cashier}"              TextAlignment="Right"  Width="130" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding ticketnumber}"               TextAlignment="Right"  Width="110" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding cash}"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"   />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding credit}"              TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding giftcard}"       TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding giftcertificate}"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding reward}"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"   />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding stampcard}"              TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding tips}"       TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                                            <TextBlock Margin="0,2,0,2"  Text="{Binding allpayments}"                TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+
+                    </ScrollViewer>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,2,0,2"  Text="Totals"           TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalTickets}"             TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalCash}"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalCredit}"              TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalGiftCard}"           TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalGiftCert}"    TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalReward}"                TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalStampCard}"              TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalTips}"           TextAlignment="Right"  Width="80" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+                        <TextBlock Margin="0,2,0,2"  Text="{Binding TotalAllPayments}"    TextAlignment="Right"  Width="120" Height="20"  FontSize="13" FontFamily="Consolas" FontWeight="Normal"  />
+
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Grid>
+
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

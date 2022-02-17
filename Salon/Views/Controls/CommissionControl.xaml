@@ -413,30 +413,36 @@
                          
                                 <StackPanel Orientation="Vertical" Margin="1,0,1,0">
                                 
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
                                         <TextBlock Text="Ticket Count:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
-                                        <TextBlock Margin="0,0,5,0"  Text="{Binding GrandTicketCount}" TextAlignment="Right" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock Margin="0,0,5,0"  Text="{Binding GrandTicketCount}" TextAlignment="Right" Width="50" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                     </StackPanel>
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
                                         <TextBlock Text="Service Count:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
-                                        <TextBlock Margin="0,0,5,0"  Text="{Binding GrandServiceCount}" TextAlignment="Right" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock Margin="0,0,5,0"  Text="{Binding GrandServiceCount}" TextAlignment="Right" Width="50" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                     </StackPanel>
-
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
+                                        <TextBlock Text="Day Count:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock Margin="0,0,5,0"  Text="{Binding GrandTotalDayCount}" TextAlignment="Right" Width="50" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    </StackPanel>
 
 
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Margin="1,0,1,0">
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
-                                        <TextBlock Text="Total:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
+                                        <TextBlock Text="Sales:" Width="100" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                         <TextBlock Margin="0,0,5,0"  Text="{Binding GrandTotalSales, StringFormat=c}" TextAlignment="Right" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                     </StackPanel>
                                     
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
-                                        <TextBlock Text="Commission:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" HorizontalAlignment="Left">
+                                        <TextBlock Text="Commission:" Width="100" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                         <TextBlock Margin="0,0,5,0"   Text="{Binding GrandTotalCommission, StringFormat=c}" TextAlignment="Right" Foreground="Blue" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                     </StackPanel>
-
-
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
+                                        <TextBlock Text="Clean Up Fees:" Width="100" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock Margin="0,0,5,0"   Text="{Binding GrandTotalDailyFees, StringFormat={}{0:C2}}" TextAlignment="Right" Foreground="Red" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    </StackPanel>
+           
                                 
 
                                 </StackPanel>
@@ -444,29 +450,32 @@
 
                                 <StackPanel Orientation="Vertical" Margin="1,0,1,0">
 
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
                                         <TextBlock Text="Tips:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                         <TextBlock  Margin="0,0,5,0"  Text="{Binding GrandTotalGratuity, StringFormat=c}" TextAlignment="Right" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                     </StackPanel>
 
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
                                         <TextBlock Text="Net Tips:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
-                                        <TextBlock  Margin="0,0,5,0" Text="{Binding GrandTotalNetGratuity, StringFormat=c}" TextAlignment="Right" Foreground="Red" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock  Margin="0,0,5,0" Text="{Binding GrandTotalNetGratuity, StringFormat=c}" TextAlignment="Right" Foreground="Blue" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                     </StackPanel>
 
-
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
+                                        <TextBlock Text="Supply Fees:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock Margin="0,0,5,0"   Text="{Binding GrandTotalSupplyFees, StringFormat={}{0:C2}}" TextAlignment="Right" Foreground="Red" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    </StackPanel>
                                 </StackPanel>
 
 
                                 <StackPanel Orientation="Vertical" Margin="1,0,1,0">
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
-                                        <TextBlock Text="Pay 1:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
-                                        <TextBlock  Margin="0,0,5,0"  Text="{Binding Custom1, StringFormat=c}" TextAlignment="Right" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
+                                        <TextBlock Text="Pay 1:" Width="80" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock  Margin="0,0,5,0"  Text="{Binding Custom1, StringFormat=c}" TextAlignment="Right" Width="100" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
 
                                     </StackPanel>
-                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue" Width="195" HorizontalAlignment="Left">
-                                        <TextBlock Text="Pay 2:" Width="95" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
-                                        <TextBlock  Margin="0,0,5,0"  Text="{Binding Custom2, StringFormat=c}" TextAlignment="Right" Width="95" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                    <StackPanel  Orientation="Horizontal" Visibility="{Binding SubTotalVisiblity}"  Background="AliceBlue"  HorizontalAlignment="Left">
+                                        <TextBlock Text="Pay 2:" Width="80" TextAlignment="Right" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                        <TextBlock  Margin="0,0,5,0"  Text="{Binding Custom2, StringFormat=c}" TextAlignment="Right" Width="100" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
 
 
                                     </StackPanel>
@@ -500,10 +509,10 @@
                                                 <TextBlock Width="200"/>
                                                 <TextBlock Text="Description "  TextAlignment="Left" Width="200" FontSize="13" FontFamily="Consolas" FontWeight="Bold" TextDecorations="Underline"  />
                                                 <TextBlock Text="Price"         TextAlignment="Right" Width="80" FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
-                                                <TextBlock Text="Supply"         TextAlignment="Right" Width="70" FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
+                                                <TextBlock Text="Supply"         TextAlignment="Right" Width="70" Foreground="Red" FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
                                                 <TextBlock Text="Commission"    TextAlignment="Right" Width="80" Foreground="Blue"  FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
                                                 <TextBlock Text="Tips"          TextAlignment="Right" Width="70"  FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
-                                                <TextBlock Text="NetTips"      TextAlignment="Right" Width="70" Foreground="Red" FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
+                                                <TextBlock Text="NetTips"      TextAlignment="Right" Width="70" Foreground="blue" FontSize="13" FontFamily="Consolas" FontWeight="Bold"  TextDecorations="Underline" />
 
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
@@ -539,7 +548,7 @@
 
                                                                 <TextBlock Text="{Binding Description}"                                         Width="200" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
                                                                 <TextBlock Text="{Binding CommissionPrice, StringFormat=c}"       TextAlignment="Right"   Width="80" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
-                                                                <TextBlock Text="{Binding SupplyFee, StringFormat=c}"   TextAlignment="Right"   Width="70" FontSize="13" FontFamily="Consolas" FontWeight="Normal" />
+                                                                <TextBlock Text="{Binding SupplyFee, StringFormat=c}"   TextAlignment="Right"   Width="70" FontSize="13" FontFamily="Consolas" FontWeight="Normal" Foreground="Red"  />
                                                                 <TextBlock Text="{Binding Commission, StringFormat=c}"  TextAlignment="Right"   Width="80" FontSize="13" FontFamily="Consolas" FontWeight="Normal" Foreground="Blue"  />
                                                            
                                                             </StackPanel>
@@ -559,10 +568,10 @@
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,0,0,20" >
                                                 <TextBlock Text="Total: "                                   TextAlignment="Right" Width="400"   FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
                                                 <TextBlock Text="{Binding TotalSales, StringFormat=c}"      TextAlignment="Right" Width="80"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding TotalSupplyFee, StringFormat=c}"  TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
+                                                <TextBlock Text="{Binding TotalSupplyFee, StringFormat=c}"  TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" Foreground="Red" />
                                                 <TextBlock Text="{Binding TotalCommission, StringFormat=c}" TextAlignment="Right" Width="80"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" Foreground="Blue"   />
                                                 <TextBlock Text="{Binding Gratuity, StringFormat=c}"        TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding NetGratuity, StringFormat=c}"     TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" Foreground="Red" />
+                                                <TextBlock Text="{Binding NetGratuity, StringFormat=c}"     TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" Foreground="Blue" />
 
                                             </StackPanel>
 
@@ -592,10 +601,10 @@
        <StackPanel Grid.Row="4" Orientation="Horizontal" >
             <TextBlock  Text="Grand Total:"                                     TextAlignment="Right" Width="400"   FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
             <TextBlock  Text="{Binding GrandTotalSales, StringFormat=c}"        TextAlignment="Right" Width="80"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
-            <TextBlock  Text="{Binding GrandTotalSupplyFee, StringFormat=c}"    TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
+            <TextBlock  Text="{Binding GrandTotalSupplyFee, StringFormat=c}"    TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold"  Foreground="Red"  />
             <TextBlock  Text="{Binding GrandTotalCommission, StringFormat=c}"   TextAlignment="Right" Width="80"    FontSize="13" FontFamily="Consolas" FontWeight="Bold"  Foreground="Blue" />
             <TextBlock  Text="{Binding GrandTotalGratuity, StringFormat=c}"     TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" />
-            <TextBlock  Text="{Binding GrandTotalNetGratuity, StringFormat=c}"  TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" Foreground="Red"  />
+            <TextBlock  Text="{Binding GrandTotalNetGratuity, StringFormat=c}"  TextAlignment="Right" Width="70"    FontSize="13" FontFamily="Consolas" FontWeight="Bold" Foreground="Blue"  />
 
         </StackPanel>
 

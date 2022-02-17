@@ -1,0 +1,83 @@
+﻿<Window x:Class="RedDot.SalesReportLarge"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+        Title="Sales Report" Height="1080" Width="1920" WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize">
+
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="AliceBlue" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+
+        </ResourceDictionary>
+
+
+    </Window.Resources>
+
+
+
+
+
+    <Grid>
+
+
+        <TabControl Height="1080" SelectedIndex="{Binding SelectedIndex}" >
+            <TabItem Header="Daily Sales" Style="{StaticResource TabItemStyle}">
+
+                <local:DailySalesControl />
+
+            </TabItem>
+
+            <TabItem Header="Daily Payments" Style="{StaticResource TabItemStyle}">
+
+                <local:DailyPaymentSummaryControl />
+
+            </TabItem>
+
+
+            <TabItem Header="Weekly Sales" Style="{StaticResource TabItemStyle}">
+                <local:WeeklySalesControl />
+
+            </TabItem>
+
+
+            <TabItem Header="Monthly Sales" Style="{StaticResource TabItemStyle}">
+
+                <local:MonthlySalesControl />
+
+            </TabItem>
+
+            <TabItem Header="Custom Sales" Style="{StaticResource TabItemStyle}">
+
+                <local:CustomSalesControl />
+
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+
+
+
+
+
+
+
+
+</Window>
+

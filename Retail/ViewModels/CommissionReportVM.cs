@@ -11,18 +11,26 @@ using System.Windows;
 
 namespace RedDot
 {
-    public class CommissionReportVM:EmployeeListViewModel
+    public class CommissionReportVM:INPCBase
     {
+        private ObservableCollection<Employee> _employees;
 
+
+
+
+        private DBEmployee _dbemployees;
         public Employee CurrentEmployee { get; set; }
 
         private ObservableCollection<EmployeeSalesData> _currentreport;
       public ICommand EmployeeClicked { get; set; }
       public ICommand ViewTicketClicked { get; set; }
-
-      public ICommand PrintCommissionClicked { get; set; }
+        public ICommand EditCostClicked { get; set; }
+        public ICommand PrintCommissionClicked { get; set; }
       public ICommand PrintCommissionLargeClicked { get; set; }
       public ICommand ExportCommissionCSVClicked { get; set; }
+
+        public ICommand PrintPDFClicked { get; set; }
+        public ICommand MailPDFClicked { get; set; }
 
  
 
@@ -59,19 +67,12 @@ namespace RedDot
       }
 
 
-        public bool EnableReportDates
-      {
-          get { return m_enablereportdates; }
-          set
-          {
-              m_enablereportdates = value;
-              NotifyPropertyChanged("EnableReportDates");
-          }
-      }
+
 
       private Window m_parent;
       private Security m_security;
-        public CommissionReportVM(Window parent, Security security, int employeeid =0)
+        private bool m_salesrep;
+        public CommissionReportVM(Window parent, Security security, int employeeid =0,bool salesrep=false)
         {
             EmployeeClicked                      = new RelayCommand(ExecuteEmployeeClicked, param => this.CanExecute);
             ExportCommissionCSVClicked           = new RelayCommand(ExecuteExportCommissionCSVClicked, param => this.CanClick);
@@ -80,6 +81,9 @@ namespace RedDot
             TodayClicked                         = new RelayCommand(ExecuteTodayClicked, param => this.CanClick);
             CustomClicked                        = new RelayCommand(ExecuteCustomClicked, param => this.CanClick);
             ViewTicketClicked                       = new RelayCommand(ExecuteViewTicketClicked, param => this.CanExecute);
+            EditCostClicked = new RelayCommand(ExecuteEditCostClicked, param => this.CanExecute);
+            PrintPDFClicked = new RelayCommand(ExecutePrintPDFClicked, param => this.CanClick);
+
 
             CurrentEmployee                      = new Employee(employeeid);
             _currentemployeeid                   = employeeid;
@@ -91,6 +95,11 @@ namespace RedDot
             m_currentdate                        = new ReportDate();
             m_currentdate.StartDate              = DateTime.Today;
             m_currentdate.EndDate                = DateTime.Today;
+            m_salesrep = salesrep;
+
+            _dbemployees = new DBEmployee();
+            _employees = new ObservableCollection<Employee>();
+
 
             if (employeeid == 0) CurrentEmployee.DisplayName = "All Employees";
 
@@ -103,7 +112,41 @@ namespace RedDot
 
             FillDateList();
             SelectedDateID                       = 1;
+            LoadEmployees();
+
         }
+
+
+        public void LoadEmployees()
+        {
+            DataTable tbl;
+            Employee current;
+            ObservableCollection<Employee> employees;
+            employees = new ObservableCollection<Employee>();
+            tbl = m_salesrep ? _dbemployees.GetSalesReps():  _dbemployees.GetSalesEmployees();
+
+            foreach (DataRow row in tbl.Rows)
+            {
+                current = new Employee(row);
+                employees.Add(current);
+            }
+
+            Employees = employees;
+
+        }
+
+
+
+
+
+        public ObservableCollection<Employee> Employees
+        {
+            get { return _employees; }
+            set { _employees = value; NotifyPropertyChanged("Employees"); }
+        }
+
+ 
+
 
         private void FillDateList()
         {
@@ -278,7 +321,6 @@ namespace RedDot
             DBEmployee dbemployee = new DBEmployee();
             EmployeeSalesData employeecommission;
 
-            if(id > 0)  CurrentEmployee = new Employee(id);
 
             //if integer = 1000 , then its for all employees , otherwise, just one
             // employee 999 is all employee combined so still consider as one employee
@@ -289,7 +331,6 @@ namespace RedDot
             if (id == 1000)
             {
 
-              // dt = dbemployee.GetEmployeeAll();
 
                DataTable dt = _reports.GetWorkedEmployees(currentdate.StartDate, currentdate.EndDate);
 
@@ -299,8 +340,10 @@ namespace RedDot
                 {
                     foreach (DataRow row in dt.Rows)
                     {
-                        employeecommission = new EmployeeSalesData((int)row["employeeid"], currentdate.StartDate, currentdate.EndDate);
+                        employeecommission = new EmployeeSalesData((int)row["employeeid"]);
+                        employeecommission.EmployeeSales = _reports.GetEmployeeCommission(employeecommission.CurrentEmployee, currentdate.StartDate, currentdate.EndDate);
                         employeecommission.SubTotalVisiblity = Visibility.Visible;
+
                         if(employeecommission.GrandTotalSales > 0)  allemployeesales.Add(employeecommission);
 
                     }
@@ -312,25 +355,21 @@ namespace RedDot
 
             }else //single employee
             {
+
+
                 if (id > 0)
                 {
-                    employeecommission = new EmployeeSalesData(id,currentdate.StartDate,currentdate.EndDate);
+
+
+
+                    employeecommission = new EmployeeSalesData(id);
+                    employeecommission.EmployeeSales = _reports.GetEmployeeCommission(employeecommission.CurrentEmployee, currentdate.StartDate, currentdate.EndDate);
                     allemployeesales.Add(employeecommission);
 
                     return allemployeesales;
-
                 }
-                else
-                    if (CurrentEmployee.ID > 0)
-                    {
 
-                        employeecommission = new EmployeeSalesData(CurrentEmployee.ID, currentdate.StartDate, currentdate.EndDate);
-                        allemployeesales.Add(employeecommission);
-
-                        return allemployeesales;
-                    }
-                    else return null;
-
+                return null;
 
             }
 
@@ -348,7 +387,10 @@ namespace RedDot
     }
         //-------------------------------------Public Methods -----------------------------------------
 
-
+        public void ExecutePrintPDFClicked(object obj)
+        {
+            _reports.PrintCommissionPDF(CurrentReport, m_currentdate);
+        }
 
         public void ExecutePrintCommissionClicked(object tagstr)
         {
@@ -413,6 +455,45 @@ namespace RedDot
             }
         }
 
+        public void ExecuteEditCostClicked(object salesitemid)
+        {
+            try
+            {
+                int id;
+
+                if (salesitemid == null) return;
+
+                if (salesitemid.ToString() != "") id = int.Parse(salesitemid.ToString());
+                else id = 0;
+
+
+                if (m_security.WindowAccess("Cost") == false)
+                {
+                    MessageBox.Show("Access Denied");
+                    return; //jump out of routine
+                }
+                NumPad cost = new NumPad("Enter New Cost:", false);
+                Utility.OpenModal(m_parent, cost);
+                if (cost.Amount != "")
+                {
+                    if (decimal.Parse(cost.Amount) >= 0)
+                    {
+                        SalesModel sm = new SalesModel();
+                        sm.UpdateCost(id, decimal.Parse(cost.Amount));
+
+                    }
+                }
+
+
+
+                CurrentReport = GetCommission(_currentemployeeid, m_currentdate);
+                CalculateTotals();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("ExecuteEditClicked: " + e.Message);
+            }
+        }
         public void ExecuteCustomClicked(object tagstr)
         {
 
@@ -437,7 +518,7 @@ namespace RedDot
                 _currentemployeeid = int.Parse(employeeid.ToString());
                 CurrentReport = GetCommission(_currentemployeeid, m_currentdate);
                 CalculateTotals();
-                EnableReportDates = true;
+            
             }
         }
 

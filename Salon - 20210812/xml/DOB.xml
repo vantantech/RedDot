@@ -1,0 +1,8 @@
+<SIP>
+  <Version>1.0</Version>
+  <ECRId>1004</ECRId>
+  <Request>EDITFORM</Request>
+  <RequestId>10041</RequestId>
+  <FormText>Enter Date Of Birth</FormText>
+  <EditBoxFormat>NN-NN-NNNN</EditBoxFormat>
+</SIP>

@@ -1,0 +1,11 @@
+<SIP>
+<Version>1.0</Version>
+<ECRId></ECRId>
+<Request>Refund</Request>
+<RequestId>10041</RequestId>
+<TotalAmount></TotalAmount>
+<CardGroup></CardGroup>
+<InvoiceNbr></InvoiceNbr>
+<ConfirmAmount></ConfirmAmount>
+</SIP>
+

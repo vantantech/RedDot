@@ -80,7 +80,25 @@ namespace RedDot
             this.Close();
         }
 
+        private void Button_WipeSalesDataCustom(object sender, RoutedEventArgs e)
+        {
+            SecurityModel sec = new SecurityModel();
 
+            if (sec.WindowNewAccess("DatabaseView"))
+            {
+                CustomDate cd = new CustomDate(Visibility.Visible);
+                cd.Topmost = true;
+                cd.ShowDialog();
+
+
+
+                if (Confirm.Ask("Wipe All Sales Data from " + cd.StartDate + " to " + cd.EndDate + "???") == true)
+                {
+
+                    if (_dbsettings.WipeSalesDataCustom(cd.StartDate, cd.EndDate)) TouchMessageBox.Show("Sales Data Wiped Successfully!!");
+                }
+            }
+        }
 
         private void Button_WipeSalesData(object sender, RoutedEventArgs e)
         {

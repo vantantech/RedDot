@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ConfigParameters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <VersionNumber>3.3.1</VersionNumber>
+  <ECRId>1004</ECRId>
+  <ResetDelay>3</ResetDelay>
+  <ConfirmAmount>false</ConfirmAmount>
+  <EnableTaxPercent>true</EnableTaxPercent>
+  <TaxPercent>8.25</TaxPercent>
+  <EnableTipPercent>false</EnableTipPercent>
+  <TipPercent>0</TipPercent>
+  <EnableEBTPercent>true</EnableEBTPercent>
+  <EBTPercent>100</EBTPercent>
+  <EnableLineItem>true</EnableLineItem>
+  <FieldCount>30</FieldCount>
+  <ServerLabel1>Enter Tip Amount For Stylist Joe</ServerLabel1>
+  <ServerLabel2>Enter Tip Amount For Stylist Mae</ServerLabel2>
+  <ServerLabel3>Enter Tip Amount For Stylist Bob</ServerLabel3>
+  <ServerLabel4>Enter Tip Amount For Stylist Sal</ServerLabel4>
+  <ServerLabel5>Enter Tip Amount For Stylist Tom</ServerLabel5>
+  <AckDelay>0</AckDelay>
+  <BoldMandatorytags>false</BoldMandatorytags>
+  <EnableMultiCardSelection>false</EnableMultiCardSelection>
+  <TerminalId>5572626</TerminalId>
+  <ApplicationId>PI8HD33M</ApplicationId>
+  <DownloadType>FULL</DownloadType>
+  <DownloadTime>NOW</DownloadTime>
+  <DownloadPort>8001</DownloadPort>
+  <DownloadURL>SSLHPS.TEST.HPSDNLD.NET</DownloadURL>
+  <Header1>Heartland Groceries</Header1>
+  <Header2>5850 Granite Pkwy, Ste 1200</Header2>
+  <Header3>Plano, TX 75024</Header3>
+  <Header4>888.963.3600</Header4>
+  <Footer1>THANK YOU!</Footer1>
+  <Footer2>Visit us at</Footer2>
+  <Footer3>www.heartlandpaymentsystems.com</Footer3>
+  <Footer4>for exciting coupons</Footer4>
+  <IsSerial>false</IsSerial>
+  <IsTCP>true</IsTCP>
+  <IsOther>false</IsOther>  
+  <IPAddress>192.168.1.250</IPAddress>
+  <IPPort>12345</IPPort>
+  <SerialPort>COM6</SerialPort>
+  <SerialParity>8N1</SerialParity>
+  <BaudRate>115200</BaudRate>
+  <ParityValue>None</ParityValue>
+  <DataBits>8</DataBits>
+  <StopBits>One</StopBits>
+  <SIPForceNAK>0</SIPForceNAK>
+  <POSForceNAK>0</POSForceNAK>
+  <MaxBufferSize>5120</MaxBufferSize>
+</ConfigParameters>

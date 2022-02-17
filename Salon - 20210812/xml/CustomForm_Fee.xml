@@ -1,0 +1,8 @@
+<SIP>
+  <Version>1.0</Version>
+  <ECRId>1004</ECRId>
+  <Request>STATUSFORM</Request>
+  <RequestId>10041</RequestId>
+  <FormText>You are being charged an additional fee of $2.00 for the ambience and the curteous customer service at this store</FormText>
+  <ButtonText>OK</ButtonText>
+</SIP>

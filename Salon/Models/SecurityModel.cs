@@ -181,11 +181,7 @@ namespace RedDot
                 }
                 else
                 {
-                    if(lgn.ID == 0)
-                    {
-                        TouchMessageBox.Show("User Not Found!");
-                    }
-                    return CurrentEmployee;
+                    return null;
                 }
 
             }

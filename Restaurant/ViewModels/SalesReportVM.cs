@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -328,8 +329,23 @@ namespace RedDot
         }
         private void RunDailyReport()
         {
+
+
+
+
             DailyRevenueSalesReport = m_report.GetDailyRevenue(DailyStartDate, DailyStartDate); //tips etc.. is calculated here
+
+
+         
+
+
+         
+
             DailySettlementSalesReport = m_report.GetDailySettlement(DailyStartDate, DailyStartDate);
+
+      
+
+
             m_dailydifferencesalesreport = new Difference();
             m_dailydifferencesalesreport.NetRevenue = DailyRevenueSalesReport.NetRevenue;
             m_dailydifferencesalesreport.NetPayment = DailySettlementSalesReport.TotalPayment;
@@ -356,6 +372,12 @@ namespace RedDot
                 DailyNetPayment = DailyNetPayment + (row["netpayment"].ToString() != "" ? (decimal)row["netpayment"] : 0);
                
             }
+
+
+
+
+
+
 
 
         }

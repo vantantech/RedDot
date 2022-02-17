@@ -27,8 +27,7 @@ namespace RedDot.DataManager
             string sql4;
             string dow;
 
-            DataTable dt;
-
+       
 
             try
             {

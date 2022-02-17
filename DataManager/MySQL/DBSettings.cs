@@ -270,7 +270,31 @@ namespace RedDot.DataManager
 
        }
 
+        public bool WipeSalesDataCustom(DateTime startdate, DateTime enddate)
+        {
+            string sql;
+            bool success = true;
 
+
+
+
+
+            sql = "delete salesitem from sales inner join salesitem on sales.id = salesitem.salesid where  DATE(sales.saledate) between '" + startdate.ToString("yyyy-MM-dd") + "' and '" + enddate.ToString("yyyy-MM-dd") + "'";
+            if (!_dbconnect.Command(sql)) success = false;
+
+            sql = "delete gratuity from sales inner join gratuity on sales.id = gratuity.salesid where  DATE(sales.saledate) between '" + startdate.ToString("yyyy-MM-dd") + "' and '" + enddate.ToString("yyyy-MM-dd") + "'";
+            if (!_dbconnect.Command(sql)) success = false;
+
+            sql = "delete payment from sales inner join payment on sales.id = payment.salesid where  DATE(sales.saledate) between '" + startdate.ToString("yyyy-MM-dd") + "' and '" + enddate.ToString("yyyy-MM-dd") + "'";
+            if (!_dbconnect.Command(sql)) success = false;
+
+
+            sql = "delete from  sales where  DATE(sales.saledate) between '" + startdate.ToString("yyyy-MM-dd") + "' and '" + enddate.ToString("yyyy-MM-dd") + "'";
+            if (!_dbconnect.Command(sql)) success = false;
+
+
+            return success;
+        }
         public bool WipeSalesData()
         {
             string sql;

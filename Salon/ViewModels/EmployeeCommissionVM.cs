@@ -27,20 +27,25 @@ namespace RedDot
 
   
         private decimal _grandtotalsales;
+        private decimal _grandtotalsupplyfees;
+        private decimal _grandtotaldailyfees;
         private decimal _grandtotalcommission;
+
         private decimal _grandtotalgratuities;
         private decimal _grandtotalnetgratuities;
 
+
+        private int _daycount = 0;
 
 
         private decimal _custom1 = 0;
         private decimal _custom2 = 0;
         private decimal _custom3 = 0;
 
-   
+        private bool _summary = false;
 
         Reports _reports;
-        public EmployeeCommissionVM(int employeeid, DateTime startdate, DateTime enddate)
+        public EmployeeCommissionVM(int employeeid, DateTime startdate, DateTime enddate, bool summary)
         {
 
 
@@ -51,7 +56,7 @@ namespace RedDot
 
 
             _reports = new Reports();
-
+            _summary = summary;
           
 
             EmployeeSales = _reports.GetEmployeeCommission(CurrentEmployee, startdate, enddate);
@@ -61,12 +66,28 @@ namespace RedDot
         }
 
 
+        public bool IsSummary
+        {
+            get { return _summary; }
+            set
+            {
+                _summary = value;
+                NotifyPropertyChanged("IsSummary");
+            }
+        }
+
 
 
         //----------------------------------Public Properties ----------------------------------------------------------------------------
         public ObservableCollection<SalesData> EmployeeSales
         {
-            get { return _employeesales; }
+            get {
+                if (_summary) return new ObservableCollection<SalesData>();
+                else
+                    return _employeesales;
+            
+            
+            }
             set {
                 _employeesales = value;
                 NotifyPropertyChanged("EmployeeSales");
@@ -118,6 +139,34 @@ namespace RedDot
 
         }
 
+        public decimal GrandTotalDailyFees
+        {
+
+            get { return _grandtotaldailyfees; }
+
+            set { _grandtotaldailyfees = value; NotifyPropertyChanged("GrandTotalDailyFees"); }
+
+        }
+
+        public decimal TotalPay
+        {
+            get { return GrandTotalCommission + GrandTotalNetGratuity; }
+        }
+
+        public decimal TotalNetPay
+        {
+            get { return TotalPay - GrandTotalDailyFees; }
+        }
+
+        public decimal GrandTotalSupplyFees
+        {
+
+            get { return _grandtotalsupplyfees; }
+
+            set { _grandtotalsupplyfees = value; NotifyPropertyChanged("GrandTotalSupplyFees"); }
+
+        }
+
         private decimal _grandservicecount;
         public decimal GrandServiceCount
         {
@@ -164,6 +213,11 @@ namespace RedDot
             set { _grandtotalnetgratuities = value; NotifyPropertyChanged("GrandTotalNetGratuity"); }
         }
 
+        public int GrandTotalDayCount
+        {
+            get { return _daycount; }
+            set { _daycount = value; NotifyPropertyChanged("GrandTotalDayCount"); }
+        }
 
         //calculates the grand total that goes on bottom of report
         public void CalculateGrandTotals()
@@ -175,21 +229,30 @@ namespace RedDot
             decimal grandtotalnetgratuities = 0;
             decimal servicecount = 0;
             decimal ticketcount = 0;
-
-      
-      
-
-                foreach (SalesData salesdata in EmployeeSales)
-                {
-                    grandtotalsales += salesdata.TotalSales;
-                    grandtotalcommission += salesdata.TotalCommission;
-                    grandtotalgratuities += salesdata.Gratuity;
-                    grandtotalnetgratuities += salesdata.NetGratuity;
-                    servicecount += salesdata.ServiceCount;
-                    if(salesdata.ServiceCount >0) ticketcount++;
-                }
+            decimal grandtotalsupplyfees = 0;
 
 
+
+
+            if(_employeesales != null)
+            foreach (SalesData salesdata in _employeesales)
+            {
+                grandtotalsales += salesdata.TotalSales;
+                grandtotalcommission += salesdata.TotalCommission;
+                grandtotalgratuities += salesdata.Gratuity;
+                grandtotalnetgratuities += salesdata.NetGratuity;
+                grandtotalsupplyfees += salesdata.TotalSupplyFee;
+                servicecount += salesdata.ServiceCount;
+                if (salesdata.ServiceCount > 0) ticketcount++;
+            }
+
+            var daycount = _employeesales.Select(x => x.SaleDate.ToString("M/d/yy")).Distinct().Count();
+
+            GrandTotalDayCount = daycount;
+
+            GrandTotalDailyFees =  daycount * CurrentEmployee.DailyFee;
+
+            GrandTotalSupplyFees = grandtotalsupplyfees;
 
             GrandServiceCount = servicecount;
             GrandTicketCount = ticketcount;
@@ -201,9 +264,7 @@ namespace RedDot
             GrandTotalGratuity = grandtotalgratuities;
             GrandTotalNetGratuity = grandtotalnetgratuities;
 
-
-
-            Custom1 =Math.Round( GrandTotalCommission * (CurrentEmployee.PaySplit/100m),2);
+            Custom1 =Math.Round( (GrandTotalCommission * (CurrentEmployee.PaySplit/100m) - GrandTotalDailyFees),2);
             Custom2 =Math.Round( GrandTotalCommission * (1-(CurrentEmployee.PaySplit/100m)) + GrandTotalNetGratuity,2);
 
         }

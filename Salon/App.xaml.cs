@@ -110,7 +110,7 @@ namespace RedDot
                 {
                     logger.Info("WebSync Restart Process:" + ex.Message);
                 }
-               
+
 
 
 
@@ -180,7 +180,19 @@ namespace RedDot
                         demo = true;
                     }
                 }
-                
+
+
+
+                if (GlobalSettings.Instance.EnableFingerPrint)
+                {
+                    //failed to detect finger printing libraries
+                    if (!FingerPrint.Testforfingerprint())
+                    {
+                        TouchMessageBox.Show("Finger Print reader or libraries are missing.");
+                        GlobalSettings.Instance.EnableFingerPrint = false;
+                    }
+                }
+
 
                 //LIcense check is done so start application window 
 
@@ -216,7 +228,7 @@ namespace RedDot
                     m_remotescreen.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
                     m_remotescreen.Top = GlobalSettings.Instance.r1.Top;
                     m_remotescreen.Left = GlobalSettings.Instance.r1.Left;
-                    //m_remotescreen.Show();
+                    m_remotescreen.Show();
                 }
 
 

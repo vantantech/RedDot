@@ -657,7 +657,7 @@ namespace RedDot
 
                         if (line.ItemType == "product")
                         {
-                            m_dbproducts.DBDeductInventory(line.ProductID);
+                            m_dbproducts.DBDeductInventory(line.ProductID, line.Quantity);
 
                         }
 
@@ -699,7 +699,7 @@ namespace RedDot
 
                         if (line.ItemType == "product")
                         {
-                            m_dbproducts.DBAddToInventory(line.ProductID);
+                            m_dbproducts.DBAddToInventory(line.ProductID, line.Quantity);
 
                         }
 
@@ -742,7 +742,7 @@ namespace RedDot
 
                         if(line.ItemType=="product")
                         {
-                            m_dbproducts.DBDeductInventory(line.ProductID);
+                            m_dbproducts.DBDeductInventory(line.ProductID, line.Quantity);
 
                         }
 
@@ -1518,9 +1518,9 @@ namespace RedDot
             return null;
         }
 
-        public void UpdatePaymentDate(int paymentid, DateTime date)
+        public void UpdatePayment(int paymentid, DateTime date, string paytype , decimal amount)
         {
-            m_dbTicket.DBUpdatePaymentDate(paymentid, date);
+            m_dbTicket.DBUpdatePayment(paymentid, date, paytype, amount);
         }
 
         public LineItem GetLineItemLine(int id)

@@ -154,9 +154,16 @@
                                 <TextBlock Text="{Loc ExportDetail}"></TextBlock>
                             </StackPanel>
                         </Button>
-                  
 
-                    <Button Margin="500,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Right" VerticalAlignment="Top" Height="60"   Width="70" 
+
+                    <Button Margin="400,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Right" VerticalAlignment="Top" Height="60"   Width="70" 
+                            Command="{Binding RunReportClicked}" >
+                        <StackPanel>
+                            <Image Source="/media/reports.png" Width="40" Height="40"/>
+                            <TextBlock  Text="Run Report" FontSize="13" FontWeight="Normal"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="10,0,0,0" Style="{StaticResource CustomButtonStyleFlat}"  HorizontalAlignment="Right" VerticalAlignment="Top" Height="60"   Width="70" 
                             Command="{Binding BackClicked}" >
                         <StackPanel>
                             <Image Source="/media/back.png" Width="40" Height="40"/>

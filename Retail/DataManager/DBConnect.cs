@@ -129,7 +129,6 @@ namespace RedDot
             }
             catch (Exception e)
             {
-
                 MessageBox.Show("GetConnectionString:" + e.Message);
                 return "";
             }

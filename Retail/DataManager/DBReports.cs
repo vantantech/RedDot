@@ -38,10 +38,11 @@ namespace RedDot
 		{
 
 
-			string query = "select employee.firstname, employee.lastname, salesitem.*, (price + coalesce(surcharge,0) - coalesce(salesitem.discount,0)) as pricesurcharge, sales.saledate,sales.discount as adjustment,sales.employeeid as salesemployeeid, sales.closedate, pay.paymenttype from salesitem " +
+			string query = "select concat(coalesce(customer.firstname,' '),' ' ,coalesce( customer.lastname,' ')) as customername,  employee.firstname, employee.lastname, salesitem.*, (price + coalesce(surcharge,0) - coalesce(salesitem.discount,0)) as pricesurcharge, sales.saledate,sales.discount as adjustment,sales.employeeid as salesemployeeid, sales.closedate, pay.paymenttype from salesitem " +
 							" inner join sales on salesitem.salesid = sales.id" +
 							" inner join employee on sales.employeeid = employee.id" +
-							" inner join (select salesid, group_concat(description) as paymenttype from payment group by salesid ) as pay on salesitem.salesid = pay.salesid ";
+							" inner join (select salesid, group_concat(description) as paymenttype from payment group by salesid ) as pay on salesitem.salesid = pay.salesid " +
+							" left outer join customer on sales.customerid = customer.id ";
 
 
 			if (employeeid >= 900 )
@@ -51,7 +52,7 @@ namespace RedDot
 
 
 			query = query + " and   DATE(sales.closedate) between '" + startdate.ToString("yyyy-MM-dd") + "' and '" + enddate.ToString("yyyy-MM-dd") + "' and salesitem.commissiontype != 'none' ";
-			query = query + "  order by salesitem.salesid, salesitem.id";
+			query = query + "  order by sales.closedate, salesitem.salesid, salesitem.id";
 
 
 			return m_dbconnect.GetData(query);

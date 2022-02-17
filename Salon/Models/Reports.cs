@@ -9,6 +9,7 @@ using System.Data;
 //using System.Windows.Forms;
 using RedDot.DataManager;
 using Microsoft.Win32;
+using RedDot.Classes;
 
 namespace RedDot
 {
@@ -45,6 +46,8 @@ namespace RedDot
         {
             return _dbreports.GetDailySales(reportdate, reportdate, employeeid);
         }
+
+
 
         public DataTable GetDailySalesSummary(DateTime reportdate)
         {
@@ -435,8 +438,109 @@ namespace RedDot
 
 
 
+        public DailyRevenue GetSummaryRevenue(DateTime startdate, DateTime enddate)
+        {
+
+            DailyRevenue dailyreport;
+            DataTable dt;
+            ReportCat reportcat;
+            decimal totalrevenue;
 
 
+
+
+
+            dailyreport = new DailyRevenue();
+            dailyreport.SalesCat = new ObservableCollection<ReportCat>();
+
+            dailyreport.DOW = startdate.DayOfWeek.ToString().Substring(0, 3).ToUpper();
+            dailyreport.ReportDate = startdate.ToString("M/d");
+
+            //get the daily service/product sold
+            dt = _dbreports.GetSalesRevenue(startdate, enddate);
+
+            totalrevenue = 0;
+
+            if (dt != null)
+                foreach (DataRow row in dt.Rows) //parse through each category of items sold
+                {
+                    reportcat = new ReportCat();
+                    reportcat.CatName = row["reportcategory"].ToString();
+                    if (row["revenue"].ToString() != "")
+                    {
+                        reportcat.CatValue = decimal.Parse(row["revenue"].ToString());
+
+                    }
+                    else reportcat.CatValue = 0;
+
+                    totalrevenue = totalrevenue + reportcat.CatValue;
+                    dailyreport.SalesCat.Add(reportcat);
+                }
+
+
+            dailyreport.SalesTax = _dbreports.GetDailySalesTax(startdate, enddate);  //added 06/15/18
+            dailyreport.TipsWitheld = _dbreports.GetDailyTips(startdate, enddate);
+            dailyreport.TotalRevenue = totalrevenue;
+            dailyreport.TotalAdjustment = _dbreports.GetDailySalesAdjustments(startdate, enddate);  //this discount is for COMPs / ticket discount , not item discount.  Adjustment could be negative or positive
+            dailyreport.TotalDiscount = (-1) * _dbreports.GetDailySalesDiscounts(startdate, enddate);
+
+
+
+            return dailyreport;
+        }
+        public DailySettlement GetSummarySettlement(DateTime startdate, DateTime enddate)
+        {
+
+            DailySettlement dailyreport;
+            DataTable dt;
+            ReportCat reportcat;
+            decimal totalpayment;
+            decimal tipswithheld;
+
+
+
+            dailyreport = new DailySettlement();
+            dailyreport.PaymentCat = new ObservableCollection<ReportCat>();
+
+            dailyreport.DOW = startdate.DayOfWeek.ToString().Substring(0, 3).ToUpper();
+            dailyreport.ReportDate = startdate.ToString("M/d");
+
+            //get the daily service/product sold
+            dt = _dbreports.GetSalesSettlement(startdate, enddate);
+            tipswithheld = _dbreports.GetDailyTips(startdate, enddate);
+            totalpayment = 0;
+            foreach (DataRow row in dt.Rows) //parse through each category of items sold
+            {
+                reportcat = new ReportCat();
+                reportcat.CatName = row["reportcategory"].ToString();
+                if (row["netamount"].ToString() != "") reportcat.CatValue = decimal.Parse(row["netamount"].ToString());
+                else reportcat.CatValue = 0;
+                //add tips to credit charge
+
+                totalpayment = totalpayment + reportcat.CatValue;
+                dailyreport.PaymentCat.Add(reportcat);
+            }
+
+
+
+            dailyreport.TotalPayment = totalpayment;
+
+
+
+            return dailyreport;
+        }
+
+
+        public TipSummary GetTipSummary(DateTime startdate, DateTime enddate)
+        {
+           decimal tipswithheld = _dbreports.GetDailyTips(startdate, enddate);
+           
+            TipSummary tips = new TipSummary();
+            tips.Total = tipswithheld;
+           tips.Deduction =  Math.Round(tipswithheld * GlobalSettings.Instance.CreditCardFeePercent / 100, 2);
+            tips.NetTotal = Math.Round(tipswithheld * (100 - GlobalSettings.Instance.CreditCardFeePercent) / 100, 2);
+            return tips;
+        }
 
 
 
@@ -757,6 +861,7 @@ namespace RedDot
                 decimal GrandNetGratuity = 0;
                 decimal GrandSupplyFee = 0;
                 decimal GrandCommission = 0;
+                decimal GrandDailyFee = 0;
 
                 decimal Custom1 = 0;
                 decimal Custom2 = 0;
@@ -795,6 +900,9 @@ namespace RedDot
 
                 foreach(EmployeeCommissionVM report in reportlist)
                 {
+                    report.IsSummary = false;
+
+
                     if (cut)
                     {
                         printer.Center();
@@ -823,6 +931,7 @@ namespace RedDot
                     printer.LineFeed();
                     printer.PrintLF("Service Count:" + report.GrandServiceCount);
                     printer.PrintLF("Ticket Count:" + report.GrandTicketCount);
+                    printer.PrintLF("Day Count:" + report.GrandTotalDayCount);
 
                     bool PrintComm = GlobalSettings.Instance.ShowCommissionOnReport;
                     switch (reporttype)
@@ -977,14 +1086,16 @@ namespace RedDot
 
                     if (creditfee > 0) printer.PrintLF("Net Tips (-" + GlobalSettings.Instance.CreditCardFeePercent + "%) :" + Math.Round(NetGratuity, 2).ToString().PadLeft(10, ' '));
                     printer.PrintLF("------------------------------------------------"); //48 characters
-                    printer.PrintLF("Total Pay        :" + Math.Round(Commission + NetGratuity, 2).ToString().PadLeft(10, ' '));
+                    printer.PrintLF("Total Pay        :" +Math.Round(report.TotalPay, 2).ToString().PadLeft(10, ' '));
+                    printer.PrintLF("Clean Up Fees    :" + ("-" + Math.Round(report.GrandTotalDailyFees, 2).ToString()).PadLeft(10, ' '));
+                    printer.PrintLF("------------------------------------------------"); //48 characters
+                    printer.PrintLF("Total Net Pay    :" + Math.Round(report.TotalNetPay, 2).ToString().PadLeft(10, ' '));
+                    printer.LineFeed();
+
+
                     printer.PrintLF("=================== PAY CHECK =================="); //48 characters
+                    printer.PrintLF("Pay   1          :" +  report.Custom1.ToString().PadLeft(10,' '));
 
-
-
-
-
-                    printer.PrintLF("Pay   1          :" + report.Custom1.ToString().PadLeft(10, ' '));
                     printer.PrintLF("Pay   2          :" + report.Custom2.ToString().PadLeft(10, ' '));
                     printer.LineFeed();
 
@@ -994,6 +1105,7 @@ namespace RedDot
                     GrandNetGratuity = GrandNetGratuity + NetGratuity;
                     GrandSupplyFee = GrandSupplyFee + SupplyFee;
                     GrandCommission = GrandCommission + Commission;
+                    GrandDailyFee += report.GrandTotalDailyFees;
                     Total = 0;
                     Gratuity = 0;
                     NetGratuity = 0;
@@ -1038,12 +1150,13 @@ namespace RedDot
                         printer.PrintLF("Store Summary - " + daterange);
                         printer.LineFeed();
                         printer.DoubleHeightOFF();
-                        printer.PrintLF("Sales       :" + GrandTotal.ToString().PadLeft(10, ' '));
-                        printer.PrintLF("Supplies    :" + ("-" + GrandSupplyFee.ToString()).PadLeft(10, ' '));
-                        printer.PrintLF("Net Sales   :" + Math.Round(GrandTotal - GrandSupplyFee, 2).ToString().PadLeft(10, ' '));
-                        printer.PrintLF("Commission  :" + Math.Round(GrandCommission, 2).ToString().PadLeft(10, ' '));
-                        printer.PrintLF("Tips        :" + GrandGratuity.ToString().PadLeft(10, ' '));
-                        printer.PrintLF("Net Tips    :" + GrandNetGratuity.ToString().PadLeft(10, ' '));
+                        printer.PrintLF("Sales        :" + GrandTotal.ToString().PadLeft(10, ' '));
+                        printer.PrintLF("Supplies     :" + ("-" + GrandSupplyFee.ToString()).PadLeft(10, ' '));
+                        printer.PrintLF("Net Sales    :" + Math.Round(GrandTotal - GrandSupplyFee, 2).ToString().PadLeft(10, ' '));
+                        printer.PrintLF("Commission   :" + Math.Round(GrandCommission, 2).ToString().PadLeft(10, ' '));
+                        printer.PrintLF("Tips         :" + GrandGratuity.ToString().PadLeft(10, ' '));
+                        printer.PrintLF("Net Tips     :" + GrandNetGratuity.ToString().PadLeft(10, ' '));
+                        printer.PrintLF("Clean Up Fees:" + GrandDailyFee.ToString().PadLeft(10, ' '));
                      
                 
                 }
@@ -1291,6 +1404,160 @@ namespace RedDot
 
         }
 
+        public void PrintSummaryReport(DateTime startdate, DateTime enddate)
+        {
+            try
+            {
+
+                int receiptwidth = GlobalSettings.Instance.ReceiptWidth;
+                string printername = GlobalSettings.Instance.ReceiptPrinter;
+                Location store = GlobalSettings.Instance.Shop;
+
+
+                //defaults to receipt width since some customer had the character width setup.
+                int receiptchars = receiptwidth;
+                //translate to chars if value is in millimeters
+                //58mm printer = 32 chars  , 80mm printer = 48 chars
+                if (receiptwidth == 58) receiptchars = 32;
+                if (receiptwidth == 80) receiptchars = 48;
+
+
+
+                if (printername == "none") return;
+
+
+                //58mm printer = 32 chars  , 80mm printer = 48 chars
+                ReceiptPrinter printer = new ReceiptPrinter(printername);
+
+                printer.Center();
+                printer.LineFeed();
+                printer.PrintLF(store.Name);
+
+                printer.PrintLF(store.Address1);
+                if (store.Address2.Trim() != "") printer.PrintLF(store.Address2);
+                printer.PrintLF(store.City + ", " + store.State + " " + store.Zip);
+                printer.PrintLF(store.Phone);
+                printer.LineFeed();
+
+                printer.DoubleHeight();
+                printer.PrintLF("Summary Report");
+                printer.LineFeed();
+                if (startdate == enddate)
+                {
+                    printer.PrintLF(startdate.ToShortDateString());
+                }
+                else
+                {
+                    printer.PrintLF(startdate.ToShortDateString() + "-" + enddate.ToShortDateString());
+                }
+
+                printer.DoubleHeightOFF();
+                printer.LineFeed();
+                printer.Left();
+
+                printer.PrintLF(new String('=', receiptchars));
+                printer.LineFeed();
+                printer.LineFeed();
+                printer.DoubleHeight();
+                printer.PrintLF("Revenue");
+                printer.DoubleHeightOFF();
+
+                printer.LineFeed();
+                DailyRevenue dailyrevenue;
+                dailyrevenue = GetDailyRevenue(startdate, enddate);
+
+                foreach (ReportCat rp in dailyrevenue.SalesCat)
+                {
+                    printer.PrintLF(Utility.FormatPrintRow(rp.CatName, rp.CatValue.ToString(), receiptchars));
+
+                }
+                printer.PrintLF(Utility.FormatPrintRow("Tips Withheld:", dailyrevenue.TipsWitheld.ToString(), receiptchars));
+
+                printer.PrintLF(Utility.FormatPrintRow("Total Discount:", "-" + dailyrevenue.TotalDiscount.ToString(), receiptchars));
+                printer.PrintLF(Utility.FormatPrintRow("Total Adjustment:", "-" + dailyrevenue.TotalAdjustment.ToString(), receiptchars));
+                printer.PrintLF(Utility.FormatPrintRow("Total Tax:", dailyrevenue.SalesTax.ToString(), receiptchars));
+                printer.PrintLF(new String('-', receiptchars));
+                printer.PrintLF(Utility.FormatPrintRow("Total Revenue:", dailyrevenue.NetRevenue.ToString(), receiptchars));
+
+
+                printer.LineFeed();
+                printer.LineFeed();
+                printer.DoubleHeight();
+                printer.PrintLF("Settlement");
+                printer.DoubleHeightOFF();
+
+                printer.LineFeed();
+                DailySettlement dailypayment;
+                dailypayment = GetDailySettlement(startdate, enddate);
+
+                decimal totalreceived = 0;
+                foreach (ReportCat rp in dailypayment.PaymentCat)
+                {
+                    if (rp.CatName.ToUpper().Substring(0, 4) != "GIFT" && rp.CatName.ToUpper().Substring(0, 4) != "REWA" && rp.CatName.ToUpper().Substring(0, 4) != "STAM")
+                    {
+                        printer.PrintLF(Utility.FormatPrintRow(rp.CatName, rp.CatValue.ToString(), receiptchars));
+                        totalreceived += rp.CatValue;
+                    }
+
+
+
+
+                }
+                printer.PrintLF(new String('-', receiptchars));
+                printer.PrintLF(Utility.FormatPrintRow("Total Payments:", totalreceived.ToString(), receiptchars));
+                printer.LineFeed();
+
+                //------------------------------------GIFT CARD-------------------------
+                totalreceived = 0;
+                foreach (ReportCat rp in dailypayment.PaymentCat)
+                {
+                    if (rp.CatName.ToUpper().Substring(0, 4) == "GIFT")
+                    {
+                        printer.PrintLF(Utility.FormatPrintRow(rp.CatName, rp.CatValue.ToString(), receiptchars));
+                        totalreceived += rp.CatValue;
+                    }
+
+                }
+                printer.PrintLF(new String('-', receiptchars));
+                printer.PrintLF(Utility.FormatPrintRow("Total GiftCard:", totalreceived.ToString(), receiptchars));
+                printer.LineFeed();
+
+                //-----------------------------------REWARDS--------------------------
+                totalreceived = 0;
+                foreach (ReportCat rp in dailypayment.PaymentCat)
+                {
+                    if (rp.CatName.ToUpper().Substring(0, 4) == "REWA" || rp.CatName.ToUpper().Substring(0, 4) == "STAM")
+                    {
+                        printer.PrintLF(Utility.FormatPrintRow(rp.CatName, rp.CatValue.ToString(), receiptchars));
+                        totalreceived += rp.CatValue;
+                    }
+
+                }
+                printer.PrintLF(new String('-', receiptchars));
+                printer.PrintLF(Utility.FormatPrintRow("Total Reward:", totalreceived.ToString(), receiptchars));
+                printer.LineFeed();
+
+
+
+                printer.PrintLF(Utility.FormatPrintRow("Total Settlements:", dailypayment.TotalPayment.ToString(), receiptchars));
+                printer.LineFeed();
+                printer.LineFeed();
+
+
+                printer.Send(); //sends buffer to printer
+
+                printer.Cut();
+
+            }
+            catch (Exception e)
+            {
+
+                TouchMessageBox.Show("Print Summary Report:" + e.Message);
+            }
+
+
+
+        }
 
 
         public void PrintPayments(DateTime startdate, DateTime enddate, string ReportTitle, int employeeid)

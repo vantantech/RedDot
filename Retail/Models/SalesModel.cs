@@ -138,13 +138,35 @@ namespace RedDot
             return _dbproducts.GetProductsByCat(catid);
         }
 
+
+        public DataTable GetRefundProducts(int salesid)
+        {
+
+            return _dbproducts.GetRefundProducts(salesid);
+        }
+
         public DataTable FindProducts(string type, string description)
         {
             return _dbproducts.GetProductsByTypeDescription(type, description);
 
         }
 
+        public void UpdateCost(int salesitemid, decimal newcost)
+        {
+            try
+            {
+                //if (Status == "Closed") return false;
 
+
+              _dbticket.DBUpdateSalesItemValue(salesitemid, "cost", newcost);
+            
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Update Cost:" + e.Message);
+             
+            }
+        }
 
         /*
         public ObservableCollection<Ticket> LoadTickets(Employee currentemployee)

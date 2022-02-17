@@ -31,7 +31,7 @@ namespace RedDot
         {
             if (_security.WindowAccess("EmployeeCommission"))
             {
-                RetailEmployeeCommissionReport rpt = new RetailEmployeeCommissionReport(_security,_security.CurrentEmployee.ID);
+                EmployeeCommissionReport rpt = new EmployeeCommissionReport(_security,_security.CurrentEmployee.ID);
                 Utility.OpenModal(this, rpt);
 
             }

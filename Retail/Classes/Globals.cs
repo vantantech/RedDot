@@ -49,7 +49,7 @@ namespace RedDot
         public string[] GetAllUserPins { get; private set; }
         public int[] GetallPinIDs { get; private set; }
 
-
+        public bool Demo { get; set; }
         public void LoadAllFmdsUserIDs()
         {
             DBEmployee dbemployee = new DBEmployee();
@@ -528,6 +528,7 @@ namespace RedDot
         /// </summary>
         /// 
 
+
         public string DBUser
         {
             get { return Utility.GetINIString("DBUser", "DataBase"); }
@@ -709,6 +710,14 @@ namespace RedDot
             set { _dbsettings.SaveSetting("CreditCardChoices", value.ToString()); }
         }
 
+
+        public string EmployeeRoles
+        {
+            get { return _dbsettings.GetStringSetting("EmployeeRoles"); }
+            set { _dbsettings.SaveSetting("EmployeeRoles", value.ToString()); }
+        }
+
+
         public string StoreEmail
         {
             get { return _dbsettings.GetStringSetting("StoreEmail"); }
@@ -767,6 +776,6 @@ namespace RedDot
             set { _dbsettings.SaveSetting("RewardException", value.ToString()); }
         }
 
-
+ 
     }
 }

@@ -502,6 +502,12 @@ namespace RedDot
             set { _dbsettings.BoolSaveSetting("EnableHoldButton", value); }
         }
 
+        public bool EnableFingerPrint
+        {
+            get { return _dbsettings.BoolGetSetting("Application", "EnableFingerPrint", "Enable Finger Print", "false"); }
+            set { _dbsettings.BoolSaveSetting("EnableFingerPrint", value); }
+        }
+
 
         public bool EnableCreditSale
         {
@@ -898,7 +904,18 @@ namespace RedDot
             set { _dbsettings.StringSaveSetting("PaymentNotice", value.ToString()); }
         }
 
-   
+
+        public string IPAddress
+        {
+            get { return Utility.GetINIString("IPAddress", "CreditCard", "S300-xxxxxx"); }
+            set { Utility.PutINIString("IPAddress", "CreditCard", value.ToString()); }
+        }
+
+        public string Port
+        {
+            get { return Utility.GetINIString("Port", "CreditCard", "10009"); } //10009 for PAXS300
+            set { Utility.PutINIString("Port", "CreditCard", value.ToString()); }
+        }
 
         public string SIPDefaultIPAddress
         {

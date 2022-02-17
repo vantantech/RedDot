@@ -139,9 +139,6 @@
     <Reference Include="PdfSharp.Charting">
       <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
-    <Reference Include="RedDotUpdater">
-      <HintPath>..\Updater\bin\Release\RedDotUpdater.dll</HintPath>
-    </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
@@ -256,7 +253,6 @@
     <Compile Include="ViewModels\TimeCardVM.cs" />
     <Compile Include="Classes\TimeSlot.cs" />
     <Compile Include="Classes\TouchMessage.cs" />
-    <Compile Include="ViewModels\UpdateViewModel.cs" />
     <Compile Include="Classes\Utility.cs" />
     <Compile Include="Classes\VFD.cs" />
     <Compile Include="Classes\Visible.cs" />
@@ -306,6 +302,9 @@
     <Compile Include="Views\BackOffice\AvailableShipping.xaml.cs">
       <DependentUpon>AvailableShipping.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Control\SalesDetailsControl.xaml.cs">
+      <DependentUpon>SalesDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\InventoryReport.xaml.cs">
       <DependentUpon>InventoryReport.xaml</DependentUpon>
     </Compile>
@@ -330,8 +329,8 @@
     <Compile Include="Views\Common\AlertView.xaml.cs">
       <DependentUpon>AlertView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reports\RetailCommisionReport.xaml.cs">
-      <DependentUpon>RetailCommisionReport.xaml</DependentUpon>
+    <Compile Include="Views\Reports\CommisionReport.xaml.cs">
+      <DependentUpon>CommisionReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\RetailMonthlySalesReport.xaml.cs">
       <DependentUpon>RetailMonthlySalesReport.xaml</DependentUpon>
@@ -513,8 +512,8 @@
     <Compile Include="Views\BackOffice\ReportsMenu.xaml.cs">
       <DependentUpon>ReportsMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reports\RetailEmployeeCommissionReport.xaml.cs">
-      <DependentUpon>RetailEmployeeCommissionReport.xaml</DependentUpon>
+    <Compile Include="Views\Reports\EmployeeCommissionReport.xaml.cs">
+      <DependentUpon>EmployeeCommissionReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Employee\EmployeeList.xaml.cs">
       <DependentUpon>EmployeeList.xaml</DependentUpon>
@@ -527,6 +526,12 @@
     </Compile>
     <Compile Include="Views\Common\More.xaml.cs">
       <DependentUpon>More.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\EmployeeSalesReport.xaml.cs">
+      <DependentUpon>EmployeeSalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\SalesRepReport.xaml.cs">
+      <DependentUpon>SalesRepReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\ShippingReport.xaml.cs">
       <DependentUpon>ShippingReport.xaml</DependentUpon>
@@ -585,9 +590,6 @@
     <Compile Include="Views\TouchMessageBox.xaml.cs">
       <DependentUpon>TouchMessageBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Update.xaml.cs">
-      <DependentUpon>Update.xaml</DependentUpon>
-    </Compile>
     <Page Include="Resources\ReceiptResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -605,6 +607,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BackOffice\AvailableShipping.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Control\SalesDetailsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -640,7 +646,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reports\RetailCommisionReport.xaml">
+    <Page Include="Views\Reports\CommisionReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -876,7 +882,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Reports\RetailEmployeeCommissionReport.xaml">
+    <Page Include="Views\Reports\EmployeeCommissionReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -913,6 +919,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Common\More.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\EmployeeSalesReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\SalesRepReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -977,10 +991,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TouchMessageBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Update.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

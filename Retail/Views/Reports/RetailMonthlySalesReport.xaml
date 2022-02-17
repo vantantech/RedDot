@@ -46,7 +46,7 @@
 
             </TabItem>
 
-            <TabItem Header="Monthly Payment Report" Style="{StaticResource TabItemStyle}">
+            <TabItem  Header="Monthly Payment Report" Style="{StaticResource TabItemStyle}">
 
                 <local:MonthlyPaymentsControl />
 

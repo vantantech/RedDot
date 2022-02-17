@@ -218,7 +218,7 @@ namespace RedDot
             RewardClicked = new RelayCommand(ExecuteRewardClicked, param => this.CanExecuteReward);
    
             NewTicketClicked = new RelayCommand(ExecuteNewTicketClicked, param => this.CanExecuteNullCloseTicket);
-            CreateRefundClicked = new RelayCommand(ExecuteCreateRefundClicked, param => this.CanExecuteRefundTicket);
+            CreateRefundClicked = new RelayCommand(ExecuteRefundClicked, param => this.CanExecuteRefundTicket);
 
             PrintReceiptClicked = new RelayCommand(ExecutePrintReceiptClicked, param => CanPrintReceiptClickedExecute);
             PrintLargeReceiptClicked = new RelayCommand(ExecutePrintLargeReceiptClicked, param => CanPrintReceiptClickedExecute);
@@ -307,14 +307,22 @@ namespace RedDot
 
             }
 
-            if (Categories1 == null )
+            if(CurrentTicket.ParentTicketID == 0)
             {
-                Categories1 = m_inventorymodel.GetCategoryList("Cat1",0);
-                Categories2 = m_inventorymodel.GetCategoryList("Cat2",0);
-                Categories3 = m_inventorymodel.GetCategoryList("Cat3",0);
-                Categories4 = m_inventorymodel.GetCategoryList("Cat4",0);
-                // CatLoaded = true;
+                if (Categories1 == null)
+                {
+                    Categories1 = m_inventorymodel.GetCategoryList("Cat1", 0);
+                    Categories2 = m_inventorymodel.GetCategoryList("Cat2", 0);
+                    Categories3 = m_inventorymodel.GetCategoryList("Cat3", 0);
+                    Categories4 = m_inventorymodel.GetCategoryList("Cat4", 0);
+                    // CatLoaded = true;
+                }
             }
+            else
+            {
+                LoadRefundItems();
+            }
+      
 
 
             SetVisibility();
@@ -1257,6 +1265,22 @@ namespace RedDot
             }
         }
 
+        public void LoadRefundItems()
+        {
+            ObservableCollection<Product> selprod = new ObservableCollection<Product>();
+            DataTable sel;
+
+            sel = m_salesModel.GetRefundProducts(CurrentTicket.ParentTicketID);
+
+            foreach (DataRow row in sel.Rows)
+            {
+                Product prod = new Product(row);
+                selprod.Add(prod);
+            }
+            Products = selprod;
+
+        }
+
         public void ExecuteCategoryServiceClicked(object objid)
         {
             int id = 0;
@@ -1572,7 +1596,6 @@ namespace RedDot
             string[] portion = temp.Split(',');
 
             int id = 0;
-            string itemtype = portion[1]; // type = service, product , giftcard .. etc..
             LineItemActionView linevw;
 
             try
@@ -1584,8 +1607,8 @@ namespace RedDot
 
                 LineItem line = CurrentTicket.GetLineItemLine(id);
 
-                if (CurrentTicket.Status == "Closed") linevw = new LineItemActionView(m_parent, "Closed", line);
-                else linevw = new LineItemActionView(m_parent, itemtype, line);
+          
+                linevw = new LineItemActionView(m_parent, CurrentTicket.Status, line);
                 Utility.OpenModal(m_parent, linevw);
 
 
@@ -1754,36 +1777,46 @@ namespace RedDot
 
         public void ExecutePaymentDeleteClicked(object paymentid)
         {
+
+            if (CurrentTicket.Status == "Closed")
+            {
+                MessageBox.Show("Ticket is closed.  Can not modify");
+                return;
+            }
+
+
+
             Payment pay = CurrentTicket.GetPaymentLine((int)paymentid);
             if (pay.Voided) return;
 
 
 
 
-            if (!m_security.ManagerOverrideAccess("VoidPayment", "Manager Override Needed")) return;
+        
 
-            Selection sel = new Selection("Edit", "Void");
+            Selection sel = new Selection("Edit", "Void","Refund");
             sel.ShowDialog();
-            if(sel.Action == "Edit")
+            switch(sel.Action.ToUpper())
             {
-                CustomDate cd = new CustomDate(Visibility.Hidden,pay.PaymentDate);
+
+                case "EDIT":
+                if (!m_security.ManagerOverrideAccess("EditPayment", "Manager Override Needed")) return;
+               // if (!m_security.HasAccess("EditPayment")) return;
+                EditPayment cd = new EditPayment(pay.PaymentDate,pay.Description,pay.Amount);
               
                 cd.ShowDialog();
 
-                CurrentTicket.UpdatePaymentDate(pay.ID, cd.StartDate);
+                CurrentTicket.UpdatePayment(pay.ID, cd.StartDate, cd.PayType, cd.Amount);
                 CurrentTicket.Reload();
 
-            }else
-            {
+                    break;
+                case "VOID":
+
+                if (!m_security.ManagerOverrideAccess("VoidPayment", "Manager Override Needed")) return;
                 Confirm dlg;
 
                 try
                 {
-                    if (CurrentTicket.Status == "Closed")
-                    {
-                        MessageBox.Show("Ticket is closed.  Can not modify");
-                        return;
-                    }
 
 
 
@@ -1815,6 +1848,26 @@ namespace RedDot
 
                     MessageBox.Show("Error deleting line item: " + e.Message);
                 }
+
+                    break;
+
+                case "REFUND":
+
+                    if (!m_security.ManagerOverrideAccess("VoidPayment", "Manager Override Needed")) return;
+          
+
+
+                    NumPad np = new NumPad("Refund Amount", false, pay.AmountStr);
+                    np.ShowDialog();
+
+                    string amt = np.Amount;
+
+                    decimal amount = Math.Abs( decimal.Parse(amt)) * (-1);
+
+
+                    CurrentTicket.AddPayment(pay.Description, amount, pay.AuthorCode);
+
+                    break;
             }
 
 
@@ -1969,7 +2022,7 @@ namespace RedDot
 
         }
 
-        public void ExecuteCreateRefundClicked(object obj)
+        public void ExecuteRefundClicked(object obj)
         {
 
             if (m_security.WindowNewAccess("Refund"))

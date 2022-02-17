@@ -22,7 +22,7 @@ namespace RedDot
 
         public string Action;
   
-        public LineItemActionView(Window parent,string itemtype, LineItem line)
+        public LineItemActionView(Window parent,string status, LineItem line)
         {
 
             InitializeComponent();
@@ -40,9 +40,8 @@ namespace RedDot
                 this.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             }
             Action = "";
-            if (itemtype == "giftcard") btnPickEmployee.Visibility = Visibility.Collapsed;
-            if (GlobalSettings.Instance.Shop.Type != "Salon") btnPickEmployee.Visibility = Visibility.Collapsed;
-            if (itemtype.ToLower() == "closed")
+
+            if (status.ToLower() == "closed")
             {
                 btnDelete.IsEnabled = false;
                 btnDiscount.IsEnabled = false;
@@ -50,6 +49,7 @@ namespace RedDot
                 btnPriceOverride.IsEnabled = false;
                 btnSurcharge.IsEnabled = false;
                 btnQuantity.IsEnabled = false;
+                btnCost.IsEnabled = false;
 
             }
         }

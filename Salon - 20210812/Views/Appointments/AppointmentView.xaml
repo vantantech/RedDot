@@ -1,0 +1,416 @@
+﻿<Window x:Class="RedDot.AppointmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+        x:Name="thisform"
+        Title="Appointments" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
+         SizeChanged="Size_Changed" MouseMove="Window_MouseMove">
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+            <local:EmptyToVisibilityConverter x:Key="EmptyToVisibilityConverter"/>
+            <local:BooleanToColorConverter x:Key="BooleanToColorConverter"/>
+            <local:ResizeConverter x:Key="ResizeConverter" />
+            <local:ResizeConverter2 x:Key="ResizeConverter2" />
+
+
+            <Style TargetType="{x:Type Button}" x:Key="ApptButtonStyle">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="Lavender"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="BorderBrush" Value="#FF2B5F91"/>
+                <Setter Property="Margin" Value="1"/>
+                <Setter Property="MinWidth" Value="20"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+
+                            <Grid>
+                                <Rectangle Stroke="{TemplateBinding BorderBrush}" RadiusX="1" RadiusY="1" Fill="{TemplateBinding Background}"/>
+
+                                <Rectangle x:Name="rectangle" RadiusX="1" RadiusY="1" Fill="White" Margin="1" Opacity="0"/>
+
+                                <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" Margin="{TemplateBinding Padding}"/>
+                            </Grid>
+
+
+
+
+
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" TargetName="rectangle" Value="0.2"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Opacity" TargetName="rectangle" Value="0.3"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Fill" TargetName="rectangle" Value="#666"/>
+                                    <Setter Property="Opacity" TargetName="rectangle" Value="0.6"/>
+                                    <Setter Property="Opacity" TargetName="contentPresenter" Value="0.3"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="10,0,10,0"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="50"   Width="80" 
+                            Click="Button_Click" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
+                    <TextBlock Text="Date" VerticalAlignment="Center" Foreground="Maroon" FontSize="14" FontWeight="Bold"></TextBlock>
+                </StackPanel>
+            </Button>
+
+            <ItemsControl ItemsSource="{Binding DateList}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="1"  
+                                Style="{StaticResource CustomButtonStyle_Appt}"  
+                                Background="{Binding Background}"
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Height="50"   Width="70" 
+                             Command="{Binding DataContext.ApptDateClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                CommandParameter="{Binding StrValue}">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Description}" FontSize="14" Foreground="Black" FontWeight="Bold"></TextBlock>
+
+                                <TextBlock Text="{Binding Description2}" FontSize="14" Foreground="Maroon" FontWeight="Bold"></TextBlock>
+                            </StackPanel>
+                           
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+       
+        </StackPanel>
+
+
+        <Border Grid.Row="1"  BorderBrush="AliceBlue" BorderThickness="2" Width="auto"  Height="{Binding ElementName=thisform,Path=ActualHeight,Converter={StaticResource ResizeConverter2}}">
+
+                                       
+                                    
+                      <StackPanel Orientation="Vertical">
+
+
+                                <!-- Fixed Header Row .. Contains list of employees-->
+                                <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding AppointDate,StringFormat={}{0:MM/dd}}" FontSize="25" TextAlignment="Center"  Height="80" Width="75"/>
+
+
+
+                                            <!-- List of  each employee-->
+                                            <ItemsControl  ItemsSource="{Binding AppointmentList}" >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+
+                                                <Border BorderBrush="Blue" Margin="1,0,1,0"  CornerRadius="15,5,0,0"  Width="{Binding DataContext.ColumnWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"  >
+                                                            <Border.Background>
+                                                                <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
+                                                                    <GradientStop Color="#FFFFC934" Offset="0"/>
+                                                                    <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
+                                                                </LinearGradientBrush>
+                                                            </Border.Background>
+                                                            <!-- employee name and pic-->
+                                                            <StackPanel Orientation="Vertical" >
+                                                               
+                                                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center"   >
+                                                                        <TextBlock  Text="{Binding CurrentEmployee.DisplayName}"  Height="20"  FontSize="15"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
+                                                                         <Image Source="{Binding CurrentEmployee.ImageSrc}" Stretch="UniformToFill"  Width="60" Height="60" HorizontalAlignment="Center" />
+                                                                    </StackPanel>
+                                                              
+                                                                <Button Command="{Binding DataContext.NewAppointmentClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding CurrentEmployee.ID}" 
+                                                                            Style="{StaticResource ApptButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="60" >
+                                                                    <StackPanel>
+                                                                        <Image Source="/RedDot;component/media/newappointment.png" Height="40" Width="40"/>
+                                                                        <TextBlock Text="{Loc New}"></TextBlock>
+                                                                    </StackPanel>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Border>
+
+
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                    <StackPanel Orientation="Vertical">
+
+                                        <Button  Style="{StaticResource ApptButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="60" 
+                             Command="{Binding PreviousEmployeeClicked}" >
+                                            <StackPanel>
+                                                <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                                                <TextBlock Text="Previous"></TextBlock>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button  Style="{StaticResource  ApptButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="60" 
+                             Command="{Binding NextEmployeeClicked}" >
+                                            <StackPanel>
+                                                <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                                                <TextBlock Text="Next"></TextBlock>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                            
+                                            
+                                            
+                                        </StackPanel>
+
+                                <ScrollViewer   VerticalScrollBarVisibility="Visible"                                                  Height="{Binding ElementName=thisform,Path=ActualHeight,Converter={StaticResource ResizeConverter}}">
+                                    <ScrollViewer.Resources>
+                                        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                                            <Style.Triggers>
+                                                <Trigger Property="Orientation" Value="Horizontal">
+                                                    <Setter Property="Width" Value="auto"/>
+                                                    <Setter Property="Height" Value="40" />
+                                                </Trigger>
+                                                <Trigger Property="Orientation" Value="Vertical">
+                                                    <Setter Property="Width" Value="40"/>
+                                                    <Setter Property="Height" Value="auto" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+
+
+                                    </ScrollViewer.Resources>
+
+                                
+                            
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <!-- time slots  /  column on left most-->
+
+                                            <ItemsControl ItemsSource="{Binding TimeSlots}"  Width="75">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Vertical" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+
+                                                            <ItemsControl ItemsSource="{Binding Intervals}"  Width="75">
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <StackPanel Orientation="Vertical" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <Grid>
+
+                                                                            <TextBlock Text="{Binding Time}" TextAlignment="Right"  Height="20" Width="75"/>
+
+                                                                        </Grid>
+
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+
+                                                            </ItemsControl>
+
+                                                        </Grid>
+
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+
+                                            </ItemsControl>
+                                            <!-- List of Appointments for each employee-->
+                                            <ItemsControl Name="ic1" ItemsSource="{Binding AppointmentList}" AlternationCount="2">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border BorderBrush="Transparent" BorderThickness="1" Background="Cornsilk" >
+                                          
+
+                                                        <ItemsControl ItemsSource="{Binding Appointments}" Width="{Binding DataContext.ColumnWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <StackPanel Orientation="Vertical" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+
+
+                                                                        <Button   Visibility="{Binding Visible}" 
+                                                                                  Command="{Binding DataContext.AppointmentClicked,RelativeSource={RelativeSource AncestorLevel=2 ,AncestorType=ItemsControl,Mode=FindAncestor}}"  
+                                                                                  CommandParameter="{Binding ID}" Style="{StaticResource ApptButtonStyle}"  
+                                                                                  HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                                                                  Height="{Binding Height}" Width="{Binding Width}"
+                                                                                         ToolTip="{Binding ApptText}"
+                                                                                  Background="{Binding ApptColor}"    >
+
+
+                                                                            <StackPanel Height="{Binding Height}"   Orientation="Vertical" VerticalAlignment="Top">
+                                                                    
+                                                                            <ItemsControl ItemsSource="{Binding SelectedCategories}">
+                                                                                <ItemsControl.ItemsPanel>
+                                                                                    <ItemsPanelTemplate>
+                                                                                        <WrapPanel Orientation="Horizontal" />
+                                                                                    </ItemsPanelTemplate>
+                                                                                </ItemsControl.ItemsPanel>
+                                                                                <ItemsControl.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                      
+                                                                                            <Border Background="{Binding colorcode}" BorderBrush="{Binding colorcode}" 
+                                                                                    BorderThickness="0" 
+                                                                                    Width="20"
+                                                                                    Height="20"
+                                                                                    CornerRadius="3" 
+                                                                                    VerticalAlignment="Top">
+                                                                                                <TextBlock Text="{Binding lettercode}" FontWeight="Bold" HorizontalAlignment="Center" />
+                                                                                            </Border>
+
+                                                                          
+                                                                         
+                                                                                    </DataTemplate>
+                                                                                </ItemsControl.ItemTemplate>
+                                                                            </ItemsControl>
+
+
+                                                                            <Border 
+                                                                                    Background="Transparent"    BorderBrush="Green" 
+                                                                                    BorderThickness="0" 
+                                                                                    Width="auto"
+                                                                                    Height="20"
+                                                                                    CornerRadius="3" 
+                                                                                    VerticalAlignment="Top">
+                                                                                <TextBlock Text="Flexible" Foreground="{Binding Flexible, Converter={StaticResource BooleanToColorConverter}}" />
+                                                                            </Border>
+                                                                            <TextBlock Width="{Binding Width}" Text="{Binding ApptText}" VerticalAlignment="Top" TextWrapping="Wrap" />
+                                                                            </StackPanel>
+
+
+
+
+                                                                        </Button>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+
+                                                            </ItemsControl>
+
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                        </StackPanel>
+
+
+                    
+                                    
+                                     
+                                    
+                                    
+                                    
+                                    
+                                </ScrollViewer>
+
+                      </StackPanel>
+                       
+   
+
+            </Border>
+
+
+        <TextBlock Opacity=".5" Grid.Row="1" 
+                   Text="{Binding AppointDate,StringFormat={}{0:MM/dd}}"
+                   FontSize="300"
+                   FontWeight="Bold"
+                   TextAlignment="Center"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Foreground="LightGray"
+                   IsHitTestVisible="false"
+                   Width="auto" Height="auto" 
+                   Margin="0,200,0,0"/>
+
+        <Viewbox Name="calendar" Visibility="Hidden"  Grid.Row="1">
+            <Calendar   SelectedDate="{Binding AppointDate}" SelectedDatesChanged="Calendar_SelectedDatesChanged" />
+
+        </Viewbox>
+        
+        
+       
+
+        <StackPanel Grid.Row="2"  Orientation="Horizontal">
+
+            <Button Margin="100,0,10,0" Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="100" 
+                             Command="{Binding PreviousDayClicked}" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/previous.png" Height="40" Width="40"/>
+                    <TextBlock Text="Previous"></TextBlock>
+                </StackPanel>
+            </Button>
+
+            <Button Margin="30,0,10,0"  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="100" 
+                             Command="{Binding NextDayClicked}" >
+                <StackPanel>
+                    <Image Source="/RedDot;component/media/next.png" Height="40" Width="40"/>
+                    <TextBlock Text="Next"></TextBlock>
+                </StackPanel>
+            </Button>
+
+ 
+
+         
+        </StackPanel>
+
+
+    </Grid>
+</Window>

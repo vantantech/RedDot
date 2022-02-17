@@ -65,11 +65,37 @@ namespace RedDot
             test.Text = "";
             tbPin.Text = "";
 
-            reader = new FingerPrint();
 
-            reader.InitializeReaders();
+            if(GlobalSettings.Instance.EnableFingerPrint)
+            {
+                reader = new FingerPrint();
 
-            reader.StartIndentification();
+                try
+                {
+                    var result = reader.InitializeReaders();
+                    if (result == false)
+                    {
+
+                        TouchMessageBox.Show("Finger Print libraries or device is missing");
+                        return;
+                    }
+
+                    reader.StartIndentification();
+
+
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Source == "DPUruNet")
+                    {
+                        TouchMessageBox.Show("Finger Print libraries are missing.  Please install.");
+                    }
+                    else
+                        TouchMessageBox.Show(ex.Message);
+                }
+            }
+
+         
         }
 
         //fingerpirnt code starts
@@ -194,6 +220,7 @@ namespace RedDot
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            if(reader!=null)
             reader.CancelCaptureAndCloseReader();
             ID = -99;
             PIN = "-99";
@@ -213,7 +240,8 @@ namespace RedDot
 
                 if (ID > 0)
                 {
-                    reader.CancelCaptureAndCloseReader();
+                    if(reader != null)
+                        reader.CancelCaptureAndCloseReader();
 
                     this.Close();
                 }
@@ -261,6 +289,7 @@ namespace RedDot
                 trackcount = 0;
                 if (ID > 0)
                 {
+                    if(reader!=null)
                     reader.CancelCaptureAndCloseReader();
 
                     this.Close();
@@ -280,6 +309,7 @@ namespace RedDot
                     RawString = "";
                     if (ID > 0)
                     {
+                        if(reader != null)
                         reader.CancelCaptureAndCloseReader();
 
                         this.Close();
@@ -297,6 +327,7 @@ namespace RedDot
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
+            if(reader!=null)
             reader.CancelCaptureAndCloseReader();
         }
 

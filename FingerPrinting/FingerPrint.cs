@@ -1,6 +1,7 @@
 ﻿using DPUruNet;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace RedDot
+namespace RedDot.FingerPrinting
 {
 
     public class FingerPrint
@@ -29,21 +30,120 @@ namespace RedDot
 
         private Fmd fmd = null;
 
-        public  bool InitializeReaders()
+        private bool m_enabled = true;
+        public bool Enabled
         {
-            ReaderCollection rc = ReaderCollection.GetReaders();
-            if (rc.Count == 0)
+            get { return m_enabled; }
+            set
             {
-                //UpdateEnrollMessage("Fingerprint Reader not found. Please check if reader is plugged in and try again", null);
-               // TouchMessageBox.Show("Fingerprint Reader not found. Please check if reader is plugged in and try again");
-                return false;
+                m_enabled = value;
             }
-            else
+        }
+
+
+        public Fmd[] GetAllFmd1s { get; private set; }
+
+        public Fmd[] GetAllFmd2s { get; private set; }
+
+
+        public string[] GetAllUserNames { get; private set; }
+
+        public int[] GetallfingerIDs { get; private set; }
+
+        public string[] GetAllUserPins { get; private set; }
+        public int[] GetallPinIDs { get; private set; }
+
+
+        public void LoadAllFmdsUserIDs(DataTable dt)
+        {
+
+
+            int i = 0;
+            int j = 0;
+
+
+            GetAllFmd1s = new Fmd[dt.Rows.Count];
+            GetAllFmd2s = new Fmd[dt.Rows.Count];
+            GetAllUserNames = new string[dt.Rows.Count];
+            GetAllUserPins = new string[dt.Rows.Count];
+
+
+            GetallfingerIDs = new int[dt.Rows.Count];
+            GetallPinIDs = new int[dt.Rows.Count];
+            bool hasprints = false;
+
+            if (dt.Rows.Count != 0)
             {
-                reader = rc[0];
-                Constants.ResultCode readersResult = reader.Open(Constants.CapturePriority.DP_PRIORITY_COOPERATIVE);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if ((dr["fmd1"].ToString().Length != 0) && (dr["fmd2"].ToString().Length != 0))
+                    {
+                        hasprints = true;
+                        GetAllFmd1s[i] = Fmd.DeserializeXml(dr["fmd1"].ToString());
+                        GetAllFmd2s[i] = Fmd.DeserializeXml(dr["fmd2"].ToString());
+                        GetAllUserNames[i] = dr["firstname"].ToString().TrimEnd() + " " + dr["lastname"].ToString().TrimEnd();
+
+                        GetallfingerIDs[i] = int.Parse(dr["id"].ToString());
+                        i++;
+                    }
+
+                    //need to load pins and separate set of IDs since not all employee might have fingerprints
+                    GetAllUserPins[j] = dr["pin"].ToString().TrimEnd();
+                    GetallPinIDs[j] = int.Parse(dr["id"].ToString());
+                    j++;
+                }
+            }
+
+            if (!hasprints)
+            {
+                GetAllFmd1s = null;
+                GetAllFmd2s = null;
+            }
+
+        }
+        public static bool Testforfingerprint()
+        {
+            try
+            {
+                ReaderCollection rc = ReaderCollection.GetReaders();
                 return true;
             }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public  bool InitializeReaders()
+        {
+            if (!m_enabled) return false;
+
+
+            try
+            {
+                ReaderCollection rc = ReaderCollection.GetReaders();
+                if (rc.Count == 0)
+                {
+                    //UpdateEnrollMessage("Fingerprint Reader not found. Please check if reader is plugged in and try again", null);
+                    // TouchMessageBox.Show("Fingerprint Reader not found. Please check if reader is plugged in and try again");
+                    return false;
+                }
+                else
+                {
+                    reader = rc[0];
+                    Constants.ResultCode readersResult = reader.Open(Constants.CapturePriority.DP_PRIORITY_COOPERATIVE);
+                    return true;
+                }
+            }catch(Exception ex)
+            {
+                if (ex.Source == "DPUruNet")
+                {
+                   return false;
+                }
+                else
+                    return true;
+            }
+
         }
 
 
@@ -62,6 +162,9 @@ namespace RedDot
 
         public string StartEnrollment()
         {
+            if (!m_enabled) return "Finger Print Disabled";
+
+
             fingerindex = 0;
             preEnrollmentFmd = new List<Fmd>();
 
@@ -86,6 +189,8 @@ namespace RedDot
 
         public string StartIndentification()
         {
+            if (!m_enabled) return "Finger Print Disabled";
+
             if (fingerprintavailable == false) return "";
 
 

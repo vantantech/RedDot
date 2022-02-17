@@ -1,0 +1,140 @@
+﻿<Window x:Class="RedDot.AvailableInventory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RedDot"
+       Title="Available Inventory"  Height="768" Width="1024"  WindowStartupLocation="Manual" WindowStyle="None" Icon="/media/sphere.png"  ResizeMode="NoResize"   >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+   
+
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+
+
+
+            <DataTemplate x:Key="AvailableProductTemplate">
+
+
+                <Button   Command="{Binding DataContext.AddToCategoryClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" Click="Button_Click" >
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Name="borderbox" BorderThickness="2"  Height="50" Margin="2"  BorderBrush="Gray" >
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Border   Width="50" Height="50"  Background="{Binding colorcode}" >
+                                        <TextBlock  Text="{Binding menuprefix}" Width="Auto" Height="Auto"  FontSize="15" Foreground="AliceBlue"  TextAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Width="160"  Height="50"  Background="AliceBlue" >
+                                        <StackPanel Orientation="Vertical">
+
+                                            <TextBlock Text="{Binding description}" Width="160"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding price}" Width="120"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="  (" Width="auto"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text="{Binding turnvalue}" Width="auto"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                                <TextBlock Text=")" Width="auto"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding supplyfee}" Width="120"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="borderbox" Value="Yellow"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+            </DataTemplate>
+
+
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Visibility="{Binding VisibleAvailable}"   >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical"  VerticalAlignment="Center" Height="35" Background="AliceBlue">
+            <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock  Text="Click Below to Add Items to [" FontSize="20" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding CurrentCategory.Description}" FontSize="20" HorizontalAlignment="Center" Foreground="Blue"/>
+                <TextBlock  Text="]" FontSize="20" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+        </StackPanel>
+
+
+
+        <ScrollViewer  Grid.Row="1" x:Name="ScrollViewer2" VerticalScrollBarVisibility="Visible" VerticalAlignment="Top" Height="640">
+            <ScrollViewer.Resources>
+                <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                    <Style.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="Width" Value="40"/>
+                            <Setter Property="Height" Value="Auto" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Resources>
+            <ItemsControl Name="IC2"  ItemsSource="{Binding Available}" ItemTemplate="{StaticResource AvailableProductTemplate}" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" >
+
+
+            <Button Margin="150,0,0,0" Command="{Binding AddNewProductClicked}" CommandParameter="1000" Style="{StaticResource CustomButtonStyle}" Height="70" Width="120"  >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/createnew.png" Width="40" Height="40"/>
+                    <TextBlock  Text="Create New Item" FontSize="15" FontWeight="Normal" />
+                </StackPanel>
+            </Button>
+            
+            
+            <Button  Margin="150,0,0,0"  Style="{StaticResource CustomButtonStyleFlat}" Height="70" Width="120" Click="Button_Click" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/back.png" Width="40" Height="40"/>
+                    <TextBlock  Text="BACK" FontSize="15" FontWeight="Normal"/>
+                </StackPanel>
+
+            </Button>
+
+
+                          
+        </StackPanel>
+    </Grid>
+
+</Window>
+

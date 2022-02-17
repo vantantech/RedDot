@@ -9,6 +9,11 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
 using RedDot.DataManager;
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Windows.Threading;
+using System.Threading;
+using System.Windows.Data;
 
 namespace RedDot
 {
@@ -18,7 +23,8 @@ namespace RedDot
       public Employee CurrentEmployee { get; set; }
 
       private ObservableCollection<EmployeeCommissionVM> _currentreport;
-      public ICommand EmployeeClicked { get; set; }
+
+        public ICommand EmployeeClicked { get; set; }
 
         public ICommand PrintCommissionDetailsClicked { get; set; }
         public ICommand PrintCommissionClicked { get; set; }
@@ -40,7 +46,8 @@ namespace RedDot
 
       private decimal _grandtotalsales = 0;
       private decimal _grandtotalcommission = 0;
-      private decimal _grandtotalgratuities = 0;
+        private decimal _grandtotaldailyfee = 0;
+        private decimal _grandtotalgratuities = 0;
       private decimal _grandtotalnetgratuities = 0;
       private decimal _grandtotalsupplyfee = 0;
       private decimal _custom1 = 0;
@@ -84,10 +91,43 @@ namespace RedDot
           }
       }
 
-       
+
+        private bool m_isbusy = false;
+        public bool IsBusy
+        {
+            get { return m_isbusy; }
+            set
+            {
+                m_isbusy = value;
+                NotifyPropertyChanged("IsBusy");
+            }
+        }
+
+
+        private string m_reporttext;
+        private object _sentenceLock;
+
+        public string ReportText
+        {
+            get { return m_reporttext; }
+            set
+            {
+                m_reporttext = value;
+                NotifyPropertyChanged("ReportText");
+            }
+        }
 
         public CommissionReportVM(SecurityModel security):base(security)
         {
+            CurrentReport = new ObservableCollection<EmployeeCommissionVM>();
+
+
+
+            _sentenceLock = new object();
+
+           BindingOperations.EnableCollectionSynchronization(CurrentReport, _sentenceLock);
+
+
             EmployeeClicked = new RelayCommand(ExecuteEmployeeClicked, param => this.CanExecute);
 
             ExportCommissionCSVClicked = new RelayCommand(ExecuteExportCommissionCSVClicked, param => this.CanClick);
@@ -119,11 +159,13 @@ namespace RedDot
 
             if (_currentid != 0)
             {
-                CurrentReport = GetCommission(_currentid, m_currentdate);
+                // GetCommissionReport(_currentid, m_currentdate);
             }
 
             FillDateList();
             SelectedDateID = 1;
+
+
         }
 
         private void FillDateList()
@@ -135,17 +177,15 @@ namespace RedDot
 
 
             newdate = new ReportDate();
-            newdate.ReportDateID = j;
-            newdate.StartDate = startdate;
-            newdate.EndDate = startdate;
-            ReportDates.Add(newdate);
-            j++;
+  
 
             DateTime firstday = GlobalSettings.Instance.PayPeriodStartDate;
             int diff = (int)DateTime.Now.DayOfWeek - (int)firstday.DayOfWeek;
 
             switch(GlobalSettings.Instance.PayPeriodType.ToUpper())
             {
+
+                case "SEMI-MONTHLY":
 
                 case "SEMIMONTHLY":
 
@@ -157,8 +197,13 @@ namespace RedDot
                         newdate.ReportDateID = j;
                         newdate.StartDate = new DateTime(startdate.Year, startdate.Month, 16);
                         newdate.EndDate = newdate.StartDate.AddMonths(1).AddDays(-16);
-                        ReportDates.Add(newdate);
-                        j++;
+
+                        if(DateTime.Today > newdate.StartDate)
+                        {
+                            ReportDates.Add(newdate);
+                            j++;
+                        }
+            
 
 
                         newdate = new ReportDate();
@@ -246,9 +291,9 @@ namespace RedDot
                     {
                         CurrentDate.StartDate = rptdate.StartDate;
                         CurrentDate.EndDate = rptdate.EndDate;
-                        CurrentReport = GetCommission(_currentid,rptdate);
+                        GetCommissionReport(_currentid,rptdate);
 
-                        CalculateGrandTotals();
+                      
                     }
                 }
 
@@ -283,6 +328,15 @@ namespace RedDot
             get { return _grandtotalcommission; }
 
             set { _grandtotalcommission = value; NotifyPropertyChanged("GrandTotalCommission"); }
+
+        }
+
+        public decimal GrandTotalDailyFee
+        {
+
+            get { return _grandtotaldailyfee; }
+
+            set { _grandtotaldailyfee = value; NotifyPropertyChanged("GrandTotalDailyFee"); }
 
         }
 
@@ -336,86 +390,134 @@ namespace RedDot
 
 
 
-//------------------------------------------------------   Public Functions ------------------------------------------------------------------------
+        //------------------------------------------------------   Public Functions ------------------------------------------------------------------------
 
 
 
 
-/// <summary>
-/// Functions
-/// </summary>
-/// <param name="id"></param>
-/// <param name="currentdate"></param>
-/// <returns></returns>
+        /// <summary>
+        /// Functions
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="currentdate"></param>
+        /// <returns></returns>
 
 
 
-
-        public ObservableCollection<EmployeeCommissionVM> GetCommission(int id, ReportDate currentdate)
+        public void GetCommissionReport(int id, ReportDate currentdate)
         {
-
-
-            ObservableCollection<EmployeeCommissionVM> allemployeesales;
+            CurrentReport = new ObservableCollection<EmployeeCommissionVM>();
             DBEmployee dbemployee = new DBEmployee();
             EmployeeCommissionVM employeecommission;
 
-            if(id > 0)  CurrentEmployee = new Employee(id);
+            BackgroundWorker worker = new BackgroundWorker();
+
+            if (id > 0) CurrentEmployee = new Employee(id);
 
             //if integer = 1000 , then its for all employees , otherwise, just one
             // employee 999 is all employee combined so still consider as one employee
-            allemployeesales = new ObservableCollection<EmployeeCommissionVM>();
+           // var report = new ObservableCollection<EmployeeCommissionVM>();
 
-            
-
-            if (id == 1000)
+            worker.DoWork += (o, ea) =>
             {
 
-              // dt = dbemployee.GetEmployeeAll();
-
-               DataTable dt = _reports.GetWorkedEmployees(currentdate.StartDate, currentdate.EndDate);
-
-                //collection of all employees , each one with a SalesDataList
-
-                if(dt.Rows.Count > 0)
+                if (id == 1000)
                 {
-                    foreach (DataRow row in dt.Rows)
+
+                    // dt = dbemployee.GetEmployeeAll();
+
+                    DataTable dt = _reports.GetWorkedEmployees(currentdate.StartDate, currentdate.EndDate);
+
+                    if (dt.Rows.Count > 0)
                     {
-                        employeecommission = new EmployeeCommissionVM((int)row["employeeid"], currentdate.StartDate, currentdate.EndDate);
-                        employeecommission.SubTotalVisiblity = Visibility.Visible;
-                        if(employeecommission.GrandTotalSales > 0)  allemployeesales.Add(employeecommission);
+                        float total = 0;
+                        int count = 0;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            count++;
+                            var timer = new Stopwatch();
+                            timer.Start();
+                            employeecommission = new EmployeeCommissionVM((int)row["employeeid"], currentdate.StartDate, currentdate.EndDate,true);
+                            employeecommission.SubTotalVisiblity = Visibility.Visible;
+                            if (employeecommission.GrandTotalSales > 0)
+                            {
+
+
+                                App.Current.Dispatcher.Invoke((Action)delegate
+                                {
+                                    CurrentReport.Add(employeecommission);
+                                    ////NotifyPropertyChanged("CurrentReport");
+                                    //Thread.Sleep(100);
+                                });
+
+                            }
+
+                            timer.Stop();
+                            logger.Debug(count + " " + employeecommission.CurrentEmployee.DisplayName + " " + timer.Elapsed.ToString() + " to finish");
+                            total += timer.Elapsed.Seconds;
+
+                        }
+
+
+          
+
+
+                        logger.Debug("total time " + total + " seconds");
+
+                
 
                     }
 
-                    return allemployeesales;
+
+
                 }
-                else return null;
-
-
-            }else //single employee
-            {
-                if (id > 0)
+                else //single employee
                 {
-                    employeecommission = new EmployeeCommissionVM(id,currentdate.StartDate,currentdate.EndDate);
-                    allemployeesales.Add(employeecommission);
+                    if (id > 0)
+                    {
+                        employeecommission = new EmployeeCommissionVM(id, currentdate.StartDate, currentdate.EndDate,false);
 
-                    return allemployeesales;
+                        App.Current.Dispatcher.Invoke((Action)delegate 
+                        {
+                            CurrentReport.Add(employeecommission);
+                        });
 
-                }
-                else
+                      
+
+
+                    }
+                    else
                     if (CurrentEmployee.ID > 0)
                     {
 
-                        employeecommission = new EmployeeCommissionVM(CurrentEmployee.ID, currentdate.StartDate, currentdate.EndDate);
-                        allemployeesales.Add(employeecommission);
+                        employeecommission = new EmployeeCommissionVM(CurrentEmployee.ID, currentdate.StartDate, currentdate.EndDate,false);
 
-                        return allemployeesales;
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            CurrentReport.Add(employeecommission);
+                        });
+
+
+
                     }
-                    else return null;
+
+                }
+            };
 
 
-            }
 
-          
+            worker.RunWorkerCompleted += (o, ea) =>
+            {
+                CalculateGrandTotals();
+                IsBusy = false;
+            };
+
+            IsBusy = true;
+
+            worker.RunWorkerAsync();
+
+
+      
 
         }
 
@@ -436,7 +538,7 @@ namespace RedDot
             CurrentDate.EndDate = CurrentDate.StartDate;
             NotifyPropertyChanged("CurrentDate");
 
-            CurrentReport = GetCommission(_currentid, m_currentdate);
+             GetCommissionReport(_currentid, m_currentdate);
 
             CalculateGrandTotals();
 
@@ -448,7 +550,7 @@ namespace RedDot
             CurrentDate.EndDate = CurrentDate.StartDate;
             NotifyPropertyChanged("CurrentDate");
 
-            CurrentReport = GetCommission(_currentid, m_currentdate);
+            GetCommissionReport(_currentid, m_currentdate);
 
             CalculateGrandTotals();
         }
@@ -514,7 +616,7 @@ namespace RedDot
             CurrentDate.EndDate = DateTime.Today;
             NotifyPropertyChanged("CurrentDate");
 
-            CurrentReport = GetCommission(_currentid,m_currentdate);
+            GetCommissionReport(_currentid,m_currentdate);
 
             CalculateGrandTotals();
 
@@ -534,20 +636,24 @@ namespace RedDot
             CurrentDate.EndDate = cd.EndDate;
             NotifyPropertyChanged("CurrentDate");
 
-            CurrentReport = GetCommission(_currentid, m_currentdate);
+            
+            GetCommissionReport(_currentid, m_currentdate);
 
             CalculateGrandTotals();
+          
 
         }
         public void ExecuteEmployeeClicked(object employeeid)
         {
             if (employeeid != null)
             {
-
+              
                 
                 _currentid = int.Parse(employeeid.ToString());
-                CurrentReport = GetCommission(_currentid, m_currentdate);
-                CalculateGrandTotals();
+                GetCommissionReport(_currentid, m_currentdate);
+        
+
+            
             }
         }
 
@@ -559,28 +665,40 @@ namespace RedDot
             decimal totalgratuities = 0;
             decimal totalnetgratuities = 0;
             decimal totalsupplyfee = 0;
+            decimal totaldailyfee = 0;
 
 
             if (CurrentReport == null) return;
 
-                foreach(EmployeeCommissionVM subreport in CurrentReport)
+            foreach (EmployeeCommissionVM subreport in CurrentReport)
+            {
+
+                if ((subreport.CurrentEmployee.ID < 999 && _currentid == 1000) || _currentid < 1000)
                 {
-
-                    if((subreport.CurrentEmployee.ID < 999 && _currentid == 1000) || _currentid < 1000 )
+                    /*
+                    foreach (SalesData salesdata in subreport.EmployeeSales)
                     {
-                        foreach (SalesData salesdata in subreport.EmployeeSales)
-                        {
-                            totalsales = totalsales + salesdata.TotalSales;
-                            totalcommission = totalcommission + salesdata.TotalCommission;
-                            totalgratuities = totalgratuities + salesdata.Gratuity;
-                            totalnetgratuities = totalnetgratuities + salesdata.NetGratuity;
-                            totalsupplyfee = totalsupplyfee + salesdata.TotalSupplyFee;
-                        }
-                        subreport.CalculateGrandTotals();
+                        totalsales = totalsales + salesdata.TotalSales;
+                        totalcommission = totalcommission + salesdata.TotalCommission;
+                        totalgratuities = totalgratuities + salesdata.Gratuity;
+                        totalnetgratuities = totalnetgratuities + salesdata.NetGratuity;
+                        totalsupplyfee = totalsupplyfee + salesdata.TotalSupplyFee;
+                     
                     }
+                    */
 
+                    subreport.CalculateGrandTotals();
+                    totaldailyfee += subreport.GrandTotalDailyFees;
+                    totalsales += subreport.GrandTotalSales;
+                    totalcommission += subreport.GrandTotalCommission;
+                    totalgratuities += subreport.GrandTotalGratuity;
+                    totalnetgratuities += subreport.GrandTotalNetGratuity;
+                    totalsupplyfee += subreport.GrandTotalSupplyFees;
 
                 }
+
+
+            }
 
 
 
@@ -592,6 +710,7 @@ namespace RedDot
             GrandTotalGratuity = totalgratuities;
             GrandTotalNetGratuity = totalnetgratuities;
             GrandTotalSupplyFee = totalsupplyfee;
+            GrandTotalDailyFee = totaldailyfee;
         }
 
     }

@@ -39,7 +39,7 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="tbAmount" IsReadOnly="True" Grid.Column="0" Height="60" Margin="10,5" FontSize="18" TextChanged="tbTextChanged" />
             <Button Grid.Column="1"  Width="80" Height="60"  FontSize="20"  Click="Button_Back">
-                <Image Source="media/leftarrow.png" />
+                <Image Source="/media/leftarrow.png" />
             </Button>
             <Button Grid.Column="2" Content="CLEAR" Width="80" Height="60" FontSize="20"  Click="Button_Clear"/>
  

@@ -95,14 +95,30 @@
                         <ControlTemplate>
                             <Border Name="borderbox" BorderThickness="1"  Width="600" Background="LightGreen" >
 
-                                <Border  Height="25"  BorderBrush="DarkGray" Width="600" >
+                                <Border    BorderBrush="DarkGray" Width="600" >
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock  Text="{Binding modelnumber}"    Width="100"  TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock  Text="Model Number: "      TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                                <TextBlock  Text="{Binding modelnumber}"    Width="300" Foreground="Blue" TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
 
-                                        <TextBlock  Text="{Binding description}"    Width="250"  TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
-                                        <TextBlock  Text="{Binding quantity}"          Width="80" TextAlignment="Right" FontSize="14" ></TextBlock>
-                                        <TextBlock  Text="{Binding price, StringFormat={}{0:C}}"          Width="80" TextAlignment="Right" FontSize="14" ></TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock  Text="Description: "     TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                                <TextBlock  Text="{Binding description}"    Width="300" Foreground="Blue" TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
 
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock  Text="Quantity: "     TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                                <TextBlock  Text="{Binding quantity}"      Foreground="Blue"    Width="80" TextAlignment="Left" FontSize="14" ></TextBlock>
+                                                <TextBlock  Text="Price: "     TextAlignment="Left" FontSize="14" TextWrapping="NoWrap" ></TextBlock>
+                                                <TextBlock  Text="{Binding price, StringFormat={}{0:C}}"     Foreground="Blue"     Width="80" TextAlignment="Left" FontSize="14" ></TextBlock>
+
+                                            </StackPanel>
+                                    
+                                        </StackPanel>
+                
+                                
                                     </StackPanel>
                                 </Border>
                             </Border>

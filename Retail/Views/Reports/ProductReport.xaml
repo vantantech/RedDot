@@ -1,7 +1,7 @@
 ﻿<Window x:Class="RedDot.ProductReport"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Inventory Report" Height="768" Width="1024"  WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow"   ResizeMode="CanResizeWithGrip"  >
+      Title="Product Sales Report" Height="768" Width="1024"  WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow"   ResizeMode="CanResizeWithGrip"  >
 
 
     <Window.Background>

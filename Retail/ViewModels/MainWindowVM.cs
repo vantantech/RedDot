@@ -27,9 +27,9 @@ namespace RedDot
         private Security _security;
         private DBEmployee m_dbemployee;
 
- 
+        public Visibility Demo { get; set; }
 
-         public ICommand BackofficeClicked { get; set; }
+        public ICommand BackofficeClicked { get; set; }
 
         public ICommand TimecardClicked { get; set; }
 
@@ -54,6 +54,11 @@ namespace RedDot
             m_dbemployee = new DBEmployee();
 
             ButtonVisibility = new Visible();
+
+            if (GlobalSettings.Instance.Demo) Demo = Visibility.Visible;
+            else Demo = Visibility.Hidden;
+
+
             _security = new Security();
             SetStoreType();
 

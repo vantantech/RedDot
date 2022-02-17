@@ -151,6 +151,10 @@ namespace RedDot
 
             if (_security.WindowAccess("BackOffice"))
             {
+
+                FingerPrint fingerPrint = new FingerPrint();
+                fingerPrint.StartEnrollment();
+
                 EnrollFingerPrint ep = new EnrollFingerPrint(CurrentEmployee);
                 Utility.OpenModal(_parent, ep);
 

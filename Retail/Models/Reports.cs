@@ -9,7 +9,12 @@ using System.Data;
 using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.Drawing;
-
+using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
+using PdfSharp.Pdf;
+using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace RedDot
 {
@@ -475,7 +480,7 @@ namespace RedDot
             return monthlyreport;
         }
         //Gets All tickets for ONE employee
-        public ObservableCollection<SalesData> GetEmployeeCommission(int employeeid, DateTime startdate, DateTime enddate)
+        public ObservableCollection<SalesData> GetEmployeeCommission(Employee employee, DateTime startdate, DateTime enddate)
         {
 
             ObservableCollection<RetailLineItem> itemdata;
@@ -496,12 +501,15 @@ namespace RedDot
             employeesales = new ObservableCollection<SalesData>();
             itemdata = new ObservableCollection<RetailLineItem>();
             salesrecord = new SalesData();
+            salesrecord.CustomerName = "";
+            salesrecord.PaymentType = "";
+
+
             int i = 0;
             decimal adjustment = 0;
 
-            DataTable dt = _dbreports.GetEmployeeSalesCommissionByID(employeeid, startdate, enddate);
+            DataTable dt = _dbreports.GetEmployeeSalesCommissionByID(employee.ID, startdate, enddate);
 
-            Employee CurrentEmployee = new Employee(employeeid);
 
             foreach (DataRow row in dt.Rows)
             {
@@ -515,7 +523,7 @@ namespace RedDot
                         salesrecord.TotalSales = totalsales;  //total sales for each ticket
                         salesrecord.TotalCost = totalcost;
                         salesrecord.TotalMargin = totalmargin;
-                        adjustment = salesrecord.TotalAdjustments * CurrentEmployee.CommissionProduct / 100;
+                        adjustment = salesrecord.TotalAdjustments * employee.CommissionProduct / 100;
                         salesrecord.TotalCommissionAdjustment = adjustment;
                         salesrecord.TotalCommission = totalcommission;
                         salesrecord.SalesItem = itemdata;
@@ -534,12 +542,13 @@ namespace RedDot
                     salesrecord.CloseDate = (DateTime)row["closedate"];
                     salesrecord.PaymentType = row["paymenttype"].ToString();
                     salesrecord.SalesID = (int)row["SalesID"];
+                    salesrecord.CustomerName = row["customername"].ToString();
 
                     if (row["adjustment"].ToString() != "") salesrecord.TotalAdjustments = (decimal)row["adjustment"];
                     else salesrecord.TotalAdjustments = 0;
 
                     itemdata = new ObservableCollection<RetailLineItem>();
-                    line = new RetailLineItem(row,CurrentEmployee.CommissionProduct,CurrentEmployee.CommissionLabor,CurrentEmployee.Role == "Sales Rep");
+                    line = new RetailLineItem(row,employee.CommissionProduct,employee.CommissionLabor,employee.Role == "Sales Rep");
                     itemdata.Add(line);
                     totalsales = totalsales + line.TotalAdjustedPrice;
                      totalcost = totalcost + line.TotalCost;
@@ -551,7 +560,7 @@ namespace RedDot
                 else
                 {
                     //additional items on the ticket
-                    line = new RetailLineItem(row, CurrentEmployee.CommissionProduct, CurrentEmployee.CommissionLabor, CurrentEmployee.Role == "Sales Rep"); 
+                    line = new RetailLineItem(row, employee.CommissionProduct, employee.CommissionLabor, employee.Role == "Sales Rep"); 
                     itemdata.Add(line);
                     totalsales = totalsales + line.TotalAdjustedPrice;
                      totalcost = totalcost + line.TotalCost;
@@ -569,7 +578,7 @@ namespace RedDot
             salesrecord.TotalSales = totalsales;  //total sales for each ticket
             salesrecord.TotalCost = totalcost;
             salesrecord.TotalMargin = totalmargin;
-            adjustment = salesrecord.TotalAdjustments * CurrentEmployee.CommissionProduct / 100;
+            adjustment = salesrecord.TotalAdjustments * employee.CommissionProduct / 100;
             salesrecord.TotalCommissionAdjustment = adjustment;
             salesrecord.TotalCommission = totalcommission;
             salesrecord.SalesItem = itemdata;
@@ -634,9 +643,195 @@ namespace RedDot
 
         }
 
+
+        public void PrintCommissionPDF(ObservableCollection<EmployeeSalesData> reportlist, ReportDate reportdate, bool display= true)
+        {
+
+
+            XFont fontsmallitalic = new XFont("Courier New", 6, XFontStyle.Italic | XFontStyle.Bold);
+
+            XFont font = new XFont("Courier New", 10, XFontStyle.Bold);
+            // Font font = new Font("Courier New", 8, System.Drawing.FontStyle.Bold);
+            // XFont font = new XFont("Times New Roman", 10, XFontStyle.Bold);
+
+            XFont fontitalic = new XFont("Courier New",10, XFontStyle.Italic | XFontStyle.Bold);
+            XFont fontbold = new XFont("Courier New", 12, XFontStyle.Bold);
+            XFont fonttitle = new XFont("Courier New", 15, XFontStyle.Bold);
+
+
+
+            // Create pen.
+            Pen blackPen = new Pen(Color.Black, 2);
+            Brush blackBrush = new SolidBrush(Color.Black);
+            Location store = GlobalSettings.Instance.Shop;
+
+            int fontHeight = (int)font.GetHeight();
+            int fontBoldHeight = (int)fontbold.GetHeight();
+
+            int startX = 50;
+            int startY = 20;
+            int XOffset = 25;
+            int YOffset = 0;
+
+
+
+
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            XTextFormatter tf = new XTextFormatter(gfx);
+            XRect rect = new XRect(0, 0, page.Width, page.Height);
+
+
+            try
+            {
+
+                decimal Total = 0;
+                decimal Cost = 0;
+                decimal Commission = 0;
+                int counter = 0;
+
+                decimal GrandTotal = 0;
+                decimal GrandCost = 0;
+                decimal GrandCommission = 0;
+
+                string bitmapfile = GlobalSettings.Instance.StoreLogo;
+                if (File.Exists(bitmapfile))
+                    if (GlobalSettings.Instance.StoreLogo != "") gfx.DrawImage(new Bitmap(bitmapfile), startX, startY, 200, 40);
+
+
+                YOffset = 80;
+                gfx.DrawString("Sales Commission Report",fonttitle, new SolidBrush(Color.Black), XOffset, YOffset);
+               // gfx.DrawString(reportdate.ReportString, fontbold, new SolidBrush(Color.Black), XOffset, YOffset);
+                PrintRightAlign(gfx, reportdate.ReportString, fontbold,500, YOffset);
+
+                YOffset = 100;
+
+
+                foreach (EmployeeSalesData report in reportlist)
+                {
+
+                    if (YOffset > 700)
+                    {
+                        page = document.AddPage();
+                        gfx = XGraphics.FromPdfPage(page);
+                        YOffset = 50;
+                    }
+
+
+                    gfx.DrawString(report.CurrentEmployee.FirstName + " " + report.CurrentEmployee.LastName , fontbold, new SolidBrush(Color.Black), XOffset , YOffset);
+  
+
+
+                    YOffset = YOffset + fontHeight * 2;
+
+
+
+                    gfx.DrawString("Date", font, new SolidBrush(Color.Black), XOffset, YOffset);
+                    gfx.DrawString("Invoice#", font, new SolidBrush(Color.Black), XOffset + 80, YOffset);
+                    gfx.DrawString("Account Name ", font, new SolidBrush(Color.Black), XOffset + 150, YOffset);
+                    gfx.DrawString("Sales Total", font, new SolidBrush(Color.Black), XOffset + 350, YOffset);
+                    gfx.DrawString("Commission Total", font, new SolidBrush(Color.Black), XOffset + 450, YOffset);
+                    gfx.DrawString("_______________________________________________________________________________________________________", font, new SolidBrush(Color.Black), XOffset, YOffset);
+
+                    YOffset = YOffset + fontHeight;
+
+                    foreach (SalesData dat in report.EmployeeSales)
+                    {
+                        gfx.DrawString( dat.CloseDate.ToShortDateString(), font, new SolidBrush(Color.Black), XOffset, YOffset);
+                        gfx.DrawString(dat.SalesID.ToString(), font, new SolidBrush(Color.Black), XOffset + 80, YOffset);
+                        gfx.DrawString(dat.CustomerName, font, new SolidBrush(Color.Black), XOffset + 150, YOffset);
+                        gfx.DrawString(dat.TotalSales.ToString(), font, new SolidBrush(Color.Black), XOffset + 350, YOffset);
+                        gfx.DrawString(dat.TotalCommission.ToString(), font, new SolidBrush(Color.Black), XOffset + 450, YOffset);
+
+
+                        Total = Total + dat.TotalSales;
+                        Cost = Cost + dat.TotalCost;
+                        Commission += dat.TotalCommission;
+
+                        YOffset = YOffset + fontHeight;
+
+                    }
+
+                    gfx.DrawString("========================================================================================================", font, new SolidBrush(Color.Black), XOffset, YOffset);
+
+                    YOffset = YOffset + fontHeight;
+
+                    gfx.DrawString("Total", font, new SolidBrush(Color.Black), XOffset + 150, YOffset);
+                    gfx.DrawString(Total.ToString() , font, new SolidBrush(Color.Black), XOffset + 350, YOffset);
+                    gfx.DrawString( Math.Round(Commission, 2).ToString(), font, new SolidBrush(Color.Black), XOffset + 450, YOffset);
+
+
+
+                    YOffset = YOffset + fontHeight * 4;
+
+                    counter++;
+                    GrandTotal = GrandTotal + Total;
+                    GrandCost = GrandCost + Cost;
+                    GrandCommission += Commission;
+                    Total = 0;
+                    Cost = 0;
+                    Commission = 0;
+
+                    if (reportlist.Count == 1)
+                    {
+                        // Save the document...
+                        string filename_1 = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\pdf\\CommissionReport_" + report.CurrentEmployee.FirstName + "_" + report.CurrentEmployee.LastName + "_" + reportdate.DateString + ".pdf";
+                        document.Save(filename_1);
+
+
+                        // ...and start a viewer.
+                        if (display)
+                            Process.Start(filename_1);
+                        return;
+                    }
+                }
+
+                YOffset = YOffset + fontHeight;
+
+                if (counter > 1)
+                {
+                    gfx.DrawString("========================================================================================================", font, new SolidBrush(Color.Black), XOffset, YOffset);
+                    YOffset = YOffset + fontHeight;
+
+                  
+                    gfx.DrawString("Grand Total", font, new SolidBrush(Color.Black), XOffset + 150, YOffset);
+                    gfx.DrawString(GrandTotal.ToString(), font, new SolidBrush(Color.Black), XOffset + 350, YOffset);
+                    gfx.DrawString(Math.Round(GrandCommission, 2).ToString(), font, new SolidBrush(Color.Black), XOffset + 450, YOffset);
+                }
+
+
+
+                // Save the document...
+                string filename = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\pdf\\CommissionReport_" + reportdate.DateString + ".pdf";
+                document.Save(filename);
+
+
+                // ...and start a viewer.
+                if (display)
+                    Process.Start(filename);
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Print Commission:" + e.Message);
+            }
+        }
+
+
+
+
         //prints employee commission report
         public void PrintCommission(ObservableCollection<EmployeeSalesData> reportlist, string daterange)
         {
+
+
+
+
+
             try
             {
                 decimal receiptwidth = GlobalSettings.Instance.ReceiptWidth;
@@ -975,7 +1170,7 @@ namespace RedDot
             pdoc.PrintPage += (sender,e) => pdoc_PrintCommissionLarge( reportlist,daterange, e);  //this method allows you to pass parameters
 
   
-            if (GlobalSettings.Instance.LargeFormatPrinter == "")
+            if (GlobalSettings.Instance.LargeFormatPrinter == "" || GlobalSettings.Instance.LargeFormatPrinter == "none")
             {
                 MessageBox.Show("Large format printer name not set.");
                 return;
@@ -1158,7 +1353,11 @@ namespace RedDot
         }
 
 
-
+ 
+        private static void PrintRightAlign(XGraphics graphics, string receiptline, XFont font, int rightlimit, int Y)
+        {
+            graphics.DrawString(receiptline, font, new SolidBrush(Color.Black), rightlimit - graphics.MeasureString(receiptline, font).Width, Y);
+        }
 
     }
 

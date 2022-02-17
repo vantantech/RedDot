@@ -33,12 +33,34 @@ namespace RedDot
         {
             if (_security.WindowAccess("OwnerCommission"))
             {
-                RetailCommisionReport rpt = new RetailCommisionReport(_security);
+                CommisionReport rpt = new CommisionReport(_security);
                 rpt.ShowDialog();
 
             }
         }
 
+
+
+        private void SalesRep_Click(object sender, RoutedEventArgs e)
+        {
+            if (_security.WindowAccess("OwnerCommission"))
+            {
+                SalesRepReport rpt = new SalesRepReport(_security);
+                rpt.ShowDialog();
+
+            }
+        }
+
+
+        private void EmployeeSalesReport_Click(object sender, RoutedEventArgs e)
+        {
+            if (_security.WindowAccess("EmployeeSales"))
+            {
+                EmployeeSalesReport rpt = new EmployeeSalesReport(_security);
+                rpt.ShowDialog();
+
+            }
+        }
         private void DailySalesReport_Click(object sender, RoutedEventArgs e)
         {
             if (_security.WindowAccess("SalesReport"))

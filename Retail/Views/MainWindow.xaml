@@ -247,6 +247,14 @@
                             </ComboBox>
                         </StackPanel>
 
+                    <StackPanel Grid.Row="1" Orientation="Vertical"   Visibility="{Binding Demo}"  >
+                        <TextBlock Text="DEMO" FontSize="80" Foreground="Red" />
+                        <TextBlock Text="This software is not licensed for " FontSize="20" Foreground="White" />
+
+                        <TextBlock Text="commercial use.  Only used for" FontSize="20" Foreground="White" />
+                        <TextBlock Text=" demo purposes. Close in 30 min." FontSize="20" Foreground="White" />
+
+                    </StackPanel>
                     <Image Grid.Row="1" Source="{Binding StoreLogo}" Width="400"></Image>
 
                 </Grid>

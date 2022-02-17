@@ -14,7 +14,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using System.IO;
-using RedDotDependents;
+
 
 namespace RedDot
 {
@@ -31,40 +31,8 @@ namespace RedDot
 
             Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            if (LicenseModel.CheckLicense())
-            {
-
-                if (LicenseModel.GetSoftware() != "Retail")
-                {
-                    MessageBox.Show("Not licensed for Retail App.  Exiting.");
-                    Application.Current.Shutdown();
-                    Environment.Exit(0);
-
-                }
-
-            }
-            else
-            {
-
-
-                if( LicenseModel.RequestLicense("Retail"))
-                {
-                    if (LicenseModel.GetSoftware() != "Retail")
-                    {
-                        MessageBox.Show("Not licensed for Retail App.  Exiting.");
-                        Application.Current.Shutdown();
-                        Environment.Exit(0);
-
-                    }
-                }
-                else
-                {
-                    TouchMessageBox.Show("Request has been sent to Server for license .. please check back soon.");
-                }
-
-
-               
-            }
+            GlobalSettings.Instance.Demo = !LicenseModel.CheckLicense("Retail");
+ 
 
 
 
@@ -128,11 +96,7 @@ namespace RedDot
 
 
           
-           Updater.CheckAndUpdate(true);
-
-
-
-
+    
             MainWindow wnd;
 
             wnd = new MainWindow();

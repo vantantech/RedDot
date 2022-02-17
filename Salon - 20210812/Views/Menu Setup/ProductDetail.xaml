@@ -1,0 +1,300 @@
+﻿<Window x:Class="RedDot.ProductDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:local="clr-namespace:RedDot"
+       Title="Product Detail"  Height="768" Width="1024"  WindowStartupLocation="Manual" WindowStyle="None" Icon="/media/sphere.png"  ResizeMode="NoResize"   >
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF3164a5" Offset="1"/>
+            <GradientStop Color="#FF8AAED4" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Buttons.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            <ObjectDataProvider    ObjectInstance="{x:Type Colors}"     MethodName="GetProperties"     x:Key="colorPropertiesOdp" />
+
+
+            <!-- Converters -->
+            <local:StringToColorConverter x:Key="StringToColorConverter"/>
+
+
+
+            <!--
+
+            <DataTemplate x:Key="SelectedProductTemplate">
+
+
+                <Button   Command="{Binding DataContext.EditClicked, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding id}" >
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border Name="borderbox" BorderThickness="2"  Height="50" Margin="2"  BorderBrush="Gray" >
+
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Border   Width="50" Height="50"  Background="{Binding colorcode}" >
+                                        <TextBlock  Text="{Binding menuprefix}" Width="Auto" Height="Auto"  FontSize="15" Foreground="AliceBlue"  TextAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <Border Width="160"  Height="50"  Background="AliceBlue" >
+                                        <StackPanel Orientation="Vertical">
+
+                                            <TextBlock Text="{Binding description}" Width="160"  TextAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBlock>
+                                            <TextBlock Text="{Binding price}"  Width="160"  TextAlignment="Center" FontSize="12"></TextBlock>
+
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="borderbox" Value="Yellow"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+            </DataTemplate>
+
+-->
+
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+
+
+            <TextBlock Margin="10,32,10,31" Text="Item Display Preview:           " FontSize="20"  VerticalAlignment="Center" />
+            <Border BorderThickness="1"   Margin="1"  BorderBrush="Gray" >
+
+                <Button   >
+                    <Button.Template>
+                        <ControlTemplate>
+
+
+                            <StackPanel Orientation="Horizontal" Height="{Binding ProductHeight}">
+                                <Border   Width="50"  Height="Auto" Background="{Binding CurrentProduct.ColorCode}" >
+                                    <TextBlock  Text="{Binding CurrentProduct.MenuPrefix}" Width="Auto" Height="Auto"  FontSize="{Binding ProductFontSize}" Foreground="AliceBlue"  TextAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <Border Width="{Binding ProductWidth}"     Background="AliceBlue" >
+                                    <StackPanel Orientation="Vertical">
+
+                                        <TextBlock Text="{Binding CurrentProduct.Description}" Width="Auto" Height="{Binding DescriptionHeight}"  TextAlignment="Center" FontSize="{Binding ProductFontSize}" TextWrapping="Wrap"/>
+                                        <Border   Width="Auto" Height="25"  Background="SlateGray" >
+                                            <TextBlock Text="{Binding CurrentProduct.Price}"  Width="auto" Height="auto"  FontSize="{Binding ProductFontSize}" Foreground="White"  TextAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Border>
+
+
+
+
+        </StackPanel>
+
+
+
+        <StackPanel Grid.Row="1"  Orientation="Vertical">
+            <Rectangle Fill="DarkGray" Height="2" Width="1024" />
+            <TextBlock Margin="10" Text="PRODUCT DETAILS" FontSize="20" HorizontalAlignment="Left"  />
+            <Rectangle Fill="DarkGray" Height="2" Width="1024" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Vertical"  >
+
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock  Text="ID:" TextAlignment="Right" Height="25"    FontSize="15" Width="100"/>
+                        <TextBox  IsReadOnly="True" Margin="5,0,0,0" Text="{Binding  CurrentProduct.ID,Mode=OneWay}" TextAlignment="Left"  Height="25"  TextWrapping="Wrap" FontSize="15" Width="100"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock   Text="Menu Prefix:" TextAlignment="Right" Height="25"   FontSize="15" Width="100"/>
+                        <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentProduct.MenuPrefix}" TextAlignment="Left"  Height="25" 
+                                  TextWrapping="Wrap" FontSize="15" Width="100"
+                                  GotFocus="TextBox_GotFocus"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock   Text="Description:" TextAlignment="Right" Height="25"   FontSize="15" Width="100"/>
+                        <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentProduct.Description}" TextAlignment="Left"
+                                  Height="25"   FontSize="15" Width="400"
+                                  GotFocus="TextBox_GotFocus"
+                                  Background="LightYellow"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="50" RenderTransformOrigin="0.532,0.5">
+                        <TextBlock Text="Price:" TextAlignment="Right" Height="25"    FontSize="15" Width="100"/>
+                        <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentProduct.Price}" TextAlignment="Left" 
+                                  Height="25" FontSize="15" Width="100"
+                                  GotFocus="TextBox_GotFocus"
+                                  Background="LightYellow"/>
+                        <Button Command="{Binding PriceClicked}"  BorderThickness="0"   Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="50" Height="50" >
+
+                            <Image Source="/RedDot;component/media/123.png" Height="50" Width="50"/>
+
+                        </Button>
+                        <TextBlock Text="( -1 to indicate flexible pricing )" TextAlignment="Right" Height="25"    FontSize="15" Width="200"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock  Text="Color:" TextAlignment="Right" Height="25"    FontSize="15" Width="100"/>
+                        <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentProduct.ColorCode}" TextAlignment="Left"  Height="50"  TextWrapping="Wrap" FontSize="15" Width="100" Background="{Binding  CurrentProduct.ColorCode}" />
+                        <ComboBox Name="cboColors"     ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" SelectedValuePath="Name" SelectedValue="{Binding CurrentProduct.ColorCode}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Height="18" Margin="0,0,0,2">
+                                        <Border BorderThickness="1" CornerRadius="2" BorderBrush="Black" Width="50" VerticalAlignment="Stretch" Background="{Binding Name}"/>
+                                        <TextBlock Text="{Binding Name}" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Style="{StaticResource CustomButtonStyle}" Command="{Binding CopyCategoryColorClicked}" Height="50" >
+                            <TextBlock Text="Copy from Category" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock   Text="Type:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                        <ComboBox  Margin="5,0,0,0"  ItemsSource="{Binding ProductTypes}"  DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="{Binding CurrentProduct.Type}" Width="150">
+
+                        </ComboBox>
+                    </StackPanel>
+
+
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock   Text="Commission:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                        <ComboBox  Margin="5,0,0,0"  ItemsSource="{Binding CommissionTypes}"  DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="{Binding CurrentProduct.CommissionType}" Width="150">
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock   Text="Fixed Amount:" TextAlignment="Right" Height="25" TextWrapping="Wrap"  FontSize="15" Width="100"/>
+                        <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentProduct.CommissionAmt}" TextAlignment="Left"  Height="25" 
+                                  TextWrapping="Wrap" FontSize="15" Width="100"
+                                  GotFocus="TextBox_GotFocus"/>
+                        <TextBlock   Text="( Only for Fixed Commission )" TextAlignment="Right" Height="25" TextWrapping="Wrap"  FontSize="15" Width="200"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Height="60">
+                        <TextBlock  Text="Taxable:" Height="30"  TextAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap"  FontSize="15" Width="100"/>
+
+                        <CheckBox   Margin="5,0,0,0" Height="20" Width="20" IsChecked="{Binding CurrentProduct.Taxable}" >
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                            </CheckBox.LayoutTransform>
+
+                        </CheckBox>
+                    </StackPanel>
+
+
+
+
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Vertical"  Margin="5,0,-5,0" >
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock  Text="Report Category:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="130"/>
+                        <ComboBox  Margin="5,0,0,0"  ItemsSource="{Binding ReportCategories}"  DisplayMemberPath="Description" SelectedValuePath="StrValue" SelectedValue="{Binding CurrentProduct.ReportCategory}" Width="200">
+
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock  Text="Bar Code:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="130"/>
+                        <TextBox  Margin="5,0,0,0" Text="{Binding  CurrentProduct.BarCode}" TextAlignment="Left" 
+                                  Height="25"  TextWrapping="Wrap" FontSize="15" Width="200"
+                                  GotFocus="TextBox_GotFocus"/>
+                        <TextBlock Margin="15,0,0,0" Text="(UPC-12 digits)" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="auto"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock  Text="Turn Value:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="130"/>
+                        <TextBox  Margin="5,0,0,2" Text="{Binding  CurrentProduct.TurnValue}" TextAlignment="Left" 
+                                  Height="25"   FontSize="15" Width="100"
+                                  GotFocus="TextBox_GotFocus" InputScope="Number" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBlock  Text="Supply Fee:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="130"/>
+                        <TextBox  Margin="5,0,0,2" Text="{Binding  CurrentProduct.SupplyFee}" TextAlignment="Left" 
+                                  Height="25"   FontSize="15" Width="100"
+                                  GotFocus="TextBox_GotFocus" InputScope="Number" VerticalAlignment="Bottom" />
+                    </StackPanel>
+
+
+
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock   Text="Image:" TextAlignment="Right" Height="25"  TextWrapping="Wrap"  FontSize="15" Width="130"/>
+                        <Button  Margin="5,0,0,0" Width="150" Height="150" Command="{Binding PictureClicked}" >
+                            <Border  BorderThickness="3" BorderBrush="Blue" >
+                                <Image Source="{Binding CurrentProduct.ImageSrc}" Width="150" Height="150" />
+                            </Border>
+                        </Button>
+                    </StackPanel>
+
+                </StackPanel>
+
+
+            </Grid>
+
+
+
+
+
+        </StackPanel>
+        <StackPanel Grid.Row="2"  Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button  Style="{StaticResource CustomButtonStyle}" Command="{Binding DeleteProductClicked}"  HorizontalAlignment="Center" Height="70"   Width="150"  >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/x.png" Height="40" Width="40"/>
+                    <TextBlock  Text="Delete Permanently" FontSize="15"/>
+                </StackPanel>
+            </Button>
+            <Button  Style="{StaticResource CustomButtonStyle}" Command="{Binding CloneProductClicked}"  HorizontalAlignment="Center" Height="70"   Width="150"  >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/clone.png" Height="40" Width="40"/>
+                    <TextBlock  Text="Clone / Copy" FontSize="15"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="50,0,0,0"  Style="{StaticResource CustomButtonStyle}" Height="70" Width="120" Command="{Binding PrintClicked}" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/barcode.png" Width="40" Height="40"/>
+                    <TextBlock  Text="Print Bar Code" FontSize="15" FontWeight="Normal"/>
+                </StackPanel>
+
+            </Button>
+            <Button Margin="50,0,0,0"  Style="{StaticResource CustomButtonStyle}" Height="70" Width="120" Click="Exit_Click" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/media/back.png" Width="40" Height="40"/>
+                    <TextBlock  Text="BACK" FontSize="15" FontWeight="Normal"/>
+                </StackPanel>
+
+            </Button>
+
+
+
+        </StackPanel>
+
+    </Grid>
+</Window>

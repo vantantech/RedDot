@@ -74,6 +74,7 @@ namespace RedDot
         private string _paytype;
         private int _sortorder;
         private int _commission;
+        private decimal _dailyfee;
      
 
         private DataRow m_datarow;
@@ -143,6 +144,8 @@ namespace RedDot
             if (employeerow["appointment"].ToString() != "")   _appointment        =(employeerow["appointment"].ToString()== "1");
             if (employeerow["sales"].ToString() != "") _sales                   = (employeerow["sales"].ToString() == "1");
             if (employeerow["paynormal"].ToString() != "") _paynormal            = decimal.Parse(employeerow["paynormal"].ToString()); else _paynormal = 0;
+            if (employeerow["dailyfee"].ToString() != "") _dailyfee = decimal.Parse(employeerow["dailyfee"].ToString()); else _dailyfee = 0;
+
             if (employeerow["commission"].ToString() != "") _commission        = int.Parse(employeerow["commission"].ToString()); else _commission = 0;
             if (employeerow["paysplit"].ToString() != "") paysplit = int.Parse(employeerow["paysplit"].ToString()); else paysplit = 0;
             if (employeerow["sortorder"].ToString() != "") _sortorder            = int.Parse(employeerow["sortorder"].ToString()); else _sortorder = 0;
@@ -486,6 +489,17 @@ namespace RedDot
                 _commission = value;
                 _dbEmployee.UpdateNumeric(ID, "commission", _commission);
                 NotifyPropertyChanged("CommissionPercent");
+            }
+        }
+
+        public decimal DailyFee
+        {
+            get { return _dailyfee; }
+            set
+            {
+                _dailyfee = value;
+                _dbEmployee.UpdateNumeric(ID, "dailyfee", _dailyfee);
+                NotifyPropertyChanged("DailyFee");
             }
         }
 

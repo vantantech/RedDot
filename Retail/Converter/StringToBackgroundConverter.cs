@@ -20,7 +20,8 @@ namespace RedDot
             if(value.ToString() == "Open")  return "Lightgray";
             if(value.ToString() == "Reversed")   return "Orange";
             if (value.ToString() == "Pending") return "LightBlue";
-
+            if (value.ToString() == "Sales Rep") return "LightBlue";
+            if (value.ToString() == "admin") return "Yellow";
             if (value.ToString() == "Voided") return "DarkGray";
             return "Transparent";
                     // return Binding.DoNothing;

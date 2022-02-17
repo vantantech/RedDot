@@ -106,6 +106,10 @@ namespace RedDot.DataManager
             return dbsettings.WipeSalesData();
         }
 
+        public bool WipeSalesDataCustom(DateTime startdate, DateTime enddate)
+        {
+            return dbsettings.WipeSalesDataCustom(startdate,enddate);
+        }
 
         public bool WipeCustomerData()
         {

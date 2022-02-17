@@ -35,9 +35,9 @@ namespace RedDot
         //-------------------------------------------------------------------------TRIPOS Functions ------------------------------------------------------------
         public SaleResponse ExecuteCreditSale(int salesid, decimal amount, string referencenumber)
         {
-            string port = GlobalSettings.Instance.SIPPort; //need to get from database
-            string host = GlobalSettings.Instance.SIPDefaultIPAddress;
-            string urlstring = "http://{0}:{1}/api/v1/sale"; // also need to get from database
+            string port = GlobalSettings.Instance.Port;
+            string host = GlobalSettings.Instance.IPAddress;
+            string urlstring = "http://{0}:{1}/api/v1/sale"; 
             string url = string.Format(urlstring, host, port);
 
             string contentType = "application/xml";
