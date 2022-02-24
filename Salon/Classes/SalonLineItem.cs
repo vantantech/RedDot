@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using RedDot;
-
-    using RedDot.DataManager;
+using RedDot.Base;
+using RedDot.DataManager;
 
 namespace RedDot
 {

@@ -63,12 +63,7 @@
 
 
         <StackPanel Orientation="Horizontal">
-            <RadioButton GroupName="employeeselection" Margin="3" Style="{StaticResource RoundButtonStyle}" Command="{Binding EmployeeClicked}" 
-                                            CommandParameter="1000"  Height="80" Width="100"  >
 
-                <TextBlock  Text="All SalesPerson" Width="100" Height="auto"  FontSize="12"  TextWrapping="Wrap"  TextAlignment="Center" VerticalAlignment="Center" />
-
-            </RadioButton>
             <ScrollViewer x:Name="ScrollViewer1" VerticalScrollBarVisibility="Visible"  VerticalAlignment="Top" Height="150" Width="1400">
                 <ScrollViewer.Resources>
                     <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
@@ -109,26 +104,12 @@
             <StackPanel Orientation="Horizontal">
 
 
-                <StackPanel Orientation="Vertical">
-                    <!-- Report Dates-->
+ 
                     <TextBlock Text="{Binding CurrentDate.StartDate, StringFormat='MM/dd/yy'}"   Width="auto" Style="{StaticResource ReportStyle}" FontWeight="Bold"  />
                     <TextBlock Text=" to "                                           Width="auto" Style="{StaticResource ReportStyle}" FontWeight="Bold"   />
                     <TextBlock Text="{Binding CurrentDate.EndDate, StringFormat='MM/dd/yy'}"   Width="auto" Style="{StaticResource ReportStyle}" FontWeight="Bold"   />
 
-                </StackPanel>
-
-
-
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding TodayClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/calendar.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc Today}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+          
 
                 <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
 
@@ -157,16 +138,6 @@
                     </Button>
                 </StackPanel>
 
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding PrintCommissionClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/receipt.png" Height="40" Width="40"/>
-                            <TextBlock Text="{Loc Print}"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
                 <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
                     <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
                              Command="{Binding ExportCommissionCSVClicked}" 

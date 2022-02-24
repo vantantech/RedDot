@@ -83,7 +83,7 @@ namespace RedDot
             ViewTicketClicked                       = new RelayCommand(ExecuteViewTicketClicked, param => this.CanExecute);
             EditCostClicked = new RelayCommand(ExecuteEditCostClicked, param => this.CanExecute);
             PrintPDFClicked = new RelayCommand(ExecutePrintPDFClicked, param => this.CanClick);
-
+            MailPDFClicked = new RelayCommand(ExecuteEmailPDFClicked, param => this.CanClick);
 
             CurrentEmployee                      = new Employee(employeeid);
             _currentemployeeid                   = employeeid;
@@ -110,7 +110,13 @@ namespace RedDot
                 CurrentReport                    = GetCommission((int)employeeid,m_currentdate);
             }
 
-            FillDateList();
+
+            if (salesrep)
+                RepDateList();
+            else
+                FillDateList();
+
+
             SelectedDateID                       = 1;
             LoadEmployees();
 
@@ -146,7 +152,27 @@ namespace RedDot
         }
 
  
+        private void RepDateList()
+        {
+            DateTime startdate;
+            ReportDate newdate;
+            startdate = DateTime.Today;
+    
 
+
+
+            for (int i = 1; i <= 12; i++)
+            {
+                newdate = new ReportDate();
+                newdate.Monthly = true;
+                newdate.StartDate = DateTime.Parse(startdate.Month + " 01, " + startdate.Year);
+                newdate.EndDate = newdate.StartDate.AddMonths(1).AddDays(-1);
+                newdate.ReportDateID = i;
+
+                ReportDates.Add(newdate);
+                startdate = startdate.AddMonths(-1);
+            }
+        }
 
         private void FillDateList()
         {
@@ -386,6 +412,16 @@ namespace RedDot
             }
     }
         //-------------------------------------Public Methods -----------------------------------------
+
+
+        public void ExecuteEmailPDFClicked(object button)
+        {
+            _reports.PrintCommissionPDF(CurrentReport, m_currentdate);
+
+
+           _reports.EmailCommissionPDF( m_currentdate,new Employee(_currentemployeeid));
+        }
+
 
         public void ExecutePrintPDFClicked(object obj)
         {

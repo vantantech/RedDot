@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RedDot;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Forms;
@@ -15,6 +10,7 @@ using PdfSharp.Pdf;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Net.Mail;
 
 namespace RedDot
 {
@@ -643,7 +639,62 @@ namespace RedDot
 
         }
 
+        public void EmailCommissionPDF(ReportDate reportdate, Employee employee)
+        {
 
+            try
+            {
+
+  
+
+
+                string filename = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\pdf\\CommissionReport_" + employee.FirstName + "_" + employee.LastName + "_" + reportdate.DateString + ".pdf";
+
+
+
+                if (!File.Exists(filename))
+                {
+                    MessageBox.Show("PDf file not found:  Please Print PDF first");
+                    return;
+                }
+
+                EmailCustomer eml = new EmailCustomer(employee.Email,reportdate.ReportString + " Commission Report", "Your " + reportdate.ReportString + " Commission Report has been attached", "CommissionReport_" + employee.FirstName + "_" + employee.LastName + "_" + reportdate.DateString + ".pdf");
+                eml.ShowDialog();
+
+                if (eml.Action == "cancel") return;
+
+
+                if (eml.To.Length < 1)
+                {
+                    MessageBox.Show("Address is invalid");
+                    return;
+                }
+
+                MailMessage mail = new MailMessage(GlobalSettings.Instance.StoreEmail, eml.To);
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Host = GlobalSettings.Instance.SMTPServer;
+                client.Credentials = new System.Net.NetworkCredential(GlobalSettings.Instance.SMTPUserName, GlobalSettings.Instance.SMTPPassword);
+
+                MailAddress copy = new MailAddress(GlobalSettings.Instance.SMTPCopyTo);
+                mail.CC.Add(copy);
+
+                mail.Subject = eml.Subject;
+                mail.Body = eml.Message;
+                mail.Attachments.Add(new Attachment(filename));
+      
+                client.Send(mail);
+                MessageBox.Show("Email Sent!");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Email: " + e.Message);
+            }
+
+
+        }
         public void PrintCommissionPDF(ObservableCollection<EmployeeSalesData> reportlist, ReportDate reportdate, bool display= true)
         {
 

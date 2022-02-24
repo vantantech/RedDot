@@ -187,26 +187,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding PrintPDFClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/pdf.png" Height="40" Width="40"/>
-                            <TextBlock Text="Print PDF"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" >
-                    <Button  Style="{StaticResource CustomButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="60"   Width="80" 
-                             Command="{Binding MailPDFClicked}" 
-                             CommandParameter="{Binding CurrentEmployee.ID}">
-                        <StackPanel>
-                            <Image Source="/RedDot;component/media/email.png" Height="40" Width="40"/>
-                            <TextBlock Text="Mail PDF"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+             
             </StackPanel>
         </Border>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using RedDot.Base;
 using RedDot.DataManager;
 using System;
 using System.Collections.Generic;

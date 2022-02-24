@@ -235,7 +235,7 @@ namespace RedDot
            decimal cashbackamount,
            decimal tip,
            string TransType,
-           string PinVerified,
+           int PinVerified,
            string SignatureLine,
            string TipAdjustAllowed,
            string EMV_ApplicationName,
@@ -286,7 +286,7 @@ namespace RedDot
                     " tipadjustallowed,emv_applicationname,emv_cryptogram,emv_cryptogramtype,emv_aid,cardholdername,custom1, custom2,custom4) values (" +
                     stationno + "," + salesid + ",'" + CardGroup + "'," + authamt + "," + requested_amount + ",'" + ApprovalCode + "','" +
                     CardType + "','" + MaskedPAN + "'," + tip + ",'" + paymentdate.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
-                    cashbackamount + ",'" + CardAcquisition + "','" + ResponseId + "','" + TransType + "'," + (PinVerified == null ? "0" : PinVerified) + "," +
+                    cashbackamount + ",'" + CardAcquisition + "','" + ResponseId + "','" + TransType + "'," + PinVerified + "," +
                     SignatureLine + "," + TipAdjustAllowed + ",'" + (EMV_ApplicationName == null ? "" : EMV_ApplicationName) + "','" + (EMV_Cryptogram == null ? "" : EMV_Cryptogram) + "','" +
                     (EMV_CryptogramType == null ? "" : EMV_CryptogramType) + "','" + (EMV_AID == null ? "" : EMV_AID) + "','" + (EMV_CardholderName == null ? "" : EMV_CardholderName.Replace("'", "''")) + "','" + CloverPaymentId + "','" + CloverOrderId + "','" + reason +  "')";
 

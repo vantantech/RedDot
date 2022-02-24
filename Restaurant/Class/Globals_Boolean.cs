@@ -60,6 +60,11 @@ namespace RedDot
             set { _dbsettings.SaveSetting("Credit Card", "AllowCashBack", value.ToString()); }
         }
 
+        public bool AutoCapture
+        {
+            get { return _dbsettings.BoolGetSetting("CreditCard", "AutoCapture", "Credit Auto Capture", "true"); }
+            set { _dbsettings.SaveSetting("Credit Card","AutoCapture", value.ToString()); }
+        }
 
         public bool PrintCustomerCopy
         {

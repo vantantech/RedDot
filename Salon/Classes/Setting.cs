@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RedDot;
 using System.Data;
 using RedDot.DataManager;
+using RedDot.Base;
 
 namespace RedDot
 {

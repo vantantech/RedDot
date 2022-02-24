@@ -121,7 +121,8 @@ namespace RedDot.DataManager
             return _dbconnect.Command(querystring);
         }
 
-        public bool DBInsertCreditPayment(int salesid,
+        public bool DBInsertCreditPayment(
+            int salesid,
             decimal requested_amount,
             string CardGroup,
             string ApprovalCode,
@@ -170,6 +171,7 @@ namespace RedDot.DataManager
                     tip = authamt - requested_amount;
                 }
 
+                //partial authorizations
                 if (authamt < requested_amount)
                 {
                     requested_amount = authamt;

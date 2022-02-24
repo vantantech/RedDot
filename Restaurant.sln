@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant", "Restaurant\Restaurant.csproj", "{0FE3593A-5710-432B-9C51-FE152D60123F}"
 EndProject
@@ -57,23 +57,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACE54EEF-BDFF-4B7A-B918-55E2BCE07930}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://vantantech.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Restaurant\\Restaurant.csproj
-		SccProjectName1 = Restaurant
-		SccLocalPath1 = Restaurant
-		SccProjectUniqueName2 = CustomScreens\\CustomScreens.csproj
-		SccProjectName2 = CustomScreens
-		SccLocalPath2 = CustomScreens
-		SccProjectUniqueName3 = RestaurantService\\RestaurantService.csproj
-		SccProjectName3 = RestaurantService
-		SccLocalPath3 = RestaurantService
-		SccProjectUniqueName4 = RedDotCore\\RedDotCore.csproj
-		SccProjectName4 = RedDotCore
-		SccLocalPath4 = RedDotCore
 	EndGlobalSection
 EndGlobal

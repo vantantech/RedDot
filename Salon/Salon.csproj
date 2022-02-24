@@ -201,8 +201,8 @@
     <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
@@ -265,6 +265,7 @@
     <Compile Include="Classes\DailySales.cs" />
     <Compile Include="Classes\DeviceScanner.cs" />
     <Compile Include="Classes\Globals.cs" />
+    <Compile Include="Classes\INPCBase.cs" />
     <Compile Include="Classes\IpFinder.cs" />
     <Compile Include="Classes\ListPair.cs" />
     <Compile Include="Classes\POSPayment.cs" />
@@ -298,7 +299,6 @@
     <Compile Include="Classes\LineItem.cs" />
     <Compile Include="Classes\RedDotEnum.cs" />
     <Compile Include="Classes\IniFile.cs" />
-    <Compile Include="Classes\INPCBase.cs" />
     <Compile Include="Classes\LD220.cs" />
     <Compile Include="Models\HeartSIP.cs" />
     <Compile Include="Classes\ResponseEventArgs.cs" />
@@ -383,7 +383,6 @@
     <Compile Include="Models\CloverListener.cs" />
     <Compile Include="ViewModels\CloverVM.cs" />
     <Compile Include="ViewModels\CreditCardManagerVM.cs" />
-    <Compile Include="ViewModels\EnrollFingerPrintVM.cs" />
     <Compile Include="ViewModels\ExternalCreditCardVM.cs" />
     <Compile Include="ViewModels\GlobalPaymentVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
@@ -1408,6 +1407,10 @@
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{c686b6a6-2679-482a-9b57-f6c041757b91}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataManager\DataManager.csproj">
       <Project>{0406086f-1590-49ed-8a6d-6317893c041f}</Project>
       <Name>DataManager</Name>

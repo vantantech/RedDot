@@ -63,8 +63,8 @@ namespace RedDot
         public RemoteScreen RemoteScreen { get; set; }
      
         public Reader CurrentReader { get; set; }
- 
-     
+        public string SessionKey { get; set; }
+        public DateTime SessionExpire { get; set; }
         public Ticket CurrentTicket { get; set; }
    
         public System.Drawing.Rectangle r0 { get; set; }
@@ -488,7 +488,7 @@ namespace RedDot
 
         #endregion
 
- 
+
 
         /*
                 ███████╗████████╗██████╗ ██╗███╗   ██╗ ██████╗ ███████╗
@@ -502,8 +502,75 @@ namespace RedDot
 
         #region Strings
 
+        public string BoltBaseURL
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "BoltBaseURL", "Bolt Base URL", "https://bolt.cardpointe.com/api"); }
+            set { _dbsettings.StringSaveSetting("CreditCard","BoltBaseURL", value.ToString()); }
+        }
 
-  
+
+        public string CardConnectURL
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "CardConnectURL", "Card Connect URL", "https://boltgw.cardconnect.com/cardconnect/rest"); }
+            set { _dbsettings.StringSaveSetting("CreditCard", "CardConnectURL", value.ToString()); }
+        }
+
+        public string CardConnectUsernamePassword
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "CardConnectUsernamePassword", "CardConnect Username Password", "vantanprod:2#jfFVnn&9K4g=sMJ3xu"); }
+            set { _dbsettings.StringSaveSetting("CreditCard", "CardConnectUsernamePassword", value.ToString()); }
+        }
+
+        public string CardConnectAuthorization
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "CardConnectAuthorization", "CardConnect Authorization", "FJjybuRK6EDYAVAWtP+0ufZ6Vnru3QjbHc3pJiyKW4I="); }
+            set { _dbsettings.StringSaveSetting("CreditCard", "CardConnectAuthorization", value.ToString()); }
+        }
+
+        public string MerchantID
+        {
+            get { return _dbsettings.StringGetSetting("CreditCard", "MerchantID", "Merchant ID", "496440222883"); }
+            set { _dbsettings.StringSaveSetting("CreditCard", "MerchantID", value.ToString()); }
+        }
+
+
+        string _hsn = "";
+        public string HardwareSerialNumber
+        {
+            get
+            {
+                if (_hsn == "")
+                {
+                    _hsn = Utility.GetINIString("HardwareSerialNumber", "CreditCard", "C032UQ03960675");
+                }
+                return _hsn;
+            }
+            set
+            {
+                _hsn = value.ToString();
+                Utility.PutINIString("HardwareSerialNumber", "CreditCard", value.ToString());
+            }
+        }
+
+
+        string _model = "";
+        public string PinPadModel
+        {
+            get
+            {
+                if (_model == "")
+                {
+                    _model = Utility.GetINIString("PinPadModel", "CreditCard", "Mini2");
+                }
+                return _model;
+            }
+            set
+            {
+                _model = value.ToString();
+                Utility.PutINIString("PinPadModel", "CreditCard", value.ToString());
+            }
+        }
+
 
         public string DisplayComPort
         {

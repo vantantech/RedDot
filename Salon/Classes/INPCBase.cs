@@ -23,9 +23,16 @@ namespace RedDot
             }
         }
 
+
+        private string m_windowbackgroundcolor;
        public string WindowBackgroundColor
         {
-            get { return GlobalSettings.Instance.WindowBackgroundColor; }
+            get { return m_windowbackgroundcolor; }
+            set
+            {
+                m_windowbackgroundcolor = value;
+                NotifyPropertyChanged("WindowBackgroundColor");
+            }
         }
 
         #endregion

@@ -734,7 +734,7 @@ namespace RedDot
             return dbticket.DBInsertCreditPayment(salesid, requested_amount, cardgroup, resp.cardTransaction.authCode, resp.cardTransaction.cardType.ToString(), resp.cardTransaction.last4, resp.cardTransaction.entryType.ToString(), resp.cardTransaction.referenceId, (decimal)resp.amount / 100, (decimal)resp.cashbackAmount / 100, (decimal)resp.tipAmount / 100, transtype,0, signature, "0", "", "", "", "", resp.cardTransaction.cardholderName, paymentdate, resp.id, resp.order.id);
         }
 
-        //payment for Vantiv
+        //payment for Vantiv TriPOS
         public static bool InsertCreditPayment(string transtype, int salesid, decimal requested_amount, TriPOS.ResponseModels.SaleResponse resp, DateTime paymentdate)
         {
             DBTicket dbticket = new DBTicket();
