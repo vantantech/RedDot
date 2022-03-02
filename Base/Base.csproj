@@ -7,8 +7,8 @@
     <ProjectGuid>{C686B6A6-2679-482A-9B57-F6C041757B91}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedDot.Base</RootNamespace>
-    <AssemblyName>Base</AssemblyName>
+    <RootNamespace>RedDotBase</RootNamespace>
+    <AssemblyName>RedDotBase</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

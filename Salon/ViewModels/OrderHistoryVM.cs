@@ -56,10 +56,11 @@ namespace RedDot
         private int _subid;
 
 
-    
-   
+        private int totalcount = 0;
+        private int currentcount = 0;
 
-     
+
+
         public ICommand VoidClicked { get; set; }
 
        public ICommand EditClicked { get; set; }
@@ -813,8 +814,9 @@ namespace RedDot
                     if (resp.DeviceResponseText.ToUpper() == "OK")
                     {
                         m_salesmodel.UpdatePaymentCapture(ID, TipAmount, (decimal)resp.TransactionAmount, NetAmount, resp.TransactionId);
-                        return true;
-                    }
+                TouchMessageBox.ShowSmall("Settle ID: " + ResponseId + " Amount: " + (NetAmount + TipAmount).ToString() + (char)13 + (char)10 + currentcount.ToString() + " out of  " + totalcount.ToString(), 1);
+                return true;
+            }
                     else
                     {
                         logger.Error(resp.DeviceResponseText);

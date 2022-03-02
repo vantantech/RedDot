@@ -264,6 +264,7 @@
     <Compile Include="Class\EmployeeSchedule.cs" />
     <Compile Include="Class\EmployeeShift.cs" />
     <Compile Include="Class\Globals_Boolean.cs" />
+    <Compile Include="Class\Globals_String.cs" />
     <Compile Include="Class\ListPair.cs" />
     <Compile Include="Class\ConfigParameters.cs" />
     <Compile Include="Class\ListType.cs" />
@@ -286,9 +287,11 @@
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TicketItemController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Models\CardConnectModel.cs" />
+    <Compile Include="Models\CardConnect\CardConnectModel.cs" />
     <Compile Include="Models\CardConnect\CCCaptureRequest.cs" />
     <Compile Include="Models\CardConnect\CCCaptureResponse.cs" />
+    <Compile Include="Models\CardConnect\CCConfirmationRequest.cs" />
+    <Compile Include="Models\CardConnect\CCConfirmationResponse.cs" />
     <Compile Include="Models\CardConnect\CCReceiptData.cs" />
     <Compile Include="Models\CardConnect\CCRefundRequest.cs" />
     <Compile Include="Models\CardConnect\CCRefundResponse.cs" />
@@ -395,6 +398,7 @@
     <Compile Include="TriPOS\SignatureFiles\SignatureStatusCode.cs" />
     <Compile Include="ViewModels\AddComboItemVM.cs" />
     <Compile Include="ViewModels\AdminDatabaseVM.cs" />
+    <Compile Include="ViewModels\CardConnectVM.cs" />
     <Compile Include="ViewModels\CashierInOutVM.cs" />
     <Compile Include="ViewModels\CashTenderVM.cs" />
     <Compile Include="ViewModels\CCPBaseVM.cs" />

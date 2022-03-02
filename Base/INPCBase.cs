@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using NLog;
 
-namespace RedDot.Base
+namespace RedDotBase
 {
     public class INPCBase : INotifyPropertyChanged
     {

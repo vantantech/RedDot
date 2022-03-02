@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
+using RedDotBase;
 
 namespace RedDot
 {

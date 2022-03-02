@@ -952,6 +952,7 @@ namespace RedDot
                     case "HSIP_ISC250":
                     case "VANTIV":
                     case "VIRTUAL":
+                    case "CARDCONNECT":
 
                         CCPRefund ccp = new CCPRefund(CurrentTicket,m_security);
                         Utility.OpenModal(m_parent, ccp);

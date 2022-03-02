@@ -15,6 +15,7 @@ using GlobalPayments.Api.Terminals;
 using RedDot.Models;
 using System.ComponentModel;
 using RedDot.Models.CardConnect;
+using RedDotBase;
 
 namespace RedDot
 {

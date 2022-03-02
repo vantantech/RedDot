@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows;
 using RedDot.DataManager;
 using RedDot.Models;
+using RedDotBase;
 
 namespace RedDot
 {

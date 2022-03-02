@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using RedDot.Base;
+using RedDotBase;
 using RedDot.DataManager;
 using System;
 using System.Collections.Generic;
@@ -139,10 +139,10 @@ namespace RedDot
         }
         public string IPAddress
         {
-            get { return GlobalSettings.Instance.SIPDefaultIPAddress; }
+            get { return GlobalSettings.Instance.IPAddress; }
             set
             {
-                GlobalSettings.Instance.SIPDefaultIPAddress = value;
+                GlobalSettings.Instance.IPAddress = value;
             }
         }
         public string Port
@@ -496,17 +496,5 @@ namespace RedDot
 
     }
 
-    public class SettingsTabItem:INPCBase
-    {
-        private DataTable m_settings;
-        public string Header { get; set; }
-        public DataTable Settings
-        {
-            get { return m_settings;}
-            set{
-                m_settings = value;
-                NotifyPropertyChanged("Settings");
-            }
-        }
-    }
+
 }

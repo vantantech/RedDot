@@ -3,6 +3,7 @@ using GlobalPayments.Api.Services;
 using GlobalPayments.Api.Terminals;
 using GlobalPayments.Api.Terminals.Abstractions;
 using NLog;
+using RedDotBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace RedDot
     public class CreditCardManagerVM:INPCBase
     {
 
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+    
 
 
 

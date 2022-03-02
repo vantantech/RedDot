@@ -19,6 +19,7 @@ using System.Management;
 using System.Threading;
 using NLog;
 using RedDot.DataManager;
+using RedDotBase;
 
 
 namespace RedDot
@@ -36,7 +37,7 @@ namespace RedDot
         private DBEmployee m_dbemployee;
 
         private DataTable m_employeelist;
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+
 
         string m_salesviewmode = GlobalSettings.Instance.SalesViewMode;
 

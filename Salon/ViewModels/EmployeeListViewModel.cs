@@ -11,6 +11,7 @@ using RedDot;
 //using System.Windows.Forms;
 using RedDot.DataManager;
 using Microsoft.Win32;
+using RedDotBase;
 
 namespace RedDot
 {

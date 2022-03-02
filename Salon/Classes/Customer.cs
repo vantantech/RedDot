@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using Newtonsoft.Json;
-using RedDot.Base;
+using RedDotBase;
 using RedDot.DataManager;
 
 namespace RedDot

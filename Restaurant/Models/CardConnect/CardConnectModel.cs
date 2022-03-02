@@ -4,6 +4,7 @@ using RedDot.Models.CardConnect;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -33,13 +34,17 @@ namespace RedDot.Models
             string urlstring = "{0}/v3/tip"; // also need to get from database
             string url = string.Format(urlstring, host);
 
+
+            string tippercent = GlobalSettings.Instance.TipSuggestion;
+
+
             var tiprequestbody = new CCTipRequest
             {
                 merchantId = GlobalSettings.Instance.MerchantID,
                 hsn = GlobalSettings.Instance.HardwareSerialNumber,
                 amount = Decimal.ToInt32(Math.Round(amount, 2) * 100).ToString(),
-                tipPercentPresets = new int[] { 10, 15, 20 },
-                prompt = "Would you like to leave a tip?"
+                tipPercentPresets = Array.ConvertAll(tippercent.Split(','),int.Parse),
+                prompt = GlobalSettings.Instance.TipPrompt
 
             };
 
@@ -91,7 +96,8 @@ namespace RedDot.Models
                 hsn = GlobalSettings.Instance.HardwareSerialNumber,
                 amount = Decimal.ToInt32(Math.Round(amount, 2) * 100).ToString(),
                 orderId = salesid.ToString(),
-                capture = capture ? "true" : "false"
+                capture = capture ? "true" : "false",
+                includeSignature = capture ? "true" : "false"
             };
 
 
@@ -133,6 +139,156 @@ namespace RedDot.Models
 
         }
 
+
+        public static bool ReadConfirmation(string prompt, int timeout=60)
+        {
+            Connect();
+
+
+            if (GlobalSettings.Instance.SessionKey == null)
+            {
+                TouchMessageBox.Show("Not able to retrieve session key!!");
+                return false;
+            }
+
+            string host = GlobalSettings.Instance.BoltBaseURL;
+            string urlstring = "{0}/v2/readConfirmation"; // also need to get from database
+            string url = string.Format(urlstring, host);
+
+
+
+            var tiprequestbody = new CCConfirmationRequest
+            {
+                merchantId = GlobalSettings.Instance.MerchantID,
+                hsn = GlobalSettings.Instance.HardwareSerialNumber,
+                beep = false,
+                prompt = prompt
+
+            };
+
+            logger.Debug("url=" + url);
+            var client = new RestClient(url);
+            client.Timeout = timeout * 1000; 
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", GlobalSettings.Instance.CardConnectAuthorization);
+            request.AddHeader("X-CardConnect-SessionKey", GlobalSettings.Instance.SessionKey);
+
+            var body = JsonConvert.SerializeObject(tiprequestbody);
+            logger.Debug("body=" + body);
+
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+
+            string cont = response.Content;
+
+            if (cont == "" )
+            {
+                if(timeout >= 30)  TouchMessageBox.Show("No Response from Customer -- Time Out");
+                return false;
+            }
+
+            logger.Debug("response body:" + cont);
+
+            CCConfirmationResponse resp = JsonConvert.DeserializeObject<CCConfirmationResponse>(cont);
+
+            return resp.confirmed;
+        }
+
+        public static void DisplayWelcome()
+        {
+            Display("Welcome to " + GlobalSettings.Instance.Shop.Name + "\n\n\n Station No: " + GlobalSettings.Instance.StationNo);
+        }
+        public static void Display(string text)
+        {
+            Connect();
+
+
+            if (GlobalSettings.Instance.SessionKey == null)
+            {
+                TouchMessageBox.Show("Not able to retrieve session key!!");
+
+            }
+
+            string host = GlobalSettings.Instance.BoltBaseURL;
+            string urlstring = "{0}/v2/display"; // also need to get from database
+            string url = string.Format(urlstring, host);
+
+
+
+            var tiprequestbody = new
+            {
+                merchantId = GlobalSettings.Instance.MerchantID,
+                hsn = GlobalSettings.Instance.HardwareSerialNumber,
+                text = text
+
+            };
+
+            logger.Debug("url=" + url);
+            var client = new RestClient(url);
+            client.Timeout = 30 * 1000; //30 seconds
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", GlobalSettings.Instance.CardConnectAuthorization);
+            request.AddHeader("X-CardConnect-SessionKey", GlobalSettings.Instance.SessionKey);
+
+            var body = JsonConvert.SerializeObject(tiprequestbody);
+            logger.Debug("body=" + body);
+
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+
+            string cont = response.Content;
+
+
+
+        }
+        public static void ClearPinPad()
+        {
+            Connect();
+
+
+            if (GlobalSettings.Instance.SessionKey == null)
+            {
+                TouchMessageBox.Show("Not able to retrieve session key!!");
+            
+            }
+
+            string host = GlobalSettings.Instance.BoltBaseURL;
+            string urlstring = "{0}/v3/clearDisplay"; // also need to get from database
+            string url = string.Format(urlstring, host);
+
+
+
+            var tiprequestbody = new
+            {
+                merchantId = GlobalSettings.Instance.MerchantID,
+                hsn = GlobalSettings.Instance.HardwareSerialNumber
+             
+            };
+
+            logger.Debug("url=" + url);
+            var client = new RestClient(url);
+            client.Timeout = 30 * 1000; //30 seconds
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", GlobalSettings.Instance.CardConnectAuthorization);
+            request.AddHeader("X-CardConnect-SessionKey", GlobalSettings.Instance.SessionKey);
+
+            var body = JsonConvert.SerializeObject(tiprequestbody);
+            logger.Debug("body=" + body);
+
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+
+            string cont = response.Content;
+
+    
+          
+        }
         public static string Base64Encode(string plainText)
         {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
@@ -153,7 +309,7 @@ namespace RedDot.Models
             string host = GlobalSettings.Instance.CardConnectURL;
             string urlstring = "{0}/capture";
             string url = string.Format(urlstring, host);
-            string usernamepassword = Base64Encode(GlobalSettings.Instance.CardConnectUsernamePassword);
+            string usernamepassword = Base64Encode(GlobalSettings.Instance.CardConnectUsername + ":" + GlobalSettings.Instance.CardConnectPassword);
 
             var requestbody = new CCCaptureRequest
             {
@@ -196,7 +352,7 @@ namespace RedDot.Models
             string host = GlobalSettings.Instance.CardConnectURL;
             string urlstring = "{0}/void";
             string url = string.Format(urlstring, host);
-            string usernamepassword = Base64Encode(GlobalSettings.Instance.CardConnectUsernamePassword);
+            string usernamepassword = Base64Encode(GlobalSettings.Instance.CardConnectUsername + ":" + GlobalSettings.Instance.CardConnectPassword);
 
             var requestbody = new CCVoidRequest
             {
@@ -239,7 +395,7 @@ namespace RedDot.Models
             string host = GlobalSettings.Instance.CardConnectURL;
             string urlstring = "{0}/refund";
             string url = string.Format(urlstring, host);
-            string usernamepassword = Base64Encode(GlobalSettings.Instance.CardConnectUsernamePassword);
+            string usernamepassword = Base64Encode(GlobalSettings.Instance.CardConnectUsername + ":" + GlobalSettings.Instance.CardConnectPassword);
 
             var requestbody = new CCRefundRequest
             {
@@ -276,14 +432,15 @@ namespace RedDot.Models
 
 
 
-
-
         public static bool Connect()
         {
 
             string host = GlobalSettings.Instance.BoltBaseURL;
             string urlstring = "{0}/v2/connect"; // also need to get from database
             string url = string.Format(urlstring, host);
+
+
+            GlobalSettings.Instance.SessionKey = null;
 
             logger.Debug("url=" + url);
 
@@ -296,7 +453,7 @@ namespace RedDot.Models
 
 
             var client = new RestClient(url);
-            client.Timeout = -1;
+            client.Timeout = 30 * 1000; //30 seconds
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", GlobalSettings.Instance.CardConnectAuthorization);
@@ -309,6 +466,11 @@ namespace RedDot.Models
 
             if (response == null) return false;
 
+            if (response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                TouchMessageBox.Show("Not able to connect to PIN PAD, please check Bolt Status");
+                return false;
+            }
 
             var responsestr = response.Headers.ToList().Find(x => x.Name == "X-CardConnect-SessionKey");
 
@@ -379,13 +541,18 @@ namespace RedDot.Models
             return resp;
         }
 
-        public static string ProcessCredit(int salesid, decimal amt, bool capture)
+        public static bool ProcessCredit(int salesid, decimal amt, bool capture)
         {
 
             logger.Info("CREDIT SALE => ticket=" + salesid + ", amount=" + amt);
+            decimal tip = 0;
 
-            //request tip amount from customer
-            decimal tip = GetTip(amt);
+            if (capture)
+            {
+                //request tip amount from customer
+                tip = GetTip(amt);
+            }
+   
             //connect to pinpad to authorize card
             CCSaleResponse resp = authCard(salesid, amt + tip, capture);
 
@@ -405,9 +572,30 @@ namespace RedDot.Models
                             if (result == false)
                             {
                                 TouchMessageBox.Show("Payment record insert failed.");
-                                return "";
+                                return false;
                             }
-                            return resp.retref;
+                           
+                            if (resp.retref != "")
+                            {
+
+                                Payment payment = GetPayment(resp.retref);
+
+                                //print credit slip
+
+
+
+                                if (GlobalSettings.Instance.PrintMerchantCopy || !capture) ReceiptPrinterModel.PrintCreditSlip(payment, "**Merchant Copy**");
+
+                                //if settings is true ,then always print customer receipt
+                                if (GlobalSettings.Instance.PrintCustomerCopy || (!capture && GlobalSettings.Instance.PrintCustomerAuthCopy )) ReceiptPrinterModel.PrintCreditSlip(payment, "**Customer Copy**");
+
+                               
+                            
+                      
+                                
+                            }
+                            return true;
+
 
                         default:
 
@@ -427,7 +615,7 @@ namespace RedDot.Models
 
 
 
-                return "";
+                return false;
 
 
             }
@@ -435,17 +623,30 @@ namespace RedDot.Models
             {
                 logger.Error("No Response from Credit Card Pin Pad  ");
                 TouchMessageBox.Show("No Response from Credit Card Pin Pad");
-                return "";
+                return false;
 
             }
         }
 
-        public static string ProcessRefund(string retref, decimal amount)
+ 
+
+        public static Payment GetPayment(string transactionNo)
         {
-            logger.Info("COMMAND:Credit Refund , Amount=" + amount.ToString());
+            DBSales m_dbsales = new DBSales();
+            DataTable rtn = m_dbsales.GetPayment(transactionNo);
+            if (rtn.Rows.Count > 0)
+            {
+                return new Payment(rtn.Rows[0]);
+            }
+            else return null;
+        }
+
+        public static string ProcessRefund(string retref)
+        {
+            logger.Info("COMMAND:Credit Refund ");
 
             CCRefundResponse resp = CardConnectModel.Refund(retref);
-            logger.Info("CREDIT REFUND => reference number:" + retref + ", amount=" + amount);
+            logger.Info("CREDIT REFUND => reference number:" + retref );
 
             logger.Info("Credit Refund:RECEIVED:" + resp.ToString());
 

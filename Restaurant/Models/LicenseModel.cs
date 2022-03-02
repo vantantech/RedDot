@@ -212,25 +212,37 @@ namespace RedDot
         private static string identifier(string wmiClass, string wmiProperty)
         {
             string result = "";
-            System.Management.ManagementClass mc =
-        new System.Management.ManagementClass(wmiClass);
-            System.Management.ManagementObjectCollection moc = mc.GetInstances();
-            foreach (System.Management.ManagementObject mo in moc)
+
+            try
             {
-                //Only get the first one
-                if (result == "")
+                System.Management.ManagementClass mc =
+    new System.Management.ManagementClass(wmiClass);
+                System.Management.ManagementObjectCollection moc = mc.GetInstances();
+                foreach (System.Management.ManagementObject mo in moc)
                 {
-                    try
+                    //Only get the first one
+                    if (result == "")
                     {
-                        result = mo[wmiProperty].ToString();
-                        break;
-                    }
-                    catch
-                    {
+                        try
+                        {
+                            if (mo == null) return "";
+
+                            var test = mo[wmiProperty];
+                            if (test != null) result = test.ToString();
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            return "";
+                        }
                     }
                 }
+                return result;
+            }catch
+            {
+                return "";
             }
-            return result;
+        
         }
         private static string cpuId()
         {

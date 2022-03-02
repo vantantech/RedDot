@@ -873,7 +873,7 @@ namespace RedDot
             if (Status == null) return;
 
             Status = "Closed";
-            m_dbTicket.DBQSCloseTicket(m_salesid, m_subtotal, m_total, m_salestax,m_autotipamount);
+            m_dbTicket.DBCloseTicket(m_salesid, m_subtotal, m_total, m_salestax,m_autotipamount);
             Reload(); //reloades ticket
 
         }
@@ -881,10 +881,7 @@ namespace RedDot
 
         public bool TryCloseTicket()
         {
-            bool rewardexceptionflag = false;
-            decimal rewardpercent = GlobalSettings.Instance.RewardPercent;
-
-            string rewardexceptions = GlobalSettings.Instance.RewardException.ToUpper();
+     
 
 
             try
@@ -900,33 +897,14 @@ namespace RedDot
                     m_dbTicket.DBActivateGiftCertificates(m_salesid); //runs everytime ticket close , will not double insert
 
 
-                    if (rewardexceptions == "DISCOUNT")
-                    {
-                        if (HasDiscount) rewardexceptionflag = true;
-                    }
-
-                    if (CurrentCustomer != null)
-                    {
-                        if (!rewardexceptionflag)
-                        {
-
-                            m_dbTicket.DBInsertCustomerReward(CurrentCustomer.ID, SalesID, SaleDate, Total, Total * rewardpercent / 100, "ADD", "");
-                        }
-                    }
+                  
 
                     Status = "Closed";
 
               
-                   m_dbTicket.DBQSCloseTicket(m_salesid, m_subtotal, m_total, m_salestax, m_autotipamount);
+                   m_dbTicket.DBCloseTicket(m_salesid, m_subtotal, m_total, m_salestax, m_autotipamount);
 
-                    foreach (Seat seat in Seats)
-                    foreach(LineItem line in seat.LineItems)
-                    {
-                        if(line.ItemType=="product")
-                        {
-                            m_dbproducts.DBDeductInventory(line.ProductID);
-                        }
-                    }
+ 
 
 
                     Reload(); //reloades ticket
@@ -953,21 +931,7 @@ namespace RedDot
                         TouchMessageBox.ShowSmall(String.Format("Change Due: {0:c}", ChangeDue), GlobalSettings.Instance.AutoAskTimeout);
 
 
-                    if (GlobalSettings.Instance.AutoReceiptPrint)
-                    {
-                        Confirm cnf = new Confirm("Print Customer Receipt?",GlobalSettings.Instance.AutoAskTimeout);
-                        cnf.Topmost = true;
-                        cnf.ShowDialog();
-
-                        if(cnf.Action == Confirm.OK)
-                        {
-                            ReceiptPrinterModel.PrintReceipt(this, GlobalSettings.Instance.ReceiptPrinter);
-                        }
-
-                    }
-
-
-                   
+                
 
           
 

@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RedDot;
-using System.Windows;
-using com.clover.remotepay.sdk;
-using DPUruNet;
-using System.Data;
-using RedDot.Models;
-
-namespace RedDot
+﻿namespace RedDot
 {
     public partial class GlobalSettings
     {
@@ -62,14 +50,32 @@ namespace RedDot
 
         public bool AutoCapture
         {
-            get { return _dbsettings.BoolGetSetting("CreditCard", "AutoCapture", "Credit Auto Capture", "true"); }
+            get { return _dbsettings.BoolGetSetting("Credit Card", "AutoCapture", "Credit Auto Capture", "true"); }
             set { _dbsettings.SaveSetting("Credit Card","AutoCapture", value.ToString()); }
         }
 
         public bool PrintCustomerCopy
         {
-            get { return _dbsettings.BoolGetSetting("Credit Card", "PrintCustomerCopy", "Print Customer Copy", "true"); }
+            get { return _dbsettings.BoolGetSetting("Credit Card", "PrintCustomerCopy", "Print Customer Credit Slip", "true"); }
             set { _dbsettings.SaveSetting("Credit Card", "PrintCustomerCopy", value.ToString()); }
+        }
+
+        public bool PrintCustomerAuthCopy
+        {
+            get { return _dbsettings.BoolGetSetting("Credit Card", "PrintCustomerAuthCopy", "Print Customer Authorization Slip", "false"); }
+            set { _dbsettings.SaveSetting("Credit Card", "PrintCustomerAuthCopy", value.ToString()); }
+        }
+
+        public bool PrintCustomerAuthReceipt
+        {
+            get { return _dbsettings.BoolGetSetting("Credit Card", "PrintCustomerAuthReceipt", "Print Customer Receipt w/Auth", "false"); }
+            set { _dbsettings.SaveSetting("Credit Card", "PrintCustomerAuthReceipt", value.ToString()); }
+        }
+
+        public bool PrintMerchantCopy
+        {
+            get { return _dbsettings.BoolGetSetting("Credit Card", "PrintMerchantCopy", "Print Merchant Credit Slip", "true"); }
+            set { _dbsettings.SaveSetting("Credit Card", "PrintMerchantCopy", value.ToString()); }
         }
 
         public bool RequestTip

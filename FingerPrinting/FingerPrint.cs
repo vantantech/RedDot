@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace RedDot.FingerPrinting
+namespace FingerPrinting
 {
 
     public class FingerPrint

@@ -7,7 +7,7 @@
     <ProjectGuid>{237DE052-5635-45FF-8DD0-DBDA2583225F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RedDot.FingerPrinting</RootNamespace>
+    <RootNamespace>FingerPrinting</RootNamespace>
     <AssemblyName>FingerPrinting</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Base">
-      <HintPath>..\Base\bin\Debug\Base.dll</HintPath>
-    </Reference>
     <Reference Include="DeviceId, Version=5.2.0.0, Culture=neutral, PublicKeyToken=f755c371b5c59c52, processorArchitecture=MSIL">
       <HintPath>..\packages\DeviceId.5.2.0\lib\net40\DeviceId.dll</HintPath>
     </Reference>
@@ -109,6 +106,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{c686b6a6-2679-482a-9b57-f6c041757b91}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\fingerprint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\back.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

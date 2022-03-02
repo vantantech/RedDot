@@ -17,6 +17,7 @@ using System.Data;
 using System.ComponentModel;
 using RedDot;
 using RedDot.DataManager;
+using RedDotBase;
 
 namespace RedDot
 {

@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salon", "Salon\Salon.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManager", "DataManager\DataManager.csproj", "{0406086F-1590-49ED-8A6D-6317893C041F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerPrinting", "FingerPrinting\FingerPrinting.csproj", "{237DE052-5635-45FF-8DD0-DBDA2583225F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base", "Base\Base.csproj", "{C686B6A6-2679-482A-9B57-F6C041757B91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerPrinting", "FingerPrinting\FingerPrinting.csproj", "{237DE052-5635-45FF-8DD0-DBDA2583225F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +35,6 @@ Global
 		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|x86.ActiveCfg = Release|Any CPU
 		{0406086F-1590-49ED-8A6D-6317893C041F}.Release|x86.Build.0 = Release|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|x86.Build.0 = Debug|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|x86.ActiveCfg = Release|Any CPU
-		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|x86.Build.0 = Release|Any CPU
 		{C686B6A6-2679-482A-9B57-F6C041757B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C686B6A6-2679-482A-9B57-F6C041757B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C686B6A6-2679-482A-9B57-F6C041757B91}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -51,6 +43,14 @@ Global
 		{C686B6A6-2679-482A-9B57-F6C041757B91}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C686B6A6-2679-482A-9B57-F6C041757B91}.Release|x86.ActiveCfg = Release|Any CPU
 		{C686B6A6-2679-482A-9B57-F6C041757B91}.Release|x86.Build.0 = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Debug|x86.Build.0 = Debug|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|x86.ActiveCfg = Release|Any CPU
+		{237DE052-5635-45FF-8DD0-DBDA2583225F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

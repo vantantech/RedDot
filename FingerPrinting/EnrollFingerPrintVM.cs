@@ -1,6 +1,6 @@
 ﻿
 
-using RedDot.Base;
+using RedDotBase;
 using System;
 using System.Drawing;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace RedDot.FingerPrinting
+namespace FingerPrinting
 {
 
     public class EnrollFingerPrintVM : INPCBase

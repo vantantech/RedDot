@@ -208,14 +208,7 @@ namespace RedDot
 
         }
 
-        public bool DBDeductInventory(int productid)
-        {
-            string query;
 
-            query = "update product set qoh = qoh - 1  where id=" + productid;
-            return m_dbconnect.Command(query);
-
-        }
         public bool UpdateNumeric(int id, string field, int fieldvalue)
         {
             string query;

@@ -814,6 +814,8 @@ namespace RedDot
                 case "WORLDPAY":
                 case "VANTIV":
                 case "VIRTUAL":
+                case "CARDCONNECT":
+
 
                     string transtype = "SALE";
 
@@ -824,26 +826,7 @@ namespace RedDot
                     break;
 
 
-                case "CardConnect":
-
-
-                    string referencenumber = CardConnectModel.ProcessCredit(currentticket.SalesID, currentticket.Balance, GlobalSettings.Instance.AutoCapture);
-                    if (referencenumber != "")
-                    {
-                   
-                        Payment payment = GetPayment(referencenumber);
-
-                        //print credit slip
-                      
-                            ReceiptPrinterModel.AutoPrintCreditSlip( payment);
-
-
-            
-                    }
-
-
-
-                    break;
+     
 
                 case "CLOVER":
                     CloverPayment pay = new CloverPayment(currentticket, m_security, "SALE", null,"");
@@ -861,7 +844,44 @@ namespace RedDot
 
             //need to load payment  to refresh object first before trying to close ticket
             currentticket.LoadPayment();
-            return currentticket.TryCloseTicket();
+
+            bool IsPaid = currentticket.TryCloseTicket();
+            if (IsPaid)
+            {
+                if (CardConnectModel.ReadConfirmation("Print a Copy of Receipt??", 5))
+                    ReceiptPrinterModel.PrintReceipt(currentticket, GlobalSettings.Instance.ReceiptPrinter);
+                else
+                {
+                    CardConnectModel.ClearPinPad();
+                    CardConnectModel.DisplayWelcome();
+                }
+
+                //update customer account 
+
+                bool rewardexceptionflag = false;
+                decimal rewardpercent = GlobalSettings.Instance.RewardPercent;
+
+                string rewardexceptions = GlobalSettings.Instance.RewardException.ToUpper();
+                if (rewardexceptions == "DISCOUNT")
+                {
+                    if (currentticket.HasDiscount) rewardexceptionflag = true;
+                }
+
+                if (currentticket.CurrentCustomer != null)
+                {
+                    if (!rewardexceptionflag)
+                    {
+
+                        m_dbticket.DBInsertCustomerReward(currentticket.CurrentCustomer.ID, currentticket.SalesID, currentticket.SaleDate, currentticket.Total, currentticket.Total * rewardpercent / 100, "ADD", "");
+                    }
+                }
+                //update rewards
+            }
+
+
+
+
+            return IsPaid;
 
         }
 
@@ -1743,7 +1763,7 @@ namespace RedDot
         //payment for Card Connect
         public static bool InsertCreditPayment(string transtype, int salesid, decimal requested_amount, decimal tip, CCSaleResponse resp, DateTime paymentdate, string reason)
         {
-            string signatureline = "0";
+            string signatureline = transtype == "SALE"? "0": "1";
             string tipadjustallowed = "0";
             decimal netamount = resp.amount - tip;
             DBTicket dbticket = new DBTicket();

@@ -259,8 +259,15 @@ namespace RedDot
                   switch(line.CardGroup.ToUpper())
                     {
                         case "CREDIT":
-                            receiptline = Utility.FormatPrintRow(line.CardType + (line.Voided ? " (VOIDED)" : " " + line.AuthorCode), line.AmountStr, receiptchars);
-                            printer.PrintLF(receiptline);
+                          
+                            printer.PrintLF(Utility.FormatPrintRow(line.CardType + (line.Voided ? " (VOIDED)" : ""), line.AmountStr, receiptchars));
+                         
+                            printer.PrintLF(Utility.FormatPrintRow("Approval Code:", line.AuthorCode, receiptchars));
+                          
+                            printer.PrintLF(Utility.FormatPrintRow("Entry Method:", line.CardAcquisition, receiptchars));
+                          
+                            printer.PrintLF(Utility.FormatPrintRow("AID:", line.EMV_AID, receiptchars));
+                            printer.PrintLF(Utility.FormatPrintRow("Transaction ID:", line.ResponseId, receiptchars));
                             break;
 
                         case "GIFT CARD":
@@ -388,7 +395,7 @@ namespace RedDot
 
         public static void AutoPrintCreditSlip( Payment m_payment)
         {
-            ReceiptPrinterModel.PrintCreditSlip( m_payment, "**Merchant Copy**");
+            if (GlobalSettings.Instance.PrintMerchantCopy) ReceiptPrinterModel.PrintCreditSlip( m_payment, "**Merchant Copy**");
             if (GlobalSettings.Instance.PrintCustomerCopy) ReceiptPrinterModel.PrintCreditSlip( m_payment, "**Customer Copy**");
         }
 
@@ -453,14 +460,16 @@ namespace RedDot
                 //  printer.PrintLF(new String('=', receiptchars));
 
 
-                printer.DoubleHeight();
+              //  printer.DoubleHeight();
 
-                printer.PrintLF(payment.CardGroup.ToUpper() + " " + payment.TransType.ToUpper());
-                printer.PrintLF("Ticket: " + payment.SalesID.ToString());
-                printer.DoubleHeightOFF();
+               // printer.PrintLF(payment.CardGroup.ToUpper() + " " + payment.TransType.ToUpper());
+              ///  printer.PrintLF("Ticket: " + payment.SalesID.ToString());
+             //   printer.DoubleHeightOFF();
 
 
                 printer.Left();
+
+                printer.PrintLF("Ticket: " + payment.SalesID.ToString());
 
                 if (payment.Voided)
                     printer.PrintLF(Utility.FormatPrintRow(payment.VoidDate.ToShortDateString(), payment.VoidDate.ToShortTimeString(), receiptchars));
@@ -473,30 +482,34 @@ namespace RedDot
                 printer.LineFeed();
 
                 printer.PrintLF(new String('-', receiptchars));
-                if (payment.CardAcquisition == "INSERT" || payment.CardAcquisition == "EMV TAP" || payment.CardAcquisition.ToUpper() == "CHIP" || payment.CardAcquisition == "CONTACTICC")
+                if (payment.CardAcquisition.ToUpper().Contains("SWIPE") || payment.CardAcquisition.ToUpper().Contains("KEY"))
                 {
+
+                    printer.PrintLF(Utility.FormatPrintRow("Card Type:", payment.CardType, receiptchars));
+                    printer.PrintLF(Utility.FormatPrintRow("Acct:", payment.MaskedPAN, receiptchars));
+
+                    printer.PrintLF(Utility.FormatPrintRow("Entry Method:", payment.CardAcquisition, receiptchars));
+                    printer.PrintLF(Utility.FormatPrintRow("Auth Code:", payment.AuthorCode, receiptchars));
+                    printer.PrintLF(Utility.FormatPrintRow("Card Holder:", payment.CardHolderName, receiptchars));
+
+
+                }
+                else
+                {
+
+
                     printer.PrintLF(Utility.FormatPrintRow("Acct:", payment.MaskedPAN, receiptchars));
                     printer.PrintLF(Utility.FormatPrintRow("App Name:", payment.EMV_ApplicationName, receiptchars));
                     printer.PrintLF(Utility.FormatPrintRow("AID:", payment.EMV_AID, receiptchars));
-                    printer.PrintLF(Utility.FormatPrintRow(payment.EMV_CryptogramType + ":", payment.EMV_Cryptogram, receiptchars));
-                    printer.PrintLF(Utility.FormatPrintRow("Entry:", payment.CardAcquisition, receiptchars));
-                    printer.PrintLF(Utility.FormatPrintRow("Approval:", payment.AuthorCode, receiptchars));
+                   // printer.PrintLF(Utility.FormatPrintRow(payment.EMV_CryptogramType + ":", payment.EMV_Cryptogram, receiptchars));
+                    printer.PrintLF(Utility.FormatPrintRow("Entry Method:", payment.CardAcquisition, receiptchars));
+                    printer.PrintLF(Utility.FormatPrintRow("Auth Code:", payment.AuthorCode, receiptchars));
                     printer.PrintLF(Utility.FormatPrintRow("Card Holder:", payment.CardHolderName, receiptchars));
 
 
                     if (payment.PinVerified == false) printer.PrintLF(Utility.FormatPrintRow("PIN:", "PIN not provided", receiptchars));
                     else printer.PrintLF(Utility.FormatPrintRow("PIN:", "Verified", receiptchars));
-                }
-                else
-                {
-                    printer.PrintLF(Utility.FormatPrintRow("Card Type:", payment.CardType, receiptchars));
-                    printer.PrintLF(Utility.FormatPrintRow("Acct:", payment.MaskedPAN, receiptchars));
 
-                    printer.PrintLF(Utility.FormatPrintRow("Entry:", payment.CardAcquisition, receiptchars));
-                    printer.PrintLF(Utility.FormatPrintRow("Approval:", payment.AuthorCode, receiptchars));
-                    printer.PrintLF(Utility.FormatPrintRow("Card Holder:", payment.CardHolderName, receiptchars));
-
-                 
 
                 }
 

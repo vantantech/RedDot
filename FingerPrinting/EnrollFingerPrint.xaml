@@ -1,9 +1,9 @@
-﻿<Window x:Class="RedDot.FingerPrinting.EnrollFingerPrint"
+﻿<Window x:Class="FingerPrinting.EnrollFingerPrint"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RedDot"
+        xmlns:local="clr-namespace:FingerPrinting"
         mc:Ignorable="d"
         Title="EnrollFingerPrint" Height="400" Width="600" 
         WindowStartupLocation="CenterScreen"
@@ -73,13 +73,13 @@
                 <StackPanel Margin="20" Orientation="Horizontal">
                     <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="10" Command="{Binding StartEnrollmentClicked}" >
                         <StackPanel>
-                            <Image Source="/RedDot;component/media/fingerprint.png" Height="40" Width="40"/>
+                            <Image Source="/media/fingerprint.png" Height="40" Width="40"/>
                             <TextBlock Text="Start"></TextBlock>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource CustomButtonStyle}"   HorizontalAlignment="Center" VerticalAlignment="Top" Height="80"   Width="120"  Margin="10" Command="{Binding BackClicked}" >
                         <StackPanel>
-                            <Image Source="/RedDot;component/media/back.png" Height="40" Width="40"/>
+                            <Image Source="/media/back.png" Height="40" Width="40"/>
                             <TextBlock Text="Back"></TextBlock>
                         </StackPanel>
                     </Button>

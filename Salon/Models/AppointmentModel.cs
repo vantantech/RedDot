@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using RedDot.DataManager;
-using RedDot.Base;
+using RedDotBase;
 
 namespace RedDot
 {

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Data;
 using System.Windows.Input;
 using RedDot.DataManager;
+using RedDotBase;
 
 namespace RedDot
 {

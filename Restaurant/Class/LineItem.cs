@@ -253,6 +253,21 @@ namespace RedDot
             }
 
         }
+
+        [DataMember]
+        public string PinPadStr
+        {
+            get
+            {
+
+
+                string rtn = Utility.FormatPrintRow( DoFormat(Quantity) + "x" + WeightStrDescription, " " + PriceStr, 19);
+
+                return rtn;
+            }
+
+        }
+
         [DataMember]
         public decimal PriceWithModifiers
         {

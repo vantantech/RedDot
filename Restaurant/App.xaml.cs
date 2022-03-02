@@ -21,6 +21,7 @@ using GlobalPayments.Api.Services;
 using GlobalPayments.Api.Entities;
 using GlobalPayments.Api.Terminals;
 using TriPOS.ResponseModels;
+using RedDot.Models;
 
 namespace RedDot
 {
@@ -380,12 +381,14 @@ namespace RedDot
             //Loads finger print database into memory
             GlobalSettings.Instance.LoadAllFmdsUserIDs();
 
-// for tablet ordering
+            // for tablet ordering
             RunWebService();
-   
+
 
             // TriPOSModel triposmodel = new TriPOSModel(GlobalSettings.Instance.LaneId);
             //  triposmodel.Reboot();
+
+            CardConnectModel.DisplayWelcome();
 
             MainWindow wnd;
 
@@ -421,7 +424,7 @@ namespace RedDot
             }catch(Exception ex)
             {
                 string baseUri = GlobalSettings.Instance.WebApiLocalAddress + ":" + GlobalSettings.Instance.WebApiLocalPort;
-                TouchMessageBox.Show("Web service Error:" + baseUri + ":" +  ex.Message,30);
+                TouchMessageBox.Show("Web service Error:" + baseUri + ":" +  ex.Message,5);
             }
         }
 

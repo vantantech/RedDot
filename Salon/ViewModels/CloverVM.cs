@@ -11,6 +11,7 @@ using Clover;
 using System.Windows.Input;
 using System.Windows;
 using NLog;
+using RedDotBase;
 
 namespace RedDot
 {

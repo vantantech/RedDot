@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NLog;
+using RedDot.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +12,12 @@ namespace RedDot
     public class PaymentModel
     {
         SecurityModel m_security;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        SalesModel m_salesmodel;
         public PaymentModel(SecurityModel security)
         {
             m_security = security;
+            m_salesmodel = new SalesModel(security);
         }
 
      
@@ -125,7 +130,7 @@ namespace RedDot
                         if (dlg1.Action == Confirm.OK)
                         {
 
-                            switch (GlobalSettings.Instance.CreditCardProcessor)
+                            switch (GlobalSettings.Instance.CreditCardProcessor.ToUpper())
                             {
                                 case "HeartSIP":
                                    // CreditPayment ccp = new CreditPayment(m_parent, CurrentTicket, m_ccp, "VOID", pay.ResponseId);
@@ -135,16 +140,14 @@ namespace RedDot
                                 case "External":
 
                                     CurrentTicket.VoidPayment((int)paymentid,tp.ReturnText);
-                                    //if tip is already assigned to current employee, then need to remove tip first for current employee
-                                    //passing 0 for employee ID will delete all gratuity for that ticket
-                                    //this only affects nail salons
+                    
 
                                     break;
 
                                 case "PAX_S300":
                                 case "HSIP_ISC250":
                                 case "VANTIV":
-
+                               
                                  
                                  
                                         CCPPayment tri = new CCPPayment(CurrentTicket,m_security, "VOID", pay,tp.ReturnText); //all credit card
@@ -152,13 +155,46 @@ namespace RedDot
 
                                     break;
 
+                                case "CARDCONNECT":
 
-                                case "Clover":
+                                    var resp = CardConnectModel.Void(pay.ResponseId, pay.AuthorCode, pay.Amount);
+                                    if (resp.respstat == "A")
+                                    {
+                                        //update payment
+                                        CurrentTicket.VoidPayment(pay.ID, tp.ReturnText);
+
+                                        //force ticket to load payment into object so it will contain the tip
+
+                                        CurrentTicket.LoadPayment();
+                                        Payment payment = m_salesmodel.GetPayment(pay.ResponseId);
+
+
+                                        //print credit slip
+
+                                        if (payment != null)
+                                        {
+                                            ReceiptPrinterModel.AutoPrintCreditSlip(payment);
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        logger.Error("VOID TRANSACTION FAILED !!!! ERROR:  " + resp.resptext);
+                                        TouchMessageBox.Show("VOID TRANSACTION FAILED !!!! ERROR:  " + resp.resptext);
+                                    }
+
+
+                                    break;
+                                case "CLOVER":
 
                                     CloverPayment clover = new CloverPayment(CurrentTicket, m_security, "VOID", pay,tp.ReturnText);
                                     Utility.OpenModal(m_parent, clover);
 
                                     break;
+
+
+                             
                             }
 
 

@@ -3,6 +3,8 @@ using GlobalPayments.Api.Services;
 using GlobalPayments.Api.Terminals;
 using GlobalPayments.Api.Terminals.Abstractions;
 using NLog;
+using RedDot.Models;
+using RedDot.Models.CardConnect;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -826,8 +828,8 @@ namespace RedDot
 
         private void RunCapture(object sender, DoWorkEventArgs e)
         {
-         
 
+            bool allresult = true;
             var payments = _history.GetAUTHPayments(StartDate, EndDate);
             var processor = GlobalSettings.Instance.CreditCardProcessor.ToUpper();
 
@@ -854,15 +856,24 @@ namespace RedDot
                         case "VIRTUAL":
                             CaptureVirtual(payment);
                             break;
+
+                        case "CARDCONNECT":
+                            if (CaptureCardConnect(payment) == false) allresult = false;
+                            break;
                     }
                 }
             }));
 
             LoadOrders();
-       
+
+
+            if (allresult) TouchMessageBox.ShowSmall("Tickets Settled Successfully.");
+            else TouchMessageBox.ShowSmall("NOT all ticket was settled successfuly.");
+
+
         }
 
-        private void CapturePAX(DataRow payment)
+        private bool CapturePAX(DataRow payment)
         {
 
             _device.Reset();
@@ -888,11 +899,13 @@ namespace RedDot
                 m_salesmodel.UpdatePaymentCapture(ID, TipAmount, (decimal)resp.TransactionAmount, NetAmount, resp.TransactionId);
 
                 TouchMessageBox.ShowSmall("Settle ID: " + ResponseId + " Amount: " + (NetAmount + TipAmount).ToString() + (char)13 + (char)10 + currentcount.ToString() + " out of  " + totalcount.ToString(), 1);
+                return true;
             }
             else
             {
                 logger.Error(resp.DeviceResponseText);
                 TouchMessageBox.Show("SALE TRANSACTION FAILED !!!! ERROR:  " + resp.DeviceResponseText);
+                return false;
             }
 
 
@@ -987,7 +1000,49 @@ namespace RedDot
 
         }
 
- 
+        private bool CaptureCardConnect(DataRow payment)
+        {
+
+
+
+            decimal NetAmount = decimal.Parse(payment["netamount"].ToString());
+            decimal TipAmount = decimal.Parse(payment["tipamount"].ToString());
+            string ResponseId = payment["responseid"].ToString();
+            string AuthCode = payment["authorcode"].ToString();
+            int ID = int.Parse(payment["id"].ToString());
+
+
+            logger.Info("COMMAND:Credit Capture , Amount=" + NetAmount + ",Tip=" + TipAmount);
+
+
+            CCCaptureResponse resp = CardConnectModel.Capture(ResponseId, AuthCode, NetAmount + TipAmount);
+            logger.Info("CREDIT COMPLETE=> reference number:" + resp.retref + ", ticket=" + payment["salesid"] + ",responseid=" + ResponseId + ", amount=" + NetAmount + TipAmount);
+
+
+
+            logger.Info("Credit Capture:RECEIVED:" + resp.ToString());
+            logger.Info("Credit Capture:HRef=" + resp.retref);
+            if (resp.resptext == "Approval")
+            {
+
+
+                m_salesmodel.UpdatePaymentCapture(ID, TipAmount, decimal.Parse(resp.amount), NetAmount, resp.retref);
+
+                TouchMessageBox.ShowSmall("Settled:" + ResponseId + " Amount:" + (NetAmount + TipAmount).ToString(), 1);
+                return true;
+            }
+            else
+            {
+                logger.Error(resp.resptext);
+                TouchMessageBox.Show("CAPTURE FAILED !!!! ERROR:  " + resp.resptext);
+                return false;
+            }
+
+
+
+        }
+
+
 
 
         public void ExecutePaymentDeleteClicked(object paymentid)

@@ -20,7 +20,7 @@ using com.clover.remotepay.sdk;
 using com.clover.sdk.v3.payments;
 using com.clover.remotepay.transport;
 using Clover;
-
+using FingerPrinting;
 
 namespace RedDot
 {

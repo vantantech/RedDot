@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RedDot.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace RedDot
         private GlobalPaymentVM gpvm;
         private TriPOSVM triposvm;
         private VirtualPaymentVM virtualvm;
+        private CardConnectVM cardconnectvm;
 
       
 
@@ -49,22 +51,17 @@ namespace RedDot
                 triposvm = new TriPOSVM(this,security, ticket, transtype, payment,reason);
                 this.DataContext = triposvm;
                     break;
-
+                case "CARDCONNECT":
+                    cardconnectvm = new CardConnectVM(this, security, ticket, transtype, payment, reason);
+                    this.DataContext = cardconnectvm;
+                    break;
             }
         }
 
 
-        private void btn_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            tbAmount.Text = tbAmount.Text + button.Content.ToString();
-        }
+ 
 
-        private void ClearClick(object sender, RoutedEventArgs e)
-        {
-            //Clear 
-            tbAmount.Text = "";
-        }
+   
 
         private void BackClick(object sender, RoutedEventArgs e)
         {

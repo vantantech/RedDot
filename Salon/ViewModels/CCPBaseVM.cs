@@ -1,4 +1,5 @@
 ﻿using NLog;
+using RedDotBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace RedDot
     public class CCPBaseVM:INPCBase
     {
 
-        protected static Logger logger = LogManager.GetCurrentClassLogger();
+    
 
         public ICommand CreditAuthClicked { get; set; }
         public ICommand CreditSaleClicked { get; set; }

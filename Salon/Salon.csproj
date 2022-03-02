@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RedDot</RootNamespace>
     <AssemblyName>RedDot</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -112,6 +112,9 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\HeartSIP\HeartSIP 3.3\20180118 - 3.3.0.26222\HeartPOS\VisualStudio\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="FingerPrinting">
+      <HintPath>..\FingerPrinting\bin\Debug\FingerPrinting.dll</HintPath>
     </Reference>
     <Reference Include="GlobalPayments.Api">
       <HintPath>..\..\..\..\RedDot Releases\RedDot Core\GlobalPayments.Api.dll</HintPath>
@@ -265,11 +268,11 @@
     <Compile Include="Classes\DailySales.cs" />
     <Compile Include="Classes\DeviceScanner.cs" />
     <Compile Include="Classes\Globals.cs" />
-    <Compile Include="Classes\INPCBase.cs" />
     <Compile Include="Classes\IpFinder.cs" />
     <Compile Include="Classes\ListPair.cs" />
     <Compile Include="Classes\POSPayment.cs" />
     <Compile Include="Classes\Converters\StringToImage.cs" />
+    <Compile Include="Classes\SettingsTabItem.cs" />
     <Compile Include="Classes\TapTipKeyboard.cs" />
     <Compile Include="Classes\TicketTotals.cs" />
     <Compile Include="Classes\TipSummary.cs" />
@@ -452,9 +455,6 @@
     </Compile>
     <Compile Include="Views\Controls\ViewReceiptControl.xaml.cs">
       <DependentUpon>ViewReceiptControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Employee\EnrollFingerPrint.xaml.cs">
-      <DependentUpon>EnrollFingerPrint.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menu Setup\Gift Card\CardScanner.xaml.cs">
       <DependentUpon>CardScanner.xaml</DependentUpon>
@@ -772,10 +772,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\ViewReceiptControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Employee\EnrollFingerPrint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1414,10 +1410,6 @@
     <ProjectReference Include="..\DataManager\DataManager.csproj">
       <Project>{0406086f-1590-49ed-8a6d-6317893c041f}</Project>
       <Name>DataManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FingerPrinting\FingerPrinting.csproj">
-      <Project>{237de052-5635-45ff-8dd0-dbda2583225f}</Project>
-      <Name>FingerPrinting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

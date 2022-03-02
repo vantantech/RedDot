@@ -8,6 +8,7 @@ using System.Data;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using RedDot.DataManager;
+using RedDotBase;
 
 namespace RedDot
 {

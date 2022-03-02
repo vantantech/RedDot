@@ -55,13 +55,93 @@ namespace RedDot
 
         public string IPAddress
         {
+            get { return GlobalSettings.Instance.IPAddress; }
+            set
+            {
+                GlobalSettings.Instance.IPAddress = value;
+            }
+        }
+
+
+        public string BoltURL
+        {
+            get { return GlobalSettings.Instance.BoltBaseURL; }
+            set
+            {
+                GlobalSettings.Instance.BoltBaseURL = value;
+            }
+        }
+
+        public string CardPointeURL
+        {
+            get { return GlobalSettings.Instance.CardConnectURL; }
+            set
+            {
+                GlobalSettings.Instance.CardConnectURL = value;
+            }
+        }
+
+        public string APIUsername
+        {
+            get { return GlobalSettings.Instance.CardConnectUsername; }
+            set
+            {
+                GlobalSettings.Instance.CardConnectUsername = value;
+            }
+        }
+
+        public string APIPassword
+        {
+            get { return GlobalSettings.Instance.CardConnectPassword; }
+            set
+            {
+                GlobalSettings.Instance.CardConnectPassword = value;
+            }
+        }
+
+        public string MerchantID
+        {
+            get { return GlobalSettings.Instance.MerchantID; }
+            set
+            {
+                GlobalSettings.Instance.MerchantID = value;
+            }
+        }
+
+        public string PinPadModel
+        {
+            get { return GlobalSettings.Instance.PinPadModel; }
+            set
+            {
+                GlobalSettings.Instance.PinPadModel = value;
+            }
+        }
+
+        public string HSN
+        {
+            get { return GlobalSettings.Instance.HardwareSerialNumber; }
+            set
+            {
+                GlobalSettings.Instance.HardwareSerialNumber = value;
+            }
+        }
+
+        public string Port
+        {
+            get { return GlobalSettings.Instance.Port; }
+            set
+            {
+                GlobalSettings.Instance.Port = value;
+            }
+        }
+        public string SIPDefaultIPAddress
+        {
             get { return GlobalSettings.Instance.SIPDefaultIPAddress; }
             set
             {
                 GlobalSettings.Instance.SIPDefaultIPAddress = value;
             }
         }
-
         public string SIPPort
         {
             get { return GlobalSettings.Instance.SIPPort; }

@@ -10,7 +10,7 @@ using com.clover.remotepay.sdk;
 using GlobalPayments.Api.Terminals;
 using Clover;
 using RedDot.Models;
-using RedDot.Base;
+using RedDotBase;
 
 namespace RedDot
 {

@@ -356,7 +356,7 @@ namespace RedDot
 
 
 
-        public bool DBQSCloseTicket(int salesid, decimal subtotal, decimal total, decimal salestax, decimal autotip)
+        public bool DBCloseTicket(int salesid, decimal subtotal, decimal total, decimal salestax, decimal autotip)
         {
             if (salesid == 0) return false;
 

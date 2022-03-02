@@ -1,7 +1,7 @@
 ﻿using HeartPOS;
 using HPS;
 using NLog;
-using RedDot.Base;
+using RedDotBase;
 using System;
 using System.Configuration;
 using System.IO;

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RedDot.FingerPrinting
+namespace FingerPrinting
 {
     /// <summary>
     /// Interaction logic for EnrollFingerPrint.xaml

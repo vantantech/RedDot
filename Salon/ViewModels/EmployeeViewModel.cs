@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using RedDotBase;
+using FingerPrinting;
 
 namespace RedDot
 {
@@ -155,7 +157,7 @@ namespace RedDot
                 FingerPrint fingerPrint = new FingerPrint();
                 fingerPrint.StartEnrollment();
 
-                EnrollFingerPrint ep = new EnrollFingerPrint(CurrentEmployee);
+                EnrollFingerPrint ep = new EnrollFingerPrint(CurrentEmployee.ID);
                 Utility.OpenModal(_parent, ep);
 
                 //Loads finger print database into memory

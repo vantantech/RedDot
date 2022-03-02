@@ -12,13 +12,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Linq;
+using RedDotBase;
 
 namespace RedDot
 {
     public class PAXManagerVM : INPCBase
     {
-
-        private static Logger logger = LogManager.GetCurrentClassLogger();
 
 
         public ICommand CreditAuthClicked { get; set; }
